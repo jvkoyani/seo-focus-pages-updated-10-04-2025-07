@@ -25,12 +25,13 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsLocationsOpen(false);
   }, [location.pathname]);
 
   return (
     <AnimatedSection 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'py-3 bg-white shadow-md' : 'py-5 bg-transparent'
+        isScrolled ? 'py-3 bg-white shadow-md' : 'py-5 bg-white md:bg-transparent'
       }`}
       animation="fade-in"
     >
@@ -47,13 +48,13 @@ const Navbar = () => {
             <Link to="/" className="text-seo-dark hover:text-seo-blue font-medium transition-colors">
               Home
             </Link>
-            <div className="relative group">
+            <div className="relative">
               <button
                 onClick={toggleLocations}
                 className="flex items-center text-seo-dark hover:text-seo-blue font-medium transition-colors focus:outline-none"
               >
                 Locations
-                <ChevronDown className="ml-1 h-4 w-4" />
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isLocationsOpen ? 'rotate-180' : ''}`} />
               </button>
               <div className={`absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-200 ease-in-out overflow-hidden ${isLocationsOpen ? 'opacity-100 visible max-h-96' : 'opacity-0 invisible max-h-0'}`}>
                 <div className="py-2 grid grid-cols-1 gap-1">
