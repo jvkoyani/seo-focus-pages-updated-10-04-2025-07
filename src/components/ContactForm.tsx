@@ -65,8 +65,8 @@ const ContactForm = ({ location }: ContactFormProps) => {
             </h2>
             <p className="text-lg text-seo-gray-dark mb-8">
               {location 
-                ? `Take the first step towards improving your ${location} business's online visibility. Fill out the form and we'll get back to you with a personalized SEO strategy.`
-                : 'Take the first step towards improving your website's online visibility. Fill out the form and we'll get back to you with a personalized SEO strategy.'}
+                ? `Take the first step towards improving your ${location} business\'s online visibility. Fill out the form and we\'ll get back to you with a personalized SEO strategy.`
+                : 'Take the first step towards improving your website\'s online visibility. Fill out the form and we\'ll get back to you with a personalized SEO strategy.'}
             </p>
             
             <div className="space-y-6 mb-8">
@@ -77,7 +77,7 @@ const ContactForm = ({ location }: ContactFormProps) => {
                 <div>
                   <h3 className="font-semibold text-seo-dark text-lg mb-1">Free SEO Audit</h3>
                   <p className="text-seo-gray-dark">
-                    Get a comprehensive analysis of your website's current SEO performance.
+                    Get a comprehensive analysis of your website&#39;s current SEO performance.
                   </p>
                 </div>
               </div>
@@ -121,7 +121,7 @@ const ContactForm = ({ location }: ContactFormProps) => {
                   </div>
                   <p className="text-lg text-seo-dark mb-2">Thank you for reaching out!</p>
                   <p className="text-seo-gray-dark">
-                    We've received your message and will get back to you shortly.
+                    We&#39;ve received your message and will get back to you shortly.
                   </p>
                 </div>
               ) : (

@@ -100,7 +100,7 @@ export const services: ServiceData[] = [
   {
     id: '2',
     title: 'Technical SEO',
-    description: 'Improve your website's foundation with comprehensive technical SEO audits and optimizations.',
+    description: 'Improve your website\'s foundation with comprehensive technical SEO audits and optimizations.',
     icon: 'settings',
     features: [
       'Site speed optimization',
@@ -186,7 +186,7 @@ export const testimonials: TestimonialData[] = [
     name: 'Emma Wilson',
     company: 'Coastal Properties',
     location: 'Brisbane',
-    quote: 'The local SEO campaign they developed for our real estate agency has been transformative. We're now the top result for our target keywords in Brisbane.',
+    quote: 'The local SEO campaign they developed for our real estate agency has been transformative. We\'re now the top result for our target keywords in Brisbane.',
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop'
   }
 ];
