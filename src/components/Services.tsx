@@ -5,8 +5,10 @@ import {
   FileText, 
   Link as LinkIcon, 
   ShoppingCart, 
-  BarChart 
+  BarChart,
+  ArrowRight
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
 import { services } from '@/lib/data';
 
@@ -63,7 +65,7 @@ const Services = ({ location }: ServicesProps) => {
               <p className="text-seo-gray-dark mb-6">
                 {service.description}
               </p>
-              <ul className="space-y-2">
+              <ul className="space-y-2 mb-6">
                 {service.features.map((feature, i) => (
                   <li key={i} className="flex items-start">
                     <svg className="h-5 w-5 text-seo-blue mt-0.5 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -73,6 +75,15 @@ const Services = ({ location }: ServicesProps) => {
                   </li>
                 ))}
               </ul>
+              <Link 
+                to={`/service/${service.id}`} 
+                className="inline-flex items-center text-seo-blue font-medium group mt-2"
+              >
+                <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
+                  Learn more
+                </span>
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </AnimatedSection>
           ))}
         </div>
