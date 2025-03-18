@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
-import { locations } from '@/lib/data';
+import { locations, services, industries } from '@/lib/data';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -70,52 +70,37 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Our Services</h4>
             <ul className="space-y-3">
-              <li>
-                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Local SEO
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Technical SEO
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Content Strategy
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Link Building
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
-                  E-commerce SEO
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Analytics & Reporting
-                </Link>
-              </li>
+              {services.map(service => (
+                <li key={service.id}>
+                  <Link to={`/service/${service.id}`} className="text-white/70 hover:text-seo-blue transition-colors">
+                    {service.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Locations</h4>
+            <h4 className="text-lg font-semibold mb-4">Industries</h4>
             <ul className="space-y-3">
-              {locations.slice(0, 6).map((location) => (
-                <li key={location.id}>
+              {industries.map(industry => (
+                <li key={industry.id}>
                   <Link 
-                    to={`/location/${location.slug}`} 
+                    to={`/industry/${industry.slug}`} 
                     className="text-white/70 hover:text-seo-blue transition-colors"
                   >
-                    {location.name}
+                    {industry.title}
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link 
+                  to="/industries" 
+                  className="text-white/70 hover:text-seo-blue transition-colors font-medium"
+                >
+                  View All Industries
+                </Link>
+              </li>
             </ul>
           </div>
           
@@ -133,8 +118,18 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Careers
+                <Link to="/locations" className="text-white/70 hover:text-seo-blue transition-colors">
+                  Locations
+                </Link>
+              </li>
+              <li>
+                <Link to="/industries" className="text-white/70 hover:text-seo-blue transition-colors">
+                  Industries We Serve
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
+                  Services
                 </Link>
               </li>
               <li>
@@ -148,6 +143,22 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
+          </div>
+        </div>
+        
+        {/* Locations Grid - New Section */}
+        <div className="py-8 border-t border-white/10">
+          <h4 className="text-lg font-semibold mb-4">Locations We Serve</h4>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {locations.map(location => (
+              <Link 
+                key={location.id}
+                to={`/location/${location.slug}`} 
+                className="text-white/70 hover:text-seo-blue transition-colors text-sm"
+              >
+                {location.name}
+              </Link>
+            ))}
           </div>
         </div>
         

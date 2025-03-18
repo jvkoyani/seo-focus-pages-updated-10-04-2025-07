@@ -1,3 +1,18 @@
+import { 
+  MapPin, 
+  Settings, 
+  FileText, 
+  Link as LinkIcon, 
+  ShoppingCart, 
+  BarChart,
+  Briefcase,
+  Building,
+  Stethoscope,
+  Scale,
+  Activity,
+  Home,
+  Calculator
+} from 'lucide-react';
 
 export interface LocationData {
   id: string;
@@ -24,6 +39,16 @@ export interface TestimonialData {
   location: string;
   quote: string;
   image: string;
+}
+
+export interface IndustryData {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  icon: React.ElementType;
+  features: string[];
+  benefits: string[];
 }
 
 export const locations: LocationData[] = [
@@ -190,3 +215,154 @@ export const testimonials: TestimonialData[] = [
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop'
   }
 ];
+
+export const industries: IndustryData[] = [
+  {
+    id: '1',
+    title: 'Accountant SEO',
+    slug: 'accountant-seo',
+    description: 'Specialized SEO strategies to help accounting firms attract more qualified leads and grow their client base.',
+    icon: Calculator,
+    features: [
+      'Local SEO for accounting practices',
+      'Content strategy for financial topics',
+      'Reputation management',
+      'Conversion optimization for client acquisition',
+      'Competitor analysis'
+    ],
+    benefits: [
+      'Attract more qualified leads looking for accounting services',
+      'Establish authority in specialized financial niches',
+      'Increase visibility for high-value keywords',
+      'Improve conversion rates for consultation requests',
+      'Gain competitive advantage in local search results'
+    ]
+  },
+  {
+    id: '2',
+    title: 'Chiropractor SEO',
+    slug: 'chiropractor-seo',
+    description: 'Custom SEO solutions for chiropractors to increase patient acquisition and boost local visibility.',
+    icon: Activity,
+    features: [
+      'Local SEO for chiropractic clinics',
+      'Patient testimonial optimization',
+      'Google Business Profile management',
+      'Content marketing for patient education',
+      'Review generation strategies'
+    ],
+    benefits: [
+      'Attract more patients searching for chiropractic care',
+      'Build trust through optimized reviews and testimonials',
+      'Increase visibility in local map pack results',
+      'Educate potential patients about your services',
+      'Differentiate your practice from competitors'
+    ]
+  },
+  {
+    id: '3',
+    title: 'Dental SEO',
+    slug: 'dental-seo',
+    description: 'Results-driven SEO for dental practices focused on patient acquisition and practice growth.',
+    icon: Stethoscope,
+    features: [
+      'Local SEO for dental practices',
+      'Service page optimization',
+      'Patient journey mapping',
+      'Content strategy for oral health topics',
+      'Competitive analysis against other local dentists'
+    ],
+    benefits: [
+      'Increase new patient inquiries through organic search',
+      'Rank higher for profitable treatment keywords',
+      'Improve visibility in Google Maps and local results',
+      'Build authority through educational dental content',
+      'Track and improve ROI from your digital marketing'
+    ]
+  },
+  {
+    id: '4',
+    title: 'Healthcare SEO',
+    slug: 'healthcare-seo',
+    description: 'Comprehensive SEO strategies for healthcare providers to improve online visibility and patient acquisition.',
+    icon: Stethoscope,
+    features: [
+      'HIPAA-compliant content strategy',
+      'Medical service page optimization',
+      'Provider profile enhancement',
+      'Healthcare schema implementation',
+      'Medical content authority building'
+    ],
+    benefits: [
+      'Establish your practice as an authority in your specialty',
+      'Increase visibility for symptom and treatment searches',
+      'Improve patient education through optimized content',
+      'Enhance credibility through structured medical data',
+      'Outrank competing healthcare providers'
+    ]
+  },
+  {
+    id: '5',
+    title: 'Lawyer SEO',
+    slug: 'lawyer-seo',
+    description: 'Specialized SEO for law firms to increase case inquiries and establish authority in specific practice areas.',
+    icon: Scale,
+    features: [
+      'Practice area page optimization',
+      'Local SEO for law firms',
+      'Legal content strategy development',
+      'Attorney profile enhancement',
+      'Case study and result highlighting'
+    ],
+    benefits: [
+      'Attract more qualified case inquiries through search',
+      'Build authority in specific legal practice areas',
+      'Outrank competing law firms for valuable keywords',
+      'Improve conversion rates for consultation requests',
+      'Expand your firm's digital footprint'
+    ]
+  },
+  {
+    id: '6',
+    title: 'Physio SEO',
+    slug: 'physio-seo',
+    description: 'Tailored SEO strategies for physiotherapy clinics to increase patient bookings and local visibility.',
+    icon: Activity,
+    features: [
+      'Local SEO for physiotherapy clinics',
+      'Treatment page optimization',
+      'Patient success story highlighting',
+      'Condition-specific content development',
+      'Online booking optimization'
+    ],
+    benefits: [
+      'Increase new patient inquiries through organic search',
+      'Rank higher for treatment and condition keywords',
+      'Improve visibility in Google Maps results',
+      'Build authority with educational physiotherapy content',
+      'Convert more visitors into booked appointments'
+    ]
+  },
+  {
+    id: '7',
+    title: 'Real Estate SEO',
+    slug: 'real-estate-seo',
+    description: 'Strategic SEO solutions for real estate agencies and agents to generate more leads and property inquiries.',
+    icon: Home,
+    features: [
+      'Local real estate SEO',
+      'Property listing optimization',
+      'Area guide content development',
+      'Agent profile enhancement',
+      'Real estate schema implementation'
+    ],
+    benefits: [
+      'Attract more qualified property seekers through search',
+      'Improve visibility for location-based property searches',
+      'Establish authority in specific neighborhoods and markets',
+      'Increase lead generation through optimized content',
+      'Outrank competing agents and agencies'
+    ]
+  }
+];
+
