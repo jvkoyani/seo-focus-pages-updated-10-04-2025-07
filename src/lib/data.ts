@@ -320,7 +320,7 @@ export const industries: IndustryData[] = [
       'Build authority in specific legal practice areas',
       'Outrank competing law firms for valuable keywords',
       'Improve conversion rates for consultation requests',
-      'Expand your firm's digital footprint'
+      'Expand your firm\'s digital footprint'
     ]
   },
   {
