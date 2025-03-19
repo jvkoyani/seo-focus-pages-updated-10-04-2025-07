@@ -1,3 +1,4 @@
+
 import { 
   MapPin, 
   Settings, 
@@ -423,7 +424,7 @@ export const blogPosts: BlogPostData[] = [
     id: '2',
     title: 'Technical SEO Checklist: 10 Critical Elements for Better Rankings',
     slug: 'technical-seo-checklist',
-    excerpt: 'Discover the essential technical SEO elements that can significantly improve your website's search engine rankings.',
+    excerpt: 'Discover the essential technical SEO elements that can significantly improve your website\'s search engine rankings.',
     content: `<p>While content and backlinks often take the spotlight in SEO discussions, technical SEO forms the foundation. It includes elements like site speed, mobile optimization, and schema markup.</p>`,
     image: 'https://images.unsplash.com/photo-1542744095-291d1f67b221?q=80&w=1000&auto=format&fit=crop',
     date: '2023-10-22',
