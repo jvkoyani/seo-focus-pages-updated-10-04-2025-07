@@ -1,5 +1,5 @@
 
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
 
@@ -18,16 +18,22 @@ const Hero = ({
 }: HeroProps) => {
   return (
     <div className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-      {/* Background Image with overlay */}
+      {/* Animated background with parallax effect */}
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-fixed transform transition-transform duration-10000 hover:scale-105"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-seo-dark/80 to-seo-dark/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-seo-dark/90 to-seo-dark/50" />
+        
+        {/* Animated dots overlay */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{ 
+            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 2px, transparent 2px)',
+            backgroundSize: '30px 30px'
+          }}></div>
+        </div>
       </div>
 
       {/* Content */}
@@ -37,14 +43,14 @@ const Hero = ({
             className="mb-2" 
             animation="fade-in"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-white/10 text-white backdrop-blur-sm">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-white/10 text-white backdrop-blur-sm border border-white/20">
               {location ? `${location} SEO Services` : 'Data-Driven SEO Agency'}
             </span>
           </AnimatedSection>
           
           <AnimatedSection 
             className="mb-6" 
-            animation="fade-in" 
+            animation="fade-in-left" 
             delay={200}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
@@ -69,36 +75,55 @@ const Hero = ({
           >
             <Link
               to="/contact"
-              className="bg-seo-blue hover:bg-seo-blue-light text-white px-8 py-4 rounded-md font-medium text-lg transition-all duration-300 flex items-center justify-center button-hover-effect"
+              className="bg-seo-blue hover:bg-seo-blue-light text-white px-8 py-4 rounded-md font-medium text-lg transition-all duration-300 flex items-center justify-center relative overflow-hidden group"
             >
-              Get Free SEO Audit
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <span className="relative z-10">Get Free SEO Audit</span>
+              <ArrowRight className="ml-2 h-5 w-5 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+              <div className="absolute inset-0 bg-gradient-to-r from-seo-blue-light to-seo-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </Link>
             <Link
               to="/services"
-              className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-md font-medium text-lg transition-all duration-300 flex items-center justify-center button-hover-effect"
+              className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-md font-medium text-lg transition-all duration-300 flex items-center justify-center border border-white/20 hover:border-white/30"
             >
               Our Services
             </Link>
           </AnimatedSection>
 
-          {/* Stats */}
+          {/* Stats with improved visuals */}
           <AnimatedSection 
             className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8" 
-            animation="fade-in" 
+            animation="slide-up" 
             delay={800}
           >
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
-              <p className="text-4xl font-bold text-white mb-2">98%</p>
-              <p className="text-white/80 text-sm">Client Retention Rate</p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center relative overflow-hidden group hover:bg-white/15 transition-all duration-300 border border-white/10 hover:border-white/20">
+              <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full"></div>
+              <p className="text-4xl font-bold text-white mb-2 relative z-10">98%</p>
+              <p className="text-white/80 text-sm relative z-10">Client Retention Rate</p>
+              <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-green-400 to-green-300 w-0 group-hover:w-full transition-all duration-700"></div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
-              <p className="text-4xl font-bold text-white mb-2">250+</p>
-              <p className="text-white/80 text-sm">Businesses Helped</p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center relative overflow-hidden group hover:bg-white/15 transition-all duration-300 border border-white/10 hover:border-white/20">
+              <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full"></div>
+              <p className="text-4xl font-bold text-white mb-2 relative z-10">250+</p>
+              <p className="text-white/80 text-sm relative z-10">Businesses Helped</p>
+              <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-blue-400 to-blue-300 w-0 group-hover:w-full transition-all duration-700"></div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
-              <p className="text-4xl font-bold text-white mb-2">175%</p>
-              <p className="text-white/80 text-sm">Average Traffic Increase</p>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center relative overflow-hidden group hover:bg-white/15 transition-all duration-300 border border-white/10 hover:border-white/20">
+              <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full"></div>
+              <p className="text-4xl font-bold text-white mb-2 relative z-10">175%</p>
+              <p className="text-white/80 text-sm relative z-10">Average Traffic Increase</p>
+              <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-400 to-purple-300 w-0 group-hover:w-full transition-all duration-700"></div>
+            </div>
+          </AnimatedSection>
+          
+          {/* Scroll indicator */}
+          <AnimatedSection 
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2" 
+            animation="bounce-in" 
+            delay={1500}
+          >
+            <div className="flex flex-col items-center">
+              <span className="text-white/60 text-sm mb-2">Scroll to explore</span>
+              <ChevronDown className="h-6 w-6 text-white/60 animate-bounce" />
             </div>
           </AnimatedSection>
         </div>

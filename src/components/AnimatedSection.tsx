@@ -6,8 +6,9 @@ interface AnimatedSectionProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  animation?: 'fade-in' | 'fade-in-left' | 'fade-in-right' | 'slide-up';
+  animation?: 'fade-in' | 'fade-in-left' | 'fade-in-right' | 'slide-up' | 'zoom-in' | 'bounce-in';
   threshold?: number;
+  duration?: number;
 }
 
 const AnimatedSection = ({
@@ -16,6 +17,7 @@ const AnimatedSection = ({
   delay = 0,
   animation = 'fade-in',
   threshold = 0.2,
+  duration = 500,
 }: AnimatedSectionProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -49,23 +51,40 @@ const AnimatedSection = ({
     };
   }, [delay, threshold]);
 
+  const getAnimationClass = () => {
+    if (!isVisible) return '';
+    
+    switch (animation) {
+      case 'fade-in':
+        return 'animate-fade-in';
+      case 'fade-in-left':
+        return 'animate-fade-in-left';
+      case 'fade-in-right':
+        return 'animate-fade-in-right';
+      case 'slide-up':
+        return 'animate-slide-up';
+      case 'zoom-in':
+        return 'animate-[zoom-in_0.5s_ease-out_forwards]';
+      case 'bounce-in':
+        return 'animate-[bounce-in_0.6s_cubic-bezier(0.17,0.67,0.83,0.67)_forwards]';
+      default:
+        return 'animate-fade-in';
+    }
+  };
+
   return (
     <div
       ref={sectionRef}
       className={cn(
         'opacity-0',
-        {
-          'animate-fade-in': animation === 'fade-in' && isVisible,
-          'animate-fade-in-left': animation === 'fade-in-left' && isVisible,
-          'animate-fade-in-right': animation === 'fade-in-right' && isVisible,
-          'animate-slide-up': animation === 'slide-up' && isVisible,
-        },
+        getAnimationClass(),
         className
       )}
       style={{ 
         willChange: 'opacity, transform',
         animationDelay: `${delay}ms`,
-        animationFillMode: 'forwards'
+        animationFillMode: 'forwards',
+        animationDuration: `${duration}ms`
       }}
     >
       {children}
