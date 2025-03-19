@@ -1,42 +1,18 @@
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowRight, MapPin } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
-import Services from '@/components/Services';
-import Testimonials from '@/components/Testimonials';
-import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
-import { LocationData, locations } from '@/lib/data';
-import { ArrowRight, CheckCircle } from 'lucide-react';
+import ContactForm from '@/components/ContactForm';
+import Services from '@/components/Services';
+import BlogPreview from '@/components/BlogPreview';
+import CaseStudyPreview from '@/components/CaseStudyPreview';
+import { locations, services, blogPosts, caseStudies, industries } from '@/lib/data';
 
 const Location = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [location, setLocation] = useState<LocationData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Find the location data based on the slug
-    const foundLocation = locations.find(loc => loc.slug === slug) || null;
-    setLocation(foundLocation);
-    setLoading(false);
-
-    // Update page metadata
-    if (foundLocation) {
-      document.title = foundLocation.metaTitle;
-      
-      // Update meta description
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', foundLocation.metaDescription);
-      }
-    }
-  }, [slug]);
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
+  const location = locations.find(loc => loc.slug === slug);
 
   if (!location) {
     return (
@@ -44,14 +20,15 @@ const Location = () => {
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-seo-dark mb-4">Location Not Found</h1>
-            <p className="text-seo-gray-dark mb-6">Sorry, the location you're looking for doesn't exist.</p>
-            <a 
-              href="/" 
-              className="bg-seo-blue hover:bg-seo-blue-light text-white px-6 py-2 rounded-md transition-colors"
+            <h1 className="text-3xl font-bold mb-4">Location Not Found</h1>
+            <p className="mb-6">Sorry, the location you're looking for doesn't exist.</p>
+            <Link 
+              to="/" 
+              className="inline-flex items-center text-seo-blue font-medium"
             >
-              Back to Home
-            </a>
+              <span>Return to home</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </div>
         </div>
         <Footer />
@@ -59,211 +36,225 @@ const Location = () => {
     );
   }
 
+  // Find relevant blog posts for this location
+  const relatedBlogs = blogPosts
+    .filter(post => 
+      post.content.toLowerCase().includes(location.name.toLowerCase()) ||
+      post.tags.some(tag => tag.toLowerCase().includes(location.name.toLowerCase()))
+    )
+    .slice(0, 3);
+
+  // Find relevant case studies for this location
+  const relatedCaseStudies = caseStudies
+    .filter(study => 
+      study.title.toLowerCase().includes(location.name.toLowerCase()) ||
+      study.challenge.toLowerCase().includes(location.name.toLowerCase()) ||
+      study.solution.toLowerCase().includes(location.name.toLowerCase())
+    )
+    .slice(0, 2);
+
+  // Get relevant industries for this location
+  const relevantIndustries = industries.slice(0, 3);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <Hero 
-        title={`${location.name} SEO Services That Drive Results`}
-        subtitle={`Tailored search engine optimization strategies for ${location.name} businesses`}
-        location={location.name}
-        backgroundImage={location.image}
-      />
       
-      <Services location={location.name} />
-      
-      {/* Local SEO Benefits Section */}
-      <section className="py-24 bg-seo-gray-light">
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 bg-gradient-to-b from-white to-seo-gray-light">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-center">
-            <AnimatedSection className="flex-1" animation="fade-in-left">
-              <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-                Local SEO Advantages
-              </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
-                Why Your {location.name} Business Needs Local SEO
-              </h2>
-              <p className="text-lg text-seo-gray-dark mb-8">
-                In today's competitive {location.name} market, being visible when local customers search is essential for business growth.
-              </p>
+          <AnimatedSection className="text-center max-w-3xl mx-auto" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              <MapPin className="h-4 w-4 inline mr-1" />
+              {location.name}
+            </span>
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6">
+              SEO Services in {location.name}
+            </h1>
+            <p className="text-xl text-seo-gray-dark mb-8">
+              {location.description}
+            </p>
+            <Link
+              to="/contact"
+              className="bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors button-hover-effect"
+            >
+              Get a Free Consultation
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+      
+      {/* Main Content Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <AnimatedSection className="prose prose-lg max-w-none" animation="fade-in">
+              <h2>Expert SEO Services in {location.name}</h2>
               
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-seo-blue mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-seo-dark text-lg">Increased Local Visibility</h3>
-                    <p className="text-seo-gray-dark">
-                      Appear in the local pack and Google Maps when {location.name} customers search for your services.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-seo-blue mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-seo-dark text-lg">Target Ready-to-Buy Customers</h3>
-                    <p className="text-seo-gray-dark">
-                      Local searches have higher conversion rates because customers are actively looking for nearby solutions.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-seo-blue mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-seo-dark text-lg">Beat Local Competition</h3>
-                    <p className="text-seo-gray-dark">
-                      Stand out among other {location.name} businesses with strategic SEO that highlights your unique value.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-seo-blue mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-seo-dark text-lg">Build Local Trust</h3>
-                    <p className="text-seo-gray-dark">
-                      Optimize your online presence to showcase reviews and build credibility with {location.name} customers.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <p>In today's competitive digital landscape, having a strong online presence is crucial for businesses in {location.name}. Our specialized SEO services are designed to help local businesses stand out from the competition and attract more qualified leads through search engines.</p>
               
-              <div className="mt-10">
-                <a 
-                  href="#contact" 
-                  className="inline-flex items-center text-seo-blue font-semibold group"
-                >
-                  <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
-                    Get your free SEO audit
-                  </span>
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
-            </AnimatedSection>
-            
-            <AnimatedSection className="flex-1 relative" animation="fade-in-right">
-              <div className="relative max-w-md mx-auto">
-                <div className="absolute -top-6 -left-6 w-24 h-24 bg-seo-blue/10 rounded-lg"></div>
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-seo-blue/10 rounded-lg"></div>
-                
-                <div className="relative z-10 bg-white rounded-xl shadow-xl overflow-hidden">
-                  <div 
-                    className="h-64 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${location.image})` }}
-                  ></div>
-                  <div className="p-8">
-                    <h3 className="text-xl font-bold text-seo-dark mb-3">
-                      {location.name} SEO Specialists
-                    </h3>
-                    <p className="text-seo-gray-dark mb-6">
-                      Our team understands the unique challenges and opportunities in the {location.name} market. We combine local expertise with proven SEO strategies to help your business thrive.
-                    </p>
-                    <div className="flex items-center justify-between text-sm text-seo-gray-medium">
-                      <span>Trusted by {location.name} businesses</span>
-                      <span>Since 2015</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <p>With our deep understanding of both SEO best practices and the unique aspects of the {location.name} market, we develop tailored strategies that deliver measurable results for your business.</p>
+              
+              <h3>Why {location.name} Businesses Need Specialized SEO</h3>
+              
+              <p>The {location.name} market presents unique challenges and opportunities for businesses looking to improve their online visibility:</p>
+              
+              <ul>
+                <li><strong>Local Competition:</strong> The {location.name} market is highly competitive, with many businesses vying for visibility in local search results.</li>
+                <li><strong>Consumer Behavior:</strong> {location.name} consumers have specific search patterns and preferences that require targeted optimization strategies.</li>
+                <li><strong>Geographic Considerations:</strong> Effective SEO in {location.name} requires optimization for specific neighborhoods, suburbs, and landmarks.</li>
+                <li><strong>Local Business Ecosystem:</strong> Building relationships with other {location.name} businesses and organizations can significantly impact your search visibility.</li>
+              </ul>
+              
+              <p>Our SEO services for {location.name} businesses take all these factors into account to develop a comprehensive strategy that drives real business growth.</p>
+              
+              <h3>Our SEO Approach for {location.name} Businesses</h3>
+              
+              <p>We combine proven SEO techniques with location-specific strategies to deliver superior results:</p>
+              
+              <ul>
+                <li><strong>Local Keyword Research:</strong> We identify the most valuable keywords that {location.name} residents use when searching for products or services like yours.</li>
+                <li><strong>Google Business Profile Optimization:</strong> We optimize your Google Business Profile to improve visibility in local map packs and attract nearby customers.</li>
+                <li><strong>Local Content Creation:</strong> We develop engaging, location-specific content that resonates with the {location.name} audience and addresses their specific needs.</li>
+                <li><strong>Local Link Building:</strong> We build high-quality backlinks from relevant {location.name} websites to boost your local authority.</li>
+                <li><strong>Local Citation Building:</strong> We ensure your business information is consistent across all online directories and platforms.</li>
+                <li><strong>Competitor Analysis:</strong> We analyze your local competitors to identify opportunities and develop strategies to outrank them.</li>
+              </ul>
+              
+              <p>This comprehensive approach ensures that your business achieves sustainable growth in the competitive {location.name} market.</p>
             </AnimatedSection>
           </div>
         </div>
       </section>
       
-      {/* Process Section */}
-      <section className="py-24 bg-white">
+      {/* Services Section */}
+      <Services location={location.name} locationSlug={location.slug} />
+      
+      {/* Industries Section */}
+      <section className="py-20 bg-seo-gray-light">
         <div className="container mx-auto px-4">
-          <AnimatedSection
-            className="text-center mb-16 max-w-3xl mx-auto"
-            animation="fade-in"
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Our Process
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
-              How We'll Optimize Your {location.name} Business
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
+              Industries We Serve in {location.name}
             </h2>
             <p className="text-lg text-seo-gray-dark">
-              Our proven 5-step methodology delivers consistent results for businesses in {location.name}
+              We provide specialized SEO solutions for various industries in {location.name}
             </p>
           </AnimatedSection>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              {/* Vertical Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-seo-blue/20"></div>
-              
-              {/* Timeline Items */}
-              <div className="space-y-12">
-                <AnimatedSection className="relative pl-20" animation="fade-in-left">
-                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-seo-blue/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-seo-blue">1</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
-                    In-Depth {location.name} Market Analysis
-                  </h3>
-                  <p className="text-seo-gray-dark">
-                    We research your local competition, identify market gaps, and analyze {location.name}-specific keywords to understand the local search landscape.
-                  </p>
-                </AnimatedSection>
-                
-                <AnimatedSection className="relative pl-20" animation="fade-in-left" delay={100}>
-                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-seo-blue/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-seo-blue">2</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
-                    Technical SEO Optimization
-                  </h3>
-                  <p className="text-seo-gray-dark">
-                    We fix technical issues that could be holding your site back, ensuring it's fast, mobile-friendly, and structured for maximum visibility in {location.name} searches.
-                  </p>
-                </AnimatedSection>
-                
-                <AnimatedSection className="relative pl-20" animation="fade-in-left" delay={200}>
-                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-seo-blue/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-seo-blue">3</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
-                    Local Content Development
-                  </h3>
-                  <p className="text-seo-gray-dark">
-                    We create {location.name}-focused content that resonates with local customers and signals to Google that you're a relevant local business.
-                  </p>
-                </AnimatedSection>
-                
-                <AnimatedSection className="relative pl-20" animation="fade-in-left" delay={300}>
-                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-seo-blue/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-seo-blue">4</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
-                    Local Citation Building
-                  </h3>
-                  <p className="text-seo-gray-dark">
-                    We ensure your business information is consistent across the web and build {location.name}-specific citations to boost your local authority.
-                  </p>
-                </AnimatedSection>
-                
-                <AnimatedSection className="relative pl-20" animation="fade-in-left" delay={400}>
-                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-seo-blue/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-seo-blue">5</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
-                    Ongoing Optimization & Reporting
-                  </h3>
-                  <p className="text-seo-gray-dark">
-                    We continuously monitor your performance in {location.name} searches, making data-driven adjustments and providing transparent reports on your progress.
-                  </p>
-                </AnimatedSection>
-              </div>
-            </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {relevantIndustries.map((industry, index) => (
+              <AnimatedSection
+                key={industry.id}
+                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-8"
+                animation="fade-in"
+                delay={index * 100}
+              >
+                <div className="bg-seo-blue/10 rounded-full w-14 h-14 flex items-center justify-center mb-6">
+                  <industry.icon className="h-7 w-7 text-seo-blue" />
+                </div>
+                <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
+                  {industry.title} in {location.name}
+                </h3>
+                <p className="text-seo-gray-dark mb-6">
+                  Specialized SEO strategies for {industry.title.toLowerCase()} businesses in {location.name}.
+                </p>
+                <Link 
+                  to={`/industry/${industry.slug}`} 
+                  className="inline-flex items-center text-seo-blue font-medium group"
+                >
+                  <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
+                    Learn more
+                  </span>
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link 
+              to="/industries" 
+              className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
+            >
+              <span>View All Industries</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
       
-      <Testimonials location={location.name} />
+      {/* Blog Posts Section */}
+      {relatedBlogs.length > 0 && (
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+              <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+                Insights
+              </span>
+              <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
+                SEO Resources for {location.name}
+              </h2>
+              <p className="text-lg text-seo-gray-dark">
+                Discover our latest insights and strategies for {location.name} businesses
+              </p>
+            </AnimatedSection>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedBlogs.map((post, index) => (
+                <BlogPreview key={post.id} post={post} delay={index * 100} />
+              ))}
+            </div>
+            
+            <div className="text-center mt-12">
+              <Link 
+                to="/blogs" 
+                className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
+              >
+                <span>View All Articles</span>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
       
-      <ContactForm location={location.name} />
+      {/* Case Studies Section */}
+      {relatedCaseStudies.length > 0 && (
+        <section className="py-20 bg-seo-gray-light">
+          <div className="container mx-auto px-4">
+            <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+              <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+                Success Stories
+              </span>
+              <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
+                {location.name} Success Stories
+              </h2>
+              <p className="text-lg text-seo-gray-dark">
+                See how we've helped {location.name} businesses achieve results
+              </p>
+            </AnimatedSection>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {relatedCaseStudies.map((study, index) => (
+                <CaseStudyPreview key={study.id} caseStudy={study} delay={index * 100} />
+              ))}
+            </div>
+            
+            <div className="text-center mt-12">
+              <Link 
+                to="/case-studies" 
+                className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
+              >
+                <span>View All Case Studies</span>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
       
+      <ContactForm />
       <Footer />
     </div>
   );

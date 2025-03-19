@@ -1,12 +1,20 @@
 
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
-import { services } from '@/lib/data';
+import ServicesComponent from '@/components/Services';
+import BlogPreview from '@/components/BlogPreview';
+import CaseStudyPreview from '@/components/CaseStudyPreview';
+import { services, blogPosts, caseStudies } from '@/lib/data';
 
 const Services = () => {
+  // Find related blog posts and case studies about SEO services
+  const relatedBlogs = blogPosts.slice(0, 3);
+  const relatedCaseStudies = caseStudies.slice(0, 2);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -59,12 +67,12 @@ const Services = () => {
                     </li>
                   ))}
                 </ul>
-                <a href="#contact" className="inline-flex items-center text-seo-blue font-medium group">
+                <Link to={`/service/${service.slug}`} className="inline-flex items-center text-seo-blue font-medium group">
                   <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
                     Learn more
                   </span>
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
+                </Link>
               </AnimatedSection>
             ))}
           </div>
@@ -122,6 +130,72 @@ const Services = () => {
         </div>
       </section>
       
+      {/* Case Studies Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Success Stories
+            </span>
+            <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
+              See Our Services in Action
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Real results for businesses like yours
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {relatedCaseStudies.map((study, index) => (
+              <CaseStudyPreview key={study.id} caseStudy={study} delay={index * 100} />
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link 
+              to="/case-studies" 
+              className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
+            >
+              <span>View All Case Studies</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+      
+      {/* Blog Posts Section */}
+      <section className="py-20 bg-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Latest Insights
+            </span>
+            <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
+              SEO Knowledge & Strategies
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Stay up-to-date with our latest articles and insights
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {relatedBlogs.map((post, index) => (
+              <BlogPreview key={post.id} post={post} delay={index * 100} />
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link 
+              to="/blogs" 
+              className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
+            >
+              <span>View All Articles</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+      
       {/* CTA Section */}
       <section className="py-20 bg-seo-dark text-white">
         <div className="container mx-auto px-4">
@@ -135,12 +209,12 @@ const Services = () => {
             <p className="text-xl text-white/80 mb-8">
               Contact us today for a free SEO audit and consultation
             </p>
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="inline-block bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-8 rounded-md transition-colors button-hover-effect"
             >
               Contact Us
-            </a>
+            </Link>
           </AnimatedSection>
         </div>
       </section>
