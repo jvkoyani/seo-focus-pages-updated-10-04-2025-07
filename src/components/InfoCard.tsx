@@ -10,7 +10,7 @@ interface InfoCardProps {
   items?: string[];
   icon?: React.ReactNode;
   className?: string;
-  animation?: 'fade-in' | 'fade-in-left' | 'fade-in-right' | 'slide-up';
+  animation?: 'fade-in' | 'fade-in-left' | 'fade-in-right' | 'slide-up' | 'zoom-in' | 'bounce-in';
   delay?: number;
   iconBackground?: string;
   iconColor?: string;
@@ -46,8 +46,9 @@ const InfoCard = ({
       delay={delay}
     >
       <div className="p-6 relative">
-        {/* Decorator element */}
-        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-seo-blue/5 to-seo-blue/10 rounded-bl-full -z-0"></div>
+        {/* Enhanced decorator element */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-seo-blue/5 to-seo-blue/20 rounded-bl-full -z-0"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-seo-blue/5 to-transparent rounded-tr-full -z-0"></div>
         
         {icon && (
           <div className={cn("rounded-full w-16 h-16 flex items-center justify-center mb-4 relative z-10", iconBackground)}>
