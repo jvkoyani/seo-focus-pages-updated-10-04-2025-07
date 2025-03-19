@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, FileText, Briefcase } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { locations, services, industries } from '@/lib/data';
 
@@ -10,6 +10,7 @@ const Navbar = () => {
   const [isLocationsOpen, setIsLocationsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isIndustriesOpen, setIsIndustriesOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -17,6 +18,7 @@ const Navbar = () => {
   const toggleLocations = () => setIsLocationsOpen(!isLocationsOpen);
   const toggleServices = () => setIsServicesOpen(!isServicesOpen);
   const toggleIndustries = () => setIsIndustriesOpen(!isIndustriesOpen);
+  const toggleResources = () => setIsResourcesOpen(!isResourcesOpen);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +34,7 @@ const Navbar = () => {
     setIsLocationsOpen(false);
     setIsServicesOpen(false);
     setIsIndustriesOpen(false);
+    setIsResourcesOpen(false);
   }, [location.pathname]);
 
   return (
@@ -80,7 +83,7 @@ const Navbar = () => {
                   {services.map((service) => (
                     <Link
                       key={service.id}
-                      to={`/service/${service.id}`}
+                      to={`/service/${service.slug}`}
                       className="block px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
                     >
                       {service.title}
@@ -152,6 +155,39 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
+            <div className="relative">
+              <button
+                onClick={toggleResources}
+                onMouseEnter={() => setIsResourcesOpen(true)}
+                onMouseLeave={() => setIsResourcesOpen(false)}
+                className="flex items-center text-seo-dark hover:text-seo-blue font-medium transition-colors focus:outline-none"
+              >
+                Resources
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isResourcesOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <div 
+                className={`absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-200 ease-in-out overflow-hidden z-50 ${isResourcesOpen ? 'opacity-100 visible max-h-96' : 'opacity-0 invisible max-h-0'}`}
+                onMouseEnter={() => setIsResourcesOpen(true)}
+                onMouseLeave={() => setIsResourcesOpen(false)}
+              >
+                <div className="py-2 grid grid-cols-1 gap-1">
+                  <Link
+                    to="/blogs"
+                    className="flex items-center px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                  >
+                    <FileText className="h-4 w-4 mr-2" />
+                    Blog Articles
+                  </Link>
+                  <Link
+                    to="/case-studies"
+                    className="flex items-center px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                  >
+                    <Briefcase className="h-4 w-4 mr-2" />
+                    Case Studies
+                  </Link>
+                </div>
+              </div>
+            </div>
             <Link to="/about" className="text-seo-dark hover:text-seo-blue font-medium transition-colors">
               About
             </Link>
@@ -208,7 +244,7 @@ const Navbar = () => {
                 {services.map((service) => (
                   <Link
                     key={service.id}
-                    to={`/service/${service.id}`}
+                    to={`/service/${service.slug}`}
                     className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
                   >
                     {service.title}
@@ -260,6 +296,31 @@ const Navbar = () => {
                     {loc.name}
                   </Link>
                 ))}
+              </div>
+            </div>
+            <div>
+              <button
+                onClick={toggleResources}
+                className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors focus:outline-none flex items-center"
+              >
+                Resources
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isResourcesOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <div className={`mt-2 ml-4 transition-all duration-200 space-y-2 ${isResourcesOpen ? 'block' : 'hidden'}`}>
+                <Link
+                  to="/blogs"
+                  className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  Blog Articles
+                </Link>
+                <Link
+                  to="/case-studies"
+                  className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                >
+                  <Briefcase className="h-4 w-4 mr-2" />
+                  Case Studies
+                </Link>
               </div>
             </div>
             <Link
