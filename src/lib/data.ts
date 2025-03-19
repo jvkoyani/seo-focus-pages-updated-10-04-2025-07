@@ -1,4 +1,3 @@
-
 import { 
   MapPin, 
   Settings, 
@@ -28,9 +27,11 @@ export interface LocationData {
 export interface ServiceData {
   id: string;
   title: string;
+  slug: string;
   description: string;
   icon: string;
   features: string[];
+  content?: string;
 }
 
 export interface TestimonialData {
@@ -50,6 +51,32 @@ export interface IndustryData {
   icon: React.ElementType;
   features: string[];
   benefits: string[];
+}
+
+export interface BlogPostData {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  image: string;
+  date: string;
+  author: string;
+  category: string;
+  tags: string[];
+}
+
+export interface CaseStudyData {
+  id: string;
+  title: string;
+  slug: string;
+  client: string;
+  industry: string;
+  challenge: string;
+  solution: string;
+  results: string[];
+  testimonial?: string;
+  image: string;
 }
 
 export const locations: LocationData[] = [
@@ -113,6 +140,7 @@ export const services: ServiceData[] = [
   {
     id: '1',
     title: 'Local SEO',
+    slug: 'local-seo',
     description: 'Dominate local search results and attract nearby customers with targeted local SEO strategies.',
     icon: 'map-pin',
     features: [
@@ -121,11 +149,13 @@ export const services: ServiceData[] = [
       'Location-specific keyword targeting',
       'Local link building strategies',
       'Review management system'
-    ]
+    ],
+    content: `<p>Your Google Business Profile is one of the most powerful tools for local SEO. It helps you establish your brand, drive traffic, and improve your search engine rankings.</p>`
   },
   {
     id: '2',
     title: 'Technical SEO',
+    slug: 'technical-seo',
     description: 'Improve your website\'s foundation with comprehensive technical SEO audits and optimizations.',
     icon: 'settings',
     features: [
@@ -134,11 +164,13 @@ export const services: ServiceData[] = [
       'Schema markup implementation',
       'Crawlability & indexation fixes',
       'SSL & security enhancements'
-    ]
+    ],
+    content: `<p>While content and backlinks often take the spotlight in SEO discussions, technical SEO forms the foundation. It includes elements like site speed, mobile optimization, and schema markup.</p>`
   },
   {
     id: '3',
     title: 'Content Strategy',
+    slug: 'content-strategy',
     description: 'Create content that ranks and engages your target audience to drive qualified traffic.',
     icon: 'file-text',
     features: [
@@ -147,11 +179,13 @@ export const services: ServiceData[] = [
       'Blog strategy development',
       'Content optimization',
       'Topic cluster creation'
-    ]
+    ],
+    content: `<p>E-commerce websites face unique content challenges. While product pages are your conversion workhorses, content is equally important. It includes blog posts, product descriptions, and other types of content that help your website rank higher in search results.</p>`
   },
   {
     id: '4',
     title: 'Link Building',
+    slug: 'link-building',
     description: 'Build high-quality backlinks that improve authority and boost search rankings.',
     icon: 'link',
     features: [
@@ -160,11 +194,13 @@ export const services: ServiceData[] = [
       'Competitor link analysis',
       'Guest posting campaigns',
       'Digital PR strategies'
-    ]
+    ],
+    content: `<p>Backlinks are one of the most important factors in SEO. They help establish your website's authority and improve your search engine rankings. We can help you acquire high-quality backlinks through various methods like guest posting, content marketing, and digital PR.</p>`
   },
   {
     id: '5',
     title: 'E-commerce SEO',
+    slug: 'ecommerce-seo',
     description: 'Specialized optimization for online stores to increase product visibility and sales.',
     icon: 'shopping-cart',
     features: [
@@ -173,11 +209,13 @@ export const services: ServiceData[] = [
       'Review schema implementation',
       'Conversion rate optimization',
       'Shopping feed management'
-    ]
+    ],
+    content: `<p>E-commerce websites face unique content challenges. While product pages are your conversion workhorses, content is equally important. It includes blog posts, product descriptions, and other types of content that help your website rank higher in search results.</p>`
   },
   {
     id: '6',
     title: 'Analytics & Reporting',
+    slug: 'analytics-reporting',
     description: 'Transparent reporting with actionable insights to track and improve your SEO performance.',
     icon: 'bar-chart',
     features: [
@@ -186,7 +224,8 @@ export const services: ServiceData[] = [
       'Conversion tracking setup',
       'Traffic analysis',
       'ROI measurement'
-    ]
+    ],
+    content: `<p>Transparent reporting with actionable insights to track and improve your SEO performance. It includes monthly performance reports, conversion tracking setup, traffic analysis, and ROI measurement.</p>`
   }
 ];
 
@@ -367,3 +406,92 @@ export const industries: IndustryData[] = [
   }
 ];
 
+export const blogPosts: BlogPostData[] = [
+  {
+    id: '1',
+    title: 'How to Optimize Your Google Business Profile for Local SEO',
+    slug: 'optimize-google-business-profile-local-seo',
+    excerpt: 'Learn the essential strategies to optimize your Google Business Profile and improve your local search visibility.',
+    content: `<p>Your Google Business Profile is one of the most powerful tools for local SEO. It helps you establish your brand, drive traffic, and improve your search engine rankings.</p>`,
+    image: 'https://images.unsplash.com/photo-1518816058185-0394eebd6df3?q=80&w=1000&auto=format&fit=crop',
+    date: '2023-09-15',
+    author: 'Sarah Johnson',
+    category: 'Local SEO',
+    tags: ['Local SEO', 'Google Business Profile', 'GMB', 'Local Search']
+  },
+  {
+    id: '2',
+    title: 'Technical SEO Checklist: 10 Critical Elements for Better Rankings',
+    slug: 'technical-seo-checklist',
+    excerpt: 'Discover the essential technical SEO elements that can significantly improve your website's search engine rankings.',
+    content: `<p>While content and backlinks often take the spotlight in SEO discussions, technical SEO forms the foundation. It includes elements like site speed, mobile optimization, and schema markup.</p>`,
+    image: 'https://images.unsplash.com/photo-1542744095-291d1f67b221?q=80&w=1000&auto=format&fit=crop',
+    date: '2023-10-22',
+    author: 'Michael Chen',
+    category: 'Technical SEO',
+    tags: ['Technical SEO', 'Website Speed', 'Core Web Vitals', 'Mobile Optimization']
+  },
+  {
+    id: '3',
+    title: 'Content Strategy for E-commerce: Driving Traffic and Sales Through SEO',
+    slug: 'content-strategy-ecommerce-seo',
+    excerpt: 'Learn how to create an effective content strategy for your e-commerce site that drives targeted traffic and increases conversions.',
+    content: `<p>E-commerce websites face unique content challenges. While product pages are your conversion workhorses, content is equally important. It includes blog posts, product descriptions, and other types of content that help your website rank higher in search results.</p>`,
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop',
+    date: '2023-11-05',
+    author: 'Emma Wilson',
+    category: 'Content Strategy',
+    tags: ['E-commerce SEO', 'Content Strategy', 'Product Descriptions', 'Conversion Optimization']
+  }
+];
+
+export const caseStudies: CaseStudyData[] = [
+  {
+    id: '1',
+    title: 'Local SEO Strategy Triples Leads for Sydney Dental Practice',
+    slug: 'local-seo-sydney-dental-practice',
+    client: 'Smile Bright Dental',
+    industry: 'Dental',
+    challenge: 'Smile Bright Dental, a multi-location dental practice in Sydney, was struggling to attract new patients despite offering exceptional service. Their website had minimal visibility in local search results.',
+    solution: 'We implemented a comprehensive local SEO strategy that included Google Business Profile optimization, local citation building, and location-specific content.',
+    results: [
+      '312% increase in organic traffic from local searches within 6 months',
+      '287% increase in appointment requests through the website',
+      'First page rankings for 45+ high-value local keywords'
+    ],
+    testimonial: 'The SEO campaign exceeded our expectations in every way. We\'re now booked out weeks in advance.',
+    image: 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=1000&auto=format&fit=crop'
+  },
+  {
+    id: '2',
+    title: 'E-commerce SEO Drives 215% Revenue Growth for Australian Fashion Retailer',
+    slug: 'ecommerce-seo-australian-fashion-retailer',
+    client: 'Urban Style Co.',
+    industry: 'E-commerce / Fashion',
+    challenge: 'Urban Style Co., an online fashion retailer based in Melbourne, was struggling with declining organic traffic and sales despite having high-quality products.',
+    solution: 'We developed a comprehensive e-commerce SEO strategy including technical fixes, enhanced product descriptions, and content marketing.',
+    results: [
+      '215% increase in organic search revenue within 12 months',
+      '187% increase in organic traffic from non-branded searches',
+      'First page rankings for 200+ high-value commercial keywords'
+    ],
+    testimonial: 'Working with the SEO team has transformed our business. We\'ve gone from struggling to stay profitable to experiencing month-over-month growth.',
+    image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=1000&auto=format&fit=crop'
+  },
+  {
+    id: '3',
+    title: 'Content Strategy Establishes Legal Firm as Industry Authority',
+    slug: 'content-strategy-legal-firm-authority',
+    client: 'Brisbane Legal Partners',
+    industry: 'Legal',
+    challenge: 'Brisbane Legal Partners, a mid-sized law firm specializing in corporate and family law, wanted to establish themselves as a thought leader in their practice areas.',
+    solution: 'We developed a comprehensive content strategy focused on establishing topical authority through in-depth practice area guides and regular blog content.',
+    results: [
+      '427% increase in organic traffic within 12 months',
+      '185% increase in qualified lead generation through the website',
+      'First page rankings for 170+ high-value legal keywords'
+    ],
+    testimonial: 'The content strategy has completely transformed our digital presence. We\'re now seen as the go-to resource for our practice areas.',
+    image: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1000&auto=format&fit=crop'
+  }
+];

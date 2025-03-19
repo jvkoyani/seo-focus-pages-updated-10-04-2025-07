@@ -23,9 +23,10 @@ const iconMap: Record<string, React.ReactNode> = {
 
 interface ServicesProps {
   location?: string;
+  locationSlug?: string;
 }
 
-const Services = ({ location }: ServicesProps) => {
+const Services = ({ location, locationSlug }: ServicesProps) => {
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4">
@@ -76,11 +77,13 @@ const Services = ({ location }: ServicesProps) => {
                 ))}
               </ul>
               <Link 
-                to={`/service/${service.id}`} 
+                to={locationSlug 
+                  ? `/location/${locationSlug}/${service.slug}` 
+                  : `/service/${service.slug}`} 
                 className="inline-flex items-center text-seo-blue font-medium group mt-2"
               >
                 <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
-                  Learn more
+                  {locationSlug ? `${service.title} in ${location}` : 'Learn more'}
                 </span>
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
