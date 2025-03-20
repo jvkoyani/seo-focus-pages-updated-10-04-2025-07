@@ -1,5 +1,4 @@
-
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate, useEffect } from 'react-router-dom';
 import { ArrowRight, Check, CheckCircle, Star, Building, Award, ShoppingBag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -13,6 +12,19 @@ import IndustrySeoServices from '@/components/IndustrySeoServices';
 const IndustryPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const industry = industries.find(i => i.slug === slug);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
+  const handleIndustryLinkClick = (industrySlug: string) => {
+    navigate(`/industry/${industrySlug}`);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   if (!industry) {
     return (
@@ -282,11 +294,53 @@ const IndustryPage = () => {
       </section>
       
       {/* Related Industries Section */}
-      <IndustrySeoServices 
-        title="Explore Other Industry Solutions" 
-        description="Discover our specialized SEO services for other industries"
-        showAll={false}
-      />
+      <section className="py-20 bg-gradient-to-br from-seo-blue/5 to-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Industry Solutions
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
+              Explore Other Industry Solutions
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Discover our specialized SEO services for other industries
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {industries
+              .filter(i => i.id !== industry.id)
+              .slice(0, 3)
+              .map((item, index) => (
+                <AnimatedSection
+                  key={index}
+                  className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+                  animation="fade-in"
+                  delay={index * 100}
+                  onClick={() => handleIndustryLinkClick(item.slug)}
+                >
+                  <div className="p-6">
+                    <h3 className="font-bold text-xl mb-2 text-seo-dark">{item.title}</h3>
+                    <p className="text-seo-gray-dark mb-4 line-clamp-2">{item.description}</p>
+                    <div className="flex items-center text-seo-blue font-medium">
+                      <span>Learn more</span>
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </div>
+                  </div>
+                </AnimatedSection>
+              ))}
+          </div>
+          
+          <div className="text-center mt-10">
+            <Button variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5" asChild>
+              <Link to="/industries">
+                View All Industries
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
       
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-seo-blue to-purple-600 text-white">

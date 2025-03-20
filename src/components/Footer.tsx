@@ -6,6 +6,14 @@ import { locations, services, industries } from '@/lib/data';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
+  // Function to handle scroll to top when clicking industry links
+  const handleLinkClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  
   return (
     <footer className="bg-seo-dark text-white">
       <div className="container mx-auto px-4">
@@ -72,7 +80,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {services.map(service => (
                 <li key={service.id}>
-                  <Link to={`/service/${service.id}`} className="text-white/70 hover:text-seo-blue transition-colors">
+                  <Link to={`/service/${service.slug}`} className="text-white/70 hover:text-seo-blue transition-colors">
                     {service.title}
                   </Link>
                 </li>
@@ -88,6 +96,7 @@ const Footer = () => {
                   <Link 
                     to={`/industry/${industry.slug}`} 
                     className="text-white/70 hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     {industry.title}
                   </Link>
@@ -97,6 +106,7 @@ const Footer = () => {
                 <Link 
                   to="/industries" 
                   className="text-white/70 hover:text-seo-blue transition-colors font-medium"
+                  onClick={handleLinkClick}
                 >
                   View All Industries
                 </Link>
@@ -123,7 +133,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/industries" className="text-white/70 hover:text-seo-blue transition-colors">
+                <Link to="/industries" className="text-white/70 hover:text-seo-blue transition-colors" onClick={handleLinkClick}>
                   Industries We Serve
                 </Link>
               </li>
@@ -155,6 +165,7 @@ const Footer = () => {
                 key={location.id}
                 to={`/location/${location.slug}`} 
                 className="text-white/70 hover:text-seo-blue transition-colors text-sm"
+                onClick={handleLinkClick}
               >
                 {location.name}
               </Link>
