@@ -1,4 +1,6 @@
-import { useParams, Link, useNavigate, useEffect } from 'react-router-dom';
+
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react'; // Correct import for useEffect
 import { ArrowRight, Check, CheckCircle, Star, Building, Award, ShoppingBag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';

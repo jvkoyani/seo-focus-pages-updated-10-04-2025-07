@@ -9,6 +9,7 @@ interface AnimatedSectionProps {
   animation?: 'fade-in' | 'fade-in-left' | 'fade-in-right' | 'slide-up' | 'zoom-in' | 'bounce-in';
   threshold?: number;
   duration?: number;
+  onClick?: () => void; // Added onClick handler prop
 }
 
 const AnimatedSection = ({
@@ -18,6 +19,7 @@ const AnimatedSection = ({
   animation = 'fade-in',
   threshold = 0.2,
   duration = 500,
+  onClick, // Added to props
 }: AnimatedSectionProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -86,6 +88,7 @@ const AnimatedSection = ({
         animationFillMode: 'forwards',
         animationDuration: `${duration}ms`
       }}
+      onClick={onClick} // Added onClick handler
     >
       {children}
     </div>
