@@ -20,6 +20,13 @@ import CaseStudy from "./pages/CaseStudy";
 import LocationService from "./pages/LocationService";
 import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
+import FreeConsultation from "./pages/FreeConsultation";
+
+// Methodology pages
+import ResearchAnalysis from "./pages/methodology/ResearchAnalysis";
+import StrategicPlanning from "./pages/methodology/StrategicPlanning";
+import Implementation from "./pages/methodology/Implementation";
+import MonitoringOptimization from "./pages/methodology/MonitoringOptimization";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +52,13 @@ const App = () => (
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-study/:slug" element={<CaseStudy />} />
           <Route path="/seo-audit" element={<SeoAudit />} />
+          <Route path="/free-consultation" element={<FreeConsultation />} />
+          
+          {/* Methodology pages */}
+          <Route path="/methodology/research-analysis" element={<ResearchAnalysis />} />
+          <Route path="/methodology/strategic-planning" element={<StrategicPlanning />} />
+          <Route path="/methodology/implementation" element={<Implementation />} />
+          <Route path="/methodology/monitoring-optimization" element={<MonitoringOptimization />} />
           
           {/* Additional SEO-friendly URL patterns */}
           <Route path="/local-seo-:locationSlug" element={<LocationService />} />

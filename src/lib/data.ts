@@ -1,4 +1,3 @@
-
 import { 
   MapPin, 
   Settings, 
@@ -78,6 +77,8 @@ export interface CaseStudyData {
   results: string[];
   testimonial?: string;
   image: string;
+  serviceType?: string;
+  location?: string;
 }
 
 export const locations: LocationData[] = [
@@ -413,8 +414,22 @@ export const blogPosts: BlogPostData[] = [
     title: 'How to Optimize Your Google Business Profile for Local SEO',
     slug: 'optimize-google-business-profile-local-seo',
     excerpt: 'Learn the essential strategies to optimize your Google Business Profile and improve your local search visibility.',
-    content: `<p>Your Google Business Profile is one of the most powerful tools for local SEO. It helps you establish your brand, drive traffic, and improve your search engine rankings.</p>`,
-    image: 'https://images.unsplash.com/photo-1518816058185-0394eebd6df3?q=80&w=1000&auto=format&fit=crop',
+    content: `<p>Your Google Business Profile is one of the most powerful tools for local SEO. It helps you establish your brand, drive traffic, and improve your search engine rankings.</p>
+    <p>When optimizing your Google Business Profile, focus on these key areas:</p>
+    <ol>
+      <li><strong>Complete All Information</strong>: Fill out every possible field with accurate, detailed information.</li>
+      <li><strong>Choose the Right Categories</strong>: Select the most relevant primary and secondary categories for your business.</li>
+      <li><strong>Add High-Quality Photos</strong>: Upload professional images of your business, products, team, and interior/exterior.</li>
+      <li><strong>Maintain Consistent NAP</strong>: Ensure your Name, Address, and Phone number match across all online platforms.</li>
+      <li><strong>Collect and Respond to Reviews</strong>: Actively encourage reviews and respond to all of them promptly and professionally.</li>
+      <li><strong>Post Regular Updates</strong>: Share news, offers, events, and other updates to keep your profile active.</li>
+      <li><strong>Use Google Posts</strong>: Create Google Posts to highlight promotions, events, and new content.</li>
+      <li><strong>Answer Q&A</strong>: Monitor and respond to questions in the Q&A section.</li>
+      <li><strong>Add Products and Services</strong>: List your key products and services with descriptions and pricing if applicable.</li>
+      <li><strong>Use Attributes</strong>: Add relevant business attributes to provide more information about your offerings.</li>
+    </ol>
+    <p>By optimizing these elements of your Google Business Profile, you'll improve your visibility in local search results and attract more customers to your business.</p>`,
+    image: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?q=80&w=1000&auto=format&fit=crop',
     date: '2023-09-15',
     author: 'Sarah Johnson',
     category: 'Local SEO',
@@ -461,7 +476,9 @@ export const caseStudies: CaseStudyData[] = [
       'First page rankings for 45+ high-value local keywords'
     ],
     testimonial: 'The SEO campaign exceeded our expectations in every way. We\'re now booked out weeks in advance.',
-    image: 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'local-seo',
+    location: 'sydney'
   },
   {
     id: '2',
@@ -477,7 +494,9 @@ export const caseStudies: CaseStudyData[] = [
       'First page rankings for 200+ high-value commercial keywords'
     ],
     testimonial: 'Working with the SEO team has transformed our business. We\'ve gone from struggling to stay profitable to experiencing month-over-month growth.',
-    image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'ecommerce-seo',
+    location: 'melbourne'
   },
   {
     id: '3',
@@ -493,6 +512,65 @@ export const caseStudies: CaseStudyData[] = [
       'First page rankings for 170+ high-value legal keywords'
     ],
     testimonial: 'The content strategy has completely transformed our digital presence. We\'re now seen as the go-to resource for our practice areas.',
-    image: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1000&auto=format&fit=crop'
-  }
+    image: 'https://images.unsplash.com/photo-1589391886645-d51941baf7fb?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'content-strategy',
+    location: 'brisbane'
+  },
+  {
+    id: '4',
+    title: 'Technical SEO Revamp Boosts Perth Engineering Firm\'s Rankings',
+    slug: 'technical-seo-perth-engineering',
+    client: 'Precision Engineering Solutions',
+    industry: 'Engineering',
+    challenge: 'Precision Engineering Solutions had a well-established Perth-based business but their website was plagued with technical issues preventing proper indexing and ranking.',
+    solution: 'We performed a comprehensive technical SEO audit and implemented fixes for site structure, mobile usability, page speed, and indexation issues.',
+    results: [
+      '156% increase in organic traffic within 4 months after technical fixes',
+      '78% improvement in page load speed',
+      '94% increase in mobile organic traffic',
+      'Doubled the number of indexed pages in Google'
+    ],
+    testimonial: 'The technical improvements made to our website have completely transformed our online presence. We\'re now ranking for keywords we never appeared for previously.',
+    image: 'https://images.unsplash.com/photo-1581094794329-c8112a37ff4e?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'technical-seo',
+    location: 'perth'
+  },
+  {
+    id: '5',
+    title: 'Link Building Campaign Elevates Adelaide Financial Advisor',
+    slug: 'link-building-adelaide-financial',
+    client: 'Secure Wealth Advisors',
+    industry: 'Financial Services',
+    challenge: 'Secure Wealth Advisors in Adelaide had quality content but lacked the domain authority to rank competitively for valuable financial planning keywords.',
+    solution: 'We implemented a strategic link building campaign focusing on quality guest posts, digital PR, and industry partnerships to boost their domain authority.',
+    results: [
+      '73% increase in domain authority over 9 months',
+      '94 high-quality backlinks acquired from relevant financial websites',
+      '189% increase in organic search visibility',
+      'First page rankings for 35+ competitive financial planning keywords'
+    ],
+    testimonial: 'The link building strategy has significantly elevated our online authority. We\'re now ranking above competitors who have been in business much longer than us.',
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'link-building',
+    location: 'adelaide'
+  },
+  {
+    id: '6',
+    title: 'Analytics Implementation Optimizes Gold Coast Tourism Website',
+    slug: 'analytics-gold-coast-tourism',
+    client: 'Gold Coast Adventures',
+    industry: 'Tourism',
+    challenge: 'Gold Coast Adventures was investing in SEO and content marketing but had no way to accurately track performance or optimize based on user behavior.',
+    solution: 'We implemented enhanced analytics tracking, set up conversion goals, created custom dashboards, and established regular reporting processes.',
+    results: [
+      'Identified underperforming content leading to a 45% improvement after optimization',
+      'Discovered mobile conversion issues resulting in 67% higher booking rates after fixes',
+      '38% reduction in cost per acquisition through data-driven optimization',
+      'Established ROI tracking showing 312% return on SEO investment'
+    ],
+    testimonial: 'Having proper analytics in place has been eye-opening. We now make decisions based on data rather than gut feeling, and the results speak for themselves.',
+    image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'analytics-reporting',
+    location: 'gold-coast'
+  },
 ];

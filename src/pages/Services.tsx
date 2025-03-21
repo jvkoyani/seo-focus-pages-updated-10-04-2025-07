@@ -8,6 +8,8 @@ import ContactForm from '@/components/ContactForm';
 import ServicesComponent from '@/components/Services';
 import BlogPreview from '@/components/BlogPreview';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
+import Hero from '@/components/Hero';
+import ResourcesSection from '@/components/ResourcesSection';
 import { services, blogPosts, caseStudies } from '@/lib/data';
 
 const Services = () => {
@@ -20,54 +22,71 @@ const Services = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-white to-seo-gray-light">
+      <Hero 
+        title="Comprehensive SEO Solutions for Your Business"
+        subtitle="Data-driven strategies designed to increase visibility, drive qualified traffic, and boost conversions"
+        backgroundImage="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop"
+      />
+      
+      {/* Main Services Grid */}
+      <ServicesComponent />
+      
+      {/* Our Methodology Section */}
+      <section className="py-20 bg-seo-gray-light">
         <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto" animation="fade-in">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
             <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Our Services
+              Our Methodology
             </span>
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6">
-              Comprehensive SEO Solutions for Your Business
-            </h1>
-            <p className="text-xl text-seo-gray-dark mb-8">
-              We provide end-to-end SEO services designed to improve your online visibility,
-              drive more qualified traffic, and increase conversions.
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
+              A Proven Process That Delivers Results
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Our systematic approach ensures consistent, measurable SEO results for your business
             </p>
           </AnimatedSection>
-        </div>
-      </section>
-      
-      {/* Services Grid */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <AnimatedSection
-                key={service.id}
-                className="bg-white rounded-xl shadow-md p-8 border border-gray-100 hover:shadow-lg transition-shadow"
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { 
+                title: "Research & Analysis", 
+                desc: "We analyze your website, competitors, and target market to identify opportunities.", 
+                icon: "🔍",
+                link: "/methodology/research-analysis" 
+              },
+              { 
+                title: "Strategic Planning", 
+                desc: "We create a customized SEO strategy tailored to your business goals.", 
+                icon: "📊",
+                link: "/methodology/strategic-planning" 
+              },
+              { 
+                title: "Implementation", 
+                desc: "We execute the strategy with technical expertise and proven tactics.", 
+                icon: "🛠️",
+                link: "/methodology/implementation" 
+              },
+              { 
+                title: "Monitoring & Optimization", 
+                desc: "We continuously track, report, and refine for maximum impact.", 
+                icon: "📈",
+                link: "/methodology/monitoring-optimization" 
+              }
+            ].map((step, index) => (
+              <AnimatedSection 
+                key={index}
+                className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
                 animation="fade-in"
                 delay={index * 100}
               >
-                <div className="bg-seo-blue/10 rounded-full w-14 h-14 flex items-center justify-center mb-6">
-                  <svg className="h-7 w-7 text-seo-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                </div>
+                <div className="text-4xl mb-4">{step.icon}</div>
                 <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
-                  {service.title}
+                  {step.title}
                 </h3>
-                <p className="text-seo-gray-dark mb-5">
-                  {service.description}
+                <p className="text-seo-gray-dark mb-6 flex-grow">
+                  {step.desc}
                 </p>
-                <ul className="space-y-3 mb-6">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="text-seo-blue mr-2">•</span>
-                      <span className="text-seo-gray-dark">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link to={`/service/${service.slug}`} className="inline-flex items-center text-seo-blue font-medium group">
+                <Link to={step.link} className="inline-flex items-center text-seo-blue font-medium group mt-auto">
                   <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
                     Learn more
                   </span>
@@ -79,50 +98,87 @@ const Services = () => {
         </div>
       </section>
       
-      {/* Process Section */}
-      <section className="py-20 bg-seo-gray-light">
+      {/* Local SEO Services in Australia Section */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
             <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Our Process
+              Local Expertise
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
-              How We Deliver Results
+              Local SEO Services in Australia
             </h2>
             <p className="text-lg text-seo-gray-dark">
-              Our proven 5-step methodology ensures we deliver consistent, measurable SEO results
+              Customized SEO solutions for businesses across major Australian cities
             </p>
           </AnimatedSection>
           
-          <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: "Research & Analysis", desc: "We start by analyzing your website, competitors, and target audience to identify opportunities." },
-              { title: "Strategic Planning", desc: "Based on our research, we create a custom SEO strategy tailored to your business goals." },
-              { title: "On-Page Optimization", desc: "We optimize your website structure, content, and technical elements for better search visibility." },
-              { title: "Off-Page Enhancement", desc: "We build high-quality backlinks and improve your online presence across the web." },
-              { title: "Monitoring & Refinement", desc: "We continuously track performance, report results, and refine our approach for maximum impact." }
-            ].map((step, index) => (
-              <AnimatedSection 
+              {
+                city: "Sydney",
+                desc: "Dominate local search results in Australia's largest city",
+                image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1000&auto=format&fit=crop",
+                link: "/location/sydney"
+              },
+              {
+                city: "Melbourne",
+                desc: "Boost your visibility in Melbourne's competitive market",
+                image: "https://images.unsplash.com/photo-1545044846-351ba102b6d5?q=80&w=1000&auto=format&fit=crop",
+                link: "/location/melbourne"
+              },
+              {
+                city: "Brisbane",
+                desc: "Targeted strategies for Brisbane's growing business landscape",
+                image: "https://images.unsplash.com/photo-1566734904496-9309bb1798b3?q=80&w=1000&auto=format&fit=crop",
+                link: "/location/brisbane"
+              },
+              {
+                city: "Perth",
+                desc: "Custom SEO solutions for Perth's unique market dynamics",
+                image: "https://images.unsplash.com/photo-1573935448851-4b07c29ee181?q=80&w=1000&auto=format&fit=crop",
+                link: "/location/perth"
+              },
+              {
+                city: "Adelaide",
+                desc: "Specialized local SEO tactics for Adelaide businesses",
+                image: "https://images.unsplash.com/photo-1566208541068-ffdb5471e9bf?q=80&w=1000&auto=format&fit=crop",
+                link: "/location/adelaide"
+              },
+              {
+                city: "Gold Coast",
+                desc: "Strategic SEO for Queensland's tourist hotspot",
+                image: "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?q=80&w=1000&auto=format&fit=crop",
+                link: "/location/gold-coast"
+              }
+            ].map((location, index) => (
+              <AnimatedSection
                 key={index}
-                className="flex mb-8 last:mb-0"
-                animation="fade-in-left"
+                className="group relative rounded-xl overflow-hidden shadow-md h-64"
+                animation="fade-in"
                 delay={index * 100}
               >
-                <div className="mr-6 relative">
-                  <div className="bg-seo-blue rounded-full w-10 h-10 flex items-center justify-center text-white font-bold">
-                    {index + 1}
-                  </div>
-                  {index < 4 && (
-                    <div className="absolute top-10 bottom-0 left-1/2 w-0.5 -ml-px h-full bg-seo-blue/20"></div>
-                  )}
-                </div>
-                <div className="bg-white rounded-xl p-6 shadow-sm flex-1">
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-2">
-                    {step.title}
+                <img
+                  src={location.image}
+                  alt={`SEO services in ${location.city}`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-seo-dark/90 to-seo-dark/20 flex flex-col justify-end p-6 transition-opacity duration-300">
+                  <h3 className="text-xl font-display font-bold text-white mb-2">
+                    {location.city}
                   </h3>
-                  <p className="text-seo-gray-dark">
-                    {step.desc}
+                  <p className="text-white/80 mb-4 text-sm">
+                    {location.desc}
                   </p>
+                  <Link
+                    to={location.link}
+                    className="inline-flex items-center text-white font-medium group"
+                  >
+                    <span className="border-b border-white/30 group-hover:border-white transition-colors">
+                      Explore Services
+                    </span>
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </div>
               </AnimatedSection>
             ))}
@@ -131,14 +187,14 @@ const Services = () => {
       </section>
       
       {/* Case Studies Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
             <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
               Success Stories
             </span>
             <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
-              See Our Services in Action
+              Case Studies & Results
             </h2>
             <p className="text-lg text-seo-gray-dark">
               Real results for businesses like yours
@@ -163,58 +219,45 @@ const Services = () => {
         </div>
       </section>
       
-      {/* Blog Posts Section */}
-      <section className="py-20 bg-seo-gray-light">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Latest Insights
-            </span>
-            <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
-              SEO Knowledge & Strategies
-            </h2>
-            <p className="text-lg text-seo-gray-dark">
-              Stay up-to-date with our latest articles and insights
-            </p>
-          </AnimatedSection>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedBlogs.map((post, index) => (
-              <BlogPreview key={post.id} post={post} delay={index * 100} />
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link 
-              to="/blogs" 
-              className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
-            >
-              <span>View All Articles</span>
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Resources & Insights Section */}
+      <ResourcesSection />
       
       {/* CTA Section */}
-      <section className="py-20 bg-seo-dark text-white">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-white/10 text-white mb-4">
-              Get Started
+      <section className="py-24 bg-seo-dark text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#FFFFFF" d="M39.9,-65.7C50.3,-59.6,56.4,-45.7,64.1,-31.9C71.8,-18,81,-4.1,79.9,8.7C78.8,21.5,67.4,33.1,56.4,43.9C45.4,54.6,35,64.5,22.1,70.2C9.2,75.9,-6.1,77.5,-18.6,72.2C-31.1,66.9,-40.8,54.6,-49.9,42.5C-59,30.4,-67.6,18.5,-70.9,4.8C-74.2,-8.9,-72.3,-24.3,-64.5,-36.3C-56.7,-48.3,-43.1,-56.7,-29.9,-61.6C-16.8,-66.5,-4.2,-67.8,8.4,-66.7C21,-65.5,29.4,-71.8,39.9,-65.7Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <AnimatedSection 
+            className="max-w-3xl mx-auto text-center" 
+            animation="fade-in"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-white/10 text-white mb-6">
+              Get Started Today
             </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              Ready to Improve Your Search Rankings?
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
+              Ready to Dominate Search Results?
             </h2>
-            <p className="text-xl text-white/80 mb-8">
-              Contact us today for a free SEO audit and consultation
+            <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+              Partner with us for a customized SEO strategy that drives real business growth. Let's take your online presence to the next level.
             </p>
-            <Link
-              to="/contact"
-              className="inline-block bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-8 rounded-md transition-colors button-hover-effect"
-            >
-              Contact Us
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/free-consultation"
+                className="bg-seo-blue hover:bg-seo-blue-light text-white px-8 py-4 rounded-md font-medium transition-colors"
+              >
+                Get a Free Consultation
+              </Link>
+              <Link
+                to="/seo-audit"
+                className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-md font-medium transition-colors border border-white/20"
+              >
+                Request Free Audit
+              </Link>
+            </div>
           </AnimatedSection>
         </div>
       </section>
