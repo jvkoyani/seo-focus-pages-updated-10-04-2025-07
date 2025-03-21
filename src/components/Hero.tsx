@@ -74,7 +74,7 @@ const Hero = ({
             delay={600}
           >
             <Link
-              to="/contact"
+              to="/seo-audit"
               className="bg-seo-blue hover:bg-seo-blue-light text-white px-8 py-4 rounded-md font-medium text-lg transition-all duration-300 flex items-center justify-center relative overflow-hidden group"
             >
               <span className="relative z-10">Get Free SEO Audit</span>

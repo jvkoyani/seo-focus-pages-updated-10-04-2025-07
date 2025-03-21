@@ -18,6 +18,7 @@ import BlogPost from "./pages/BlogPost";
 import CaseStudies from "./pages/CaseStudies";
 import CaseStudy from "./pages/CaseStudy";
 import LocationService from "./pages/LocationService";
+import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-study/:slug" element={<CaseStudy />} />
+          <Route path="/seo-audit" element={<SeoAudit />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
