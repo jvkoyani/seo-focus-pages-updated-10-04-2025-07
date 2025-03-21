@@ -1,36 +1,54 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   ArrowRight, MapPin, TrendingUp, BarChart, 
   CheckCircle, Award, Users, Target, Star, 
   Zap, Globe, Compass, Building, ShoppingBag, 
-  Phone, Lightbulb, ChevronRight
+  Phone, Lightbulb, ChevronRight, FileText, Share2
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import ResourcesSection from '@/components/ResourcesSection';
-import { locations, services } from '@/lib/data';
+import { locations } from '@/lib/data';
 import InfoCard from '@/components/InfoCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import LocationLinks from '@/components/LocationLinks';
+
+const services = [
+  { title: "Local SEO", slug: "local-seo" },
+  { title: "Technical SEO", slug: "technical-seo" },
+  { title: "E-commerce SEO", slug: "ecommerce-seo" },
+  { title: "Content Marketing", slug: "content-marketing" },
+  { title: "Link Building", slug: "link-building" },
+  { title: "SEO Audits", slug: "seo-audits" },
+  { title: "Digital PR", slug: "digital-pr" },
+  { title: "Analytics & Reporting", slug: "analytics-reporting" }
+];
 
 const LocationService = () => {
   const { locationSlug, serviceSlug } = useParams<{ locationSlug: string; serviceSlug: string }>();
   
-  const location = locations.find(loc => loc.slug === locationSlug);
-  const service = services.find(svc => svc.slug === serviceSlug);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [locationSlug, serviceSlug]);
   
-  if (!location || !service) {
+  const locationData = locations.find(loc => loc.slug === locationSlug);
+  const serviceData = services.find(svc => svc.slug === serviceSlug);
+  
+  if (!locationData || !serviceData) {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">Page Not Found</h1>
-            <p className="mb-6">Sorry, the page you're looking for doesn't exist.</p>
+            <p className="mb-6">Sorry, the location or service you're looking for doesn't exist.</p>
             <Link 
               to="/" 
               className="inline-flex items-center text-seo-blue font-medium"
@@ -44,6 +62,182 @@ const LocationService = () => {
       </div>
     );
   }
+
+  // Create a proper URL-friendly slug for this combination
+  const pageSlug = `${serviceData.slug}-${locationData.slug}`;
+
+  // Service-specific information
+  const serviceInfo = {
+    "local-seo": {
+      title: `Local SEO Services in ${locationData.name}`,
+      description: `Boost your business visibility in ${locationData.name} with our specialized local SEO services designed to attract customers in your area.`,
+      benefits: [
+        "Higher rankings in local search results",
+        "Increased visibility in Google Maps",
+        "More phone calls and direction requests",
+        "Better targeting of local customers",
+        "Improved Google Business Profile performance"
+      ],
+      features: [
+        { 
+          title: "Local Keyword Research", 
+          description: `We identify the most valuable keywords that ${locationData.name} residents are using to find businesses like yours.`,
+          icon: <Target className="w-full h-full" />
+        },
+        { 
+          title: "Google Business Profile Optimization", 
+          description: "We optimize your GBP to improve your visibility in local searches and Google Maps.",
+          icon: <MapPin className="w-full h-full" />
+        },
+        { 
+          title: "Local Citation Building", 
+          description: `We ensure your business information is consistent across all local directories relevant to ${locationData.name}.`,
+          icon: <Building className="w-full h-full" />
+        },
+        { 
+          title: "Local Content Creation", 
+          description: `We develop content specifically targeted to the ${locationData.name} market and community.`,
+          icon: <FileText className="w-full h-full" />
+        }
+      ]
+    },
+    "technical-seo": {
+      title: `Technical SEO Services in ${locationData.name}`,
+      description: `Enhance your website's technical foundation with our specialized technical SEO services for ${locationData.name} businesses.`,
+      benefits: [
+        "Improved website crawlability and indexing",
+        "Faster page load speeds",
+        "Enhanced mobile user experience",
+        "Fixed technical errors and issues",
+        "Better overall search performance"
+      ],
+      features: [
+        { 
+          title: "Technical SEO Audit", 
+          description: "We perform a comprehensive audit to identify all technical issues affecting your site's performance.",
+          icon: <Zap className="w-full h-full" />
+        },
+        { 
+          title: "Site Speed Optimization", 
+          description: "We improve your website's loading speed to enhance user experience and meet Google's Core Web Vitals.",
+          icon: <Globe className="w-full h-full" />
+        },
+        { 
+          title: "Mobile Optimization", 
+          description: "We ensure your website provides an excellent experience on all devices, especially mobile.",
+          icon: <Phone className="w-full h-full" />
+        },
+        { 
+          title: "Schema Markup Implementation", 
+          description: "We implement structured data to help search engines better understand your content.",
+          icon: <FileText className="w-full h-full" />
+        }
+      ]
+    },
+    "ecommerce-seo": {
+      title: `E-commerce SEO Services in ${locationData.name}`,
+      description: `Drive more sales and revenue with our specialized e-commerce SEO strategies for ${locationData.name} online retailers.`,
+      benefits: [
+        "Higher product and category page rankings",
+        "Increased organic traffic to your online store",
+        "Better conversion rates from search visitors",
+        "Improved product visibility in search results",
+        "Enhanced online shopping experience"
+      ],
+      features: [
+        { 
+          title: "Product Page Optimization", 
+          description: "We optimize your product pages to rank higher in search results and convert more visitors.",
+          icon: <ShoppingBag className="w-full h-full" />
+        },
+        { 
+          title: "Category Page SEO", 
+          description: "We structure and optimize your category pages to improve crawlability and user experience.",
+          icon: <Globe className="w-full h-full" />
+        },
+        { 
+          title: "E-commerce Technical SEO", 
+          description: "We address technical issues specific to e-commerce sites, such as duplicate content and URL structure.",
+          icon: <Zap className="w-full h-full" />
+        },
+        { 
+          title: "Conversion Rate Optimization", 
+          description: "We improve your site's conversion path to turn more visitors into customers.",
+          icon: <TrendingUp className="w-full h-full" />
+        }
+      ]
+    },
+    "content-marketing": {
+      title: `Content Marketing Services in ${locationData.name}`,
+      description: `Attract and engage your target audience with our strategic content marketing services tailored for ${locationData.name} businesses.`,
+      benefits: [
+        "More engaging content that resonates with your audience",
+        "Higher rankings for informational keywords",
+        "Increased brand authority and trust",
+        "More social shares and backlinks",
+        "Better audience engagement and retention"
+      ],
+      features: [
+        { 
+          title: "Content Strategy Development", 
+          description: `We create a comprehensive content strategy aligned with your ${locationData.name} business goals.`,
+          icon: <Lightbulb className="w-full h-full" />
+        },
+        { 
+          title: "Blog Content Creation", 
+          description: "We produce high-quality blog posts that engage your audience and drive organic traffic.",
+          icon: <FileText className="w-full h-full" />
+        },
+        { 
+          title: "Content Optimization", 
+          description: "We optimize existing content to improve search visibility and user engagement.",
+          icon: <Target className="w-full h-full" />
+        },
+        { 
+          title: "Content Distribution", 
+          description: `We help distribute your content across channels relevant to your ${locationData.name} audience.`,
+          icon: <Share2 className="w-full h-full" />
+        }
+      ]
+    },
+    // Default for other services
+    "default": {
+      title: `${serviceData.title} Services in ${locationData.name}`,
+      description: `Boost your online presence with our specialized ${serviceData.title} services designed for businesses in ${locationData.name}.`,
+      benefits: [
+        "Higher search engine rankings",
+        "Increased organic website traffic",
+        "Better ROI compared to paid advertising",
+        "Enhanced brand visibility and awareness",
+        "Long-term sustainable results"
+      ],
+      features: [
+        { 
+          title: "Customized Strategy", 
+          description: `We develop a tailored ${serviceData.title} strategy specific to your ${locationData.name} business needs.`,
+          icon: <Target className="w-full h-full" />
+        },
+        { 
+          title: "Comprehensive Analysis", 
+          description: "We perform in-depth analysis to identify opportunities and areas for improvement.",
+          icon: <BarChart className="w-full h-full" />
+        },
+        { 
+          title: "Implementation", 
+          description: `We execute all necessary ${serviceData.title} tactics to improve your online presence.`,
+          icon: <Zap className="w-full h-full" />
+        },
+        { 
+          title: "Monitoring and Reporting", 
+          description: "We provide regular updates and reports on your campaign's performance.",
+          icon: <FileText className="w-full h-full" />
+        }
+      ]
+    }
+  };
+
+  // Get the right info based on service slug, fallback to default if not found
+  const currentServiceInfo = serviceInfo[serviceSlug] || serviceInfo.default;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -60,11 +254,21 @@ const LocationService = () => {
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection className="mb-4" animation="fade-in">
             <div className="inline-flex items-center space-x-2">
-              <Link to="/" className="text-seo-gray-dark hover:text-seo-blue transition-colors">Home</Link>
+              <Link 
+                to="/" 
+                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+              >
+                Home
+              </Link>
               <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-              <Link to={`/location/${location.slug}`} className="text-seo-gray-dark hover:text-seo-blue transition-colors">{location.name}</Link>
+              <Link 
+                to={`/location/${locationData.slug}`}
+                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+              >
+                {locationData.name}
+              </Link>
               <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-              <span className="text-seo-blue font-medium">{service.title}</span>
+              <span className="text-seo-blue font-medium">{serviceData.title}</span>
             </div>
           </AnimatedSection>
           
@@ -73,20 +277,20 @@ const LocationService = () => {
               <div className="flex items-center mb-4">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mr-2">
                   <MapPin className="h-4 w-4 mr-1" />
-                  {location.name}
+                  {locationData.name}
                 </span>
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
                   <Star className="h-4 w-4 mr-1" />
-                  Top Rated Service
+                  {serviceData.title} Specialists
                 </span>
               </div>
               
               <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
-                {service.title} Solutions for {location.name} Businesses
+                {currentServiceInfo.title}
               </h1>
               
               <p className="text-xl text-seo-gray-dark mb-8">
-                In the competitive {location.name} market, having a strong online presence is crucial for business success. Our specialized {service.title.toLowerCase()} services are designed to help {location.name} businesses stand out from the competition and attract more qualified leads through search engines.
+                {currentServiceInfo.description}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -107,21 +311,21 @@ const LocationService = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-seo-blue to-purple-600 opacity-90"></div>
                     <div className="p-6 relative z-10">
                       <h3 className="text-xl font-bold text-white mb-2">
-                        Quick {service.title} Audit
+                        Free {serviceData.title} Audit
                       </h3>
                       <p className="text-white/90 mb-4">
-                        See how your business stacks up against competitors in {location.name}
+                        See how your business can improve with our {serviceData.title.toLowerCase()} services
                       </p>
                       <div className="flex items-center">
                         <Award className="h-8 w-8 text-yellow-300 mr-2" />
-                        <span className="text-white font-medium">Free for limited time</span>
+                        <span className="text-white font-medium">Free for {locationData.name} businesses</span>
                       </div>
                     </div>
                   </div>
                   <div className="p-6 space-y-3">
                     <div className="flex items-center">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                      <span>Complete {service.title.toLowerCase()} analysis</span>
+                      <span>Complete {serviceData.title} analysis</span>
                     </div>
                     <div className="flex items-center">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -132,9 +336,11 @@ const LocationService = () => {
                       <span>Actionable recommendations</span>
                     </div>
                     <div className="mt-6">
-                      <Button className="w-full bg-seo-blue hover:bg-seo-blue-light">
-                        Request Free Audit
-                      </Button>
+                      <Link to="/seo-audit">
+                        <Button className="w-full bg-seo-blue hover:bg-seo-blue-light">
+                          Request Free Audit
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </CardContent>
@@ -144,111 +350,34 @@ const LocationService = () => {
         </div>
       </section>
       
-      {/* Why Businesses Need Specialized Services Section */}
-      <section className="py-20 bg-white">
+      {/* Benefits Section */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
             <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Tailored Solutions
+              Key Benefits
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              Why {location.name} Businesses Need Specialized {service.title} Services
+              Why {serviceData.title} Matters for {locationData.name} Businesses
             </h2>
             <p className="text-lg text-seo-gray-dark">
-              The {location.name} market presents unique challenges and opportunities for businesses looking to improve their online visibility
+              Our specialized {serviceData.title.toLowerCase()} services provide significant advantages for businesses in the {locationData.name} area
             </p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <InfoCard
-              title="Local Competition"
-              description={`The ${location.name} market is highly competitive, with many businesses vying for visibility in local search results.`}
-              icon={<Building className="w-full h-full" />}
-              animation="fade-in"
-              delay={100}
-              iconBackground="bg-purple-100"
-              iconColor="text-purple-600"
-            />
-            
-            <InfoCard
-              title="Consumer Behavior"
-              description={`${location.name} consumers have specific search patterns and preferences that require targeted optimization strategies.`}
-              icon={<Users className="w-full h-full" />}
-              animation="fade-in"
-              delay={200}
-              iconBackground="bg-blue-100"
-              iconColor="text-blue-600"
-            />
-            
-            <InfoCard
-              title="Geographic Considerations"
-              description={`Effective ${service.title.toLowerCase()} in ${location.name} requires optimization for specific neighborhoods, suburbs, and landmarks.`}
-              icon={<Globe className="w-full h-full" />}
-              animation="fade-in"
-              delay={300}
-              iconBackground="bg-green-100"
-              iconColor="text-green-600"
-            />
-            
-            <InfoCard
-              title="Local Business Ecosystem"
-              description={`Building relationships with other ${location.name} businesses and organizations can significantly impact your search visibility.`}
-              icon={<Compass className="w-full h-full" />}
-              animation="fade-in"
-              delay={400}
-              iconBackground="bg-orange-100"
-              iconColor="text-orange-600"
-            />
-          </div>
-          
-          <AnimatedSection className="text-center mt-12" animation="fade-in" delay={600}>
-            <p className="text-lg text-seo-gray-dark mb-6 max-w-3xl mx-auto">
-              Our {service.title} services for {location.name} businesses take all these factors into account to develop a comprehensive strategy that drives real business growth.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
-      
-      {/* Our Approach Section */}
-      <section className="py-20 bg-seo-gray-light">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Our Methodology
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              Our {service.title} Approach for {location.name} Businesses
-            </h2>
-            <p className="text-lg text-seo-gray-dark">
-              We combine proven {service.title.toLowerCase()} techniques with location-specific strategies to deliver superior results
-            </p>
-          </AnimatedSection>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {service.features.map((feature, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {currentServiceInfo.benefits.map((benefit, index) => (
               <AnimatedSection
                 key={index}
-                className="bg-white rounded-xl shadow-sm p-8 relative overflow-hidden group hover:shadow-md transition-all duration-300"
+                className="bg-white rounded-xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-shadow"
                 animation="fade-in"
                 delay={index * 100}
               >
-                <div className="absolute -right-8 -bottom-8 w-24 h-24 rounded-full bg-seo-blue/5 group-hover:bg-seo-blue/10 transition-colors"></div>
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-full bg-seo-blue/10 flex items-center justify-center mb-6">
-                    <span className="w-6 h-6 text-seo-blue flex items-center justify-center font-bold rounded-full border-2 border-seo-blue">
-                      {index + 1}
-                    </span>
+                <div className="flex items-start">
+                  <div className="rounded-full p-2 bg-green-100 text-green-600 mr-3 mt-1">
+                    <CheckCircle className="h-5 w-5" />
                   </div>
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-4">
-                    {feature}
-                  </h3>
-                  <p className="text-seo-gray-dark mb-4">
-                    {getFeatureDescription(feature, location.name)}
-                  </p>
-                  <div className="flex items-center text-seo-blue font-medium group cursor-pointer">
-                    <span>Learn more</span>
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </div>
+                  <span className="text-seo-gray-dark font-medium">{benefit}</span>
                 </div>
               </AnimatedSection>
             ))}
@@ -256,202 +385,100 @@ const LocationService = () => {
         </div>
       </section>
       
-      {/* Why Choose Us Section */}
-      <section className="py-20 bg-white">
+      {/* Service Features */}
+      <section className="py-16 bg-seo-gray-light">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <AnimatedSection className="lg:w-1/2" animation="fade-in-right">
-              <div className="relative">
-                <div className="absolute -left-6 -top-6 w-64 h-64 bg-seo-blue/5 rounded-full"></div>
-                <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-purple-100 rounded-full"></div>
-                <div className="relative z-10 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-                  <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6 pb-6 border-b border-gray-100">
-                    Why Choose Us for {service.title} in {location.name}
-                  </h2>
-                  <p className="text-lg text-seo-gray-dark mb-8">
-                    When you partner with us for your {location.name} {service.title.toLowerCase()} needs, you benefit from:
-                  </p>
-                  
-                  <div className="space-y-6">
-                    <div className="flex">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                          <MapPin className="w-5 h-5 text-green-600" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-seo-dark mb-2">Local Expertise</h3>
-                        <p className="text-seo-gray-dark">
-                          Our team has extensive experience in the {location.name} market and understands the local business landscape.
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                          <BarChart className="w-5 h-5 text-blue-600" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-seo-dark mb-2">Proven Results</h3>
-                        <p className="text-seo-gray-dark">
-                          We have a track record of success, helping numerous {location.name} businesses improve their search visibility and drive growth.
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                          <Target className="w-5 h-5 text-purple-600" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-seo-dark mb-2">Customized Strategies</h3>
-                        <p className="text-seo-gray-dark">
-                          We develop tailored strategies based on your specific business goals, target audience, and competition.
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
-                          <Lightbulb className="w-5 h-5 text-yellow-600" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-seo-dark mb-2">Ongoing Optimization</h3>
-                        <p className="text-seo-gray-dark">
-                          We continuously refine our approach based on performance data and changing market conditions.
-                        </p>
-                      </div>
-                    </div>
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Our Approach
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              {serviceData.title} Services We Provide in {locationData.name}
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Our comprehensive {serviceData.title.toLowerCase()} services are designed to deliver exceptional results for your business
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {currentServiceInfo.features.map((feature, index) => (
+              <InfoCard
+                key={index}
+                title={feature.title}
+                description={feature.description}
+                icon={feature.icon}
+                animation="fade-in"
+                delay={index * 100}
+                iconBackground={index % 2 === 0 ? "bg-blue-100" : "bg-purple-100"}
+                iconColor={index % 2 === 0 ? "text-blue-600" : "text-purple-600"}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <AnimatedSection 
+              className="bg-gradient-to-r from-seo-blue to-purple-600 rounded-xl shadow-xl overflow-hidden" 
+              animation="fade-in"
+            >
+              <div className="p-8 md:p-12">
+                <div className="flex flex-col md:flex-row md:items-center justify-between">
+                  <div className="mb-8 md:mb-0 md:mr-8">
+                    <h2 className="text-3xl font-bold text-white mb-4">
+                      Ready to dominate {serviceData.title} in {locationData.name}?
+                    </h2>
+                    <p className="text-white/90 text-lg mb-0">
+                      Get a free consultation and discover how our {serviceData.title.toLowerCase()} services can help your business grow.
+                    </p>
                   </div>
-                </div>
-              </div>
-            </AnimatedSection>
-            
-            <AnimatedSection className="lg:w-1/2" animation="fade-in-left">
-              <div className="bg-gradient-to-br from-seo-blue to-purple-600 p-1 rounded-xl shadow-lg">
-                <div className="bg-white p-8 rounded-lg">
-                  <h3 className="text-2xl font-display font-bold text-seo-dark mb-6 text-center">
-                    Ready to Dominate {location.name} Search Results?
-                  </h3>
-                  
-                  <div className="space-y-6 mb-8">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                          <TrendingUp className="w-5 h-5 text-green-600" />
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-seo-dark">Increase Local Visibility</h4>
-                        <p className="text-sm text-seo-gray-dark">Rank higher in {location.name} searches</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                          <Users className="w-5 h-5 text-blue-600" />
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-seo-dark">Drive More Qualified Traffic</h4>
-                        <p className="text-sm text-seo-gray-dark">Attract customers actively looking for your services</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 mr-4">
-                        <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                          <ShoppingBag className="w-5 h-5 text-purple-600" />
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-seo-dark">Increase Conversions</h4>
-                        <p className="text-sm text-seo-gray-dark">Turn visitors into paying customers</p>
-                      </div>
-                    </div>
+                  <div className="flex-shrink-0">
+                    <Link to="/contact">
+                      <Button size="lg" className="bg-white text-seo-blue hover:bg-gray-100 w-full md:w-auto">
+                        Get Started Today
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
                   </div>
-                  
-                  <div className="space-y-4">
-                    <Button className="w-full bg-seo-blue hover:bg-seo-blue-light text-white py-6 text-lg">
-                      Get Your Free SEO Audit
-                    </Button>
-                    <Button variant="outline" className="w-full border-seo-blue text-seo-blue hover:bg-seo-blue/5 py-6 text-lg">
-                      <Phone className="mr-2 h-5 w-5" />
-                      Schedule a Call
-                    </Button>
-                  </div>
-                  
-                  <p className="text-center text-sm text-seo-gray-dark mt-4">
-                    No contracts or commitments required
-                  </p>
                 </div>
               </div>
             </AnimatedSection>
           </div>
-          
-          <AnimatedSection className="text-center mt-12" animation="fade-in">
-            <p className="text-lg text-seo-gray-dark max-w-3xl mx-auto">
-              Our commitment to delivering measurable results and exceptional service has made us a trusted {service.title.toLowerCase()} partner for businesses throughout {location.name}.
+        </div>
+      </section>
+      
+      {/* Other Locations Section */}
+      <section className="py-16 bg-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Other Locations
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              {serviceData.title} Services in Other Areas
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              We provide specialized {serviceData.title.toLowerCase()} services in these locations as well
             </p>
           </AnimatedSection>
+          
+          <LocationLinks service={serviceData} />
         </div>
       </section>
       
       {/* Resources Section */}
       <ResourcesSection 
-        filterTag={`${location.name} ${service.title}`} 
-        className="bg-seo-gray-light"
+        filterTag={serviceData.title} 
+        className="bg-white"
       />
       
       <ContactForm />
       <Footer />
     </div>
   );
-};
-
-// Helper function to generate descriptions for features
-const getFeatureDescription = (feature: string, location: string) => {
-  const descriptions: Record<string, string> = {
-    'Google Business Profile optimization': `We optimize your Google Business Profile to improve visibility in ${location} local map packs and attract nearby customers.`,
-    'Local citation building': `We build consistent citations across key directories to boost your ${location} business's local search presence.`,
-    'Location-specific keyword targeting': `We identify the most valuable keywords that ${location} residents use when searching for products or services like yours.`,
-    'Local link building strategies': `We build high-quality backlinks from relevant ${location} websites to boost your local authority.`,
-    'Review management system': `We implement systems to gather and showcase positive reviews from your ${location} customers to build trust.`,
-    'Site speed optimization': `We optimize your website's loading speed to improve user experience and search rankings in the ${location} market.`,
-    'Mobile-friendly improvements': `We ensure your website performs flawlessly on mobile devices, critical for ${location} users on the go.`,
-    'Schema markup implementation': `We implement structured data to help search engines better understand your business and improve local visibility in ${location}.`,
-    'Crawlability & indexation fixes': `We resolve technical issues that prevent search engines from properly indexing your site for ${location} searches.`,
-    'SSL & security enhancements': `We implement security measures to protect your site and boost trust with ${location} customers.`,
-    'Keyword research & planning': `We identify high-value keywords specifically targeted to the ${location} market and your industry.`,
-    'Content gap analysis': `We analyze content opportunities specific to ${location} that your competitors may be missing.`,
-    'Blog strategy development': `We develop content strategies addressing topics relevant to ${location} customers in your industry.`,
-    'Content optimization': `We optimize existing content to better target ${location}-specific search terms and user intent.`,
-    'Topic cluster creation': `We create comprehensive content structures around topics relevant to ${location} customers.`,
-    'Authority backlink acquisition': `We secure high-quality backlinks from trusted ${location} sources to boost your site's authority.`,
-    'Content-driven link building': `We create valuable content that naturally attracts links from ${location} businesses and publications.`,
-    'Competitor link analysis': `We analyze your ${location} competitors' backlink profiles to identify valuable link opportunities.`,
-    'Guest posting campaigns': `We secure guest posting opportunities on relevant ${location} websites to build authority.`,
-    'Digital PR strategies': `We implement PR strategies to gain mentions in ${location} publications and websites.`,
-    'Product page optimization': `We optimize your product pages to rank higher for ${location}-specific product searches.`,
-    'Category page structuring': `We structure category pages to maximize visibility for ${location} shoppers.`,
-    'Review schema implementation': `We implement review schema to showcase customer feedback in ${location} search results.`,
-    'Conversion rate optimization': `We optimize your website to convert more ${location} visitors into customers.`,
-    'Shopping feed management': `We optimize your shopping feeds for better visibility in ${location}-specific product searches.`,
-    'Custom dashboard creation': `We create custom dashboards showing your performance in the ${location} market.`,
-    'Monthly performance reports': `We provide detailed reports on your ${location} SEO performance and progress.`,
-    'Conversion tracking setup': `We implement tracking to measure conversions from ${location} visitors.`,
-    'Traffic analysis': `We analyze traffic patterns specific to ${location} users to identify optimization opportunities.`,
-    'ROI measurement': `We measure the return on investment of your ${location} SEO campaign.`
-  };
-  
-  return descriptions[feature] || `Our specialized approach to ${feature} is tailored for the ${location} market to maximize results.`;
 };
 
 export default LocationService;

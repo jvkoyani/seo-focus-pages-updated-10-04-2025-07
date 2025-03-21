@@ -45,6 +45,17 @@ const App = () => (
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-study/:slug" element={<CaseStudy />} />
           <Route path="/seo-audit" element={<SeoAudit />} />
+          
+          {/* Additional SEO-friendly URL patterns */}
+          <Route path="/local-seo-:locationSlug" element={<LocationService />} />
+          <Route path="/technical-seo-:locationSlug" element={<LocationService />} />
+          <Route path="/ecommerce-seo-:locationSlug" element={<LocationService />} />
+          <Route path="/content-marketing-:locationSlug" element={<LocationService />} />
+          <Route path="/link-building-:locationSlug" element={<LocationService />} />
+          <Route path="/seo-audits-:locationSlug" element={<LocationService />} />
+          <Route path="/digital-pr-:locationSlug" element={<LocationService />} />
+          <Route path="/analytics-reporting-:locationSlug" element={<LocationService />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

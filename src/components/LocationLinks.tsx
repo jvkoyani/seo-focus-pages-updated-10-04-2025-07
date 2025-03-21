@@ -89,7 +89,7 @@ const LocationLinks = ({ service }: LocationLinksProps) => {
             </div>
             
             <Link
-              to={`/location/${location.slug}/${service.slug}`}
+              to={`/${service.slug}-${location.slug}`}
               className="inline-flex items-center justify-center bg-seo-blue text-white px-5 py-3 rounded-md hover:bg-seo-blue-light transition-colors w-full group"
             >
               <span>Explore {location.name} strategies</span>
