@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { 
   ArrowRight, MapPin, TrendingUp, BarChart, 
   CheckCircle, Award, Users, Target, Star, 
@@ -20,10 +19,25 @@ import { Button } from '@/components/ui/button';
 
 const Location = () => {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
   
-  const location = locations.find(loc => loc.slug === slug);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [location.pathname]);
   
-  if (!location) {
+  const locationData = locations.find(loc => loc.slug === slug);
+  
+  const handleLinkClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  
+  if (!locationData) {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
@@ -34,6 +48,7 @@ const Location = () => {
             <Link 
               to="/" 
               className="inline-flex items-center text-seo-blue font-medium"
+              onClick={handleLinkClick}
             >
               <span>Return to home</span>
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -60,9 +75,15 @@ const Location = () => {
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection className="mb-4" animation="fade-in">
             <div className="inline-flex items-center space-x-2">
-              <Link to="/" className="text-seo-gray-dark hover:text-seo-blue transition-colors">Home</Link>
+              <Link 
+                to="/" 
+                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+                onClick={handleLinkClick}
+              >
+                Home
+              </Link>
               <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-              <span className="text-seo-blue font-medium">{location.name}</span>
+              <span className="text-seo-blue font-medium">{locationData.name}</span>
             </div>
           </AnimatedSection>
           
@@ -71,7 +92,7 @@ const Location = () => {
               <div className="flex items-center mb-4">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mr-2">
                   <MapPin className="h-4 w-4 mr-1" />
-                  {location.name}
+                  {locationData.name}
                 </span>
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
                   <Star className="h-4 w-4 mr-1" />
@@ -80,11 +101,11 @@ const Location = () => {
               </div>
               
               <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
-                SEO Services in {location.name}
+                SEO Services in {locationData.name}
               </h1>
               
               <p className="text-xl text-seo-gray-dark mb-8">
-                Our specialized SEO services are designed to help {location.name} businesses stand out from the competition and attract more qualified leads through search engines.
+                Our specialized SEO services are designed to help {locationData.name} businesses stand out from the competition and attract more qualified leads through search engines.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -108,7 +129,7 @@ const Location = () => {
                         Free SEO Audit
                       </h3>
                       <p className="text-white/90 mb-4">
-                        See how your business stacks up against competitors in {location.name}
+                        See how your business stacks up against competitors in {locationData.name}
                       </p>
                       <div className="flex items-center">
                         <Award className="h-8 w-8 text-yellow-300 mr-2" />
@@ -150,17 +171,17 @@ const Location = () => {
               Business Growth
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              Why {location.name} Businesses Need Professional SEO
+              Why {locationData.name} Businesses Need Professional SEO
             </h2>
             <p className="text-lg text-seo-gray-dark">
-              The {location.name} market presents unique challenges and opportunities for businesses looking to improve their online visibility
+              The {locationData.name} market presents unique challenges and opportunities for businesses looking to improve their online visibility
             </p>
           </AnimatedSection>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <InfoCard
               title="Local Competition"
-              description={`The ${location.name} market is highly competitive, with many businesses vying for visibility in local search results.`}
+              description={`The ${locationData.name} market is highly competitive, with many businesses vying for visibility in local search results.`}
               icon={<Building className="w-full h-full" />}
               animation="fade-in"
               delay={100}
@@ -170,7 +191,7 @@ const Location = () => {
             
             <InfoCard
               title="Consumer Behavior"
-              description={`${location.name} consumers have specific search patterns and preferences that require targeted optimization strategies.`}
+              description={`${locationData.name} consumers have specific search patterns and preferences that require targeted optimization strategies.`}
               icon={<Users className="w-full h-full" />}
               animation="fade-in"
               delay={200}
@@ -180,7 +201,7 @@ const Location = () => {
             
             <InfoCard
               title="Geographic Considerations"
-              description={`Effective SEO in ${location.name} requires optimization for specific neighborhoods, suburbs, and landmarks.`}
+              description={`Effective SEO in ${locationData.name} requires optimization for specific neighborhoods, suburbs, and landmarks.`}
               icon={<Globe className="w-full h-full" />}
               animation="fade-in"
               delay={300}
@@ -190,7 +211,7 @@ const Location = () => {
             
             <InfoCard
               title="Local Business Ecosystem"
-              description={`Building relationships with other ${location.name} businesses and organizations can significantly impact your search visibility.`}
+              description={`Building relationships with other ${locationData.name} businesses and organizations can significantly impact your search visibility.`}
               icon={<Compass className="w-full h-full" />}
               animation="fade-in"
               delay={400}
@@ -202,7 +223,7 @@ const Location = () => {
       </section>
       
       {/* Our Services Section */}
-      <Services location={location.name} locationSlug={location.slug} />
+      <Services location={locationData.name} locationSlug={locationData.slug} />
       
       {/* Why Choose Us Section */}
       <section className="py-20 bg-seo-gray-light">
@@ -214,10 +235,10 @@ const Location = () => {
                 <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-purple-100 rounded-full"></div>
                 <div className="relative z-10 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
                   <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6 pb-6 border-b border-gray-100">
-                    Why Choose Us for SEO in {location.name}
+                    Why Choose Us for SEO in {locationData.name}
                   </h2>
                   <p className="text-lg text-seo-gray-dark mb-8">
-                    When you partner with us for your {location.name} SEO needs, you benefit from:
+                    When you partner with us for your {locationData.name} SEO needs, you benefit from:
                   </p>
                   
                   <div className="space-y-6">
@@ -230,7 +251,7 @@ const Location = () => {
                       <div>
                         <h3 className="text-xl font-bold text-seo-dark mb-2">Local Expertise</h3>
                         <p className="text-seo-gray-dark">
-                          Our team has extensive experience in the {location.name} market and understands the local business landscape.
+                          Our team has extensive experience in the {locationData.name} market and understands the local business landscape.
                         </p>
                       </div>
                     </div>
@@ -244,7 +265,7 @@ const Location = () => {
                       <div>
                         <h3 className="text-xl font-bold text-seo-dark mb-2">Proven Results</h3>
                         <p className="text-seo-gray-dark">
-                          We have a track record of success, helping numerous {location.name} businesses improve their search visibility and drive growth.
+                          We have a track record of success, helping numerous {locationData.name} businesses improve their search visibility and drive growth.
                         </p>
                       </div>
                     </div>
@@ -285,7 +306,7 @@ const Location = () => {
               <div className="bg-gradient-to-br from-seo-blue to-purple-600 p-1 rounded-xl shadow-lg">
                 <div className="bg-white p-8 rounded-lg">
                   <h3 className="text-2xl font-display font-bold text-seo-dark mb-6 text-center">
-                    Ready to Dominate {location.name} Search Results?
+                    Ready to Dominate {locationData.name} Search Results?
                   </h3>
                   
                   <div className="space-y-6 mb-8">
@@ -297,7 +318,7 @@ const Location = () => {
                       </div>
                       <div>
                         <h4 className="font-bold text-seo-dark">Increase Local Visibility</h4>
-                        <p className="text-sm text-seo-gray-dark">Rank higher in {location.name} searches</p>
+                        <p className="text-sm text-seo-gray-dark">Rank higher in {locationData.name} searches</p>
                       </div>
                     </div>
                     
@@ -348,7 +369,7 @@ const Location = () => {
       
       {/* Resources Section */}
       <ResourcesSection 
-        filterTag={location.name} 
+        filterTag={locationData.name} 
         className="bg-white"
       />
       

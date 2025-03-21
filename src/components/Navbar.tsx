@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, FileText, Briefcase } from 'lucide-react';
@@ -19,6 +18,13 @@ const Navbar = () => {
   const toggleServices = () => setIsServicesOpen(!isServicesOpen);
   const toggleIndustries = () => setIsIndustriesOpen(!isIndustriesOpen);
   const toggleResources = () => setIsResourcesOpen(!isResourcesOpen);
+
+  const handleLinkClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,15 +52,18 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center" onClick={handleLinkClick}>
             <span className="text-2xl font-display font-bold text-seo-dark">
               SEO<span className="text-seo-blue">focus</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-seo-dark hover:text-seo-blue font-medium transition-colors">
+            <Link 
+              to="/" 
+              className="text-seo-dark hover:text-seo-blue font-medium transition-colors"
+              onClick={handleLinkClick}
+            >
               Home
             </Link>
             <div className="relative">
@@ -76,6 +85,7 @@ const Navbar = () => {
                   <Link
                     to="/services"
                     className="block px-4 py-2 text-sm font-medium text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     All Services
                   </Link>
@@ -85,6 +95,7 @@ const Navbar = () => {
                       key={service.id}
                       to={`/service/${service.slug}`}
                       className="block px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                      onClick={handleLinkClick}
                     >
                       {service.title}
                     </Link>
@@ -111,6 +122,7 @@ const Navbar = () => {
                   <Link
                     to="/industries"
                     className="block px-4 py-2 text-sm font-medium text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     All Industries
                   </Link>
@@ -120,6 +132,7 @@ const Navbar = () => {
                       key={industry.id}
                       to={`/industry/${industry.slug}`}
                       className="block px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                      onClick={handleLinkClick}
                     >
                       {industry.title}
                     </Link>
@@ -148,6 +161,7 @@ const Navbar = () => {
                       key={loc.id}
                       to={`/location/${loc.slug}`}
                       className="block px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                      onClick={handleLinkClick}
                     >
                       {loc.name}
                     </Link>
@@ -174,6 +188,7 @@ const Navbar = () => {
                   <Link
                     to="/blogs"
                     className="flex items-center px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     <FileText className="h-4 w-4 mr-2" />
                     Blog Articles
@@ -181,6 +196,7 @@ const Navbar = () => {
                   <Link
                     to="/case-studies"
                     className="flex items-center px-4 py-2 text-sm text-seo-dark hover:bg-seo-gray-light hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     <Briefcase className="h-4 w-4 mr-2" />
                     Case Studies
@@ -188,21 +204,29 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <Link to="/about" className="text-seo-dark hover:text-seo-blue font-medium transition-colors">
+            <Link 
+              to="/about" 
+              className="text-seo-dark hover:text-seo-blue font-medium transition-colors"
+              onClick={handleLinkClick}
+            >
               About
             </Link>
-            <Link to="/contact" className="text-seo-dark hover:text-seo-blue font-medium transition-colors">
+            <Link 
+              to="/contact" 
+              className="text-seo-dark hover:text-seo-blue font-medium transition-colors"
+              onClick={handleLinkClick}
+            >
               Contact
             </Link>
             <Link
               to="/contact"
               className="bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-2 px-5 rounded-md transition-colors button-hover-effect"
+              onClick={handleLinkClick}
             >
               Get Started
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden text-seo-dark focus:outline-none"
             onClick={toggleMenu}
@@ -212,7 +236,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         <div
           className={`fixed inset-0 bg-white z-50 transition-all duration-300 transform ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
@@ -223,9 +246,11 @@ const Navbar = () => {
             <Link
               to="/"
               className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors"
+              onClick={handleLinkClick}
             >
               Home
             </Link>
+            
             <div>
               <button
                 onClick={toggleServices}
@@ -238,6 +263,7 @@ const Navbar = () => {
                 <Link
                   to="/services"
                   className="block py-2 font-medium text-seo-gray-dark hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
                 >
                   All Services
                 </Link>
@@ -246,12 +272,14 @@ const Navbar = () => {
                     key={service.id}
                     to={`/service/${service.slug}`}
                     className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     {service.title}
                   </Link>
                 ))}
               </div>
             </div>
+            
             <div>
               <button
                 onClick={toggleIndustries}
@@ -264,6 +292,7 @@ const Navbar = () => {
                 <Link
                   to="/industries"
                   className="block py-2 font-medium text-seo-gray-dark hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
                 >
                   All Industries
                 </Link>
@@ -272,12 +301,14 @@ const Navbar = () => {
                     key={industry.id}
                     to={`/industry/${industry.slug}`}
                     className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     {industry.title}
                   </Link>
                 ))}
               </div>
             </div>
+            
             <div>
               <button
                 onClick={toggleLocations}
@@ -292,12 +323,14 @@ const Navbar = () => {
                     key={loc.id}
                     to={`/location/${loc.slug}`}
                     className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
                   >
                     {loc.name}
                   </Link>
                 ))}
               </div>
             </div>
+            
             <div>
               <button
                 onClick={toggleResources}
@@ -310,6 +343,7 @@ const Navbar = () => {
                 <Link
                   to="/blogs"
                   className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
                 >
                   <FileText className="h-4 w-4 mr-2" />
                   Blog Articles
@@ -317,27 +351,32 @@ const Navbar = () => {
                 <Link
                   to="/case-studies"
                   className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
                 >
                   <Briefcase className="h-4 w-4 mr-2" />
                   Case Studies
                 </Link>
               </div>
             </div>
+            
             <Link
               to="/about"
               className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors"
+              onClick={handleLinkClick}
             >
               About
             </Link>
             <Link
               to="/contact"
               className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors"
+              onClick={handleLinkClick}
             >
               Contact
             </Link>
             <Link
               to="/contact"
               className="bg-seo-blue text-white text-center py-3 px-5 rounded-md transition-colors button-hover-effect"
+              onClick={handleLinkClick}
             >
               Get Started
             </Link>

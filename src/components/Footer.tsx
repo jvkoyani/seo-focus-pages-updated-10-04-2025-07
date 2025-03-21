@@ -6,7 +6,7 @@ import { locations, services, industries } from '@/lib/data';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
-  // Function to handle scroll to top when clicking industry links
+  // Function to handle scroll to top when clicking links
   const handleLinkClick = () => {
     window.scrollTo({
       top: 0,
@@ -51,7 +51,7 @@ const Footer = () => {
         {/* Main Footer Content */}
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <Link to="/" className="inline-block mb-6">
+            <Link to="/" className="inline-block mb-6" onClick={handleLinkClick}>
               <span className="text-2xl font-display font-bold text-white">
                 SEO<span className="text-seo-blue">focus</span>
               </span>
@@ -80,7 +80,11 @@ const Footer = () => {
             <ul className="space-y-3">
               {services.map(service => (
                 <li key={service.id}>
-                  <Link to={`/service/${service.slug}`} className="text-white/70 hover:text-seo-blue transition-colors">
+                  <Link 
+                    to={`/service/${service.slug}`} 
+                    className="text-white/70 hover:text-seo-blue transition-colors"
+                    onClick={handleLinkClick}
+                  >
                     {service.title}
                   </Link>
                 </li>
@@ -118,27 +122,47 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Company</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/about" className="text-white/70 hover:text-seo-blue transition-colors">
+                <Link 
+                  to="/about" 
+                  className="text-white/70 hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-white/70 hover:text-seo-blue transition-colors">
+                <Link 
+                  to="/contact" 
+                  className="text-white/70 hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
+                >
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/locations" className="text-white/70 hover:text-seo-blue transition-colors">
+                <Link 
+                  to="/locations" 
+                  className="text-white/70 hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
+                >
                   Locations
                 </Link>
               </li>
               <li>
-                <Link to="/industries" className="text-white/70 hover:text-seo-blue transition-colors" onClick={handleLinkClick}>
+                <Link 
+                  to="/industries" 
+                  className="text-white/70 hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
+                >
                   Industries We Serve
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-white/70 hover:text-seo-blue transition-colors">
+                <Link 
+                  to="/services" 
+                  className="text-white/70 hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
+                >
                   Services
                 </Link>
               </li>
