@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Send, Globe, AlertTriangle, CheckCircle2, Info, Database, Clock } from "lucide-react";
+import { Send, Globe, AlertTriangle, CheckCircle2, Info, Database, Clock, Mail, FileText, Download, Share2, Phone } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,11 +11,21 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 // Define the form schema
 const formSchema = z.object({
@@ -27,7 +37,23 @@ const formSchema = z.object({
     })
 });
 
+// Lead capture form schema
+const leadFormSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  phone: z.string().optional(),
+  company: z.string().optional(),
+  message: z.string().optional(),
+});
+
+// Newsletter form schema
+const newsletterSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+});
+
 type FormValues = z.infer<typeof formSchema>;
+type LeadFormValues = z.infer<typeof leadFormSchema>;
+type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 
 // Mock SEO audit data for demonstration
 const mockAuditData = {
@@ -74,7 +100,13 @@ const mockAuditData = {
     "Create an XML sitemap",
     "Create a robots.txt file",
     "Add social meta tags to your page"
-  ]
+  ],
+  competitorAnalysis: [
+    { name: "Competitor A", score: 82, strengths: ["Fast load time", "Good mobile experience", "Complete meta tags"] },
+    { name: "Competitor B", score: 75, strengths: ["Rich content", "Good backlink profile", "Structured data"] },
+    { name: "Competitor C", score: 61, strengths: ["Social signals", "User engagement", "Regular updates"] }
+  ],
+  keywordGaps: ["local SEO services", "small business SEO", "affordable SEO", "SEO consultant", "technical SEO audit"]
 };
 
 // Issue severity component
@@ -121,11 +153,32 @@ const SeoAudit = () => {
   const [progress, setProgress] = useState(0);
   const [auditData, setAuditData] = useState<typeof mockAuditData | null>(null);
   const [checkedRecommendations, setCheckedRecommendations] = useState<number[]>([]);
+  const [showContactDialog, setShowContactDialog] = useState(false);
+  const [showNewsletterThankYou, setShowNewsletterThankYou] = useState(false);
+  const [reportRequested, setReportRequested] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       websiteUrl: "",
+    },
+  });
+
+  const leadForm = useForm<LeadFormValues>({
+    resolver: zodResolver(leadFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      company: "",
+      message: "",
+    },
+  });
+
+  const newsletterForm = useForm<NewsletterFormValues>({
+    resolver: zodResolver(newsletterSchema),
+    defaultValues: {
+      email: "",
     },
   });
 
@@ -149,12 +202,36 @@ const SeoAudit = () => {
     }, 200);
   };
 
+  const onLeadFormSubmit = (data: LeadFormValues) => {
+    // In a real application, you would send this data to your backend/CRM
+    console.log("Lead form data:", data);
+    toast.success("Thank you! Your request has been submitted.");
+    setShowContactDialog(false);
+    setReportRequested(true);
+  };
+
+  const onNewsletterSubmit = (data: NewsletterFormValues) => {
+    // In a real application, you would send this to your email marketing platform
+    console.log("Newsletter signup:", data);
+    toast.success("Thanks for subscribing to our newsletter!");
+    setShowNewsletterThankYou(true);
+    newsletterForm.reset();
+  };
+
   const toggleRecommendation = (index: number) => {
     setCheckedRecommendations(prev => 
       prev.includes(index) 
         ? prev.filter(i => i !== index) 
         : [...prev, index]
     );
+  };
+
+  const downloadReport = () => {
+    toast.success("Your report is being prepared for download.");
+    // In a real application, you would generate and offer a PDF for download
+    setTimeout(() => {
+      setShowContactDialog(true);
+    }, 1500);
   };
 
   return (
@@ -266,6 +343,8 @@ const SeoAudit = () => {
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="issues">Issues ({auditData.totalIssues})</TabsTrigger>
                   <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
+                  <TabsTrigger value="competitors">Competitors</TabsTrigger>
+                  <TabsTrigger value="keywords">Keywords</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview" className="space-y-6">
@@ -417,35 +496,348 @@ const SeoAudit = () => {
                       </ul>
                     </Card>
                   </div>
-                  
-                  <div className="pt-4 text-center">
-                    <Button variant="outline" className="mr-2">
-                      Download Report
-                    </Button>
-                    <Button className="bg-seo-blue hover:bg-seo-blue-light">
-                      Share Results
-                    </Button>
+                </TabsContent>
+
+                <TabsContent value="competitors" className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-medium mb-4">Competitor SEO Analysis</h4>
+                    <p className="text-gray-600 mb-4">
+                      See how your competitors are performing and where you can gain an advantage.
+                    </p>
+                    <div className="space-y-4">
+                      {auditData.competitorAnalysis.map((competitor, index) => (
+                        <Card key={index} className="p-4 border border-gray-200">
+                          <div className="flex flex-col md:flex-row md:items-center justify-between">
+                            <div>
+                              <h5 className="font-medium text-lg">{competitor.name}</h5>
+                              <div className="mt-2 flex flex-wrap gap-2">
+                                {competitor.strengths.map((strength, i) => (
+                                  <span key={i} className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                                    {strength}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="mt-4 md:mt-0">
+                              <div className="flex items-center">
+                                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+                                  <span className="text-xl font-bold text-gray-700">
+                                    {competitor.score}
+                                  </span>
+                                </div>
+                                <div className="ml-4">
+                                  <p className="text-sm text-gray-500">SEO Score</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="keywords" className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-medium mb-4">Keyword Gap Analysis</h4>
+                    <p className="text-gray-600 mb-4">
+                      We've identified these keywords that your competitors are ranking for, but you're not.
+                    </p>
+                    <Card className="p-4 border border-gray-200">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {auditData.keywordGaps.map((keyword, index) => (
+                          <div key={index} className="bg-gray-50 rounded-md p-3 border border-gray-100">
+                            <p className="font-medium">{keyword}</p>
+                            <div className="mt-2 flex justify-between items-center">
+                              <span className="text-xs text-gray-500">Difficulty: Medium</span>
+                              <span className="text-xs text-gray-500">Volume: 1.2K/mo</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
                   </div>
                 </TabsContent>
               </Tabs>
               
               <div className="p-6 border-t border-gray-200 bg-gray-50">
-                <h4 className="font-medium mb-4">Need Expert Help?</h4>
-                <p className="text-gray-600 mb-4">
-                  Our SEO specialists can help you implement these recommendations and improve your search engine rankings.
-                </p>
-                <Button className="bg-seo-blue hover:bg-seo-blue-light">
-                  Get Professional SEO Help
-                </Button>
+                <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                  <div>
+                    <h4 className="font-medium mb-2">Need Expert Help?</h4>
+                    <p className="text-gray-600 mb-0">
+                      Our SEO specialists can help implement these recommendations.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    <Button variant="outline" onClick={downloadReport} className="flex items-center">
+                      <Download className="mr-2 h-4 w-4" />
+                      Download Report
+                    </Button>
+                    <Dialog open={showContactDialog} onOpenChange={setShowContactDialog}>
+                      <DialogTrigger asChild>
+                        <Button className="bg-seo-blue hover:bg-seo-blue-light flex items-center">
+                          <Phone className="mr-2 h-4 w-4" />
+                          Get Professional Help
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Request a Detailed Report</DialogTitle>
+                          <DialogDescription>
+                            Fill out this form to get a comprehensive SEO analysis from our experts.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <Form {...leadForm}>
+                          <form onSubmit={leadForm.handleSubmit(onLeadFormSubmit)} className="space-y-4">
+                            <FormField
+                              control={leadForm.control}
+                              name="name"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Name</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="Your name" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={leadForm.control}
+                              name="email"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Email</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="your.email@example.com" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={leadForm.control}
+                              name="phone"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Phone (optional)</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="Your phone number" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={leadForm.control}
+                              name="company"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Company (optional)</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="Your company name" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={leadForm.control}
+                              name="message"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Message (optional)</FormLabel>
+                                  <FormControl>
+                                    <Textarea 
+                                      placeholder="Tell us more about your SEO goals..." 
+                                      className="resize-none" 
+                                      {...field} 
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <DialogFooter>
+                              <Button 
+                                type="submit" 
+                                className="w-full bg-seo-blue hover:bg-seo-blue-light"
+                              >
+                                {reportRequested ? "Send Request" : "Request Detailed Report"}
+                              </Button>
+                            </DialogFooter>
+                          </form>
+                        </Form>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </div>
               </div>
             </div>
           </AnimatedSection>
         )}
         
+        {/* Newsletter Signup */}
+        <AnimatedSection 
+          className="max-w-4xl mx-auto mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-lg p-8 text-white" 
+          animation="fade-in"
+          delay={400}
+        >
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="md:w-2/3">
+              <h3 className="text-2xl font-bold mb-2">Stay Updated on SEO Trends</h3>
+              <p className="text-white/80">
+                Subscribe to our newsletter to receive the latest SEO tips, strategies, and industry news directly to your inbox.
+              </p>
+            </div>
+            <div className="md:w-1/3">
+              {!showNewsletterThankYou ? (
+                <Form {...newsletterForm}>
+                  <form onSubmit={newsletterForm.handleSubmit(onNewsletterSubmit)} className="space-y-2">
+                    <FormField
+                      control={newsletterForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input 
+                              placeholder="Your email address" 
+                              className="bg-white/10 border-white/20 text-white placeholder:text-white/60" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-200" />
+                        </FormItem>
+                      )}
+                    />
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-white text-blue-600 hover:bg-white/90"
+                    >
+                      Subscribe
+                      <Mail className="ml-2 h-4 w-4" />
+                    </Button>
+                  </form>
+                </Form>
+              ) : (
+                <div className="bg-white/10 p-4 rounded-md text-center">
+                  <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-green-400" />
+                  <p className="font-medium">Thanks for subscribing!</p>
+                  <p className="text-sm text-white/80">You'll receive our next newsletter soon.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </AnimatedSection>
+        
+        {/* Schedule a Call CTA */}
+        <AnimatedSection 
+          className="max-w-4xl mx-auto mt-16 bg-white rounded-lg shadow-lg p-8 border border-gray-200" 
+          animation="fade-in"
+          delay={450}
+        >
+          <div className="flex flex-col md:flex-row md:items-center gap-8">
+            <div className="md:w-2/3">
+              <h3 className="text-2xl font-bold mb-4">Ready for a Strategic SEO Partnership?</h3>
+              <p className="text-gray-600 mb-6">
+                Schedule a 30-minute strategy call with our SEO experts to discuss your specific needs and how we can help you achieve your business goals.
+              </p>
+              
+              <ul className="space-y-2">
+                {[
+                  "Custom SEO strategy tailored to your business",
+                  "Actionable insights to improve your rankings",
+                  "Clear roadmap to increase organic traffic",
+                  "Transparent reporting and communication"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 mr-2 shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="md:w-1/3 bg-gray-50 p-6 rounded-lg border border-gray-100">
+              <h4 className="font-bold text-lg mb-4 text-center">Schedule Your Free Call</h4>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="w-full bg-seo-blue hover:bg-seo-blue-light">
+                    Book a Strategy Call
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Schedule Your Free 30-Minute Strategy Call</DialogTitle>
+                    <DialogDescription>
+                      Fill out the form below to schedule a call with one of our SEO experts.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <Form {...leadForm}>
+                    <form className="space-y-4">
+                      <FormField
+                        control={leadForm.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Your name" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={leadForm.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input placeholder="your.email@example.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={leadForm.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Phone</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Your phone number" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button 
+                        type="button" 
+                        className="w-full bg-seo-blue hover:bg-seo-blue-light"
+                        onClick={() => {
+                          toast.success("Thank you! We'll contact you soon to schedule your call.");
+                        }}
+                      >
+                        Schedule Call
+                      </Button>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
+              <p className="text-xs text-center mt-4 text-gray-500">
+                No obligation. 100% free consultation.
+              </p>
+            </div>
+          </div>
+        </AnimatedSection>
+                
         <AnimatedSection 
           className="max-w-4xl mx-auto mt-20 bg-white rounded-lg shadow-lg p-8 border border-gray-200" 
           animation="fade-in"
-          delay={400}
+          delay={500}
         >
           <h3 className="text-2xl font-bold mb-6">Why SEO Matters for Your Business</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
