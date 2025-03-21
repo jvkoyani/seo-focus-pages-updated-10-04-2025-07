@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Send, Globe, AlertTriangle, CheckCircle2, Info, Database, Clock, Mail, Download, Share2, Phone, MapPin, TrendingUp, Award, Users, Activity, Star, Lightbulb, Target, BarChart, Building, ShoppingBag, Compass, ChevronRight } from "lucide-react";
+import { Send, Globe, AlertTriangle, CheckCircle2, Info, Database, Clock, Mail, Download, Share2, Phone, MapPin, TrendingUp, Award, Users, Activity, Star, Lightbulb, Target, BarChart, Building, ShoppingBag, Compass, ChevronRight, FileText } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -1045,7 +1044,7 @@ const SeoAudit = () => {
           </AnimatedSection>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <AnimatedSection animation="fade-in-up" delay={100} className="relative">
+            <AnimatedSection animation="fade-in" delay={100} className="relative">
               <div className="absolute -left-4 top-4 w-8 h-8 rounded-full bg-seo-blue flex items-center justify-center text-white font-bold z-10">1</div>
               <div className="relative z-0 h-full p-6 bg-white rounded-lg shadow-md border border-gray-100">
                 <div className="rounded-full p-3 bg-blue-100 inline-block mb-4">
@@ -1058,7 +1057,7 @@ const SeoAudit = () => {
               </div>
             </AnimatedSection>
             
-            <AnimatedSection animation="fade-in-up" delay={200} className="relative">
+            <AnimatedSection animation="fade-in" delay={200} className="relative">
               <div className="absolute -left-4 top-4 w-8 h-8 rounded-full bg-seo-blue flex items-center justify-center text-white font-bold z-10">2</div>
               <div className="absolute top-1/2 -left-12 w-8 h-[2px] bg-gray-200 hidden md:block"></div>
               <div className="absolute top-1/2 -right-12 w-8 h-[2px] bg-gray-200 hidden md:block"></div>
@@ -1073,7 +1072,7 @@ const SeoAudit = () => {
               </div>
             </AnimatedSection>
             
-            <AnimatedSection animation="fade-in-up" delay={300} className="relative">
+            <AnimatedSection animation="fade-in" delay={300} className="relative">
               <div className="absolute -left-4 top-4 w-8 h-8 rounded-full bg-seo-blue flex items-center justify-center text-white font-bold z-10">3</div>
               <div className="relative z-0 h-full p-6 bg-white rounded-lg shadow-md border border-gray-100">
                 <div className="rounded-full p-3 bg-purple-100 inline-block mb-4">
