@@ -23,8 +23,8 @@ const serviceBlogContents: Record<string, {
     content: [
       'In today\'s digital landscape, local SEO has become essential for businesses in {city name} looking to establish a strong online presence and attract more customers from their local area.',
       'Local SEO refers to the process of optimizing your business\'s online presence to attract more customers from local searches. For {city name} businesses, this means appearing in search results when potential customers in your area search for products or services you offer.',
-      'One of the key benefits of local SEO for {city name} businesses is increased visibility in local search results. When your business appears in the "local pack" or Google Maps listings, you're more likely to attract customers who are ready to make a purchase.',
-      'Another major advantage is the ability to compete with larger businesses. Even if you're a small business in {city name}, effective local SEO can help you outrank larger competitors for local searches.',
+      'One of the key benefits of local SEO for {city name} businesses is increased visibility in local search results. When your business appears in the "local pack" or Google Maps listings, you\'re more likely to attract customers who are ready to make a purchase.',
+      'Another major advantage is the ability to compete with larger businesses. Even if you\'re a small business in {city name}, effective local SEO can help you outrank larger competitors for local searches.',
       'Local SEO also helps build trust and credibility with your {city name} customers. When your business appears in local search results with positive reviews and accurate information, potential customers are more likely to trust your brand.',
       'Some essential local SEO strategies for {city name} businesses include creating and optimizing your Google Business Profile, building local citations, earning customer reviews, and creating locally-focused content.',
       'By implementing a comprehensive local SEO strategy, your {city name} business can increase its visibility, attract more local customers, and ultimately grow its revenue.'
