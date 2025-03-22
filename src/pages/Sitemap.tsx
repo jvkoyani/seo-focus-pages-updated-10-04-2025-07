@@ -239,23 +239,21 @@ const Sitemap = () => {
             </div>
           </section>
           
-          {/* Service-Location Combinations */}
+          {/* Service-Location Combinations - UPDATED SECTION */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Popular Service-Location Combinations</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.slice(0, 6).map(service => {
-                // Get filtered locations based on search
-                const filteredAll = filterLocations(allAustralianCities);
-                // Take a sample of cities to display
-                const displayLocations = filteredAll.slice(0, 25);
+                // Get all major cities for popular combinations (first 15 from the main Australian cities)
+                const majorCities = allAustralianCities.slice(0, 15);
                 
                 return (
                   <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
                     <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
                     <div className="h-[200px] overflow-y-auto pr-2">
                       <div className="grid grid-cols-1 gap-2">
-                        {displayLocations.map(city => (
+                        {majorCities.map(city => (
                           <Link 
                             key={`${service.slug}-${city.slug}`}
                             to={`/${service.slug}-${city.slug}`}
@@ -280,18 +278,38 @@ const Sitemap = () => {
             <div className="mt-8 p-6 bg-white rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">All Service-Location Combinations</h3>
               <p className="text-seo-gray-dark mb-4">
-                We provide specialized SEO services for all major locations in Australia. 
-                To access a specific service in your location, use the URL pattern:
+                We provide specialized SEO services for all {allAustralianCities.length} locations in Australia. 
+                Each service is available in every location. To access a specific service in your location, use the URL pattern:
               </p>
               <div className="bg-seo-gray-light p-3 rounded mb-4 font-mono text-sm">
                 /{"{service-slug}"}-{"{location-slug}"}
               </div>
-              <p className="text-seo-gray-dark mb-4">
+              <p className="text-seo-gray-dark mb-6">
                 For example, to access Local SEO services in Sydney:
               </p>
-              <Link to="/local-seo-sydney" className="text-seo-blue hover:underline">
-                /local-seo-sydney
-              </Link>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {services.slice(0, 6).map(service => (
+                  <Link 
+                    key={service.id} 
+                    to={`/${service.slug}-sydney`}
+                    className="p-2 bg-seo-gray-light rounded hover:bg-seo-gray/20 transition-colors flex items-center"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2 text-seo-blue" />
+                    <span>/{service.slug}-sydney</span>
+                  </Link>
+                ))}
+              </div>
+              
+              <p className="text-seo-gray-dark mb-4">
+                With {services.length} services and {allAustralianCities.length} locations, we offer a total of {services.length * allAustralianCities.length} unique service-location combinations.
+              </p>
+              
+              <Button asChild className="w-full md:w-auto">
+                <Link to="/location-sitemap">
+                  View Complete Location Directory
+                </Link>
+              </Button>
             </div>
           </section>
           
