@@ -22,6 +22,11 @@ import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 import FreeConsultation from "./pages/FreeConsultation";
 
+// Country, State, County pages
+import Country from "./pages/Country";
+import State from "./pages/State";
+import County from "./pages/County";
+
 // Methodology pages
 import ResearchAnalysis from "./pages/methodology/ResearchAnalysis";
 import StrategicPlanning from "./pages/methodology/StrategicPlanning";
@@ -60,7 +65,12 @@ const App = () => (
           <Route path="/methodology/implementation" element={<Implementation />} />
           <Route path="/methodology/monitoring-optimization" element={<MonitoringOptimization />} />
           
-          {/* Additional SEO-friendly URL patterns */}
+          {/* Hierarchy pages */}
+          <Route path="/:country" element={<Country />} />
+          <Route path="/:country/:state" element={<State />} />
+          <Route path="/:country/:state/:county" element={<County />} />
+          
+          {/* SEO-friendly URL patterns for service-location combinations */}
           <Route path="/local-seo-:locationSlug" element={<LocationService />} />
           <Route path="/technical-seo-:locationSlug" element={<LocationService />} />
           <Route path="/ecommerce-seo-:locationSlug" element={<LocationService />} />
@@ -69,6 +79,9 @@ const App = () => (
           <Route path="/seo-audits-:locationSlug" element={<LocationService />} />
           <Route path="/digital-pr-:locationSlug" element={<LocationService />} />
           <Route path="/analytics-reporting-:locationSlug" element={<LocationService />} />
+          
+          {/* Generic pattern for any service-location combination */}
+          <Route path="/:serviceLocationSlug" element={<LocationService />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

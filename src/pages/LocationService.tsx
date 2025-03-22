@@ -16,6 +16,7 @@ import InfoCard from '@/components/InfoCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import LocationLinks from '@/components/LocationLinks';
+import LocationBreadcrumbs from '@/components/LocationBreadcrumbs';
 
 const services = [
   { title: "Local SEO", slug: "local-seo" },
@@ -29,7 +30,22 @@ const services = [
 ];
 
 const LocationService = () => {
-  const { locationSlug, serviceSlug } = useParams<{ locationSlug: string; serviceSlug: string }>();
+  const params = useParams<{ locationSlug?: string; serviceSlug?: string; 0?: string }>();
+  
+  let locationSlug = params.locationSlug;
+  let serviceSlug = params.serviceSlug;
+  
+  if (!locationSlug && !serviceSlug && params[0]) {
+    const segments = params[0].split('-');
+    
+    if (segments.length >= 2) {
+      const locationSegment = segments.pop() || '';
+      const serviceSegment = segments.join('-');
+      
+      locationSlug = locationSegment;
+      serviceSlug = serviceSegment;
+    }
+  }
   
   useEffect(() => {
     window.scrollTo({
@@ -63,10 +79,8 @@ const LocationService = () => {
     );
   }
 
-  // Create a proper URL-friendly slug for this combination
   const pageSlug = `${serviceData.slug}-${locationData.slug}`;
 
-  // Service-specific information
   const serviceInfo = {
     "local-seo": {
       title: `Local SEO Services in ${locationData.name}`,
@@ -200,7 +214,6 @@ const LocationService = () => {
         }
       ]
     },
-    // Default for other services
     "default": {
       title: `${serviceData.title} Services in ${locationData.name}`,
       description: `Boost your online presence with our specialized ${serviceData.title} services designed for businesses in ${locationData.name}.`,
@@ -236,14 +249,12 @@ const LocationService = () => {
     }
   };
 
-  // Get the right info based on service slug, fallback to default if not found
   const currentServiceInfo = serviceInfo[serviceSlug] || serviceInfo.default;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-seo-blue rounded-full"></div>
@@ -253,23 +264,10 @@ const LocationService = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection className="mb-4" animation="fade-in">
-            <div className="inline-flex items-center space-x-2">
-              <Link 
-                to="/" 
-                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
-              >
-                Home
-              </Link>
-              <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-              <Link 
-                to={`/location/${locationData.slug}`}
-                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
-              >
-                {locationData.name}
-              </Link>
-              <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-              <span className="text-seo-blue font-medium">{serviceData.title}</span>
-            </div>
+            <LocationBreadcrumbs 
+              locationSlug={locationData.slug}
+              serviceSlug={serviceData.slug}
+            />
           </AnimatedSection>
           
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
@@ -295,11 +293,15 @@ const LocationService = () => {
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
-                  Get a Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <Link to="/free-consultation">
+                    Get a Free Consultation
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
                 <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
-                  View Case Studies
+                  <Link to="/case-studies">
+                    View Case Studies
+                  </Link>
                 </Button>
               </div>
             </AnimatedSection>
@@ -350,7 +352,6 @@ const LocationService = () => {
         </div>
       </section>
       
-      {/* Benefits Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -385,7 +386,6 @@ const LocationService = () => {
         </div>
       </section>
       
-      {/* Service Features */}
       <section className="py-16 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -417,7 +417,6 @@ const LocationService = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
@@ -450,7 +449,6 @@ const LocationService = () => {
         </div>
       </section>
       
-      {/* Other Locations Section */}
       <section className="py-16 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -469,7 +467,6 @@ const LocationService = () => {
         </div>
       </section>
       
-      {/* Resources Section */}
       <ResourcesSection 
         filterTag={serviceData.title} 
         className="bg-white"

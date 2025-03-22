@@ -22,6 +22,10 @@ export interface LocationData {
   image: string;
   metaTitle: string;
   metaDescription: string;
+  state: string;
+  county?: string;
+  country: string;
+  relatedLocations?: string[];
 }
 
 export interface ServiceData {
@@ -90,6 +94,10 @@ export const locations: LocationData[] = [
     image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1000&auto=format&fit=crop',
     metaTitle: 'Sydney SEO Services | Rank Higher in Local Searches',
     metaDescription: 'Our Sydney SEO services help local businesses rank higher in search results. Get more traffic, leads and sales with our proven SEO strategies.',
+    state: 'New South Wales',
+    county: 'Cumberland',
+    country: 'Australia',
+    relatedLocations: ['parramatta', 'bondi', 'chatswood']
   },
   {
     id: '2',
@@ -99,6 +107,10 @@ export const locations: LocationData[] = [
     image: 'https://images.unsplash.com/photo-1545044846-351ba102b6d5?q=80&w=1000&auto=format&fit=crop',
     metaTitle: 'Melbourne SEO Services | Boost Your Local Rankings',
     metaDescription: 'Melbourne SEO experts delivering results-driven strategies for local businesses. Improve visibility, traffic and conversions.',
+    state: 'Victoria',
+    county: 'Melbourne',
+    country: 'Australia',
+    relatedLocations: ['st-kilda', 'brighton', 'dandenong']
   },
   {
     id: '3',
@@ -108,6 +120,10 @@ export const locations: LocationData[] = [
     image: 'https://images.unsplash.com/photo-1566734904496-9309bb1798b3?q=80&w=1000&auto=format&fit=crop',
     metaTitle: 'Brisbane SEO Services | Local Search Optimization',
     metaDescription: 'Brisbane SEO specialists helping businesses rank higher in local search results. Get more visibility and customers with our proven approach.',
+    state: 'Queensland',
+    county: 'Brisbane',
+    country: 'Australia',
+    relatedLocations: ['gold-coast', 'ipswich', 'logan']
   },
   {
     id: '4',
@@ -117,6 +133,10 @@ export const locations: LocationData[] = [
     image: 'https://images.unsplash.com/photo-1573935448851-4b07c29ee181?q=80&w=1000&auto=format&fit=crop',
     metaTitle: 'Perth SEO Services | Increase Your Local Visibility',
     metaDescription: 'Perth SEO services customized to help local businesses attract more customers. Improve rankings, traffic and conversions.',
+    state: 'Western Australia',
+    county: 'Perth',
+    country: 'Australia',
+    relatedLocations: ['fremantle', 'joondalup', 'rockingham']
   },
   {
     id: '5',
@@ -126,6 +146,10 @@ export const locations: LocationData[] = [
     image: 'https://images.unsplash.com/photo-1566208541068-ffdb5471e9bf?q=80&w=1000&auto=format&fit=crop',
     metaTitle: 'Adelaide SEO Services | Expert Local Optimization',
     metaDescription: 'Adelaide SEO experts helping local businesses increase online visibility. Get higher rankings and more qualified website traffic.',
+    state: 'South Australia',
+    county: 'Adelaide',
+    country: 'Australia',
+    relatedLocations: ['glenelg', 'norwood', 'prospect']
   },
   {
     id: '6',
@@ -135,7 +159,50 @@ export const locations: LocationData[] = [
     image: 'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?q=80&w=1000&auto=format&fit=crop',
     metaTitle: 'Gold Coast SEO Services | Dominate Local Searches',
     metaDescription: 'Gold Coast SEO specialists delivering custom strategies to help businesses improve rankings and attract more customers.',
+    state: 'Queensland',
+    county: 'Gold Coast',
+    country: 'Australia',
+    relatedLocations: ['brisbane', 'surfers-paradise', 'broadbeach']
   },
+  {
+    id: '7',
+    name: 'Parramatta',
+    slug: 'parramatta',
+    description: 'Specialized SEO services for Parramatta businesses to increase visibility in this competitive Western Sydney market.',
+    image: 'https://images.unsplash.com/photo-1598542717377-fbc91674ef3f?q=80&w=1000&auto=format&fit=crop',
+    metaTitle: 'Parramatta SEO Services | Local Digital Marketing',
+    metaDescription: 'Parramatta SEO experts helping local businesses improve rankings and attract more customers with tailored digital strategies.',
+    state: 'New South Wales',
+    county: 'Cumberland',
+    country: 'Australia',
+    relatedLocations: ['sydney', 'blacktown', 'liverpool']
+  },
+  {
+    id: '8',
+    name: 'St Kilda',
+    slug: 'st-kilda',
+    description: 'Customized SEO strategies for St Kilda businesses to stand out in Melbourne\'s vibrant coastal suburb.',
+    image: 'https://images.unsplash.com/photo-1523428461295-92770e70d7ae?q=80&w=1000&auto=format&fit=crop',
+    metaTitle: 'St Kilda SEO Services | Local Digital Marketing',
+    metaDescription: 'St Kilda SEO specialists helping local businesses boost online visibility and attract more local and tourist customers.',
+    state: 'Victoria',
+    county: 'Melbourne',
+    country: 'Australia',
+    relatedLocations: ['melbourne', 'brighton', 'elwood']
+  },
+  {
+    id: '9',
+    name: 'Fremantle',
+    slug: 'fremantle',
+    description: 'Tailored SEO solutions for Fremantle businesses to thrive in this historic port city marketplace.',
+    image: 'https://images.unsplash.com/photo-1571733847329-3aaa4b5ca970?q=80&w=1000&auto=format&fit=crop',
+    metaTitle: 'Fremantle SEO Services | Local Digital Marketing',
+    metaDescription: 'Fremantle SEO experts delivering customized strategies to help local businesses attract more visitors and customers.',
+    state: 'Western Australia',
+    county: 'Perth',
+    country: 'Australia',
+    relatedLocations: ['perth', 'cottesloe', 'cockburn']
+  }
 ];
 
 export const services: ServiceData[] = [
@@ -573,4 +640,58 @@ export const caseStudies: CaseStudyData[] = [
     serviceType: 'analytics-reporting',
     location: 'gold-coast'
   },
+  {
+    id: '7',
+    title: 'Local SEO Campaign Boosts Parramatta Medical Practice',
+    slug: 'local-seo-parramatta-medical',
+    client: 'Parramatta Health Center',
+    industry: 'Healthcare',
+    challenge: 'A growing medical practice in Parramatta struggled to attract new patients despite offering specialized services. Their online presence was minimal and they weren\'t visible in local searches.',
+    solution: 'We implemented a comprehensive local SEO strategy focusing on Google Business Profile optimization, local content creation, and review management.',
+    results: [
+      '256% increase in Google Business Profile views within 3 months',
+      '189% increase in appointment requests through the website',
+      'First page rankings for 28 high-value local medical keywords'
+    ],
+    testimonial: 'The results exceeded our expectations. We\'re now the go-to medical center in Parramatta for many new patients finding us online.',
+    image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'local-seo',
+    location: 'parramatta'
+  },
+  {
+    id: '8',
+    title: 'Technical SEO Overhaul for St Kilda Restaurant Group',
+    slug: 'technical-seo-st-kilda-restaurants',
+    client: 'Bayside Dining Group',
+    industry: 'Hospitality',
+    challenge: 'A popular St Kilda restaurant group with multiple venues was experiencing poor website performance, mobile issues, and declining search visibility.',
+    solution: 'We conducted a comprehensive technical SEO audit and implemented fixes for site structure, speed optimization, and mobile usability issues.',
+    results: [
+      '167% improvement in mobile page speed scores',
+      '93% increase in mobile organic traffic within 2 months',
+      '45% reduction in bounce rate across all restaurant location pages'
+    ],
+    testimonial: 'The technical improvements transformed our online presence. Our mobile bookings have increased dramatically since the optimization.',
+    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'technical-seo',
+    location: 'st-kilda'
+  },
+  {
+    id: '9',
+    title: 'E-commerce SEO Success for Fremantle Artisan Marketplace',
+    slug: 'ecommerce-seo-fremantle-artisan',
+    client: 'Fremantle Makers',
+    industry: 'E-commerce / Retail',
+    challenge: 'A Fremantle-based online marketplace for local artisans struggled with poor visibility, low traffic, and conversion issues for their product pages.',
+    solution: 'We implemented an e-commerce SEO strategy focusing on product page optimization, enhanced category structure, and local content marketing.',
+    results: [
+      '312% increase in organic product page traffic within 6 months',
+      '187% increase in e-commerce conversion rate',
+      '234% growth in organic revenue from local Fremantle searches'
+    ],
+    testimonial: 'Our artisan marketplace has flourished online since implementing these SEO strategies. Local customers now find us easily online.',
+    image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1000&auto=format&fit=crop',
+    serviceType: 'ecommerce-seo',
+    location: 'fremantle'
+  }
 ];
