@@ -51,29 +51,23 @@ const XmlSitemap = () => {
 
       // Add location pages for all cities
       allAustralianCities.forEach(city => {
-        if (city.state !== "Various") {
-          xml += `
+        xml += `
   <url>
     <loc>${baseUrl}/location/${city.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
-        }
-      });
 
-      // Add service-location combinations for all cities
-      services.forEach(service => {
-        allAustralianCities.forEach(city => {
-          if (city.state !== "Various") {
-            xml += `
+        // Add service-location combinations for all cities and all services
+        services.forEach(service => {
+          xml += `
   <url>
     <loc>${baseUrl}/${service.slug}-${city.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
-          }
         });
       });
 

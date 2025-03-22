@@ -1,24 +1,27 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { MapPin, ExternalLink, Layers, ChevronRight } from 'lucide-react';
+import { MapPin, ExternalLink, Layers, ChevronRight, Search } from 'lucide-react';
 import { allAustralianCities } from '@/lib/locationData';
 import { services } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 // Group cities by state for better organization
 const groupCitiesByState = () => {
   const stateGroups: Record<string, typeof allAustralianCities> = {};
   
   allAustralianCities.forEach(city => {
-    if (city.state === "Various") return; // Skip cities with unspecified states
+    // Include all cities, even those with "Various" state
+    const state = city.state === "Various" ? "Other Locations" : city.state;
     
-    if (!stateGroups[city.state]) {
-      stateGroups[city.state] = [];
+    if (!stateGroups[state]) {
+      stateGroups[state] = [];
     }
-    stateGroups[city.state].push(city);
+    stateGroups[state].push(city);
   });
   
   return stateGroups;
@@ -27,6 +30,15 @@ const groupCitiesByState = () => {
 const Sitemap = () => {
   const stateGroups = groupCitiesByState();
   const states = Object.keys(stateGroups).sort();
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  // Filter locations based on search term
+  const filterLocations = (locations: typeof allAustralianCities) => {
+    if (!searchTerm) return locations;
+    return locations.filter(location => 
+      location.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -130,40 +142,73 @@ const Sitemap = () => {
             </div>
           </section>
           
+          {/* Search for locations */}
+          <section className="mb-8">
+            <div className="flex items-center gap-4 max-w-md mx-auto">
+              <Input
+                type="text"
+                placeholder="Search for a location..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="flex-1"
+              />
+              <Button 
+                variant="ghost" 
+                className="px-3"
+                onClick={() => setSearchTerm('')}
+                disabled={!searchTerm}
+              >
+                Clear
+              </Button>
+            </div>
+          </section>
+          
           {/* Locations by State */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Locations We Serve</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {states.map(state => (
-                <div key={state} className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold mb-4 border-b pb-2">
-                    <Link to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-seo-blue">
-                      {state}
-                    </Link>
-                  </h3>
-                  
-                  <div className="h-[300px] overflow-y-auto pr-2">
-                    <div className="grid grid-cols-1 gap-2">
-                      {stateGroups[state].map(city => (
-                        <Link 
-                          key={city.id}
-                          to={`/location/${city.slug}`}
-                          className="flex items-center p-2 hover:bg-seo-gray-light rounded transition-colors"
-                        >
-                          <MapPin className="h-4 w-4 mr-2 text-seo-blue flex-shrink-0" />
-                          <span className="truncate">{city.name}</span>
-                        </Link>
-                      ))}
+              {states.map(state => {
+                const filteredLocations = filterLocations(stateGroups[state]);
+                if (filteredLocations.length === 0) return null;
+                
+                return (
+                  <div key={state} className="bg-white rounded-lg shadow-sm p-6">
+                    <h3 className="text-xl font-semibold mb-4 border-b pb-2">
+                      <Link to={state !== "Other Locations" ? 
+                        `/australia/${state.toLowerCase().replace(/\s+/g, '-')}` : 
+                        "#"} 
+                        className={state !== "Other Locations" ? "hover:text-seo-blue" : ""}
+                      >
+                        {state}
+                      </Link>
+                      <span className="text-sm text-seo-gray-dark ml-2">({filteredLocations.length})</span>
+                    </h3>
+                    
+                    <div className="h-[300px] overflow-y-auto pr-2">
+                      <div className="grid grid-cols-1 gap-2">
+                        {filteredLocations.map(city => (
+                          <Link 
+                            key={city.id}
+                            to={`/location/${city.slug}`}
+                            className="flex items-center p-2 hover:bg-seo-gray-light rounded transition-colors"
+                          >
+                            <MapPin className="h-4 w-4 mr-2 text-seo-blue flex-shrink-0" />
+                            <span className="truncate">{city.name}</span>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
+                    {state !== "Other Locations" && (
+                      <div className="mt-4 text-right">
+                        <Link to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-seo-blue hover:underline">
+                          All {state} locations
+                        </Link>
+                      </div>
+                    )}
                   </div>
-                  <div className="mt-4 text-right">
-                    <Link to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-seo-blue hover:underline">
-                      All {state} locations
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </section>
           
@@ -177,17 +222,15 @@ const Sitemap = () => {
                   <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
                   <div className="h-[200px] overflow-y-auto pr-2">
                     <div className="grid grid-cols-1 gap-2">
-                      {allAustralianCities.slice(0, 25).map(city => (
-                        city.state !== "Various" && (
-                          <Link 
-                            key={`${service.slug}-${city.slug}`}
-                            to={`/${service.slug}-${city.slug}`}
-                            className="flex items-center text-sm hover:text-seo-blue"
-                          >
-                            <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
-                            <span className="truncate">{service.title} in {city.name}</span>
-                          </Link>
-                        )
+                      {filterLocations(allAustralianCities.slice(0, 25)).map(city => (
+                        <Link 
+                          key={`${service.slug}-${city.slug}`}
+                          to={`/${service.slug}-${city.slug}`}
+                          className="flex items-center text-sm hover:text-seo-blue"
+                        >
+                          <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
+                          <span className="truncate">{service.title} in {city.name}</span>
+                        </Link>
                       ))}
                     </div>
                   </div>
