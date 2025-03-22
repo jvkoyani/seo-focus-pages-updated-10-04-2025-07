@@ -50,6 +50,14 @@ const Sitemap = () => {
     }));
   };
   
+  // Get major cities for popular combinations
+  const majorCities = useMemo(() => {
+    // Return the first 15 cities with full metadata (excluding "Various" state)
+    return allAustralianCities
+      .filter(city => city.description && city.state !== "Various")
+      .slice(0, 15);
+  }, []);
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -248,49 +256,61 @@ const Sitemap = () => {
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Popular Service-Location Combinations</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.slice(0, 6).map(service => {
-                // Get all major cities for popular combinations (first 15 from the main Australian cities)
-                const majorCities = allAustralianCities.slice(0, 15);
-                
-                return (
-                  <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
-                    <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
-                    <div className="h-[200px] overflow-y-auto pr-2">
-                      <div className="grid grid-cols-1 gap-2">
-                        {majorCities.map(city => (
+              {services.slice(0, 6).map(service => (
+                <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
+                  <div className="h-[200px] overflow-y-auto pr-2">
+                    <div className="grid grid-cols-1 gap-2">
+                      {majorCities.map(city => {
+                        // Create proper URL format
+                        const serviceLocationUrl = `/${service.slug}-${city.slug}`;
+                        return (
                           <Link 
                             key={`${service.slug}-${city.slug}`}
-                            to={`/${service.slug}-${city.slug}`}
+                            to={serviceLocationUrl}
                             className="flex items-center text-sm hover:text-seo-blue"
                           >
                             <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
                             <span className="truncate">{service.title} in {city.name}</span>
                           </Link>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-2 border-t text-center">
-                      <Link to={`/service/${service.slug}`} className="text-sm text-seo-blue hover:underline">
-                        View all {service.title} services
-                      </Link>
+                        );
+                      })}
                     </div>
                   </div>
-                );
-              })}
+                  <div className="mt-4 pt-2 border-t text-center">
+                    <Link to={`/service/${service.slug}`} className="text-sm text-seo-blue hover:underline">
+                      View all {service.title} services
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
             
             <div className="mt-8 p-6 bg-white rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">All Service-Location Combinations</h3>
               <p className="text-seo-gray-dark mb-4">
-                We provide specialized SEO services for all {allAustralianCities.length} locations in Australia. 
-                Each service is available in every location. To access a specific service in your location, use the URL pattern:
+                We provide specialized SEO services for all {allAustralianCities.length} locations across Australia. 
+                Each of our {services.length} services is available in every location, creating a total of {services.length * allAustralianCities.length} unique service-location combinations.
               </p>
               <div className="bg-seo-gray-light p-3 rounded mb-4 font-mono text-sm">
                 /{"{service-slug}"}-{"{location-slug}"}
               </div>
               <p className="text-seo-gray-dark mb-6">
-                For example, to access Local SEO services in Sydney:
+                For example, to access our services in major Australian cities:
               </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {majorCities.slice(0, 6).map(city => (
+                  <Link 
+                    key={city.id} 
+                    to={`/local-seo-${city.slug}`}
+                    className="p-2 bg-seo-gray-light rounded hover:bg-seo-gray/20 transition-colors flex items-center"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2 text-seo-blue" />
+                    <span>/local-seo-{city.slug}</span>
+                  </Link>
+                ))}
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 {services.slice(0, 6).map(service => (
@@ -304,10 +324,6 @@ const Sitemap = () => {
                   </Link>
                 ))}
               </div>
-              
-              <p className="text-seo-gray-dark mb-4">
-                With {services.length} services and {allAustralianCities.length} locations, we offer a total of {services.length * allAustralianCities.length} unique service-location combinations.
-              </p>
               
               <Button asChild className="w-full md:w-auto">
                 <Link to="/location-sitemap">
