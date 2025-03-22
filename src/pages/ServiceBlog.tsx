@@ -11,7 +11,13 @@ import { allAustralianCities } from '@/lib/locationData';
 import { services } from '@/lib/data';
 
 // Sample blog content for different service types
-const serviceBlogContents = {
+const serviceBlogContents: Record<string, {
+  title: string;
+  content: string[];
+  publishDate: string;
+  author: string;
+  tags: string[];
+}> = {
   'local-seo': {
     title: 'How Local SEO is Helpful to Your {city name} Business',
     content: [
