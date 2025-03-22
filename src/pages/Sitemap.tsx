@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -255,11 +256,10 @@ const Sitemap = () => {
                   <div className="h-[200px] overflow-y-auto pr-2">
                     <div className="grid grid-cols-1 gap-2">
                       {majorCities.map(city => {
-                        const serviceLocationUrl = `/${service.slug.replace(/ /g, '-')}-${city.slug}`;
                         return (
                           <Link 
                             key={`${service.slug}-${city.slug}`}
-                            to={serviceLocationUrl}
+                            to={`/location/${city.slug}/${service.slug}`}
                             className="flex items-center text-sm hover:text-seo-blue"
                           >
                             <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
@@ -285,7 +285,7 @@ const Sitemap = () => {
                 Each of our {services.length} services is available in every location, creating a total of {services.length * allAustralianCities.length} unique service-location combinations.
               </p>
               <div className="bg-seo-gray-light p-3 rounded mb-4 font-mono text-sm">
-                /{"{service-slug}"}-{"{location-slug}"}
+                /location/{"{location-slug}"}/{"{service-slug}"}
               </div>
               <p className="text-seo-gray-dark mb-6">
                 For example, to access our services in major Australian cities:
@@ -295,26 +295,25 @@ const Sitemap = () => {
                 {majorCities.slice(0, 6).map(city => (
                   <Link 
                     key={city.id} 
-                    to={`/local-seo-${city.slug}`}
+                    to={`/location/${city.slug}/local-seo`}
                     className="p-2 bg-seo-gray-light rounded hover:bg-seo-gray/20 transition-colors flex items-center"
                   >
                     <ExternalLink className="h-4 w-4 mr-2 text-seo-blue" />
-                    <span>/local-seo-{city.slug}</span>
+                    <span>/location/{city.slug}/local-seo</span>
                   </Link>
                 ))}
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 {services.slice(0, 6).map(service => {
-                  const formattedServiceSlug = service.slug.replace(/ /g, '-');
                   return (
                     <Link 
                       key={service.id} 
-                      to={`/${formattedServiceSlug}-sydney`}
+                      to={`/location/sydney/${service.slug}`}
                       className="p-2 bg-seo-gray-light rounded hover:bg-seo-gray/20 transition-colors flex items-center"
                     >
                       <ExternalLink className="h-4 w-4 mr-2 text-seo-blue" />
-                      <span>/{formattedServiceSlug}-sydney</span>
+                      <span>/location/sydney/{service.slug}</span>
                     </Link>
                   );
                 })}
@@ -359,4 +358,3 @@ const Sitemap = () => {
 };
 
 export default Sitemap;
-
