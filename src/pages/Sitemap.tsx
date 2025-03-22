@@ -113,6 +113,10 @@ const Sitemap = () => {
                 <Layers className="h-5 w-5 mr-3 text-seo-blue" />
                 <span>XML Sitemap</span>
               </Link>
+              <Link to="/location-sitemap" className="p-4 bg-white rounded shadow-sm hover:shadow-md transition-shadow flex items-center">
+                <Layers className="h-5 w-5 mr-3 text-seo-blue" />
+                <span>Location Directory</span>
+              </Link>
             </div>
           </section>
           

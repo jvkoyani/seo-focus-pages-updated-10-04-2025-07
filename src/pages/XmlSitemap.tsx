@@ -26,6 +26,7 @@ const XmlSitemap = () => {
         { url: '/contact', priority: '0.7' },
         { url: '/free-consultation', priority: '0.9' },
         { url: '/sitemap', priority: '0.7' },
+        { url: '/location-sitemap', priority: '0.7' },
       ];
 
       mainPages.forEach(page => {

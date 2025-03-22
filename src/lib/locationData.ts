@@ -1,4 +1,3 @@
-
 interface Location {
   id: string;
   name: string;
@@ -493,9 +492,8 @@ const additionalCities: Location[] = [
   },
 ];
 
-// Add all remaining cities from the previous list
+// Add all remaining cities from the previous list and the new NSW locations
 const remainingCities: Location[] = [
-  // These were in the original file, now we'll add more
   "Cranbourne", "Frankston", "Caloundra", "Mount Eliza", "Taree", "Banora Point", "Lara", 
   "Cessnock", "Horsham", "Murray Bridge", "Wallan", "Australind", "Ormeau", 
   "Barwon Heads", "Mount Barker", "Morwell", "Forster", "Penrith", "Goonellabah", 
@@ -507,14 +505,33 @@ const remainingCities: Location[] = [
   "Mooroopna", "Maryborough", "Young", "Narre Warren North", "Clifton Springs", 
   "Castlemaine", "Kingscliff", "Fremantle", "Leeton", "Blaxland", "Kyabram", 
   "Sanctuary Point", "Moama", "Merrimac", "Moree", "Murwillumbah", "Urraween", 
-  "Bongaree", "Bomaderry", "Ulverstone", "Dromana", "Helensburgh", "Seymour"
+  "Bongaree", "Bomaderry", "Ulverstone", "Dromana", "Helensburgh", "Seymour",
+  // Adding the additional 100 NSW locations
+  "Alexandria", "Alleena", "Ashford (NSW)", "Badja", "Bago", "Bakers Swamp", "Ballyroe", 
+  "Banyabba", "Barry (Blayney - NSW)", "Belmore River", "Bemboka", "Bendoura", "Bengalla", 
+  "Berowra Heights", "Berrigan", "Bilgola Beach", "Boambee", "Bocoble", "Bonny Hills", 
+  "Bow Bowing", "Brandy Hill", "Brayton", "Bridgman", "Brooklet", "Buckenbowra", 
+  "Bulahdelah", "Bungabbee", "Burcher", "Burrandana", "Burraneer", "Caffreys Flat", 
+  "Callaghans Creek", "Camellia", "Carrington (Newcastle - NSW)", "Carss Park", "Carwell", 
+  "Castle Cove", "Centennial Park (NSW)", "Clarence Town", "Cobaki Lakes", "Cobramunga", 
+  "Coleambally", "Coolah", "Cooleman", "Coonabarabran", "Copmanhurst", "Corbie Hill", 
+  "Cornwallis", "Countegany", "Crooked Corner", "Croudace Bay", "Cudmirrah", "Dalmeny", 
+  "Dandaloo", "Deep Creek (Kyogle - NSW)", "East Wardell", "Ellerston", "Empire Vale", 
+  "Estella", "Eucumbene", "Freemans", "Gala Vale", "Galambine", "Ganmain", "Gearys Flat", 
+  "Glen Innes", "Goodooga", "Greenwich", "Grose Wold", "Gulf Creek", "Gundamulda", 
+  "Hammondville", "Hawks Nest", "Holroyd", "Howick (NSW)", "Hunters Hill", "Ivanhoe (NSW)", 
+  "Jimenbuen", "Kanahooka", "Kanwal", "Kempsey", "Killcare Heights", "Kirrawee", 
+  "Kiwarrak", "Kooringal (NSW)", "Kulnura", "Lake Cargelligo", "Leeville", 
+  "Limeburners Creek (Port Macquarie-Hastings - NSW)", "Marengo (NSW)", "Mascot", 
+  "McDougalls Hill", "Medowie", "Medway", "Merungle Hill", "Milparinka", "Mount Annan", 
+  "Mount Keira", "Mount Murray", "Mount Royal"
 ].map((cityName, index) => {
-  const slug = cityName.toLowerCase().replace(/\s+/g, '-');
+  const slug = cityName.toLowerCase().replace(/[\s(),-]+/g, '-').replace(/--+/g, '-');
   return {
     id: slug,
     name: cityName,
     slug: slug,
-    state: "Various", // This would need to be accurately mapped in a real implementation
+    state: "New South Wales", // Since these are all NSW locations
     country: "Australia",
     image: "/placeholder.svg"
   };
