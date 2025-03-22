@@ -8,6 +8,9 @@ import { MapPin } from 'lucide-react';
 const LocationSitemap = () => {
   // Group cities by state
   const citiesByState = allAustralianCities.reduce((acc, city) => {
+    // Skip "Various" state as these need proper mapping
+    if (city.state === "Various") return acc;
+    
     if (!acc[city.state]) {
       acc[city.state] = [];
     }
@@ -25,10 +28,15 @@ const LocationSitemap = () => {
         {Object.entries(citiesByState).map(([state, cities]) => (
           <div key={state} className="bg-white rounded-xl shadow-sm p-6">
             <h3 className="text-xl font-bold text-seo-dark mb-4 border-b pb-2">
-              {state}
+              <Link 
+                to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`}
+                className="hover:text-seo-blue transition-colors"
+              >
+                {state}
+              </Link>
             </h3>
             <ul className="space-y-2">
-              {cities.map(city => (
+              {cities.slice(0, 10).map(city => (
                 <li key={city.id}>
                   <Link 
                     to={`/location/${city.slug}`}
@@ -39,6 +47,16 @@ const LocationSitemap = () => {
                   </Link>
                 </li>
               ))}
+              {cities.length > 10 && (
+                <li className="pt-2 border-t">
+                  <Link 
+                    to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="flex items-center text-seo-blue font-medium hover:underline"
+                  >
+                    View all {cities.length} locations in {state}
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         ))}

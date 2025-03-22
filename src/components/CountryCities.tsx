@@ -6,8 +6,10 @@ import { MapPin } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 
 const CountryCities = () => {
-  // Group cities by state
+  // Group cities by state (excluding "Various" state)
   const stateGroups = allAustralianCities.reduce((groups, city) => {
+    if (city.state === "Various") return groups;
+    
     if (!groups[city.state]) {
       groups[city.state] = [];
     }

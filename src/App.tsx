@@ -21,6 +21,7 @@ import LocationService from "./pages/LocationService";
 import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 import FreeConsultation from "./pages/FreeConsultation";
+import ServiceBlog from "./pages/ServiceBlog";
 
 // Country, State, County pages
 import Country from "./pages/Country";
@@ -58,6 +59,10 @@ const App = () => (
           <Route path="/case-study/:slug" element={<CaseStudy />} />
           <Route path="/seo-audit" element={<SeoAudit />} />
           <Route path="/free-consultation" element={<FreeConsultation />} />
+          
+          {/* Service Blog pages */}
+          <Route path="/service-blog/:slug" element={<ServiceBlog />} />
+          <Route path="/service-blog/:slug/:locationSlug" element={<ServiceBlog />} />
           
           {/* Methodology pages */}
           <Route path="/methodology/research-analysis" element={<ResearchAnalysis />} />
