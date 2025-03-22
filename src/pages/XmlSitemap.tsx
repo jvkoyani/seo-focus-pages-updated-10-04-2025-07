@@ -62,9 +62,11 @@ const XmlSitemap = () => {
 
         // Add service-location combinations for all cities and all services
         services.forEach(service => {
+          // Format service slug with hyphens for URL consistency
+          const formattedServiceSlug = service.slug.replace(/ /g, '-');
           xml += `
   <url>
-    <loc>${baseUrl}/${service.slug}-${city.slug}</loc>
+    <loc>${baseUrl}/${formattedServiceSlug}-${city.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

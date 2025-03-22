@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -81,7 +80,6 @@ const Sitemap = () => {
             </p>
           </AnimatedSection>
           
-          {/* Main sections */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Main Sections</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -128,7 +126,6 @@ const Sitemap = () => {
             </div>
           </section>
           
-          {/* Services */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Our Services</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -145,7 +142,6 @@ const Sitemap = () => {
             </div>
           </section>
           
-          {/* Methodology */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Our Methodology</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -164,7 +160,6 @@ const Sitemap = () => {
             </div>
           </section>
           
-          {/* Search for locations */}
           <section className="mb-8">
             <div className="flex items-center gap-4 max-w-md mx-auto">
               <Input
@@ -185,7 +180,6 @@ const Sitemap = () => {
             </div>
           </section>
           
-          {/* Locations by State */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Locations We Serve</h2>
             
@@ -251,7 +245,6 @@ const Sitemap = () => {
             </div>
           </section>
           
-          {/* Service-Location Combinations - UPDATED SECTION */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Popular Service-Location Combinations</h2>
             
@@ -262,8 +255,7 @@ const Sitemap = () => {
                   <div className="h-[200px] overflow-y-auto pr-2">
                     <div className="grid grid-cols-1 gap-2">
                       {majorCities.map(city => {
-                        // Create proper URL format
-                        const serviceLocationUrl = `/${service.slug}-${city.slug}`;
+                        const serviceLocationUrl = `/${service.slug.replace(/ /g, '-')}-${city.slug}`;
                         return (
                           <Link 
                             key={`${service.slug}-${city.slug}`}
@@ -313,16 +305,19 @@ const Sitemap = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                {services.slice(0, 6).map(service => (
-                  <Link 
-                    key={service.id} 
-                    to={`/${service.slug}-sydney`}
-                    className="p-2 bg-seo-gray-light rounded hover:bg-seo-gray/20 transition-colors flex items-center"
-                  >
-                    <ExternalLink className="h-4 w-4 mr-2 text-seo-blue" />
-                    <span>/{service.slug}-sydney</span>
-                  </Link>
-                ))}
+                {services.slice(0, 6).map(service => {
+                  const formattedServiceSlug = service.slug.replace(/ /g, '-');
+                  return (
+                    <Link 
+                      key={service.id} 
+                      to={`/${formattedServiceSlug}-sydney`}
+                      className="p-2 bg-seo-gray-light rounded hover:bg-seo-gray/20 transition-colors flex items-center"
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2 text-seo-blue" />
+                      <span>/{formattedServiceSlug}-sydney</span>
+                    </Link>
+                  );
+                })}
               </div>
               
               <Button asChild className="w-full md:w-auto">
@@ -333,7 +328,6 @@ const Sitemap = () => {
             </div>
           </section>
           
-          {/* More Resources */}
           <section>
             <div className="bg-seo-blue-light/10 rounded-xl p-8 text-center">
               <h2 className="text-2xl font-bold mb-4">Looking for Something Specific?</h2>
@@ -365,3 +359,4 @@ const Sitemap = () => {
 };
 
 export default Sitemap;
+
