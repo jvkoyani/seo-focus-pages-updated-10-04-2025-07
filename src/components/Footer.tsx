@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail, Phone, Clock, ChevronRight, FileText, SiteBadge } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, ChevronRight, FileText, FileJson } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -157,7 +157,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/sitemap" className="text-gray-300 hover:text-white flex items-center">
-                  <SiteBadge className="h-4 w-4 mr-1" />
+                  <FileJson className="h-4 w-4 mr-1" />
                   <span>Sitemap</span>
                 </Link>
               </li>
