@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { allAustralianCities } from '@/lib/locationData';
 import { services } from '@/lib/data';
@@ -12,18 +12,24 @@ const LocationSitemap = () => {
   const [searchTerm, setSearchTerm] = useState('');
   
   // Group cities by state
-  const citiesByState = allAustralianCities.reduce((acc, city) => {
-    // Include cities with "Various" state but group them under "Other Locations"
-    const state = city.state === "Various" ? "Other Locations" : city.state;
+  const citiesByState = useMemo(() => {
+    const result: Record<string, typeof allAustralianCities> = {};
     
-    if (!acc[state]) {
-      acc[state] = [];
-    }
-    acc[state].push(city);
-    return acc;
-  }, {} as Record<string, typeof allAustralianCities>);
+    allAustralianCities.forEach(city => {
+      // Include cities with "Various" state but group them under "Other Locations"
+      const state = city.state === "Various" ? "Other Locations" : city.state;
+      
+      if (!result[state]) {
+        result[state] = [];
+      }
+      result[state].push(city);
+      return result;
+    });
+    
+    return result;
+  }, []);
 
-  const states = Object.keys(citiesByState).sort();
+  const states = useMemo(() => Object.keys(citiesByState).sort(), [citiesByState]);
   
   // Filter locations based on search term
   const filterLocations = (locations: typeof allAustralianCities) => {
@@ -31,6 +37,16 @@ const LocationSitemap = () => {
     return locations.filter(location => 
       location.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  };
+
+  // Used to track expanded state sections
+  const [expandedStates, setExpandedStates] = useState<Record<string, boolean>>({});
+
+  const toggleStateExpansion = (state: string) => {
+    setExpandedStates(prev => ({
+      ...prev,
+      [state]: !prev[state]
+    }));
   };
 
   return (
@@ -100,6 +116,10 @@ const LocationSitemap = () => {
           const filteredLocations = filterLocations(citiesByState[state]);
           if (filteredLocations.length === 0) return null;
           
+          const isExpanded = expandedStates[state] || false;
+          const displayCount = 10;
+          const hasMore = filteredLocations.length > displayCount;
+          
           return (
             <AnimatedSection key={state} className="bg-white rounded-xl shadow-sm p-6" animation="fade-in" delay={200 + stateIndex * 50}>
               <h3 className="text-xl font-bold text-seo-dark mb-4 border-b pb-2">
@@ -116,7 +136,7 @@ const LocationSitemap = () => {
                 <span className="text-sm text-seo-gray-dark ml-2">({filteredLocations.length})</span>
               </h3>
               <ul className="space-y-2">
-                {filteredLocations.slice(0, 10).map(city => (
+                {filteredLocations.slice(0, isExpanded ? filteredLocations.length : displayCount).map(city => (
                   <li key={city.id}>
                     <Link 
                       to={`/location/${city.slug}`}
@@ -127,38 +147,22 @@ const LocationSitemap = () => {
                     </Link>
                   </li>
                 ))}
-                {filteredLocations.length > 10 && (
+                {hasMore && (
                   <li className="pt-2 border-t">
                     <Button 
                       variant="link" 
                       className="p-0 h-auto text-seo-blue"
-                      onClick={() => {
-                        const element = document.getElementById(`${state.replace(/\s+/g, '-')}-all`);
-                        if (element) {
-                          element.style.display = 'block';
-                          element.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
+                      onClick={() => toggleStateExpansion(state)}
                     >
-                      View all {filteredLocations.length} locations
-                      <ArrowRight className="ml-1 h-4 w-4" />
+                      {isExpanded ? (
+                        "Show less"
+                      ) : (
+                        <>
+                          View all {filteredLocations.length} locations
+                          <ArrowRight className="ml-1 h-4 w-4" />
+                        </>
+                      )}
                     </Button>
-                    <div id={`${state.replace(/\s+/g, '-')}-all`} className="hidden mt-2">
-                      <div className="max-h-[300px] overflow-y-auto">
-                        <div className="grid grid-cols-1 gap-1">
-                          {filteredLocations.slice(10).map(city => (
-                            <Link 
-                              key={city.id}
-                              to={`/location/${city.slug}`}
-                              className="flex items-center text-seo-gray-dark hover:text-seo-blue transition-colors p-1"
-                            >
-                              <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
-                              <span className="text-sm">{city.name}</span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
                   </li>
                 )}
               </ul>

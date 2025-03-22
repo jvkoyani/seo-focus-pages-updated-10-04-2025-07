@@ -89,6 +89,21 @@ const XmlSitemap = () => {
   </url>`;
       });
 
+      // Add state pages for each state in Australia
+      const states = [...new Set(allAustralianCities.map(city => city.state))].filter(Boolean);
+      states.forEach(state => {
+        if (state && state !== "Various") {
+          const stateSlug = state.toLowerCase().replace(/\s+/g, '-');
+          xml += `
+  <url>
+    <loc>${baseUrl}/australia/${stateSlug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+        }
+      });
+
       xml += `
 </urlset>`;
 

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -10,27 +10,27 @@ import AnimatedSection from '@/components/AnimatedSection';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-// Group cities by state for better organization
-const groupCitiesByState = () => {
-  const stateGroups: Record<string, typeof allAustralianCities> = {};
-  
-  allAustralianCities.forEach(city => {
-    // Include all cities, even those with "Various" state
-    const state = city.state === "Various" ? "Other Locations" : city.state;
-    
-    if (!stateGroups[state]) {
-      stateGroups[state] = [];
-    }
-    stateGroups[state].push(city);
-  });
-  
-  return stateGroups;
-};
-
 const Sitemap = () => {
-  const stateGroups = groupCitiesByState();
-  const states = Object.keys(stateGroups).sort();
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Group cities by state for better organization
+  const stateGroups = useMemo(() => {
+    const groups: Record<string, typeof allAustralianCities> = {};
+    
+    allAustralianCities.forEach(city => {
+      // Include all cities, even those with "Various" state
+      const state = city.state === "Various" ? "Other Locations" : city.state;
+      
+      if (!groups[state]) {
+        groups[state] = [];
+      }
+      groups[state].push(city);
+    });
+    
+    return groups;
+  }, []);
+  
+  const states = useMemo(() => Object.keys(stateGroups).sort(), [stateGroups]);
   
   // Filter locations based on search term
   const filterLocations = (locations: typeof allAustralianCities) => {
@@ -38,6 +38,16 @@ const Sitemap = () => {
     return locations.filter(location => 
       location.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  };
+
+  // Used to track which state sections are expanded
+  const [expandedStates, setExpandedStates] = useState<Record<string, boolean>>({});
+
+  const toggleStateExpansion = (state: string) => {
+    setExpandedStates(prev => ({
+      ...prev,
+      [state]: !prev[state]
+    }));
   };
   
   return (
@@ -172,6 +182,10 @@ const Sitemap = () => {
                 const filteredLocations = filterLocations(stateGroups[state]);
                 if (filteredLocations.length === 0) return null;
                 
+                const isExpanded = expandedStates[state] || false;
+                const displayLocations = isExpanded ? filteredLocations : filteredLocations.slice(0, 50);
+                const hasMore = filteredLocations.length > 50;
+                
                 return (
                   <div key={state} className="bg-white rounded-lg shadow-sm p-6">
                     <h3 className="text-xl font-semibold mb-4 border-b pb-2">
@@ -187,7 +201,7 @@ const Sitemap = () => {
                     
                     <div className="h-[300px] overflow-y-auto pr-2">
                       <div className="grid grid-cols-1 gap-2">
-                        {filteredLocations.map(city => (
+                        {displayLocations.map(city => (
                           <Link 
                             key={city.id}
                             to={`/location/${city.slug}`}
@@ -198,7 +212,20 @@ const Sitemap = () => {
                           </Link>
                         ))}
                       </div>
+                      
+                      {hasMore && (
+                        <div className="mt-3 text-center">
+                          <Button 
+                            variant="link" 
+                            onClick={() => toggleStateExpansion(state)}
+                            className="text-seo-blue"
+                          >
+                            {isExpanded ? "Show less" : `Show all ${filteredLocations.length} locations`}
+                          </Button>
+                        </div>
+                      )}
                     </div>
+                    
                     {state !== "Other Locations" && (
                       <div className="mt-4 text-right">
                         <Link to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-seo-blue hover:underline">
@@ -217,30 +244,54 @@ const Sitemap = () => {
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Popular Service-Location Combinations</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.slice(0, 6).map(service => (
-                <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
-                  <div className="h-[200px] overflow-y-auto pr-2">
-                    <div className="grid grid-cols-1 gap-2">
-                      {filterLocations(allAustralianCities.slice(0, 25)).map(city => (
-                        <Link 
-                          key={`${service.slug}-${city.slug}`}
-                          to={`/${service.slug}-${city.slug}`}
-                          className="flex items-center text-sm hover:text-seo-blue"
-                        >
-                          <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
-                          <span className="truncate">{service.title} in {city.name}</span>
-                        </Link>
-                      ))}
+              {services.slice(0, 6).map(service => {
+                // Get filtered locations based on search
+                const filteredAll = filterLocations(allAustralianCities);
+                // Take a sample of cities to display
+                const displayLocations = filteredAll.slice(0, 25);
+                
+                return (
+                  <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
+                    <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
+                    <div className="h-[200px] overflow-y-auto pr-2">
+                      <div className="grid grid-cols-1 gap-2">
+                        {displayLocations.map(city => (
+                          <Link 
+                            key={`${service.slug}-${city.slug}`}
+                            to={`/${service.slug}-${city.slug}`}
+                            className="flex items-center text-sm hover:text-seo-blue"
+                          >
+                            <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
+                            <span className="truncate">{service.title} in {city.name}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-2 border-t text-center">
+                      <Link to={`/service/${service.slug}`} className="text-sm text-seo-blue hover:underline">
+                        View all {service.title} services
+                      </Link>
                     </div>
                   </div>
-                  <div className="mt-4 pt-2 border-t text-center">
-                    <Link to={`/service/${service.slug}`} className="text-sm text-seo-blue hover:underline">
-                      View all {service.title} services
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
+            </div>
+            
+            <div className="mt-8 p-6 bg-white rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-4">All Service-Location Combinations</h3>
+              <p className="text-seo-gray-dark mb-4">
+                We provide specialized SEO services for all major locations in Australia. 
+                To access a specific service in your location, use the URL pattern:
+              </p>
+              <div className="bg-seo-gray-light p-3 rounded mb-4 font-mono text-sm">
+                /{"{service-slug}"}-{"{location-slug}"}
+              </div>
+              <p className="text-seo-gray-dark mb-4">
+                For example, to access Local SEO services in Sydney:
+              </p>
+              <Link to="/local-seo-sydney" className="text-seo-blue hover:underline">
+                /local-seo-sydney
+              </Link>
             </div>
           </section>
           
