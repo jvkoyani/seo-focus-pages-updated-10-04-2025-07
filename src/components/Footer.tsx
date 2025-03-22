@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, ArrowRight, MapPin } from 'lucide-react';
 import { locations, services, industries } from '@/lib/data';
 
 const Footer = () => {
@@ -141,6 +141,15 @@ const Footer = () => {
               </li>
               <li>
                 <Link 
+                  to="/sitemap" 
+                  className="text-white/70 hover:text-seo-blue transition-colors"
+                  onClick={handleLinkClick}
+                >
+                  Sitemap
+                </Link>
+              </li>
+              <li>
+                <Link 
                   to="/locations" 
                   className="text-white/70 hover:text-seo-blue transition-colors"
                   onClick={handleLinkClick}
@@ -182,7 +191,17 @@ const Footer = () => {
         
         {/* Locations Grid - New Section */}
         <div className="py-8 border-t border-white/10">
-          <h4 className="text-lg font-semibold mb-4">Locations We Serve</h4>
+          <h4 className="text-lg font-semibold mb-4 flex items-center">
+            <MapPin className="h-4 w-4 mr-2" />
+            Locations We Serve
+            <Link 
+              to="/sitemap" 
+              className="ml-3 text-sm text-white/50 hover:text-seo-blue"
+              onClick={handleLinkClick}
+            >
+              (View all in sitemap)
+            </Link>
+          </h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {locations.map(location => (
               <Link 
@@ -202,9 +221,14 @@ const Footer = () => {
           <p className="text-white/50 text-sm">
             &copy; {currentYear} SEOfocus. All rights reserved.
           </p>
-          <p className="text-white/50 text-sm mt-2 md:mt-0">
-            Designed with precision. Built for results.
-          </p>
+          <div className="flex flex-wrap justify-center md:justify-end space-x-4 mt-2 md:mt-0">
+            <Link to="/sitemap.xml" className="text-white/50 text-sm hover:text-seo-blue">
+              XML Sitemap
+            </Link>
+            <p className="text-white/50 text-sm">
+              Designed with precision. Built for results.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

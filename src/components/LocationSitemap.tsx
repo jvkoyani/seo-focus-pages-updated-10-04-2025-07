@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { allAustralianCities } from '@/lib/locationData';
 import { services } from '@/lib/data';
-import { MapPin } from 'lucide-react';
+import { MapPin, ArrowRight } from 'lucide-react';
 
 const LocationSitemap = () => {
   // Group cities by state
@@ -78,9 +78,10 @@ const LocationSitemap = () => {
               </p>
               <Link
                 to={`/service/${service.slug}`}
-                className="text-sm text-seo-blue font-medium hover:underline"
+                className="text-sm text-seo-blue font-medium hover:underline flex items-center"
               >
-                Learn more
+                <span>Learn more</span>
+                <ArrowRight className="h-4 w-4 ml-1" />
               </Link>
             </div>
           ))}

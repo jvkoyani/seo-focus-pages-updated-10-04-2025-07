@@ -22,6 +22,8 @@ import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 import FreeConsultation from "./pages/FreeConsultation";
 import ServiceBlog from "./pages/ServiceBlog";
+import Sitemap from "./pages/Sitemap";
+import XmlSitemap from "./pages/XmlSitemap";
 
 // Country, State, County pages
 import Country from "./pages/Country";
@@ -59,6 +61,10 @@ const App = () => (
           <Route path="/case-study/:slug" element={<CaseStudy />} />
           <Route path="/seo-audit" element={<SeoAudit />} />
           <Route path="/free-consultation" element={<FreeConsultation />} />
+          
+          {/* Sitemap Routes */}
+          <Route path="/sitemap" element={<Sitemap />} />
+          <Route path="/sitemap.xml" element={<XmlSitemap />} />
           
           {/* Service Blog pages */}
           <Route path="/service-blog/:slug" element={<ServiceBlog />} />
