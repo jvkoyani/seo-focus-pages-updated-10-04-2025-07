@@ -11,7 +11,7 @@ import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import ResourcesSection from '@/components/ResourcesSection';
-import { locations } from '@/lib/data';
+import { allAustralianCities } from '@/lib/locationData';
 import InfoCard from '@/components/InfoCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -54,7 +54,7 @@ const LocationService = () => {
     });
   }, [locationSlug, serviceSlug]);
   
-  const locationData = locations.find(loc => loc.slug === locationSlug);
+  const locationData = allAustralianCities.find(loc => loc.slug === locationSlug);
   const serviceData = services.find(svc => svc.slug === serviceSlug);
   
   if (!locationData || !serviceData) {
@@ -479,3 +479,4 @@ const LocationService = () => {
 };
 
 export default LocationService;
+

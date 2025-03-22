@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, MapPin } from 'lucide-react';
-import { locations } from '@/lib/data';
+import { allAustralianCities } from '@/lib/locationData';
 
 interface LocationBreadcrumbsProps {
   locationSlug: string;
@@ -11,12 +11,12 @@ interface LocationBreadcrumbsProps {
 }
 
 const LocationBreadcrumbs = ({ locationSlug, serviceSlug, className = '' }: LocationBreadcrumbsProps) => {
-  const locationData = locations.find(loc => loc.slug === locationSlug);
+  const locationData = allAustralianCities.find(loc => loc.slug === locationSlug);
   
   if (!locationData) return null;
   
   return (
-    <div className={`flex items-center text-sm text-seo-gray-dark ${className}`}>
+    <div className={`flex flex-wrap items-center text-sm text-seo-gray-dark ${className}`}>
       <Link 
         to="/" 
         className="hover:text-seo-blue transition-colors"
@@ -27,16 +27,16 @@ const LocationBreadcrumbs = ({ locationSlug, serviceSlug, className = '' }: Loca
       
       {/* Country */}
       <Link 
-        to="/australia" 
+        to={`/${locationData.country.toLowerCase()}`}
         className="hover:text-seo-blue transition-colors"
       >
-        Australia
+        {locationData.country}
       </Link>
       <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
       
       {/* State */}
       <Link 
-        to={`/australia/${locationData.state.toLowerCase().replace(/\s+/g, '-')}`}
+        to={`/${locationData.country.toLowerCase()}/${locationData.state.toLowerCase().replace(/\s+/g, '-')}`}
         className="hover:text-seo-blue transition-colors"
       >
         {locationData.state}
@@ -47,7 +47,7 @@ const LocationBreadcrumbs = ({ locationSlug, serviceSlug, className = '' }: Loca
       {locationData.county && (
         <>
           <Link 
-            to={`/australia/${locationData.state.toLowerCase().replace(/\s+/g, '-')}/${locationData.county.toLowerCase().replace(/\s+/g, '-')}`}
+            to={`/${locationData.country.toLowerCase()}/${locationData.state.toLowerCase().replace(/\s+/g, '-')}/${locationData.county.toLowerCase().replace(/\s+/g, '-')}`}
             className="hover:text-seo-blue transition-colors"
           >
             {locationData.county}

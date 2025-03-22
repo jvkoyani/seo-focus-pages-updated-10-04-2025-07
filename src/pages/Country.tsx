@@ -1,31 +1,58 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, MapPin, ArrowRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { locations } from '@/lib/data';
+import { ArrowRight, MapPin, Globe } from 'lucide-react';
+import { allAustralianCities } from '@/lib/locationData';
+import CountryCities from '@/components/CountryCities';
+import { services } from '@/lib/data';
 
 const Country = () => {
   const { country } = useParams<{ country: string }>();
-  const countryName = country === 'australia' ? 'Australia' : country;
   
-  // Group locations by state
-  const locationsByState = locations.reduce((acc, location) => {
-    if (location.country.toLowerCase() === country) {
-      const state = location.state;
-      if (!acc[state]) {
-        acc[state] = [];
-      }
-      acc[state].push(location);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [country]);
+  
+  // Only showing Australia for now
+  if (country?.toLowerCase() !== 'australia') {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-4">Country Not Found</h1>
+            <p className="mb-6">Sorry, we currently only serve Australia.</p>
+            <Link 
+              to="/australia" 
+              className="inline-flex items-center text-seo-blue font-medium"
+            >
+              <span>Go to Australia</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Group cities by state
+  const cityCountByState = allAustralianCities.reduce((acc, city) => {
+    if (!acc[city.state]) {
+      acc[city.state] = 0;
     }
+    acc[city.state]++;
     return acc;
-  }, {} as Record<string, typeof locations>);
-  
+  }, {} as Record<string, number>);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -47,133 +74,124 @@ const Country = () => {
               >
                 Home
               </Link>
-              <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-              <span className="text-seo-blue font-medium">{countryName}</span>
+              <ArrowRight className="h-4 w-4 text-seo-gray-medium" />
+              <span className="text-seo-blue font-medium">Australia</span>
             </div>
           </AnimatedSection>
           
-          <AnimatedSection className="max-w-3xl" animation="fade-in">
-            <div className="flex items-center mb-4">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue">
-                <MapPin className="h-4 w-4 mr-1" />
-                {countryName}
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
-              SEO Services in {countryName}
-            </h1>
-            
-            <p className="text-xl text-seo-gray-dark mb-8">
-              Comprehensive SEO solutions tailored for businesses across {countryName}. Increase your online visibility and drive more qualified traffic.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
-                Get a Free Consultation
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
-                View Case Studies
-              </Button>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-      
-      {/* States Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              States & Territories
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              SEO Services Across {countryName}
-            </h2>
-            <p className="text-lg text-seo-gray-dark">
-              Discover our specialized SEO solutions tailored for each state and territory in {countryName}
-            </p>
-          </AnimatedSection>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Object.entries(locationsByState).map(([state, stateLocations], index) => {
-              const stateSlug = state.toLowerCase().replace(/\s+/g, '-');
-              const countLocations = stateLocations.length;
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <AnimatedSection className="max-w-2xl" animation="fade-in">
+              <div className="flex items-center mb-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mr-2">
+                  <Globe className="h-4 w-4 mr-1" />
+                  Australia
+                </span>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
+                  317 Supported Cities
+                </span>
+              </div>
               
-              return (
-                <AnimatedSection
-                  key={state}
-                  className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
-                  animation="fade-in"
-                  delay={index * 100}
-                >
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3">
-                      {state}
-                    </h3>
-                    <p className="text-seo-gray-dark mb-5">
-                      {countLocations} {countLocations === 1 ? 'location' : 'locations'} with specialized SEO services
-                    </p>
-                    
-                    <div className="space-y-2 mb-6">
-                      {stateLocations.map(location => (
-                        <Link
-                          key={location.id}
-                          to={`/location/${location.slug}`}
-                          className="flex items-center py-2 px-3 rounded-md hover:bg-gray-50"
-                        >
-                          <MapPin className="h-4 w-4 text-seo-blue mr-2" />
-                          <span>{location.name}</span>
-                          <ChevronRight className="h-4 w-4 ml-auto text-gray-400" />
-                        </Link>
-                      ))}
-                    </div>
-                    
-                    <Link
-                      to={`/${country}/${stateSlug}`}
-                      className="inline-flex items-center justify-center bg-seo-blue text-white px-5 py-3 rounded-md hover:bg-seo-blue-light transition-colors w-full group"
-                    >
-                      <span>Explore {state} SEO Services</span>
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </AnimatedSection>
-              );
-            })}
+              <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
+                SEO Services Across Australia
+              </h1>
+              
+              <p className="text-xl text-seo-gray-dark mb-8">
+                Our specialized SEO services are designed to help Australian businesses stand out from the competition and attract more qualified leads through search engines.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
+                  <Link to="/free-consultation">
+                    Get a Free Consultation
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
+                  <Link to="/case-studies">
+                    View Case Studies
+                  </Link>
+                </Button>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection animation="fade-in-left" delay={300} className="md:w-1/3">
+              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                <h3 className="text-xl font-bold text-seo-dark mb-4 border-b pb-3">
+                  Australian States & Territories
+                </h3>
+                <ul className="space-y-3">
+                  {Object.entries(cityCountByState).map(([state, count]) => (
+                    <li key={state}>
+                      <Link 
+                        to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`}
+                        className="flex items-center justify-between py-2 px-3 rounded-md hover:bg-seo-blue/5 transition-colors group"
+                      >
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 text-seo-gray-medium group-hover:text-seo-blue transition-colors mr-2" />
+                          <span className="text-seo-gray-dark group-hover:text-seo-blue transition-colors">
+                            {state}
+                          </span>
+                        </div>
+                        <span className="bg-seo-blue/10 text-seo-blue text-xs px-2 py-1 rounded-full">
+                          {count} cities
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
       
-      {/* CTA Section */}
+      {/* Australian Cities Section */}
+      <CountryCities />
+      
+      {/* Services Section */}
       <section className="py-16 bg-seo-gray-light">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <AnimatedSection 
-              className="bg-gradient-to-r from-seo-blue to-purple-600 rounded-xl shadow-xl overflow-hidden" 
-              animation="fade-in"
-            >
-              <div className="p-8 md:p-12">
-                <div className="flex flex-col md:flex-row md:items-center justify-between">
-                  <div className="mb-8 md:mb-0 md:mr-8">
-                    <h2 className="text-3xl font-bold text-white mb-4">
-                      Ready to improve your {countryName} business's online presence?
-                    </h2>
-                    <p className="text-white/90 text-lg mb-0">
-                      Get a free consultation and discover how our SEO services can help your business grow.
-                    </p>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <Link to="/free-consultation">
-                      <Button size="lg" className="bg-white text-seo-blue hover:bg-gray-100 w-full md:w-auto">
-                        Get Started Today
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Our Expertise
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              SEO Services Available Nationwide
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Our comprehensive SEO solutions are available to businesses across all of Australia
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {services.map((service, index) => (
+              <AnimatedSection
+                key={service.id}
+                className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all"
+                animation="fade-in"
+                delay={index * 100}
+              >
+                <div className="bg-seo-blue/10 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                  {/* This would ideally use your icon mapping from Services.tsx */}
+                  <div className="text-seo-blue">
+                    <Globe className="h-6 w-6" />
                   </div>
                 </div>
-              </div>
-            </AnimatedSection>
+                
+                <h3 className="text-xl font-bold text-seo-dark mb-2">{service.title}</h3>
+                <p className="text-seo-gray-dark mb-4">{service.description}</p>
+                
+                <Link
+                  to={`/service/${service.slug}`}
+                  className="inline-flex items-center text-seo-blue font-medium group"
+                >
+                  <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
+                    Learn more
+                  </span>
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>

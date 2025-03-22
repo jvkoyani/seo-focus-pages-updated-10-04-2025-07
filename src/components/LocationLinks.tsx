@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
-import { locations } from '@/lib/data';
+import { allAustralianCities } from '@/lib/locationData';
 import { ArrowRight, MapPin, TrendingUp, Award, Users, Activity, Star, Clock, Building } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -11,12 +11,16 @@ interface LocationLinksProps {
     title: string;
     slug: string;
   };
+  limit?: number;
 }
 
-const LocationLinks = ({ service }: LocationLinksProps) => {
+const LocationLinks = ({ service, limit = 9 }: LocationLinksProps) => {
+  // Only display the specified number of locations (defaults to 9)
+  const displayedLocations = allAustralianCities.slice(0, limit);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {locations.map((location, index) => (
+      {displayedLocations.map((location, index) => (
         <AnimatedSection
           key={location.id}
           className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group relative"

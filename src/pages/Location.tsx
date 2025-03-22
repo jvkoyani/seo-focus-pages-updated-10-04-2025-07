@@ -12,10 +12,11 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import ResourcesSection from '@/components/ResourcesSection';
 import Services from '@/components/Services';
-import { locations } from '@/lib/data';
+import { allAustralianCities } from '@/lib/locationData';
 import InfoCard from '@/components/InfoCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import LocationBreadcrumbs from '@/components/LocationBreadcrumbs';
 
 const Location = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -28,7 +29,7 @@ const Location = () => {
     });
   }, [location.pathname]);
   
-  const locationData = locations.find(loc => loc.slug === slug);
+  const locationData = allAustralianCities.find(loc => loc.slug === slug);
   
   const handleLinkClick = () => {
     window.scrollTo({
