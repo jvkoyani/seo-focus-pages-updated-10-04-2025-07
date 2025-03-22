@@ -3,9 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { MapPin, ExternalLink, Layers } from 'lucide-react';
+import { MapPin, ExternalLink, Layers, ChevronRight } from 'lucide-react';
 import { allAustralianCities } from '@/lib/locationData';
 import { services } from '@/lib/data';
+import AnimatedSection from '@/components/AnimatedSection';
 
 // Group cities by state for better organization
 const groupCitiesByState = () => {
@@ -33,9 +34,22 @@ const Sitemap = () => {
       
       <main className="flex-1 pt-32 pb-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-display font-bold text-seo-dark mb-8 text-center">
-            Site Map
-          </h1>
+          <AnimatedSection animation="fade-in">
+            <div className="inline-flex items-center text-sm text-seo-gray-dark mb-6">
+              <Link to="/" className="hover:text-seo-blue transition-colors">Home</Link>
+              <ChevronRight className="h-4 w-4 mx-2" />
+              <span>Sitemap</span>
+            </div>
+          </AnimatedSection>
+          
+          <AnimatedSection animation="fade-in">
+            <h1 className="text-4xl font-display font-bold text-seo-dark mb-8 text-center">
+              Complete Site Map
+            </h1>
+            <p className="text-lg text-center text-seo-gray-dark max-w-3xl mx-auto mb-12">
+              Browse our comprehensive sitemap to find all pages and services available across Australia.
+            </p>
+          </AnimatedSection>
           
           {/* Main sections */}
           <section className="mb-16">
@@ -72,6 +86,10 @@ const Sitemap = () => {
               <Link to="/free-consultation" className="p-4 bg-white rounded shadow-sm hover:shadow-md transition-shadow flex items-center">
                 <Layers className="h-5 w-5 mr-3 text-seo-blue" />
                 <span>Free Consultation</span>
+              </Link>
+              <Link to="/sitemap.xml" className="p-4 bg-white rounded shadow-sm hover:shadow-md transition-shadow flex items-center">
+                <Layers className="h-5 w-5 mr-3 text-seo-blue" />
+                <span>XML Sitemap</span>
               </Link>
             </div>
           </section>
@@ -113,56 +131,96 @@ const Sitemap = () => {
           </section>
           
           {/* Locations by State */}
-          <section>
+          <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">Locations We Serve</h2>
             
-            {states.map(state => (
-              <div key={state} className="mb-8">
-                <h3 className="text-xl font-semibold mb-4 bg-seo-gray-light p-3 rounded">
-                  <Link to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-seo-blue">
-                    {state}
-                  </Link>
-                </h3>
-                
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                  {stateGroups[state].map(city => (
-                    <Link 
-                      key={city.id}
-                      to={`/location/${city.slug}`}
-                      className="flex items-center p-2 hover:bg-seo-gray-light rounded transition-colors"
-                    >
-                      <MapPin className="h-4 w-4 mr-2 text-seo-blue" />
-                      <span>{city.name}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {states.map(state => (
+                <div key={state} className="bg-white rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold mb-4 border-b pb-2">
+                    <Link to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-seo-blue">
+                      {state}
                     </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-            
-            {/* Service-Location Combinations */}
-            <div className="mt-12">
-              <h3 className="text-xl font-semibold mb-4 bg-seo-gray-light p-3 rounded">
-                Popular Service-Location Combinations
-              </h3>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {services.slice(0, 3).map(service => (
-                  <div key={service.id} className="bg-white rounded shadow-sm p-4">
-                    <h4 className="font-semibold mb-3">{service.title}</h4>
+                  </h3>
+                  
+                  <div className="h-[300px] overflow-y-auto pr-2">
                     <div className="grid grid-cols-1 gap-2">
-                      {allAustralianCities.slice(0, 5).map(city => (
+                      {stateGroups[state].map(city => (
                         <Link 
-                          key={`${service.slug}-${city.slug}`}
-                          to={`/${service.slug}-${city.slug}`}
-                          className="flex items-center hover:text-seo-blue"
+                          key={city.id}
+                          to={`/location/${city.slug}`}
+                          className="flex items-center p-2 hover:bg-seo-gray-light rounded transition-colors"
                         >
-                          <ExternalLink className="h-3 w-3 mr-2" />
-                          <span>{service.title} in {city.name}</span>
+                          <MapPin className="h-4 w-4 mr-2 text-seo-blue flex-shrink-0" />
+                          <span className="truncate">{city.name}</span>
                         </Link>
                       ))}
                     </div>
                   </div>
-                ))}
+                  <div className="mt-4 text-right">
+                    <Link to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-seo-blue hover:underline">
+                      All {state} locations
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+          
+          {/* Service-Location Combinations */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-bold mb-6 border-b pb-2">Popular Service-Location Combinations</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.slice(0, 6).map(service => (
+                <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
+                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
+                  <div className="h-[200px] overflow-y-auto pr-2">
+                    <div className="grid grid-cols-1 gap-2">
+                      {allAustralianCities.slice(0, 25).map(city => (
+                        city.state !== "Various" && (
+                          <Link 
+                            key={`${service.slug}-${city.slug}`}
+                            to={`/${service.slug}-${city.slug}`}
+                            className="flex items-center text-sm hover:text-seo-blue"
+                          >
+                            <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
+                            <span className="truncate">{service.title} in {city.name}</span>
+                          </Link>
+                        )
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-2 border-t text-center">
+                    <Link to={`/service/${service.slug}`} className="text-sm text-seo-blue hover:underline">
+                      View all {service.title} services
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+          
+          {/* More Resources */}
+          <section>
+            <div className="bg-seo-blue-light/10 rounded-xl p-8 text-center">
+              <h2 className="text-2xl font-bold mb-4">Looking for Something Specific?</h2>
+              <p className="mb-6 text-seo-gray-dark">
+                If you can't find what you're looking for, feel free to contact us directly.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link 
+                  to="/contact" 
+                  className="bg-seo-blue text-white px-6 py-3 rounded-md hover:bg-seo-blue-light transition-colors"
+                >
+                  Contact Us
+                </Link>
+                <Link 
+                  to="/free-consultation" 
+                  className="bg-white border border-seo-blue text-seo-blue px-6 py-3 rounded-md hover:bg-seo-blue/5 transition-colors"
+                >
+                  Get a Free Consultation
+                </Link>
               </div>
             </div>
           </section>

@@ -23,7 +23,7 @@ const XmlSitemap = () => {
         { url: '/industries', priority: '0.9' },
         { url: '/blogs', priority: '0.8' },
         { url: '/case-studies', priority: '0.8' },
-        { url: '/contact', priority: '0.8' },
+        { url: '/contact', priority: '0.7' },
         { url: '/free-consultation', priority: '0.9' },
         { url: '/sitemap', priority: '0.7' },
       ];
@@ -49,7 +49,7 @@ const XmlSitemap = () => {
   </url>`;
       });
 
-      // Add location pages
+      // Add location pages for all cities
       allAustralianCities.forEach(city => {
         if (city.state !== "Various") {
           xml += `
@@ -57,21 +57,21 @@ const XmlSitemap = () => {
     <loc>${baseUrl}/location/${city.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>`;
         }
       });
 
-      // Add service-location combinations
-      services.slice(0, 5).forEach(service => {
-        allAustralianCities.slice(0, 20).forEach(city => {
+      // Add service-location combinations for all cities
+      services.forEach(service => {
+        allAustralianCities.forEach(city => {
           if (city.state !== "Various") {
             xml += `
   <url>
     <loc>${baseUrl}/${service.slug}-${city.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>`;
           }
         });
@@ -107,6 +107,16 @@ const XmlSitemap = () => {
   // Set the proper content type for the XML
   useEffect(() => {
     document.title = 'XML Sitemap';
+    
+    // Set the content type to XML
+    const metaContentType = document.createElement('meta');
+    metaContentType.httpEquiv = 'Content-Type';
+    metaContentType.content = 'text/xml; charset=utf-8';
+    document.head.appendChild(metaContentType);
+
+    return () => {
+      document.head.removeChild(metaContentType);
+    };
   }, []);
 
   return (

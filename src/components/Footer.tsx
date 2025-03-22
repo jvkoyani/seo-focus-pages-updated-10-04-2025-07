@@ -1,234 +1,191 @@
 
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, ArrowRight, MapPin } from 'lucide-react';
-import { locations, services, industries } from '@/lib/data';
+import { MapPin, Mail, Phone, Clock, ChevronRight, FileText, SiteBadge } from 'lucide-react';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  
-  // Function to handle scroll to top when clicking links
-  const handleLinkClick = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-  
   return (
-    <footer className="bg-seo-dark text-white">
-      <div className="container mx-auto px-4">
-        {/* Newsletter Section */}
-        <div className="py-12 border-b border-white/10">
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-2xl font-display font-bold mb-2">
-                Subscribe to our newsletter
-              </h3>
-              <p className="text-white/70">
-                Get the latest SEO tips, strategies, and industry news
-              </p>
-            </div>
-            <div className="w-full md:w-auto">
-              <form className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="flex-1 px-4 py-3 rounded-l-md bg-white/10 border border-white/20 focus:outline-none focus:border-seo-blue text-white"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-seo-blue hover:bg-seo-blue-light px-5 py-3 rounded-r-md flex items-center justify-center transition-colors button-hover-effect"
-                >
-                  <span className="hidden sm:inline mr-2">Subscribe</span>
-                  <ArrowRight className="h-5 w-5" />
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-        
-        {/* Main Footer Content */}
-        <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gradient-to-b from-seo-dark to-black text-white">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Company Information */}
           <div>
-            <Link to="/" className="inline-block mb-6" onClick={handleLinkClick}>
-              <span className="text-2xl font-display font-bold text-white">
-                SEO<span className="text-seo-blue">focus</span>
-              </span>
-            </Link>
-            <p className="text-white/70 mb-6">
-              We help businesses improve their online visibility through data-driven SEO strategies.
+            <h3 className="text-xl font-bold mb-4">Your SEO Partner</h3>
+            <p className="mb-4 text-gray-300">
+              We help businesses grow through strategic SEO solutions tailored to their unique needs.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-white/70 hover:text-seo-blue transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-white/70 hover:text-seo-blue transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-white/70 hover:text-seo-blue transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-white/70 hover:text-seo-blue transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
+            <div className="space-y-3">
+              <div className="flex items-start">
+                <MapPin className="h-5 w-5 mt-1 mr-3 text-seo-blue" />
+                <span className="text-gray-300">
+                  123 SEO Street, Sydney<br />
+                  NSW 2000, Australia
+                </span>
+              </div>
+              <div className="flex items-center">
+                <Phone className="h-5 w-5 mr-3 text-seo-blue" />
+                <a href="tel:1300123456" className="text-gray-300 hover:text-white">
+                  1300 123 456
+                </a>
+              </div>
+              <div className="flex items-center">
+                <Mail className="h-5 w-5 mr-3 text-seo-blue" />
+                <a href="mailto:info@example.com" className="text-gray-300 hover:text-white">
+                  info@example.com
+                </a>
+              </div>
+              <div className="flex items-center">
+                <Clock className="h-5 w-5 mr-3 text-seo-blue" />
+                <span className="text-gray-300">Mon-Fri: 9am-5pm</span>
+              </div>
             </div>
           </div>
-          
+
+          {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Our Services</h4>
-            <ul className="space-y-3">
-              {services.map(service => (
-                <li key={service.id}>
-                  <Link 
-                    to={`/service/${service.slug}`} 
-                    className="text-white/70 hover:text-seo-blue transition-colors"
-                    onClick={handleLinkClick}
-                  >
-                    {service.title}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Home</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>About Us</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Services</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/blogs" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Blog</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/case-studies" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Case Studies</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Contact</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/sitemap" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Sitemap</span>
+                </Link>
+              </li>
             </ul>
           </div>
-          
+
+          {/* Our Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Industries</h4>
-            <ul className="space-y-3">
-              {industries.map(industry => (
-                <li key={industry.id}>
-                  <Link 
-                    to={`/industry/${industry.slug}`} 
-                    className="text-white/70 hover:text-seo-blue transition-colors"
-                    onClick={handleLinkClick}
-                  >
-                    {industry.title}
-                  </Link>
-                </li>
-              ))}
+            <h3 className="text-xl font-bold mb-4">Our Services</h3>
+            <ul className="space-y-2">
               <li>
-                <Link 
-                  to="/industries" 
-                  className="text-white/70 hover:text-seo-blue transition-colors font-medium"
-                  onClick={handleLinkClick}
-                >
-                  View All Industries
+                <Link to="/service/local-seo" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Local SEO</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/service/technical-seo" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Technical SEO</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/service/ecommerce-seo" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>E-commerce SEO</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/service/content-marketing" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Content Marketing</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/service/link-building" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Link Building</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/service/seo-audits" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>SEO Audits</span>
                 </Link>
               </li>
             </ul>
           </div>
-          
+
+          {/* Resources */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Company</h4>
-            <ul className="space-y-3">
+            <h3 className="text-xl font-bold mb-4">Resources</h3>
+            <ul className="space-y-2">
               <li>
-                <Link 
-                  to="/about" 
-                  className="text-white/70 hover:text-seo-blue transition-colors"
-                  onClick={handleLinkClick}
-                >
-                  About Us
+                <Link to="/free-consultation" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Free Consultation</span>
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/contact" 
-                  className="text-white/70 hover:text-seo-blue transition-colors"
-                  onClick={handleLinkClick}
-                >
-                  Contact
+                <Link to="/seo-audit" className="text-gray-300 hover:text-white flex items-center">
+                  <ChevronRight className="h-4 w-4 mr-1" />
+                  <span>Free SEO Audit</span>
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/sitemap" 
-                  className="text-white/70 hover:text-seo-blue transition-colors"
-                  onClick={handleLinkClick}
-                >
-                  Sitemap
+                <Link to="/blogs" className="text-gray-300 hover:text-white flex items-center">
+                  <FileText className="h-4 w-4 mr-1" />
+                  <span>SEO Guides</span>
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/locations" 
-                  className="text-white/70 hover:text-seo-blue transition-colors"
-                  onClick={handleLinkClick}
-                >
-                  Locations
+                <Link to="/sitemap" className="text-gray-300 hover:text-white flex items-center">
+                  <SiteBadge className="h-4 w-4 mr-1" />
+                  <span>Sitemap</span>
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/industries" 
-                  className="text-white/70 hover:text-seo-blue transition-colors"
-                  onClick={handleLinkClick}
-                >
-                  Industries We Serve
+                <Link to="/sitemap.xml" className="text-gray-300 hover:text-white flex items-center">
+                  <FileText className="h-4 w-4 mr-1" />
+                  <span>XML Sitemap</span>
                 </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/services" 
-                  className="text-white/70 hover:text-seo-blue transition-colors"
-                  onClick={handleLinkClick}
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-seo-blue transition-colors">
-                  Terms of Service
-                </a>
               </li>
             </ul>
           </div>
         </div>
         
-        {/* Locations Grid - New Section */}
-        <div className="py-8 border-t border-white/10">
-          <h4 className="text-lg font-semibold mb-4 flex items-center">
-            <MapPin className="h-4 w-4 mr-2" />
-            Locations We Serve
-            <Link 
-              to="/sitemap" 
-              className="ml-3 text-sm text-white/50 hover:text-seo-blue"
-              onClick={handleLinkClick}
-            >
-              (View all in sitemap)
+        <div className="mt-12 pt-8 border-t border-gray-800">
+          <div className="text-center">
+            <p className="text-gray-400 text-sm mb-4">
+              Serving all major Australian cities including Sydney, Melbourne, Brisbane, Perth, Adelaide and more.
+            </p>
+            <Link to="/sitemap" className="text-seo-blue hover:underline">
+              View all service locations
             </Link>
-          </h4>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {locations.map(location => (
-              <Link 
-                key={location.id}
-                to={`/location/${location.slug}`} 
-                className="text-white/70 hover:text-seo-blue transition-colors text-sm"
-                onClick={handleLinkClick}
-              >
-                {location.name}
-              </Link>
-            ))}
           </div>
         </div>
-        
-        {/* Copyright */}
-        <div className="py-6 border-t border-white/10 text-center md:text-left md:flex md:justify-between md:items-center">
-          <p className="text-white/50 text-sm">
-            &copy; {currentYear} SEOfocus. All rights reserved.
+
+        <div className="mt-8 pt-8 border-t border-gray-800 text-center">
+          <p className="text-gray-400 text-sm">
+            © {new Date().getFullYear()} Your SEO Partner. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center md:justify-end space-x-4 mt-2 md:mt-0">
-            <Link to="/sitemap.xml" className="text-white/50 text-sm hover:text-seo-blue">
-              XML Sitemap
-            </Link>
-            <p className="text-white/50 text-sm">
-              Designed with precision. Built for results.
-            </p>
-          </div>
         </div>
       </div>
     </footer>
