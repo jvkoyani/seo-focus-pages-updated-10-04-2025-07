@@ -1,110 +1,137 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { allAustralianCities } from '@/lib/locationData';
 import AnimatedSection from './AnimatedSection';
-
-// City image mapping for all locations
-const cityImages: Record<string, string> = {
-  'sydney': 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=500&q=80',
-  'melbourne': 'https://images.unsplash.com/photo-1545044846-351ba102b6d5?auto=format&fit=crop&w=500&q=80',
-  'brisbane': 'https://images.unsplash.com/photo-1566734904496-9309bb1798b3?auto=format&fit=crop&w=500&q=80',
-  'perth': 'https://images.unsplash.com/photo-1573935448851-4b07c29ee181?auto=format&fit=crop&w=500&q=80',
-  'adelaide': 'https://images.unsplash.com/photo-1566208541068-ffdb5471e9bf?auto=format&fit=crop&w=500&q=80',
-  'gold-coast': 'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?auto=format&fit=crop&w=500&q=80',
-  'canberra': 'https://images.unsplash.com/photo-1560416313-414b33c856a9?auto=format&fit=crop&w=500&q=80',
-  'hobart': 'https://images.unsplash.com/photo-1617173944883-6ffbd35d584c?auto=format&fit=crop&w=500&q=80',
-  'darwin': 'https://images.unsplash.com/photo-1682077284475-5645ca105e50?auto=format&fit=crop&w=500&q=80',
-  'wollongong': 'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?auto=format&fit=crop&w=500&q=80',
-  'newcastle': 'https://images.unsplash.com/photo-1612880202126-7243844d88bf?auto=format&fit=crop&w=500&q=80',
-  'cairns': 'https://images.unsplash.com/photo-1563006850-39d5c8aea6f0?auto=format&fit=crop&w=500&q=80',
-  'geelong': 'https://images.unsplash.com/photo-1531497018135-f81453863e36?auto=format&fit=crop&w=500&q=80',
-  'townsville': 'https://images.unsplash.com/photo-1613166845873-5241abe59e2a?auto=format&fit=crop&w=500&q=80', 
-  'sunshine-coast': 'https://images.unsplash.com/photo-1523761776026-4f21a319d5f0?auto=format&fit=crop&w=500&q=80',
-  'wagga-wagga': 'https://images.unsplash.com/photo-1507608443039-bfde4fbcd142?auto=format&fit=crop&w=500&q=80',
-  'bundaberg': 'https://images.unsplash.com/photo-1519160558534-579f5106e43f?auto=format&fit=crop&w=500&q=80',
-  'rockhampton': 'https://images.unsplash.com/photo-1527123575449-3edc08a9cd63?auto=format&fit=crop&w=500&q=80',
-  'ballarat': 'https://images.unsplash.com/photo-1520121401995-928cd50d4e27?auto=format&fit=crop&w=500&q=80',
-  'bendigo': 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=500&q=80',
-  'launceston': 'https://images.unsplash.com/photo-1612712191126-fe33c5b7b1c3?auto=format&fit=crop&w=500&q=80',
-  'mackay': 'https://images.unsplash.com/photo-1555893073-5b12b1ed324a?auto=format&fit=crop&w=500&q=80',
-  'toowoomba': 'https://images.unsplash.com/photo-1503221043305-f7498f8b7888?auto=format&fit=crop&w=500&q=80',
-  'bunbury': 'https://images.unsplash.com/photo-1515488764276-beab7607c1e6?auto=format&fit=crop&w=500&q=80'
-};
-
-// Default fallback image for cities without a specific image
-const defaultCityImage = 'https://images.unsplash.com/photo-1523950704592-ee4866469b4c?auto=format&fit=crop&w=500&q=80';
+import { allAustralianCities } from '@/lib/locationData';
+import { ArrowRight, MapPin, TrendingUp, Award, Users, Activity, Star, Clock, Building } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface LocationLinksProps {
-  service?: any;
-  currentLocation?: string;
-  showAll?: boolean;
+  service: {
+    title: string;
+    slug: string;
+  };
+  limit?: number;
 }
 
-const LocationLinks = ({ service, currentLocation, showAll = false }: LocationLinksProps) => {
-  // Filter out the current location if it exists
-  const filteredCities = allAustralianCities
-    .filter(city => !currentLocation || city.slug !== currentLocation)
-    .sort((a, b) => a.name.localeCompare(b.name));
-  
-  // If not showing all, limit to 8 cities, preferring major ones
-  const displayCities = showAll 
-    ? filteredCities 
-    : filteredCities.slice(0, 8);
-  
+const LocationLinks = ({ service, limit = 9 }: LocationLinksProps) => {
+  // Only display the specified number of locations (defaults to 9)
+  const displayedLocations = allAustralianCities.slice(0, limit);
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {displayCities.map((city, index) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {displayedLocations.map((location, index) => (
         <AnimatedSection
-          key={city.slug}
+          key={location.id}
+          className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group relative"
           animation="fade-in"
-          delay={index * 50}
-          className="group"
+          delay={index * 100}
         >
-          <Link 
-            to={service 
-              ? `/location/${city.slug}/${service.slug}` 
-              : `/location/${city.slug}`} 
-            className="block overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-lg"
-          >
-            <div className="relative h-36 overflow-hidden">
-              <img 
-                src={cityImages[city.slug] || defaultCityImage} 
-                alt={`${city.name}, ${city.state}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent p-4 flex items-end">
-                <div>
-                  <h3 className="text-white font-semibold text-lg">{city.name}</h3>
-                  <p className="text-white/80 text-sm">{city.state}</p>
+          {/* Top badge */}
+          <div className="absolute top-4 right-4 z-20">
+            <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium rounded-full shadow-sm text-seo-blue">
+              {getRandomBadge()}
+            </span>
+          </div>
+          
+          <div className="relative h-52 overflow-hidden">
+            <img 
+              src={location.image} 
+              alt={location.name}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-full p-4">
+              <div className="flex items-center mb-2">
+                <MapPin className="h-5 w-5 text-white mr-2" />
+                <span className="text-white font-medium text-lg">{location.name}</span>
+              </div>
+              <h3 className="text-xl font-display font-bold text-white">
+                {service.title} in {location.name}
+              </h3>
+            </div>
+          </div>
+          
+          <div className="p-6">
+            <div className="mb-4 bg-gradient-to-r from-seo-blue/5 to-seo-blue/0 p-3 rounded-lg border-l-2 border-seo-blue">
+              <p className="text-seo-gray-dark">
+                Customized {service.title.toLowerCase()} solutions for {location.name} businesses to boost rankings and drive targeted traffic.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-2 mb-6">
+              {getLocationAttributes(index).map((attr, i) => (
+                <div 
+                  key={i} 
+                  className={cn(
+                    "flex flex-col items-center justify-center p-2 rounded-lg group",
+                    attr.bgColor,
+                    "hover:shadow-md transition-all duration-300 cursor-pointer"
+                  )}
+                >
+                  <div className="transition-transform duration-300 group-hover:scale-110">
+                    {attr.icon}
+                  </div>
+                  <span className={cn("text-xs font-medium mt-1 text-center", attr.textColor)}>
+                    {attr.label}
+                  </span>
                 </div>
+              ))}
+            </div>
+            
+            <div className="flex items-center justify-between mb-4 border-t border-b border-gray-100 py-2">
+              <span className="text-xs text-seo-gray-dark">Success rate</span>
+              <div className="flex items-center">
+                <div className="w-20 h-2 bg-gray-100 rounded-full overflow-hidden mr-2">
+                  <div 
+                    className="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full"
+                    style={{ width: `${85 + (index * 5) % 15}%` }}
+                  ></div>
+                </div>
+                <span className="text-xs font-medium text-green-600">{85 + (index * 5) % 15}%</span>
               </div>
             </div>
-          </Link>
+            
+            <Link
+              to={`/${service.slug}-${location.slug}`}
+              className="inline-flex items-center justify-center bg-seo-blue text-white px-5 py-3 rounded-md hover:bg-seo-blue-light transition-colors w-full group"
+            >
+              <span>Explore {location.name} strategies</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </AnimatedSection>
       ))}
-      
-      {!showAll && filteredCities.length > 8 && (
-        <AnimatedSection
-          animation="fade-in"
-          delay={400}
-          className="flex items-center justify-center"
-        >
-          <Link 
-            to={service ? `/service/${service.slug}` : "/location-sitemap"} 
-            className="text-seo-blue hover:text-seo-blue-light font-medium inline-flex flex-col items-center justify-center h-full p-4 text-center"
-          >
-            <div className="bg-seo-blue/10 rounded-full w-12 h-12 flex items-center justify-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-seo-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-              </svg>
-            </div>
-            <span>View All Locations</span>
-          </Link>
-        </AnimatedSection>
-      )}
     </div>
   );
+};
+
+const getRandomBadge = () => {
+  const badges = ['Top Performer', 'High ROI', 'Best Results', 'Recommended', 'Fast Growth'];
+  return badges[Math.floor(Math.random() * badges.length)];
+};
+
+const getLocationAttributes = (index: number) => {
+  // Create different attributes based on index to add variety
+  const attributes = [
+    [
+      { icon: <TrendingUp className="h-4 w-4 text-green-600" />, label: "High Growth", bgColor: "bg-green-50", textColor: "text-green-600" },
+      { icon: <Users className="h-4 w-4 text-blue-600" />, label: "Large Market", bgColor: "bg-blue-50", textColor: "text-blue-600" },
+      { icon: <Award className="h-4 w-4 text-purple-600" />, label: "Top Results", bgColor: "bg-purple-50", textColor: "text-purple-600" }
+    ],
+    [
+      { icon: <Activity className="h-4 w-4 text-red-600" />, label: "Competitive", bgColor: "bg-red-50", textColor: "text-red-600" },
+      { icon: <Star className="h-4 w-4 text-amber-600" />, label: "5-Star", bgColor: "bg-amber-50", textColor: "text-amber-600" },
+      { icon: <TrendingUp className="h-4 w-4 text-green-600" />, label: "Growing", bgColor: "bg-green-50", textColor: "text-green-600" }
+    ],
+    [
+      { icon: <Clock className="h-4 w-4 text-blue-600" />, label: "Fast Results", bgColor: "bg-blue-50", textColor: "text-blue-600" },
+      { icon: <Building className="h-4 w-4 text-slate-600" />, label: "Business Hub", bgColor: "bg-slate-50", textColor: "text-slate-600" },
+      { icon: <Activity className="h-4 w-4 text-orange-600" />, label: "Dynamic", bgColor: "bg-orange-50", textColor: "text-orange-600" }
+    ]
+  ];
+  
+  return attributes[index % 3];
 };
 
 export default LocationLinks;
