@@ -518,22 +518,7 @@ const tasmanianCities: Location[] = [
   "Elizabeth Town", "Ellendale", "Elliott", "Emita", "Emu Heights", "Epping Forest", "Erriba", "Eugenana", 
   "Evandale", "Exeter", "Exton", "Falmouth", "Fentonbury", "Fern Tree", "Fingal", "Fitzgerald", "Flintstone", 
   "Florentine", "Flowerdale", "Flowerpot", "Flowery Gully", "Forcett", "Forest", "Forester", "Fortescue", 
-  "Forth", "Forthside", "Four Mile Creek", "Frankford", "Franklin"
-].map((cityName, index) => {
-  const slug = cityName.toLowerCase().replace(/[\s(),-]+/g, '-').replace(/--+/g, '-');
-  return {
-    id: slug,
-    name: cityName,
-    slug: slug,
-    state: "Tasmania",
-    country: "Australia",
-    image: "/placeholder.svg"
-  };
-});
-
-// More Tasmanian cities
-const moreTasmanianCities: Location[] = [
-  "Freycinet", "Friendly Beaches", "Gagebrook", "Garden Island Creek", "Gardners Bay", "Gawler", "Geeveston", 
+  "Forth", "Forthside", "Four Mile Creek", "Frankford", "Franklin", "Freycinet", "Friendly Beaches", "Gagebrook", "Garden Island Creek", "Gardners Bay", "Gawler", "Geeveston", 
   "Geilston Bay", "George Town", "Gladstone", "Glaziers Bay", "Glebe", "Glen Huon", "Glendevie", "Glenfern", 
   "Glengarry", "Glenlusk", "Glenora", "Glenorchy", "Golconda", "Golden Valley", "Goodwood", "Gordon", 
   "Gormanston", "Goshen", "Goulds Country", "Gowrie Park", "Granton", "Granville Harbour", "Grasstree Hill", 
@@ -586,4 +571,38 @@ const moreTasmanianCities: Location[] = [
   "South Hobart", "South Launceston", "South Mount Cameron", "South Nietta", "South Preston", "South Riana", 
   "South Spreyton", "South Springfield", "Southport", "Southport Lagoon", "Spalford", "Sprent", "Spreyton", 
   "Spring Beach", "Springfield", "Squeaking Point", "St Helens", "St Leonards", "St Marys", "Stanley", 
-  "Staverton", "Steppes", "Stieglitz", "Stonehenge", "Stonor", "Stony Head", "Stony Rise", "Stoo
+  "Staverton", "Steppes", "Stieglitz", "Stonehenge", "Stonor", "Stony Head", "Stony Rise", "Stoodley", "Stormlea", "Storys Creek", "Stowport", "Strahan", "Strathblane", "Strathgordon", 
+  "Strickland", "Strzelecki", "Styx", "Sulphur Creek", "Summerhill", "Sunnyside", "Surges Bay", 
+  "Surprise Bay", "Surveyors Bay", "Swan Bay", "Swan Point", "Swansea", "Swanston", "Table Cape", 
+  "Takone", "Talawa", "Taranna", "Targa", "Tarleton", "Taroona", "Tarraleah", "Tayene", "Tea Tree", 
+  "Telita", "Temma", "Tewkesbury", "The Gardens", "Thirlstane", "Tiberias", "Tinderbox", "Tods Corner", 
+  "Togari", "Toiberry", "Tolmans Hill", "Tomahawk", "Tonganah", "Tooms Lake", "Tranmere", "Travellers Rest", 
+  "Trenah", "Trevallyn", "Triabunna", "Trial Harbour", "Trowutta", "Tugrah", "Tulendeena", "Tullah", 
+  "Tunbridge", "Tunnack", "Tunnel", "Turners Beach", "Turners Marsh", "Tyenna", "Ulverstone", "Underwood", 
+  "Upper Blessington", "Upper Burnie", "Upper Castra", "Upper Esk", "Upper Natone", "Upper Scamander", 
+  "Upper Stowport", "Upper Woodstock", "Uxbridge", "Verona Sands", "Victoria Valley", "Waddamana", 
+  "Walls Of Jerusalem", "Waratah", "Warrane", "Warrentinna", "Waterhouse", "Waterloo", "Wattle Grove", 
+  "Wattle Hill", "Waverley", "Wayatinah", "Weegena", "Weetah", "Weldborough", "Wellington Park", "Wesley Vale", 
+  "West Hobart", "West Kentish", "West Launceston", "West Montagu", "West Moonah", "West Mooreville", 
+  "West Pine", "West Ridgley", "West Scottsdale", "West Takone", "West Ulverstone", "Westbury", "Western Creek", 
+  "Western Junction", "Westerway", "Westwood", "Weymouth", "White Beach", "White Hills", "Whitefoord", 
+  "Whitemark", "Whitemore", "Wickham", "Wilburville", "Wilmot", "Wiltshire", "Windermere", "Wingaroo", 
+  "Winkleigh", "Winnaleah", "Wivenhoe", "Woodbridge", "Woodbury", "Woodsdale", "Woodstock", "Woolnorth", 
+  "Wyena", "Wynyard", "Yambacoona", "Yarra Creek", "Yolla", "York Plains", "York Town", "Youngtown", "Zeehan"
+].map((cityName, index) => {
+  const slug = cityName.toLowerCase().replace(/[\s(),-]+/g, '-').replace(/--+/g, '-');
+  return {
+    id: slug,
+    name: cityName,
+    slug: slug,
+    state: "Tasmania",
+    country: "Australia",
+    image: "/placeholder.svg"
+  };
+});
+
+// More Tasmanian cities
+const moreTasmanianCities: Location[] = [
+  "Freycinet", "Friendly Beaches", "Gagebrook", "Garden Island Creek", "Gardners Bay", "Gawler", "Geeveston", 
+  "Geilston Bay", "George Town", "Gladstone", "Glaziers Bay", "Glebe", "Glen Huon", "Glendevie", "Glenfern", 
+  "Glengarry", "Glenlusk", "Glenora", "Glenorchy", "Golconda", "Golden Valley", "
