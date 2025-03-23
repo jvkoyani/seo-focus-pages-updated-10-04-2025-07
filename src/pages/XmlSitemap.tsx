@@ -69,6 +69,15 @@ const XmlSitemap = () => {
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
+          
+          // Also add SEO-friendly URL pattern (service-location)
+          xml += `
+  <url>
+    <loc>${baseUrl}/${service.slug}-${city.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`;
         });
       });
 

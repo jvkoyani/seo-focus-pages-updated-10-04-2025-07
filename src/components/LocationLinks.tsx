@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
@@ -24,6 +23,17 @@ const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksPro
   // Only display the specified number of locations (defaults to 9)
   const displayedLocations = filteredLocations.slice(0, limit);
 
+  // Get a location image, with fallback to placeholder
+  const getLocationImage = (location: typeof allAustralianCities[0]) => {
+    // If location has an image defined, use it
+    if (location.image) {
+      return location.image;
+    }
+    
+    // Otherwise generate a placeholder image with the location name
+    return `/service-images/${service.slug}.jpg`;
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {displayedLocations.map((location, index) => (
@@ -42,7 +52,7 @@ const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksPro
           
           <div className="relative h-52 overflow-hidden">
             <img 
-              src={location.image || "/placeholder.svg"} 
+              src={getLocationImage(location)} 
               alt={location.name}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
             />
