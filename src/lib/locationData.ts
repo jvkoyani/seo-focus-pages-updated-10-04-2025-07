@@ -601,8 +601,8 @@ const tasmanianCities: Location[] = [
   };
 });
 
-// More Tasmanian cities
-const moreTasmanianCities: Location[] = [
-  "Freycinet", "Friendly Beaches", "Gagebrook", "Garden Island Creek", "Gardners Bay", "Gawler", "Geeveston", 
-  "Geilston Bay", "George Town", "Gladstone", "Glaziers Bay", "Glebe", "Glen Huon", "Glendevie", "Glenfern", 
-  "Glengarry", "Glenlusk", "Glenora", "Glenorchy", "Golconda", "Golden Valley", "
+// Create a combined list of all Australian cities
+const allAustralianCities = [...australianCities, ...additionalCities, ...tasmanianCities];
+
+// Export the data
+export { allAustralianCities, australianCities, additionalCities, tasmanianCities };
