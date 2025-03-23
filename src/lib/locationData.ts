@@ -79,7 +79,6 @@ const australianCities: Location[] = [
     metaTitle: "Gold Coast SEO Services | Local Search Optimization",
     metaDescription: "Boost your Gold Coast business visibility with our specialized SEO services. Attract more tourists and local customers."
   },
-  // Adding more major cities
   {
     id: "canberra",
     name: "Canberra",
@@ -113,7 +112,6 @@ const australianCities: Location[] = [
     metaTitle: "Darwin SEO Services | Local Search Optimization",
     metaDescription: "Our Darwin SEO services help local businesses improve their online visibility and attract more qualified customers."
   },
-  // ... Adding more cities with metadata
   {
     id: "wollongong",
     name: "Wollongong",
@@ -182,9 +180,8 @@ const australianCities: Location[] = [
   },
 ];
 
-// Generating additional cities
+// Additional cities
 const additionalCities: Location[] = [
-  // Cities already in remainingCities but with more accurate state information
   {
     id: "central-coast",
     name: "Central Coast",
@@ -305,7 +302,6 @@ const additionalCities: Location[] = [
     country: "Australia",
     image: "/placeholder.svg"
   },
-  // More additional cities
   {
     id: "palmerston",
     name: "Palmerston",
@@ -492,7 +488,137 @@ const additionalCities: Location[] = [
   },
 ];
 
-// Add all remaining cities from the previous list and the new NSW locations
+// Process the Tasmanian cities
+const tasmanianCities: Location[] = [
+  "Abbotsham", "Abels Bay", "Aberdeen", "Acacia Hills", "Acton", "Acton Park", "Adventure Bay", "Akaroa", 
+  "Alberton", "Alcomie", "Allens Rivulet", "Alonnah", "Ambleside", "Andover", "Ansons Bay", "Antill Ponds", 
+  "Apollo Bay", "Apslawn", "Apsley", "Arthur River", "Arthurs Lake", "Austins Ferry", "Avoca", "Baden", 
+  "Badger Head", "Bagdad", "Bakers Beach", "Banca", "Bangor", "Barnes Bay", "Barretta", "Barrington", 
+  "Battery Point", "Beaconsfield", "Beaumaris", "Beauty Point", "Beechford", "Bell Bay", "Bellerive", 
+  "Bellingham", "Ben Lomond", "Berriedale", "Beulah", "Bicheno", "Binalong Bay", "Birchs Bay", "Birralee", 
+  "Bishopsbourne", "Black Hills", "Black River", "Blackmans Bay", "Blackstone Heights", "Blackwall", 
+  "Blackwood Creek", "Blessington", "Blue Rocks", "Blumont", "Boat Harbour", "Boat Harbour Beach", 
+  "Bonnet Hill", "Boobyalla", "Boomer Bay", "Bothwell", "Boyer", "Bracknell", "Bradys Lake", "Brandum", 
+  "Branxholm", "Breadalbane", "Bream Creek", "Breona", "Bridgenorth", "Bridgewater", "Bridport", "Brighton", 
+  "Brittons Swamp", "Broadmarsh", "Broadmeadows", "Bronte Park", "Brooklyn", "Brooks Bay", "Buckland", 
+  "Bungaree", "Burnie", "Burns Creek", "Bushy Park", "Butlers Gorge", "Cairns Bay", "Calder", "Cambridge", 
+  "Camdale", "Camena", "Campania", "Campbell Town", "Cape Barren Island", "Cape Pillar", "Cape Portland", 
+  "Cape Raoul", "Carlton", "Carlton River", "Carrick", "Casey", "Castle Forbes Bay", "Castra", "Caveside", 
+  "Central Plateau", "Cethana", "Chain Of Lagoons", "Charlotte Cove", "Chasm Creek", "Chigwell", 
+  "Christmas Hills", "Chudleigh", "Claremont", "Clarence Point", "Clarendon Vale", "Claude Road", "Cleveland", 
+  "Clifton Beach", "Cluan", "Colebrook", "Coles Bay", "Collinsvale", "Conara", "Coningham", "Connellys Marsh", 
+  "Cooee", "Copping", "Corinna", "Cornwall", "Couta Rocks", "Cowrie Point", "Crabtree", "Cradle Mountain", 
+  "Cradoc", "Cramps Bay", "Cranbrook", "Crayfish Creek", "Cremorne", "Cressy", "Cuckoo", "Cuprona", "Currie", 
+  "Cygnet", "Dairy Plains", "Davis", "Deddington", "Dee", "Deep Bay", "Deloraine", "Dennes Point", "Derby", 
+  "Derwent Bridge", "Derwent Park", "Detention", "Deviot", "Devon Hills", "Devonport", "Dilston", 
+  "Doctors Point", "Doctors Rocks", "Dodges Ferry", "Dolphin Sands", "Don", "Douglas River", "Douglas Apsley", 
+  "Dover", "Downlands", "Dowsing Point", "Dromedary", "Dulcot", "Dunalley", "Dunorlan", "Dynnyrne", "Dysart", 
+  "Eaglehawk Neck", "East Cam", "East Devonport", "East Launceston", "East Ridgley", "Eddystone", 
+  "Edgcumbe Beach", "Edith Creek", "Egg Lagoon", "Eggs And Bacon Bay", "Elderslie", "Electrona", 
+  "Elizabeth Town", "Ellendale", "Elliott", "Emita", "Emu Heights", "Epping Forest", "Erriba", "Eugenana", 
+  "Evandale", "Exeter", "Exton", "Falmouth", "Fentonbury", "Fern Tree", "Fingal", "Fitzgerald", "Flintstone", 
+  "Florentine", "Flowerdale", "Flowerpot", "Flowery Gully", "Forcett", "Forest", "Forester", "Fortescue", 
+  "Forth", "Forthside", "Four Mile Creek", "Frankford", "Franklin"
+].map((cityName, index) => {
+  const slug = cityName.toLowerCase().replace(/[\s(),-]+/g, '-').replace(/--+/g, '-');
+  return {
+    id: slug,
+    name: cityName,
+    slug: slug,
+    state: "Tasmania",
+    country: "Australia",
+    image: "/placeholder.svg"
+  };
+});
+
+// More Tasmanian cities
+const moreTasmanianCities: Location[] = [
+  "Freycinet", "Friendly Beaches", "Gagebrook", "Garden Island Creek", "Gardners Bay", "Gawler", "Geeveston", 
+  "Geilston Bay", "George Town", "Gladstone", "Glaziers Bay", "Glebe", "Glen Huon", "Glendevie", "Glenfern", 
+  "Glengarry", "Glenlusk", "Glenora", "Glenorchy", "Golconda", "Golden Valley", "Goodwood", "Gordon", 
+  "Gormanston", "Goshen", "Goulds Country", "Gowrie Park", "Granton", "Granville Harbour", "Grasstree Hill", 
+  "Grassy", "Gravelly Beach", "Gray", "Great Bay", "Greens Beach", "Gretna", "Grindelwald", "Grove", 
+  "Guildford", "Gunns Plains", "Hadspen", "Hagley", "Hamilton", "Hampshire", "Harford", "Hastings", 
+  "Havenview", "Hawley Beach", "Hayes", "Heard Island", "Hellyer", "Henrietta", "Herdsmans Cove", "Hermitage", 
+  "Herrick", "Heybridge", "Highclere", "Highcroft", "Hillcrest", "Hillwood", "Hobart", "Hollow Tree", 
+  "Holwell", "Honeywood", "Howden", "Howrah", "Howth", "Huntingfield", "Huonville", "Ida Bay", "Interlaken", 
+  "Invermay", "Irishtown", "Jackeys Marsh", "Jericho", "Jetsonville", "Judbury", "Kamona", "Kaoota", "Karanja", 
+  "Karoola", "Kayena", "Kellevie", "Kelso", "Kempton", "Kettering", "Killiecrankie", "Killora", "Kimberley", 
+  "Kindred", "Kings Meadows", "Kingston", "Kingston Beach", "Koonya", "Lachlan", "Lackrana", "Lady Barron", 
+  "Lake Leake", "Lake Margaret", "Lake Sorell", "Lake St Clair", "Lalla", "Lanena", "Lapoinya", "Latrobe", 
+  "Lauderdale", "Launceston", "Lawitta", "Lebrina", "Leeka", "Lefroy", "Legana", "Legerwood", "Leith", 
+  "Lemington", "Lenah Valley", "Leslie Vale", "Levendale", "Lewisham", "Liawenee", "Liena", "Lietinna", "Liffey", 
+  "Lileah", "Lillico", "Lilydale", "Lindisfarne", "Lisle", "Little Pine Lagoon", "Little Swanport", "Loccota", 
+  "Loira", "London Lakes", "Long Reach", "Longford", "Longley", "Lonnavale", "Loongana", "Loorana", "Lorinna", 
+  "Lottah", "Low Head", "Lower Barrington", "Lower Beulah", "Lower Longley", "Lower Marshes", "Lower Sandy Bay", 
+  "Lower Snug", "Lower Turners Marsh", "Lower Wattle Grove", "Lower Wilmot", "Loyetea", "Lucaston", "Lughrata", 
+  "Luina", "Lulworth", "Lune River", "Lutana", "Lymington", "Lymwood", "Macquarie Heads", "Macquarie Island", 
+  "Macquarie Plains", "Magra", "Malbina", "Mangalore", "Mangana", "Margate", "Marion Bay", "Marrawah", "Mathinna", 
+  "Mawbanna", "Mawson", "Mayberry", "Maydena", "Mayfield", "Mcdonald Islands", "Meadowbank", "Meander", 
+  "Mella", "Melrose", "Melton Mowbray", "Memana", "Mengha", "Mersey Forest", "Merseylea", "Meunna", "Miandetta", 
+  "Middlesex", "Middleton", "Midway Point", "Miena", "Milabena", "Millers Bluff", "Moina", "Mole Creek", 
+  "Molesworth", "Moltema", "Montagu", "Montagu Bay", "Montana", "Montello", "Montrose", "Montumana", "Moogara", 
+  "Moonah", "Mooreville", "Moorina", "Moorleah", "Morass Bay", "Moriarty", "Mornington", "Mount Direction", 
+  "Mount Field", "Mount Hicks", "Mount Lloyd", "Mount Nelson", "Mount Roland", "Mount Rumney", "Mount Seymour", 
+  "Mount Stuart", "Mount William", "Mountain River", "Mowbray", "Murdunna", "Musselroe Bay", "Myalla", 
+  "Myrtle Bank", "Nabageena", "Nabowla", "Naracoopa", "National Park", "Natone", "Needles", "Neika", 
+  "Nelson Bay", "New Norfolk", "New Town", "Newnham", "Newstead", "Nicholls Rivulet", "Nietta", "Nile", 
+  "Nook", "North Bruny", "North Hobart", "North Lilydale", "North Motton", "North Scottsdale", "Northdown", 
+  "Norwood", "Notley Hills", "Nowhere Else", "Nubeena", "Nugara", "Nugent", "Nunamara", "Oakdowns", "Oaks", 
+  "Oatlands", "Ocean Vista", "Old Beach", "Oldina", "Oonah", "Opossum Bay", "Orford", "Orielton", "Osmaston", 
+  "Osterley", "Otago", "Ouse", "Oyster Cove", "Palana", "Paloona", "Paradise", "Parattah", "Park Grove", 
+  "Parkham", "Parklands", "Parrawe", "Patersonia", "Pawleena", "Pawtella", "Pearshape", "Pegarah", "Pelham", 
+  "Pelverata", "Penguin", "Penna", "Perth", "Petcheys Bay", "Pioneer", "Pipers Brook", "Pipers River", 
+  "Plenty", "Poatina", "Police Point", "Pontville", "Pontypool", "Port Arthur", "Port Huon", "Port Latta", 
+  "Port Sorell", "Powranna", "Premaydena", "Preolenna", "Preservation Bay", "Preston", "Primrose Sands", 
+  "Promised Land", "Prospect", "Prospect Vale", "Punchbowl", "Pyengana", "Quamby Bend", "Quamby Brook", 
+  "Queens Domain", "Queenstown", "Quoiba", "Railton", "Raminea", "Randalls Bay", "Ranelagh", "Ranga", 
+  "Ravenswood", "Recherche", "Red Hills", "Redpa", "Reedy Marsh", "Reekara", "Relbia", "Renison Bell", 
+  "Retreat", "Reynolds Neck", "Rheban", "Rhyndaston", "Riana", "Richmond", "Ridgeway", "Ridgley", 
+  "Ringarooma", "Risdon", "Risdon Vale", "Riverside", "Robigana", "Rocherlea", "Roches Beach", "Rocky Cape", 
+  "Rocky Hills", "Roger River", "Rokeby", "Roland", "Romaine", "Rose Bay", "Rosebery", "Rosegarland", 
+  "Rosetta", "Rosevale", "Rosevears", "Rosny", "Rosny Park", "Ross", "Rossarden", "Round Hill", "Rowella", 
+  "Royal George", "Runnymede", "Rushy Lagoon", "Saltwater River", "Sandfly", "Sandford", "Sandy Bay", 
+  "Sassafras", "Savage River", "Scamander", "Scopus", "Scotchtown", "Scottsdale", "Sea Elephant", 
+  "Selbourne", "Seven Mile Beach", "Seymour", "Shannon", "Shearwater", "Sheffield", "Shorewell Park", 
+  "Sidmouth", "Simpsons Bay", "Sisters Beach", "Sisters Creek", "Sloping Main", "Smithton", "Snug", 
+  "Somerset", "Sorell", "Sorell Creek", "South Arm", "South Bruny", "South Burnie", "South Forest", 
+  "South Hobart", "South Launceston", "South Mount Cameron", "South Nietta", "South Preston", "South Riana", 
+  "South Spreyton", "South Springfield", "Southport", "Southport Lagoon", "Spalford", "Sprent", "Spreyton", 
+  "Spring Beach", "Springfield", "Squeaking Point", "St Helens", "St Leonards", "St Marys", "Stanley", 
+  "Staverton", "Steppes", "Stieglitz", "Stonehenge", "Stonor", "Stony Head", "Stony Rise", "Stoodley", 
+  "Stormlea", "Storys Creek", "Stowport", "Strahan", "Strathblane", "Strathgordon", "Strickland", 
+  "Strzelecki", "Styx", "Sulphur Creek", "Summerhill", "Sunnyside", "Surges Bay", "Surprise Bay", 
+  "Surveyors Bay", "Swan Bay", "Swan Point", "Swansea", "Swanston", "Table Cape", "Takone", "Talawa", 
+  "Taranna", "Targa", "Tarleton", "Taroona", "Tarraleah", "Tayene", "Tea Tree", "Telita", "Temma", 
+  "Tewkesbury", "The Gardens", "Thirlstane", "Tiberias", "Tinderbox", "Tods Corner", "Togari", "Toiberry", 
+  "Tolmans Hill", "Tomahawk", "Tonganah", "Tooms Lake", "Tranmere", "Travellers Rest", "Trenah", 
+  "Trevallyn", "Triabunna", "Trial Harbour", "Trowutta", "Tugrah", "Tulendeena", "Tullah", "Tunbridge", 
+  "Tunnack", "Tunnel", "Turners Beach", "Turners Marsh", "Tyenna", "Ulverstone", "Underwood", 
+  "Upper Blessington", "Upper Burnie", "Upper Castra", "Upper Esk", "Upper Natone", "Upper Scamander", 
+  "Upper Stowport", "Upper Woodstock", "Uxbridge", "Verona Sands", "Victoria Valley", "Waddamana", 
+  "Walls Of Jerusalem", "Waratah", "Warrane", "Warrentinna", "Waterhouse", "Waterloo", "Wattle Grove", 
+  "Wattle Hill", "Waverley", "Wayatinah", "Weegena", "Weetah", "Weldborough", "Wellington Park", 
+  "Wesley Vale", "West Hobart", "West Kentish", "West Launceston", "West Montagu", "West Moonah", 
+  "West Mooreville", "West Pine", "West Ridgley", "West Scottsdale", "West Takone", "West Ulverstone", 
+  "Westbury", "Western Creek", "Western Junction", "Westerway", "Westwood", "Weymouth", "White Beach", 
+  "White Hills", "Whitefoord", "Whitemark", "Whitemore", "Wickham", "Wilburville", "Wilmot", "Wiltshire", 
+  "Windermere", "Wingaroo", "Winkleigh", "Winnaleah", "Wivenhoe", "Woodbridge", "Woodbury", "Woodsdale", 
+  "Woodstock", "Woolnorth", "Wyena", "Wynyard", "Yambacoona", "Yarra Creek", "Yolla", "York Plains", 
+  "York Town", "Youngtown", "Zeehan"
+].map((cityName, index) => {
+  const slug = cityName.toLowerCase().replace(/[\s(),-]+/g, '-').replace(/--+/g, '-');
+  return {
+    id: slug,
+    name: cityName,
+    slug: slug,
+    state: "Tasmania",
+    country: "Australia",
+    image: "/placeholder.svg"
+  };
+});
+
+// Add all remaining cities from the previous list
 const remainingCities: Location[] = [
   "Cranbourne", "Frankston", "Caloundra", "Mount Eliza", "Taree", "Banora Point", "Lara", 
   "Cessnock", "Horsham", "Murray Bridge", "Wallan", "Australind", "Ormeau", 
@@ -506,7 +632,6 @@ const remainingCities: Location[] = [
   "Castlemaine", "Kingscliff", "Fremantle", "Leeton", "Blaxland", "Kyabram", 
   "Sanctuary Point", "Moama", "Merrimac", "Moree", "Murwillumbah", "Urraween", 
   "Bongaree", "Bomaderry", "Ulverstone", "Dromana", "Helensburgh", "Seymour",
-  // Adding the additional 100 NSW locations
   "Alexandria", "Alleena", "Ashford (NSW)", "Badja", "Bago", "Bakers Swamp", "Ballyroe", 
   "Banyabba", "Barry (Blayney - NSW)", "Belmore River", "Bemboka", "Bendoura", "Bengalla", 
   "Berowra Heights", "Berrigan", "Bilgola Beach", "Boambee", "Bocoble", "Bonny Hills", 
@@ -578,7 +703,7 @@ const remainingCities: Location[] = [
     id: slug,
     name: cityName,
     slug: slug,
-    state: cityName.includes("(ACT)") ? "Australian Capital Territory" : "New South Wales", // Handle ACT locations
+    state: cityName.includes("(ACT)") ? "Australian Capital Territory" : "New South Wales",
     country: "Australia",
     image: "/placeholder.svg"
   };
@@ -588,6 +713,8 @@ const remainingCities: Location[] = [
 export const allAustralianCities: Location[] = [
   ...australianCities,
   ...additionalCities,
+  ...tasmanianCities,
+  ...moreTasmanianCities,
   ...remainingCities
 ];
 

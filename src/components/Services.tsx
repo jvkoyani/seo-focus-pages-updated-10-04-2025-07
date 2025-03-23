@@ -21,6 +21,23 @@ const iconMap: Record<string, React.ReactNode> = {
   'bar-chart': <BarChart className="h-8 w-8 text-seo-blue" />
 };
 
+// Service images mapping
+const serviceImages: Record<string, string> = {
+  'local-seo': '/service-images/local-seo.jpg',
+  'technical-seo': '/service-images/technical-seo.jpg',
+  'ecommerce-seo': '/service-images/ecommerce-seo.jpg',
+  'content-marketing': '/service-images/content-marketing.jpg',
+  'link-building': '/service-images/link-building.jpg',
+  'seo-audits': '/service-images/seo-audits.jpg',
+  'digital-pr': '/service-images/digital-pr.jpg',
+  'analytics-reporting': '/service-images/analytics-reporting.jpg'
+};
+
+// Use a placeholder image for any service that doesn't have a specific image defined
+const getServiceImage = (slug: string) => {
+  return serviceImages[slug] || '/placeholder.svg';
+};
+
 interface ServicesProps {
   location?: string;
   locationSlug?: string;
@@ -66,6 +83,16 @@ const Services = ({ location, locationSlug }: ServicesProps) => {
               <p className="text-seo-gray-dark mb-6">
                 {service.description}
               </p>
+              
+              {/* Service Feature Image */}
+              <div className="mb-6 rounded-lg overflow-hidden">
+                <img 
+                  src={getServiceImage(service.slug)} 
+                  alt={service.title}
+                  className="w-full h-48 object-cover transition-transform hover:scale-105 duration-300"
+                />
+              </div>
+              
               <ul className="space-y-2 mb-6">
                 {service.features.map((feature, i) => (
                   <li key={i} className="flex items-start">

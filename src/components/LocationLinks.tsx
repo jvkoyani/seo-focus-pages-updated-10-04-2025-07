@@ -12,11 +12,17 @@ interface LocationLinksProps {
     slug: string;
   };
   limit?: number;
+  excludeLocation?: string;
 }
 
-const LocationLinks = ({ service, limit = 9 }: LocationLinksProps) => {
+const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksProps) => {
+  // Filter out the excluded location if provided
+  const filteredLocations = excludeLocation 
+    ? allAustralianCities.filter(loc => loc.slug !== excludeLocation)
+    : allAustralianCities;
+    
   // Only display the specified number of locations (defaults to 9)
-  const displayedLocations = allAustralianCities.slice(0, limit);
+  const displayedLocations = filteredLocations.slice(0, limit);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -36,7 +42,7 @@ const LocationLinks = ({ service, limit = 9 }: LocationLinksProps) => {
           
           <div className="relative h-52 overflow-hidden">
             <img 
-              src={location.image} 
+              src={location.image || "/placeholder.svg"} 
               alt={location.name}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
             />
@@ -93,7 +99,7 @@ const LocationLinks = ({ service, limit = 9 }: LocationLinksProps) => {
             </div>
             
             <Link
-              to={`/${service.slug}-${location.slug}`}
+              to={`/location/${location.slug}/${service.slug}`}
               className="inline-flex items-center justify-center bg-seo-blue text-white px-5 py-3 rounded-md hover:bg-seo-blue-light transition-colors w-full group"
             >
               <span>Explore {location.name} strategies</span>
