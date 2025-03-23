@@ -50,7 +50,7 @@ const XmlSitemap = () => {
   </url>`;
       });
 
-      // Add location pages for all cities
+      // Add location pages for all cities (including all South Australian cities)
       allAustralianCities.forEach(city => {
         xml += `
   <url>
