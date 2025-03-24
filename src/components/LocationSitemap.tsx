@@ -8,35 +8,14 @@ import AnimatedSection from './AnimatedSection';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-// Helper function to normalize city data
-const normalizeCityData = (city: any) => {
-  if (typeof city === 'string') {
-    const slug = city.toLowerCase().replace(/\s+/g, '-');
-    return {
-      id: slug,
-      name: city,
-      slug: slug,
-      state: "Various", // Default state for string cities
-      country: "Australia",
-      image: "/placeholder.svg"
-    };
-  }
-  return city;
-};
-
 const LocationSitemap = () => {
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Process all cities to ensure they have the correct format
-  const normalizedCities = useMemo(() => {
-    return allAustralianCities.map(city => normalizeCityData(city));
-  }, []);
-  
   // Group cities by state
   const citiesByState = useMemo(() => {
-    const result: Record<string, typeof normalizedCities> = {};
+    const result: Record<string, typeof allAustralianCities> = {};
     
-    normalizedCities.forEach(city => {
+    allAustralianCities.forEach(city => {
       // Include cities with "Various" state but group them under "Other Locations"
       const state = city.state === "Various" ? "Other Locations" : city.state;
       
@@ -44,20 +23,16 @@ const LocationSitemap = () => {
         result[state] = [];
       }
       result[state].push(city);
+      return result;
     });
     
     return result;
-  }, [normalizedCities]);
+  }, []);
 
   const states = useMemo(() => Object.keys(citiesByState).sort(), [citiesByState]);
   
-  // Calculate total number of locations
-  const totalLocations = useMemo(() => {
-    return normalizedCities.length;
-  }, [normalizedCities]);
-  
   // Filter locations based on search term
-  const filterLocations = (locations: typeof normalizedCities) => {
+  const filterLocations = (locations: typeof allAustralianCities) => {
     if (!searchTerm) return locations;
     return locations.filter(location => 
       location.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -81,7 +56,7 @@ const LocationSitemap = () => {
           Australia SEO Services - All Locations
         </h2>
         <p className="text-center text-seo-gray-dark mb-10 max-w-3xl mx-auto">
-          Browse our comprehensive directory of SEO services available across all {totalLocations.toLocaleString()} major Australian cities and regions.
+          Browse our comprehensive directory of SEO services available across all major Australian cities and regions.
         </p>
       </AnimatedSection>
 
@@ -106,7 +81,7 @@ const LocationSitemap = () => {
                 <div>
                   <span className="font-medium">{state}</span>
                   <span className="text-sm text-seo-gray-dark block">
-                    {citiesByState[state].length.toLocaleString()} locations
+                    {citiesByState[state].length} locations
                   </span>
                 </div>
               </Link>
@@ -142,7 +117,6 @@ const LocationSitemap = () => {
           if (filteredLocations.length === 0) return null;
           
           const isExpanded = expandedStates[state] || false;
-          // Show all when expanded, otherwise show first 10
           const displayCount = 10;
           const hasMore = filteredLocations.length > displayCount;
           
@@ -159,11 +133,11 @@ const LocationSitemap = () => {
                 ) : (
                   <span>{state}</span>
                 )}
-                <span className="text-sm text-seo-gray-dark ml-2">({filteredLocations.length.toLocaleString()})</span>
+                <span className="text-sm text-seo-gray-dark ml-2">({filteredLocations.length})</span>
               </h3>
               <ul className="space-y-2">
                 {filteredLocations.slice(0, isExpanded ? filteredLocations.length : displayCount).map(city => (
-                  <li key={city.id || city.slug}>
+                  <li key={city.id}>
                     <Link 
                       to={`/location/${city.slug}`}
                       className="flex items-center text-seo-gray-dark hover:text-seo-blue transition-colors"
@@ -184,7 +158,7 @@ const LocationSitemap = () => {
                         "Show less"
                       ) : (
                         <>
-                          View all {filteredLocations.length.toLocaleString()} locations
+                          View all {filteredLocations.length} locations
                           <ArrowRight className="ml-1 h-4 w-4" />
                         </>
                       )}
@@ -199,7 +173,7 @@ const LocationSitemap = () => {
 
       <AnimatedSection className="mt-16" animation="fade-in" delay={300}>
         <h2 className="text-2xl font-display font-bold text-seo-dark mb-6 text-center">
-          Our Services Available in All {totalLocations.toLocaleString()} Australian Cities
+          Our Services Available in All Australian Cities
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
