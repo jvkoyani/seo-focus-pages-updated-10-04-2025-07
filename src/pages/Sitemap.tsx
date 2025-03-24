@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -51,8 +52,10 @@ const Sitemap = () => {
   
   // Get major cities for popular combinations
   const majorCities = useMemo(() => {
-    // Return the first 15 cities
-    return allAustralianCities.slice(0, 15);
+    // Return the first 15 cities with full metadata (excluding "Various" state)
+    return allAustralianCities
+      .filter(city => city.description && city.state !== "Various")
+      .slice(0, 15);
   }, []);
   
   return (
