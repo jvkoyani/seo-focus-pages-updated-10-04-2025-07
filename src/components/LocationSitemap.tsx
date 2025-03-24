@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { allAustralianCities } from '@/lib/locationData';
@@ -16,6 +15,7 @@ const LocationSitemap = () => {
   const allCities = useMemo(() => {
     return allAustralianCities.map(city => {
       if (typeof city === 'string') {
+        // Convert string to location object if needed
         const slug = city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
         return {
           id: slug,
@@ -85,6 +85,7 @@ const LocationSitemap = () => {
     }, 0);
   }, [states, citiesByState, searchTerm]);
 
+  
   return (
     <div className="container mx-auto px-4 py-16">
       <AnimatedSection animation="fade-in">
