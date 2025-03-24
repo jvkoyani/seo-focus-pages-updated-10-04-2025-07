@@ -1,3 +1,4 @@
+
 export interface Location {
   id: string;
   name: string;
@@ -6,6 +7,9 @@ export interface Location {
   country: string;
   county?: string;
   image: string;
+  description?: string;
+  metaTitle?: string;
+  metaDescription?: string;
 }
 
 // NSW cities
