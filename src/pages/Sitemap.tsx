@@ -57,6 +57,11 @@ const Sitemap = () => {
       .filter(city => city.description && city.state !== "Various")
       .slice(0, 15);
   }, []);
+
+  // Calculate total number of locations
+  const totalLocations = useMemo(() => {
+    return allAustralianCities.length;
+  }, []);
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -77,7 +82,7 @@ const Sitemap = () => {
               Complete Site Map
             </h1>
             <p className="text-lg text-center text-seo-gray-dark max-w-3xl mx-auto mb-12">
-              Browse our comprehensive sitemap to find all pages and services available across Australia.
+              Browse our comprehensive sitemap to find all {totalLocations} locations and services available across Australia.
             </p>
           </AnimatedSection>
           
@@ -182,7 +187,9 @@ const Sitemap = () => {
           </section>
           
           <section className="mb-16">
-            <h2 className="text-2xl font-bold mb-6 border-b pb-2">Locations We Serve</h2>
+            <h2 className="text-2xl font-bold mb-6 border-b pb-2">
+              Locations We Serve <span className="text-sm text-seo-gray-dark">({totalLocations} Total Locations)</span>
+            </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {states.map(state => {
@@ -190,8 +197,9 @@ const Sitemap = () => {
                 if (filteredLocations.length === 0) return null;
                 
                 const isExpanded = expandedStates[state] || false;
-                const displayLocations = isExpanded ? filteredLocations : filteredLocations.slice(0, 50);
-                const hasMore = filteredLocations.length > 50;
+                // Show all locations when expanded, otherwise just show the first 10
+                const displayLocations = isExpanded ? filteredLocations : filteredLocations.slice(0, 10);
+                const hasMore = filteredLocations.length > 10;
                 
                 return (
                   <div key={state} className="bg-white rounded-lg shadow-sm p-6">
@@ -281,8 +289,8 @@ const Sitemap = () => {
             <div className="mt-8 p-6 bg-white rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">All Service-Location Combinations</h3>
               <p className="text-seo-gray-dark mb-4">
-                We provide specialized SEO services for all {allAustralianCities.length} locations across Australia. 
-                Each of our {services.length} services is available in every location, creating a total of {services.length * allAustralianCities.length} unique service-location combinations.
+                We provide specialized SEO services for all {totalLocations} locations across Australia. 
+                Each of our {services.length} services is available in every location, creating a total of {services.length * totalLocations} unique service-location combinations.
               </p>
               <div className="bg-seo-gray-light p-3 rounded mb-4 font-mono text-sm">
                 /location/{"{location-slug}"}/{"{service-slug}"}

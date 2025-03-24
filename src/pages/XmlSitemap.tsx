@@ -50,7 +50,10 @@ const XmlSitemap = () => {
   </url>`;
       });
 
-      // Add location pages for all cities (including all South Australian cities)
+      // Display count for debugging
+      console.log(`Total cities in XML sitemap: ${allAustralianCities.length}`);
+
+      // Add location pages for all cities
       allAustralianCities.forEach(city => {
         xml += `
   <url>
@@ -140,11 +143,18 @@ const XmlSitemap = () => {
 
   return (
     <div>
+      <div className="p-4 bg-yellow-100 border-l-4 border-yellow-500 mb-4">
+        <p className="text-sm text-yellow-800">
+          This XML sitemap contains all {allAustralianCities.length} locations and their service combinations.
+        </p>
+      </div>
       <pre style={{ 
         whiteSpace: 'pre-wrap', 
         fontFamily: 'monospace', 
         fontSize: '12px',
-        padding: '20px' 
+        padding: '20px',
+        maxHeight: '80vh',
+        overflow: 'auto'
       }}>
         {xmlContent}
       </pre>

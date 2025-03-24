@@ -31,6 +31,11 @@ const LocationSitemap = () => {
 
   const states = useMemo(() => Object.keys(citiesByState).sort(), [citiesByState]);
   
+  // Calculate total number of locations
+  const totalLocations = useMemo(() => {
+    return allAustralianCities.length;
+  }, []);
+  
   // Filter locations based on search term
   const filterLocations = (locations: typeof allAustralianCities) => {
     if (!searchTerm) return locations;
@@ -56,7 +61,7 @@ const LocationSitemap = () => {
           Australia SEO Services - All Locations
         </h2>
         <p className="text-center text-seo-gray-dark mb-10 max-w-3xl mx-auto">
-          Browse our comprehensive directory of SEO services available across all major Australian cities and regions.
+          Browse our comprehensive directory of SEO services available across all {totalLocations} major Australian cities and regions.
         </p>
       </AnimatedSection>
 
@@ -117,6 +122,7 @@ const LocationSitemap = () => {
           if (filteredLocations.length === 0) return null;
           
           const isExpanded = expandedStates[state] || false;
+          // Show all when expanded, otherwise show first 10
           const displayCount = 10;
           const hasMore = filteredLocations.length > displayCount;
           
@@ -173,7 +179,7 @@ const LocationSitemap = () => {
 
       <AnimatedSection className="mt-16" animation="fade-in" delay={300}>
         <h2 className="text-2xl font-display font-bold text-seo-dark mb-6 text-center">
-          Our Services Available in All Australian Cities
+          Our Services Available in All {totalLocations} Australian Cities
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
