@@ -1,65 +1,79 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, MapPin } from 'lucide-react';
 import { allAustralianCities } from '@/lib/locationData';
-import type { Location } from '@/types/location';
 
 interface LocationBreadcrumbsProps {
-  locationSlug?: string;
+  locationSlug: string;
+  serviceSlug?: string;
   className?: string;
 }
 
-const LocationBreadcrumbs = ({ locationSlug, className = '' }: LocationBreadcrumbsProps) => {
-  // Find location data for the given slug
-  const location = locationSlug 
-    ? allAustralianCities.find(city => city.slug === locationSlug)
-    : null;
+const LocationBreadcrumbs = ({ locationSlug, serviceSlug, className = '' }: LocationBreadcrumbsProps) => {
+  const locationData = allAustralianCities.find(loc => loc.slug === locationSlug);
   
-  if (!location) return null;
-  
-  // Format country and state for URL paths
-  const countrySlug = location.country.toLowerCase().replace(/\s+/g, '-');
-  const stateSlug = location.state.toLowerCase().replace(/\s+/g, '-');
+  if (!locationData) return null;
   
   return (
-    <div className={`flex items-center space-x-2 text-sm ${className}`}>
-      <Link to="/" className="text-seo-gray-dark hover:text-seo-blue transition-colors">
+    <div className={`flex flex-wrap items-center text-sm text-seo-gray-dark ${className}`}>
+      <Link 
+        to="/" 
+        className="hover:text-seo-blue transition-colors"
+      >
         Home
       </Link>
-      <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
+      <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
       
+      {/* Country */}
       <Link 
-        to={`/${countrySlug}`} 
-        className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+        to={`/${locationData.country.toLowerCase()}`}
+        className="hover:text-seo-blue transition-colors"
       >
-        {location.country}
+        {locationData.country}
       </Link>
-      <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
+      <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
       
+      {/* State */}
       <Link 
-        to={`/${countrySlug}/${stateSlug}`} 
-        className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+        to={`/${locationData.country.toLowerCase()}/${locationData.state.toLowerCase().replace(/\s+/g, '-')}`}
+        className="hover:text-seo-blue transition-colors"
       >
-        {location.state}
+        {locationData.state}
       </Link>
+      <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
       
-      {location.county && (
+      {/* County (if available) */}
+      {locationData.county && (
         <>
-          <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
           <Link 
-            to={`/${countrySlug}/${stateSlug}/${location.county.toLowerCase().replace(/\s+/g, '-')}`} 
-            className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+            to={`/${locationData.country.toLowerCase()}/${locationData.state.toLowerCase().replace(/\s+/g, '-')}/${locationData.county.toLowerCase().replace(/\s+/g, '-')}`}
+            className="hover:text-seo-blue transition-colors"
           >
-            {location.county}
+            {locationData.county}
           </Link>
+          <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
         </>
       )}
       
-      <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-      <span className="text-seo-blue font-medium">
-        {location.name}
-      </span>
+      {/* Location (City) */}
+      <Link 
+        to={`/location/${locationData.slug}`}
+        className="hover:text-seo-blue transition-colors flex items-center"
+      >
+        <MapPin className="h-3 w-3 mr-1" />
+        {locationData.name}
+      </Link>
+      
+      {/* Service (if available) */}
+      {serviceSlug && (
+        <>
+          <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
+          <span className="text-seo-blue font-medium">
+            {serviceSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+          </span>
+        </>
+      )}
     </div>
   );
 };

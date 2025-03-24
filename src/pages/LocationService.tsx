@@ -266,6 +266,7 @@ const LocationService = () => {
           <AnimatedSection className="mb-4" animation="fade-in">
             <LocationBreadcrumbs 
               locationSlug={locationData.slug}
+              serviceSlug={serviceData.slug}
             />
           </AnimatedSection>
           
@@ -478,3 +479,4 @@ const LocationService = () => {
 };
 
 export default LocationService;
+

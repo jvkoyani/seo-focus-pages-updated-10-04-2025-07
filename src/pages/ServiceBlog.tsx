@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -137,7 +138,7 @@ const ServiceBlog = () => {
         <div className="container mx-auto px-4">
           <div className="mb-6">
             {locationSlug ? (
-              <LocationBreadcrumbs locationSlug={locationSlug} />
+              <LocationBreadcrumbs locationSlug={locationSlug} serviceSlug={slug} />
             ) : (
               <div className="flex items-center text-sm text-seo-gray-dark">
                 <Link 
