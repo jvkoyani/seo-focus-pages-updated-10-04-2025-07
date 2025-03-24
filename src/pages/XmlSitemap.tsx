@@ -53,11 +53,10 @@ const XmlSitemap = () => {
       // Create a combined array of all cities
       const processCity = (city: any) => {
         // Handle both object-based city data and string-based city data
-        const citySlug = typeof city === 'string' 
-          ? city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') 
-          : city.slug;
-        
         const cityName = typeof city === 'string' ? city : city.name;
+        const citySlug = typeof city === 'string' 
+          ? cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') 
+          : city.slug;
         
         // Add location page
         xml += `
@@ -90,11 +89,8 @@ const XmlSitemap = () => {
       };
 
       // Process all cities in the allAustralianCities array
-      // First, process cities that are objects
       allAustralianCities.forEach(city => {
-        if (typeof city === 'object') {
-          processCity(city);
-        }
+        processCity(city);
       });
 
       // Add methodology pages
