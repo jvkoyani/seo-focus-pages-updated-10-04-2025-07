@@ -855,6 +855,14 @@ const southAustralianCities: Location[] = [
     image: "/placeholder.svg"
   };
 });
+{
+  id: "mintabie",
+  name: "Mintabie",
+  slug: "mintabie",
+  state: "South Australia",
+  country: "Australia",
+  image: "/placeholder.svg"
+}
 
 // Create a combined list of all Australian cities
 const allAustralianCities = [...australianCities, ...additionalCities, ...tasmanianCities, ...southAustralianCities];
