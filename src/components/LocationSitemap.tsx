@@ -16,10 +16,12 @@ const LocationSitemap = () => {
   const allCities = useMemo(() => {
     return allAustralianCities.map(city => {
       if (typeof city === 'string') {
-        const slug = city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+        // Safely handle string city names
+        const cityName = city as string;
+        const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
         return {
           id: slug,
-          name: city,
+          name: cityName,
           slug: slug,
           state: "Various",
           country: "Australia",

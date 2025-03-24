@@ -590,10 +590,11 @@ const tasmanianCities: Location[] = [
   "Winkleigh", "Winnaleah", "Wivenhoe", "Woodbridge", "Woodbury", "Woodsdale", "Woodstock", "Woolnorth", 
   "Wyena", "Wynyard", "Yambacoona", "Yarra Creek", "Yolla", "York Plains", "York Town", "Youngtown", "Zeehan"
 ].map((cityName, index) => {
-  const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+  const cityNameStr = typeof cityName === 'string' ? cityName : cityName.name;
+  const slug = cityNameStr.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
   return {
     id: slug,
-    name: cityName,
+    name: cityNameStr,
     slug: slug,
     state: "Tasmania",
     country: "Australia",
@@ -735,10 +736,11 @@ const southAustralianCities: Location[] = [
   "Yongala", "Yorke Valley", "Yorketown", "Younghusband", "Younghusband Holdings", "Yudnapinna", 
   "Yumali", "Yumbarra", "Yundi", "Yunta", "Zadows Landing"
 ].map((cityName, index) => {
-  const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+  const cityNameStr = typeof cityName === 'string' ? cityName : cityName.name;
+  const slug = cityNameStr.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
   return {
     id: slug,
-    name: cityName,
+    name: cityNameStr,
     slug: slug,
     state: "South Australia",
     country: "Australia",
@@ -751,3 +753,4 @@ const allAustralianCities = [...australianCities, ...additionalCities, ...tasman
 
 // Export the data
 export { allAustralianCities, australianCities, additionalCities, tasmanianCities, southAustralianCities };
+
