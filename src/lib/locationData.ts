@@ -605,7 +605,7 @@ const tasmanianCities: Location[] = [
 // South Australian cities
 const southAustralianCities: Location[] = [
   // Original South Australian cities
-  "Mintabie", "Mitchidy Moola", "Moana", "Mobilong", "Moculta", "Modbury", "Modbury Heights", "Modbury North", 
+  "Mitchidy Moola", "Moana", "Mobilong", "Moculta", "Modbury", "Modbury Heights", "Modbury North", 
   "Modbury North Dc", "Moerlong", "Monarto", "Monarto South", "Monash", "Monbulla", "Mongolata", 
   "Montacute", "Montarra", "Monteith", "Moockra", "Moody", "Moolawatana", "Mooleulooloo", "Moolooloo", 
   "Moonaree", "Moonta", "Moonta Bay", "Moonta Mines", "Moorak", "Moorillah", "Moorlands", "Moorook", 
@@ -855,14 +855,6 @@ const southAustralianCities: Location[] = [
     image: "/placeholder.svg"
   };
 });
-{
-  id: "mintabie",
-  name: "Mintabie",
-  slug: "mintabie",
-  state: "South Australia",
-  country: "Australia",
-  image: "/placeholder.svg"
-}
 
 // Create a combined list of all Australian cities
 const allAustralianCities = [...australianCities, ...additionalCities, ...tasmanianCities, ...southAustralianCities];
