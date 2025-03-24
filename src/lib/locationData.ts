@@ -573,4 +573,40 @@ const tasmanianCities: Location[] = [
   "Spring Beach", "Springfield", "Squeaking Point", "St Helens", "St Leonards", "St Marys", "Stanley", 
   "Staverton", "Steppes", "Stieglitz", "Stonehenge", "Stonor", "Stony Head", "Stony Rise", "Stoodley", "Stormlea", "Storys Creek", "Stowport", "Strahan", "Strathblane", "Strathgordon", 
   "Strickland", "Strzelecki", "Styx", "Sulphur Creek", "Summerhill", "Sunnyside", "Surges Bay", 
-  "Surprise Bay", "Surveyors Bay", "Swan Bay", "Swan Point", "Swansea", "Swanston", "
+  "Surprise Bay", "Surveyors Bay", "Swan Bay", "Swan Point", "Swansea", "Swanston"
+].map(name => ({
+  id: name.toLowerCase().replace(/\s+/g, '-'),
+  name,
+  slug: name.toLowerCase().replace(/\s+/g, '-'),
+  state: "Tasmania",
+  country: "Australia",
+  image: "/placeholder.svg"
+}));
+
+// South Australian cities
+const southAustralianCities: Location[] = [
+  "Adelaide", "Mount Gambier", "Whyalla", "Victor Harbor", "Port Augusta", "Murray Bridge", "Port Pirie",
+  "Port Lincoln", "Gawler", "Mount Barker", "Nuriootpa", "Loxton", "Berri", "Aldinga",
+  "Kapunda", "Goolwa", "Renmark", "Millicent", "Naracoorte", "Bordertown", "Kingston SE",
+  "Kingscote", "Clare", "Kadina", "Moonta", "Wallaroo", "Jamestown", "Crystal Brook",
+  "Yankalilla", "Strathalbyn", "McLaren Vale", "Hahndorf", "Penola", "Tanunda", "Angaston",
+  "Cowell", "Streaky Bay", "Ceduna", "Coffin Bay", "Coober Pedy", "Roxby Downs", "Woomera",
+  "Kimba", "Cleve", "Wudinna", "Orroroo", "Quorn", "Hawker", "Wilpena Pound", "Andamooka",
+  "Peterborough", "Burra", "Mannum", "Morgan", "Barmera", "Meningie", "Tailem Bend"
+].map(name => ({
+  id: name.toLowerCase().replace(/\s+/g, '-'),
+  name,
+  slug: name.toLowerCase().replace(/\s+/g, '-'),
+  state: "South Australia",
+  country: "Australia",
+  image: "/placeholder.svg"
+}));
+
+// Combine all cities into a single array
+export const allAustralianCities: Location[] = [
+  ...australianCities,
+  ...additionalCities,
+  ...tasmanianCities,
+  ...southAustralianCities
+];
+
