@@ -605,7 +605,7 @@ const tasmanianCities: Location[] = [
 // South Australian cities
 const southAustralianCities: Location[] = [
   // Original South Australian cities
-  "Mitchidy Moola", "Moana", "Mobilong", "Moculta", "Modbury", "Modbury Heights", "Modbury North", 
+  "Mintabie", "Mitchidy Moola", "Moana", "Mobilong", "Moculta", "Modbury", "Modbury Heights", "Modbury North", 
   "Modbury North Dc", "Moerlong", "Monarto", "Monarto South", "Monash", "Monbulla", "Mongolata", 
   "Montacute", "Montarra", "Monteith", "Moockra", "Moody", "Moolawatana", "Mooleulooloo", "Moolooloo", 
   "Moonaree", "Moonta", "Moonta Bay", "Moonta Mines", "Moorak", "Moorillah", "Moorlands", "Moorook", 
