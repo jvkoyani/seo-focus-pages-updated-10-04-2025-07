@@ -515,7 +515,8 @@ const tasmanianCities: Location[] = [
   "Elizabeth Town", "Ellendale", "Elliott", "Emita", "Emu Heights", "Epping Forest", "Erriba", "Eugenana", 
   "Evandale", "Exeter", "Exton", "Falmouth", "Fentonbury", "Fern Tree", "Fingal", "Fitzgerald", "Flintstone", 
   "Florentine", "Flowerdale", "Flowerpot", "Flowery Gully", "Forcett", "Forest", "Forester", "Fortescue", 
-  "Forth", "Forthside", "Four Mile Creek", "Frankford", "Franklin", "Freycinet", "Friendly Beaches", "Gagebrook", "Garden Island Creek", "Gardners Bay", "Gawler", "Geeveston", 
+  "Forth", "Forthside", "Four Mile Creek", "Frankford", "Franklin", "Freycinet", "Friendly Beaches", 
+  "Gagebrook", "Garden Island Creek", "Gardners Bay", "Gawler", "Geeveston", 
   "Geilston Bay", "George Town", "Gladstone", "Glaziers Bay", "Glebe", "Glen Huon", "Glendevie", "Glenfern", 
   "Glengarry", "Glenlusk", "Glenora", "Glenorchy", "Golconda", "Golden Valley", "Goodwood", "Gordon", 
   "Gormanston", "Goshen", "Goulds Country", "Gowrie Park", "Granton", "Granville Harbour", "Grasstree Hill", 
@@ -568,7 +569,41 @@ const tasmanianCities: Location[] = [
   "South Hobart", "South Launceston", "South Mount Cameron", "South Nietta", "South Preston", "South Riana", 
   "South Spreyton", "South Springfield", "Southport", "Southport Lagoon", "Spalford", "Sprent", "Spreyton", 
   "Spring Beach", "Springfield", "Squeaking Point", "St Helens", "St Leonards", "St Marys", "Stanley", 
-  "Staverton", "Steppes", "Stieglitz", "Stonehenge", "Stonor", "Stony Head", "Stony Rise", "Stoodley", "Stormlea", "Storys Creek", "Stowport", "Strahan", "Strathblane", "Strathgordon", 
+  "Staverton", "Steppes", "Stieglitz", "Stonehenge", "Stonor", "Stony Head", "Stony Rise", "Stoodley", 
+  "Stormlea", "Storys Creek", "Stowport", "Strahan", "Strathblane", "Strathgordon", 
   "Strickland", "Strzelecki", "Styx", "Sulphur Creek", "Summerhill", "Sunnyside", "Surges Bay", 
   "Surprise Bay", "Surveyors Bay", "Swan Bay", "Swan Point", "Swansea", "Swanston", "Table Cape", 
-  "Takone", "Talawa", "Taranna",
+  "Takone", "Talawa", "Taranna"
+].map(cityName => {
+  const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+  return {
+    id: slug,
+    name: cityName,
+    slug: slug,
+    state: "Tasmania",
+    country: "Australia",
+    image: "/placeholder.svg"
+  };
+});
+
+// South Australian cities (original + new additions)
+const southAustralianCities: Location[] = [
+  "Adelaide", "Mount Gambier", "Whyalla"
+].map(cityName => {
+  const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+  return {
+    id: slug,
+    name: cityName,
+    slug: slug,
+    state: "South Australia",
+    country: "Australia",
+    image: "/placeholder.svg"
+  };
+});
+
+export const allAustralianCities = [
+  ...australianCities,
+  ...additionalCities,
+  ...tasmanianCities,
+  ...southAustralianCities
+];
