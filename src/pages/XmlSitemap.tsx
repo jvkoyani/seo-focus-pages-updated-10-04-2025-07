@@ -50,21 +50,29 @@ const XmlSitemap = () => {
   </url>`;
       });
 
-      // Add location pages for all cities
-      allAustralianCities.forEach(city => {
+      // Create a combined array of all cities
+      const processCity = (city: any) => {
+        // Handle both object-based city data and string-based city data
+        const citySlug = typeof city === 'string' 
+          ? city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') 
+          : city.slug;
+        
+        const cityName = typeof city === 'string' ? city : city.name;
+        
+        // Add location page
         xml += `
   <url>
-    <loc>${baseUrl}/location/${city.slug}</loc>
+    <loc>${baseUrl}/location/${citySlug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
 
-        // Add service-location combinations for all cities and all services using the correct URL pattern
+        // Add service-location combinations for all services using the correct URL pattern
         services.forEach(service => {
           xml += `
   <url>
-    <loc>${baseUrl}/location/${city.slug}/${service.slug}</loc>
+    <loc>${baseUrl}/location/${citySlug}/${service.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -73,12 +81,20 @@ const XmlSitemap = () => {
           // Also add SEO-friendly URL pattern (service-location)
           xml += `
   <url>
-    <loc>${baseUrl}/${service.slug}-${city.slug}</loc>
+    <loc>${baseUrl}/${service.slug}-${citySlug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
         });
+      };
+
+      // Process all cities in the allAustralianCities array
+      // First, process cities that are objects
+      allAustralianCities.forEach(city => {
+        if (typeof city === 'object') {
+          processCity(city);
+        }
       });
 
       // Add methodology pages
@@ -100,7 +116,11 @@ const XmlSitemap = () => {
       });
 
       // Add state pages for each state in Australia
-      const states = [...new Set(allAustralianCities.map(city => city.state))].filter(Boolean);
+      const states = [...new Set(allAustralianCities
+        .filter(city => typeof city === 'object')
+        .map(city => (city as any).state))]
+        .filter(Boolean);
+        
       states.forEach(state => {
         if (state && state !== "Various") {
           const stateSlug = state.toLowerCase().replace(/\s+/g, '-');

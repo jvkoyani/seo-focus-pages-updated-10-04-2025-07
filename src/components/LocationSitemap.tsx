@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { allAustralianCities } from '@/lib/locationData';
 import { services } from '@/lib/data';
@@ -10,29 +10,46 @@ import { Button } from '@/components/ui/button';
 
 const LocationSitemap = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [loadedCities, setLoadedCities] = useState<number>(50);
+  
+  // Process all cities to ensure consistent format
+  const allCities = useMemo(() => {
+    return allAustralianCities.map(city => {
+      if (typeof city === 'string') {
+        const slug = city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+        return {
+          id: slug,
+          name: city,
+          slug: slug,
+          state: "Various",
+          country: "Australia",
+          image: "/placeholder.svg"
+        };
+      }
+      return city;
+    });
+  }, []);
   
   // Group cities by state
   const citiesByState = useMemo(() => {
-    const result: Record<string, typeof allAustralianCities> = {};
+    const result: Record<string, typeof allCities> = {};
     
-    allAustralianCities.forEach(city => {
-      // Include cities with "Various" state but group them under "Other Locations"
+    allCities.forEach(city => {
       const state = city.state === "Various" ? "Other Locations" : city.state;
       
       if (!result[state]) {
         result[state] = [];
       }
       result[state].push(city);
-      return result;
     });
     
     return result;
-  }, []);
+  }, [allCities]);
 
   const states = useMemo(() => Object.keys(citiesByState).sort(), [citiesByState]);
   
   // Filter locations based on search term
-  const filterLocations = (locations: typeof allAustralianCities) => {
+  const filterLocations = (locations: typeof allCities) => {
     if (!searchTerm) return locations;
     return locations.filter(location => 
       location.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -49,6 +66,25 @@ const LocationSitemap = () => {
     }));
   };
 
+  // Load more cities when user scrolls to the bottom
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 500) {
+      setLoadedCities(prev => prev + 100);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // If no cities are found after filtering
+  const totalFilteredCities = useMemo(() => {
+    return states.reduce((total, state) => {
+      return total + filterLocations(citiesByState[state]).length;
+    }, 0);
+  }, [states, citiesByState, searchTerm]);
+
   return (
     <div className="container mx-auto px-4 py-16">
       <AnimatedSection animation="fade-in">
@@ -57,6 +93,7 @@ const LocationSitemap = () => {
         </h2>
         <p className="text-center text-seo-gray-dark mb-10 max-w-3xl mx-auto">
           Browse our comprehensive directory of SEO services available across all major Australian cities and regions.
+          Showing {allCities.length} locations in total.
         </p>
       </AnimatedSection>
 
@@ -109,15 +146,23 @@ const LocationSitemap = () => {
             Clear
           </Button>
         </div>
+        
+        {searchTerm && (
+          <p className="text-center mt-2 text-sm text-seo-gray-dark">
+            Found {totalFilteredCities} locations matching "{searchTerm}"
+          </p>
+        )}
       </AnimatedSection>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {states.map((state, stateIndex) => {
+          if (stateIndex >= loadedCities / 10) return null;
+          
           const filteredLocations = filterLocations(citiesByState[state]);
           if (filteredLocations.length === 0) return null;
           
-          const isExpanded = expandedStates[state] || false;
-          const displayCount = 10;
+          const isExpanded = expandedStates[state] || searchTerm.length > 0;
+          const displayCount = 20;
           const hasMore = filteredLocations.length > displayCount;
           
           return (
@@ -136,18 +181,21 @@ const LocationSitemap = () => {
                 <span className="text-sm text-seo-gray-dark ml-2">({filteredLocations.length})</span>
               </h3>
               <ul className="space-y-2">
-                {filteredLocations.slice(0, isExpanded ? filteredLocations.length : displayCount).map(city => (
-                  <li key={city.id}>
-                    <Link 
-                      to={`/location/${city.slug}`}
-                      className="flex items-center text-seo-gray-dark hover:text-seo-blue transition-colors"
-                    >
-                      <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
-                      <span>{city.name}</span>
-                    </Link>
-                  </li>
-                ))}
-                {hasMore && (
+                {filteredLocations.slice(0, isExpanded ? filteredLocations.length : displayCount).map((city, cityIndex) => {
+                  if (cityIndex >= (isExpanded ? filteredLocations.length : displayCount)) return null;
+                  return (
+                    <li key={`${city.id}-${cityIndex}`}>
+                      <Link 
+                        to={`/location/${city.slug}`}
+                        className="flex items-center text-seo-gray-dark hover:text-seo-blue transition-colors"
+                      >
+                        <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span>{city.name}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+                {hasMore && !searchTerm && (
                   <li className="pt-2 border-t">
                     <Button 
                       variant="link" 
@@ -170,6 +218,17 @@ const LocationSitemap = () => {
           );
         })}
       </div>
+
+      {loadedCities < states.length * 10 && !searchTerm && (
+        <div className="text-center mt-8">
+          <Button 
+            onClick={() => setLoadedCities(prev => prev + 30)}
+            className="bg-seo-blue hover:bg-seo-blue-light text-white"
+          >
+            Load More Locations
+          </Button>
+        </div>
+      )}
 
       <AnimatedSection className="mt-16" animation="fade-in" delay={300}>
         <h2 className="text-2xl font-display font-bold text-seo-dark mb-6 text-center">
