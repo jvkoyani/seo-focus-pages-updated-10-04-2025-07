@@ -843,7 +843,7 @@ const southAustralianCities: Location[] = [
   "Kielpa", "Kilburn", "Kilburn North", "Kilkenny", "Kimba", "Kingoonya", "Kings Park", "Kingscote", 
   "Kingsford", "Kingston On Murray", "Kingston Park", "Kingston Se", "Kingswood", "Klemzig", "Kohinoor", 
   "Kokatha", "Kolendo", "Kondoolka", "Kongal", "Kongolia", "Kongorong", "Koolgera", "Koolunga", "Koolywurtie", 
-  "Koonamore", "Koongawa", "Koonibba", "Koonoona", "Koonunga", "Koorine", "Kooroona", "Mintabie"
+  "Koonamore", "Koongawa", "Koonibba", "Koonoona", "Koonunga", "Koorine", "Kooroona"
 ].map((cityName, index) => {
   const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
   return {
