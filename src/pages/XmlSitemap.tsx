@@ -53,36 +53,46 @@ const XmlSitemap = () => {
       // Display count for debugging
       console.log(`Total cities in XML sitemap: ${allAustralianCities.length}`);
 
-      // Add location pages for all cities
-      allAustralianCities.forEach(city => {
-        xml += `
+      // Process all cities in smaller batches to avoid browser performance issues
+      const cityBatchSize = 100;
+      
+      for (let i = 0; i < allAustralianCities.length; i += cityBatchSize) {
+        const cityBatch = allAustralianCities.slice(i, i + cityBatchSize);
+        
+        // Add location pages for cities in this batch
+        cityBatch.forEach(city => {
+          // Create a proper slug for each city if it doesn't already have one
+          const citySlug = city.slug || city.name.toLowerCase().replace(/\s+/g, '-');
+
+          xml += `
   <url>
-    <loc>${baseUrl}/location/${city.slug}</loc>
+    <loc>${baseUrl}/location/${citySlug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
 
-        // Add service-location combinations for all cities and all services using the correct URL pattern
-        services.forEach(service => {
-          xml += `
+          // Add service-location combinations for this city and all services
+          services.forEach(service => {
+            xml += `
   <url>
-    <loc>${baseUrl}/location/${city.slug}/${service.slug}</loc>
+    <loc>${baseUrl}/location/${citySlug}/${service.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
-          
-          // Also add SEO-friendly URL pattern (service-location)
-          xml += `
+            
+            // Also add SEO-friendly URL pattern (service-location)
+            xml += `
   <url>
-    <loc>${baseUrl}/${service.slug}-${city.slug}</loc>
+    <loc>${baseUrl}/${service.slug}-${citySlug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
+          });
         });
-      });
+      }
 
       // Add methodology pages
       const methodologyPages = [
@@ -103,10 +113,14 @@ const XmlSitemap = () => {
       });
 
       // Add state pages for each state in Australia
-      const states = [...new Set(allAustralianCities.map(city => city.state))].filter(Boolean);
+      const states = [...new Set(allAustralianCities
+        .filter(city => typeof city === 'object' && city.state)
+        .map(city => (city as any).state))]
+        .filter(Boolean);
+      
       states.forEach(state => {
         if (state && state !== "Various") {
-          const stateSlug = state.toLowerCase().replace(/\s+/g, '-');
+          const stateSlug = typeof state === 'string' ? state.toLowerCase().replace(/\s+/g, '-') : '';
           xml += `
   <url>
     <loc>${baseUrl}/australia/${stateSlug}</loc>

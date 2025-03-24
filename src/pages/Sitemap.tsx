@@ -10,14 +10,35 @@ import AnimatedSection from '@/components/AnimatedSection';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
+// Helper function to normalize city data
+const normalizeCityData = (city: any) => {
+  if (typeof city === 'string') {
+    const slug = city.toLowerCase().replace(/\s+/g, '-');
+    return {
+      id: slug,
+      name: city,
+      slug: slug,
+      state: "Various", // Default state for string cities
+      country: "Australia",
+      image: "/placeholder.svg"
+    };
+  }
+  return city;
+};
+
 const Sitemap = () => {
   const [searchTerm, setSearchTerm] = useState('');
   
+  // Process all cities to ensure they have the correct format
+  const normalizedCities = useMemo(() => {
+    return allAustralianCities.map(city => normalizeCityData(city));
+  }, []);
+  
   // Group cities by state for better organization
   const stateGroups = useMemo(() => {
-    const groups: Record<string, typeof allAustralianCities> = {};
+    const groups: Record<string, typeof normalizedCities> = {};
     
-    allAustralianCities.forEach(city => {
+    normalizedCities.forEach(city => {
       // Include all cities, even those with "Various" state
       const state = city.state === "Various" ? "Other Locations" : city.state;
       
@@ -28,12 +49,12 @@ const Sitemap = () => {
     });
     
     return groups;
-  }, []);
+  }, [normalizedCities]);
   
   const states = useMemo(() => Object.keys(stateGroups).sort(), [stateGroups]);
   
   // Filter locations based on search term
-  const filterLocations = (locations: typeof allAustralianCities) => {
+  const filterLocations = (locations: typeof normalizedCities) => {
     if (!searchTerm) return locations;
     return locations.filter(location => 
       location.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -53,15 +74,15 @@ const Sitemap = () => {
   // Get major cities for popular combinations
   const majorCities = useMemo(() => {
     // Return the first 15 cities with full metadata (excluding "Various" state)
-    return allAustralianCities
+    return normalizedCities
       .filter(city => city.description && city.state !== "Various")
       .slice(0, 15);
-  }, []);
+  }, [normalizedCities]);
 
   // Calculate total number of locations
   const totalLocations = useMemo(() => {
-    return allAustralianCities.length;
-  }, []);
+    return normalizedCities.length;
+  }, [normalizedCities]);
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -82,7 +103,7 @@ const Sitemap = () => {
               Complete Site Map
             </h1>
             <p className="text-lg text-center text-seo-gray-dark max-w-3xl mx-auto mb-12">
-              Browse our comprehensive sitemap to find all {totalLocations} locations and services available across Australia.
+              Browse our comprehensive sitemap to find all {totalLocations.toLocaleString()} locations and services available across Australia.
             </p>
           </AnimatedSection>
           
@@ -188,7 +209,7 @@ const Sitemap = () => {
           
           <section className="mb-16">
             <h2 className="text-2xl font-bold mb-6 border-b pb-2">
-              Locations We Serve <span className="text-sm text-seo-gray-dark">({totalLocations} Total Locations)</span>
+              Locations We Serve <span className="text-sm text-seo-gray-dark">({totalLocations.toLocaleString()} Total Locations)</span>
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -211,14 +232,14 @@ const Sitemap = () => {
                       >
                         {state}
                       </Link>
-                      <span className="text-sm text-seo-gray-dark ml-2">({filteredLocations.length})</span>
+                      <span className="text-sm text-seo-gray-dark ml-2">({filteredLocations.length.toLocaleString()})</span>
                     </h3>
                     
                     <div className="h-[300px] overflow-y-auto pr-2">
                       <div className="grid grid-cols-1 gap-2">
                         {displayLocations.map(city => (
                           <Link 
-                            key={city.id}
+                            key={city.id || city.slug}
                             to={`/location/${city.slug}`}
                             className="flex items-center p-2 hover:bg-seo-gray-light rounded transition-colors"
                           >
@@ -235,7 +256,7 @@ const Sitemap = () => {
                             onClick={() => toggleStateExpansion(state)}
                             className="text-seo-blue"
                           >
-                            {isExpanded ? "Show less" : `Show all ${filteredLocations.length} locations`}
+                            {isExpanded ? "Show less" : `Show all ${filteredLocations.length.toLocaleString()} locations`}
                           </Button>
                         </div>
                       )}
@@ -263,18 +284,16 @@ const Sitemap = () => {
                   <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
                   <div className="h-[200px] overflow-y-auto pr-2">
                     <div className="grid grid-cols-1 gap-2">
-                      {majorCities.map(city => {
-                        return (
-                          <Link 
-                            key={`${service.slug}-${city.slug}`}
-                            to={`/location/${city.slug}/${service.slug}`}
-                            className="flex items-center text-sm hover:text-seo-blue"
-                          >
-                            <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
-                            <span className="truncate">{service.title} in {city.name}</span>
-                          </Link>
-                        );
-                      })}
+                      {majorCities.slice(0, 15).map(city => (
+                        <Link 
+                          key={`${service.slug}-${city.slug}`}
+                          to={`/location/${city.slug}/${service.slug}`}
+                          className="flex items-center text-sm hover:text-seo-blue"
+                        >
+                          <ExternalLink className="h-3 w-3 mr-2 flex-shrink-0" />
+                          <span className="truncate">{service.title} in {city.name}</span>
+                        </Link>
+                      ))}
                     </div>
                   </div>
                   <div className="mt-4 pt-2 border-t text-center">
@@ -289,8 +308,8 @@ const Sitemap = () => {
             <div className="mt-8 p-6 bg-white rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">All Service-Location Combinations</h3>
               <p className="text-seo-gray-dark mb-4">
-                We provide specialized SEO services for all {totalLocations} locations across Australia. 
-                Each of our {services.length} services is available in every location, creating a total of {services.length * totalLocations} unique service-location combinations.
+                We provide specialized SEO services for all {totalLocations.toLocaleString()} locations across Australia. 
+                Each of our {services.length} services is available in every location, creating a total of {(services.length * totalLocations).toLocaleString()} unique service-location combinations.
               </p>
               <div className="bg-seo-gray-light p-3 rounded mb-4 font-mono text-sm">
                 /location/{"{location-slug}"}/{"{service-slug}"}
@@ -302,7 +321,7 @@ const Sitemap = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 {majorCities.slice(0, 6).map(city => (
                   <Link 
-                    key={city.id} 
+                    key={city.id || city.slug} 
                     to={`/location/${city.slug}/local-seo`}
                     className="p-2 bg-seo-gray-light rounded hover:bg-seo-gray/20 transition-colors flex items-center"
                   >
