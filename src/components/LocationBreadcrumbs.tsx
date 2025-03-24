@@ -3,17 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { allAustralianCities } from '@/lib/locationData';
-
-// Define type for location data that includes optional county
-interface LocationData {
-  id: string;
-  name: string;
-  slug: string;
-  state: string;
-  country: string;
-  image: string;
-  county?: string; // Making county optional
-}
+import type { Location } from '@/types/location';
 
 interface LocationBreadcrumbsProps {
   locationSlug?: string;
@@ -22,26 +12,8 @@ interface LocationBreadcrumbsProps {
 
 const LocationBreadcrumbs = ({ locationSlug, className = '' }: LocationBreadcrumbsProps) => {
   // Find location data for the given slug
-  const locationData = locationSlug 
-    ? allAustralianCities.find(city => 
-        typeof city === 'string' 
-          ? city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') === locationSlug
-          : city.slug === locationSlug
-      ) 
-    : null;
-  
-  // Convert string location to location object if needed
-  const location: LocationData | null = locationData 
-    ? typeof locationData === 'string'
-      ? {
-          id: locationData.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-'),
-          name: locationData,
-          slug: locationData.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-'),
-          state: "Various",
-          country: "Australia",
-          image: "/placeholder.svg"
-        }
-      : locationData as LocationData
+  const location = locationSlug 
+    ? allAustralianCities.find(city => city.slug === locationSlug)
     : null;
   
   if (!location) return null;

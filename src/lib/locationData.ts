@@ -440,17 +440,33 @@ export const actCities: string[] = [
   "Queanbeyan"
 ];
 
-// Now, I need to fix the error in LocationSitemap.tsx by updating the type for the `allAustralianCities` array
-export const allAustralianCities: (string | Location)[] = [
-  ...southAustralianCities,
-  ...victorianCities,
-  ...newSouthWalesCities,
-  ...queenslandCities,
-  ...westernAustralianCities,
-  ...tasmanianCities,
-  ...northernTerritoryCities,
-  ...actCities
-];
+// Helper function to convert a string city name to a Location object
+const createLocationFromString = (cityName: string): Location => {
+  const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+  return {
+    id: slug,
+    name: cityName,
+    slug: slug,
+    state: "Various",
+    country: "Australia",
+    image: "/placeholder.svg"
+  };
+};
+
+// Convert all string cities to Location objects
+const convertCitiesToLocations = (cities: string[]): Location[] => {
+  return cities.map(city => createLocationFromString(city));
+};
+
+// Convert all city arrays to Location objects
+const southAustralianLocations = convertCitiesToLocations(southAustralianCities);
+const victorianLocations = convertCitiesToLocations(victorianCities);
+const newSouthWalesLocations = convertCitiesToLocations(newSouthWalesCities);
+const queenslandLocations = convertCitiesToLocations(queenslandCities);
+const westernAustralianLocations = convertCitiesToLocations(westernAustralianCities);
+const tasmanianLocations = convertCitiesToLocations(tasmanianCities);
+const northernTerritoryLocations = convertCitiesToLocations(northernTerritoryCities);
+const actLocations = convertCitiesToLocations(actCities);
 
 // Predefined locations with more details
 export const predefinedLocations: Location[] = [
@@ -528,8 +544,18 @@ export const predefinedLocations: Location[] = [
   }
 ];
 
-// Combine predefined locations with string locations
-export const allLocations: (string | Location)[] = [
+// Combine all location arrays - now all entries are Location objects
+export const allAustralianCities: Location[] = [
   ...predefinedLocations,
-  ...allAustralianCities.filter(city => !predefinedLocations.some(loc => loc.name === city))
+  ...southAustralianLocations,
+  ...victorianLocations,
+  ...newSouthWalesLocations,
+  ...queenslandLocations,
+  ...westernAustralianLocations,
+  ...tasmanianLocations,
+  ...northernTerritoryLocations,
+  ...actLocations
 ];
+
+// For backward compatibility, keep allLocations but we don't use it much
+export const allLocations: Location[] = allAustralianCities;
