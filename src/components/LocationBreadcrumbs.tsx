@@ -1,79 +1,93 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, MapPin } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { allAustralianCities } from '@/lib/locationData';
 
+// Define type for location data that includes optional county
+interface LocationData {
+  id: string;
+  name: string;
+  slug: string;
+  state: string;
+  country: string;
+  image: string;
+  county?: string; // Making county optional
+}
+
 interface LocationBreadcrumbsProps {
-  locationSlug: string;
-  serviceSlug?: string;
+  locationSlug?: string;
   className?: string;
 }
 
-const LocationBreadcrumbs = ({ locationSlug, serviceSlug, className = '' }: LocationBreadcrumbsProps) => {
-  const locationData = allAustralianCities.find(loc => loc.slug === locationSlug);
+const LocationBreadcrumbs = ({ locationSlug, className = '' }: LocationBreadcrumbsProps) => {
+  // Find location data for the given slug
+  const locationData = locationSlug 
+    ? allAustralianCities.find(city => 
+        typeof city === 'string' 
+          ? city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') === locationSlug
+          : city.slug === locationSlug
+      ) 
+    : null;
   
-  if (!locationData) return null;
+  // Convert string location to location object if needed
+  const location: LocationData | null = locationData 
+    ? typeof locationData === 'string'
+      ? {
+          id: locationData.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-'),
+          name: locationData,
+          slug: locationData.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-'),
+          state: "Various",
+          country: "Australia",
+          image: "/placeholder.svg"
+        }
+      : locationData as LocationData
+    : null;
+  
+  if (!location) return null;
+  
+  // Format country and state for URL paths
+  const countrySlug = location.country.toLowerCase().replace(/\s+/g, '-');
+  const stateSlug = location.state.toLowerCase().replace(/\s+/g, '-');
   
   return (
-    <div className={`flex flex-wrap items-center text-sm text-seo-gray-dark ${className}`}>
-      <Link 
-        to="/" 
-        className="hover:text-seo-blue transition-colors"
-      >
+    <div className={`flex items-center space-x-2 text-sm ${className}`}>
+      <Link to="/" className="text-seo-gray-dark hover:text-seo-blue transition-colors">
         Home
       </Link>
-      <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
+      <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
       
-      {/* Country */}
       <Link 
-        to={`/${locationData.country.toLowerCase()}`}
-        className="hover:text-seo-blue transition-colors"
+        to={`/${countrySlug}`} 
+        className="text-seo-gray-dark hover:text-seo-blue transition-colors"
       >
-        {locationData.country}
+        {location.country}
       </Link>
-      <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
+      <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
       
-      {/* State */}
       <Link 
-        to={`/${locationData.country.toLowerCase()}/${locationData.state.toLowerCase().replace(/\s+/g, '-')}`}
-        className="hover:text-seo-blue transition-colors"
+        to={`/${countrySlug}/${stateSlug}`} 
+        className="text-seo-gray-dark hover:text-seo-blue transition-colors"
       >
-        {locationData.state}
+        {location.state}
       </Link>
-      <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
       
-      {/* County (if available) */}
-      {locationData.county && (
+      {location.county && (
         <>
+          <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
           <Link 
-            to={`/${locationData.country.toLowerCase()}/${locationData.state.toLowerCase().replace(/\s+/g, '-')}/${locationData.county.toLowerCase().replace(/\s+/g, '-')}`}
-            className="hover:text-seo-blue transition-colors"
+            to={`/${countrySlug}/${stateSlug}/${location.county.toLowerCase().replace(/\s+/g, '-')}`} 
+            className="text-seo-gray-dark hover:text-seo-blue transition-colors"
           >
-            {locationData.county}
+            {location.county}
           </Link>
-          <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
         </>
       )}
       
-      {/* Location (City) */}
-      <Link 
-        to={`/location/${locationData.slug}`}
-        className="hover:text-seo-blue transition-colors flex items-center"
-      >
-        <MapPin className="h-3 w-3 mr-1" />
-        {locationData.name}
-      </Link>
-      
-      {/* Service (if available) */}
-      {serviceSlug && (
-        <>
-          <ChevronRight className="h-4 w-4 mx-1 text-seo-gray-medium" />
-          <span className="text-seo-blue font-medium">
-            {serviceSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-          </span>
-        </>
-      )}
+      <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
+      <span className="text-seo-blue font-medium">
+        {location.name}
+      </span>
     </div>
   );
 };
