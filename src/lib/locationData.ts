@@ -113,63 +113,6 @@ const australianCities: Location[] = [
     metaTitle: "Darwin SEO Services | Local Search Optimization",
     metaDescription: "Our Darwin SEO services help local businesses improve their online visibility and attract more qualified customers."
   },
-  // Northern Territory cities and locations
-const northernTerritoryCities: Location[] = [
-  "Acacia Hills", "Adelaide River", "Alawa", "Ali Curung", "Alice Springs", "Alyangula", "Amata", "Ampilatwatja",
-  "Anatye", "Angurugu", "Anindilyakwa", "Anmatjere", "Annie River", "Anula", "Araluen", "Archer",
-  "Areyonga", "Arnold", "Atitjere", "Ayers Range South", "Baines", "Bakewell", "Barrow Creek", "Barunga",
-  "Batchelor", "Bathurst Island", "Bayview", "Bees Creek", "Bellamack", "Belyuen", "Berrimah", "Berry Springs",
-  "Beswick", "Beswick Creek", "Binjari", "Birdum", "Black Jungle", "Blackmore", "Borroloola", "Bradshaw",
-  "Braitling", "Brinkin", "Buchanan", "Buffalo Creek", "Bulman Weemol", "Burrundie", "Burt Plain", "Bynoe",
-  "Bynoe Harbour", "Calvert", "Camp Creek", "Canteen Creek", "Casuarina", "Channel Island", "Charles Darwin", "Charlotte",
-  "Chilla Well", "Ciccone", "Claravale", "Cobourg", "Coconut Grove", "Collett Creek", "Coolalinga", "Coomalie Creek",
-  "Coonawarra", "Cossack", "Costello", "Cox Peninsula", "Creswell", "Daguragu", "Daly", "Daly River",
-  "Daly Waters", "Darwin", "Darwin Dc", "Darwin River", "Darwin River Dam", "Davenport", "De Rose Hill", "Delamere",
-  "Delissaville", "Desert Springs", "Douglas Daly", "Driver", "Dundee Beach", "Dundee Downs", "Dundee Forest", "Durack",
-  "East Arm", "East Arnhem", "East Point", "East Side", "Eaton", "Edith", "Elliott", "Elrundie",
-  "Elsey", "Emungalan", "Engawala", "Erldunda", "Ernabella", "Eva Valley", "Fannie Bay", "Farrar",
-  "Finke", "Finniss Valley", "Fleming", "Florina", "Fly Creek", "Flying Fox", "Flynn", "Freds Pass",
-  "Galiwinku", "Gapuwiyak", "Ghan", "Gibson Desert North", "Gibson Desert South", "Gillen", "Girraween", "Glyde Point",
-  "Goulburn Island", "Gray", "Gregory", "Gulung Mardrulk", "Gunbalanya", "Gunn", "Gunn Point", "Gunyangara",
-  "Gurindji", "Haasts Bluff", "Hale", "Hart", "Hart Range", "Hayes Creek", "Helen Springs Station", "Herbert",
-  "Hermannsburg", "Hidden Valley", "Holmes", "Holtze", "Hotham", "Howard Springs", "Hugh", "Hughes",
-  "Humpty Doo", "Imanpa", "Indulkana", "Ininti Store", "Irlpme", "Jabiru", "Jilkminggan", "Jingili",
-  "Johnston", "Kakadu", "Kalka", "Kalkarindji", "Kaltjiti", "Kaltukatjara", "Kanpi", "Karama",
-  "Katherine", "Katherine East", "Katherine South", "King Ash Bay", "Kings Creek Station", "Kintore", "Kiwirrkurra", "Knuckey Lagoon",
-  "Koolpinyah", "Kulgera", "Kunparrka", "Lajamanu", "Lake Bennett", "Lake Mackay", "Lambells Lagoon", "Lambina",
-  "Lansdowne", "Laramba", "Larapinta", "Larrakeyah", "Larrimah", "Leanyer", "Lee Point", "Limmen",
-  "Litchfield Park", "Livingstone", "Lloyd Creek", "Ludmilla", "Lyons", "Macdonnell Range", "Malak", "Manbulloo",
-  "Mandorah", "Maningrida", "Manton", "Mapuru", "Maranboy", "Maranunga", "Margaret River", "Marlow Lagoon",
-  "Marrakai", "Marrara", "Mataranka", "Mcarthur", "Mcminns Lagoon", "Mereenie", "Mickett Creek", "Middle Point",
-  "Milikapiti", "Milingimbi", "Millner", "Milyakburra", "Mimili", "Miniyeri", "Minjilang", "Mitchell",
-  "Moil", "Moulden", "Mount Bundey", "Mount Johns", "Mount Liebig", "Mount Zeil", "Muirhead", "Murputja",
-  "Murrumujuk", "Mutitjulu", "Nakara", "Namatjira", "Napperby Station", "Nauiyu", "Nemarluk", "Newcastle Waters",
-  "Ngaanyatjarra Giles", "Nganmarriyanga", "Ngukurr", "Nhulunbuy", "Nicholson", "Nightcliff", "Nitmiluk", "Noonamah",
-  "Numbulwar", "Numburindi", "Nutwood Downs", "Nyapari", "Nyirripi", "Oenpelli", "Palmerston", "Pamayu",
-  "Papunya", "Parap", "Patjarr", "Pellew Islands", "Peppimenarti", "Petermann", "Pigeon Hole", "Pine Creek",
-  "Pinelands", "Pipalyatjara", "Pirlangimpi", "Point Stephens", "Point Stuart", "Pularumpi", "Rakula", "Ramingining",
-  "Rapid Creek", "Renner Springs", "Robin Falls", "Robinson River", "Rosebery", "Rosebery Heights", "Rum Jungle", "Sadadeen",
-  "Sandover", "Sandpalms Roadhouse", "Santa Teresa", "Shoal Bay", "Simpson", "Southport", "Stapleton", "Stuart",
-  "Stuart Park", "Sturt Plateau", "Tablelands", "Tanami", "Tanami East", "Tara", "Telegraph Station", "Tennant Creek",
-  "Thamarrurr", "The Gap", "The Gardens", "The Narrows", "Ti Tree", "Tieyon", "Timber Creek", "Tindal",
-  "Tipperary", "Titjikala", "Tivendale", "Tiwi", "Tiwi Islands", "Tjirrkarli", "Tjukurla", "Top Springs",
-  "Tortilla Flats", "Tumbling Waters", "Umbakumba", "Umuwa", "Undoolya", "Uralla", "Venn", "Vernon Islands",
-  "Victoria River", "Victoria River Downs", "Virginia", "Wadeye", "Wagait Beach", "Wagaman", "Wak Wak", "Wallace Rockhole",
-  "Wanguri", "Wannan", "Warrego", "Warruwi", "Warumungu", "Watarru", "Wave Hill", "Weddell",
-  "West Arnhem", "White Gums", "Wickham", "Willowra", "Wilora", "Wilton", "Wingellina", "Winnellie",
-  "Wishart", "Woodroffe", "Woolaning", "Woolner", "Wulagi", "Wurrumiyanga", "Wutunugurra", "Yarralin",
-  "Yarrawonga", "Yirrkala", "Yuelamu", "Yuendumu", "Yulara", "Yunyarinyi", "Zuccoli"
-].map((cityName, index) => {
-  const slug = cityName.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
-  return {
-    id: slug,
-    name: cityName,
-    slug: slug,
-    state: "Northern Territory",
-    country: "Australia",
-    image: "/placeholder.svg"
-  };
-});
   {
     id: "wollongong",
     name: "Wollongong",
