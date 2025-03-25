@@ -11,7 +11,7 @@ interface HeroProps {
 }
 
 const Hero = ({
-  title = "Boost Your Search Rankings & Drive More Qualified Traffic",
+  title = "Boost Your Search Rankings & Drive More Qualified Traffic xyz",
   subtitle = "Data-driven SEO strategies tailored to your business goals",
   location,
   backgroundImage = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop",
