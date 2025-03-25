@@ -629,7 +629,7 @@ const southAustralianCities: Location[] = [
   "Middle River", "Middleback Range", "Middleton", "Midgee", "Mil Lel", "Milang", "Mile End", "Mile End South",
   "Milendella", "Millbrook", "Millers Creek", "Millicent", "Millswood", "Miltalie", "Minbrie", "Minburra",
   "Minburra Plain", "Minburra Station", "Mindarie", "Mingary", "Mingbool", "Minlaton", "Minnipa", "Mintabie",
-  "Mintaro", "Minvalara", "Miranda", "Mitcham", "Mitcham Shopping Centre", "Mitchell", "Mitchell Park", "Mitchellville"
+  "Mintaro", "Minvalara", "Miranda", "Mitcham", "Mitcham Shopping Centre", "Mitchell", "Mitchell Park", "Mitchellville" 
   "Kuitpo", "Kuitpo Colony", "Kulpara", "Kurralta Park", "Kyancutta", "Kybunga", "Kybybolite", "Kyeema", 
   "Modbury North Dc", "Moerlong", "Monarto", "Monarto South", "Monash", "Monbulla", "Mongolata", 
   "Montacute", "Montarra", "Monteith", "Moockra", "Moody", "Moolawatana", "Mooleulooloo", "Moolooloo", 
