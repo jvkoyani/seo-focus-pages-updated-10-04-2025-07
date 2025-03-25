@@ -91,7 +91,7 @@ const australianCities: Location[] = [
     metaTitle: "Canberra SEO Services | Local Search Optimization",
     metaDescription: "Our Canberra SEO services help businesses improve their visibility in search engines and attract more qualified leads."
   },
-  {
+   {
     id: "hobart",
     name: "Hobart",
     slug: "hobart",
@@ -101,6 +101,17 @@ const australianCities: Location[] = [
     description: "Hobart is Tasmania's capital, known for its historic buildings, beautiful harbor, and proximity to nature.",
     metaTitle: "Hobart SEO Services | Local Search Optimization",
     metaDescription: "Improve your Hobart business visibility online with our specialized SEO services. Attract more local customers and grow your business."
+  },
+  {
+    id: "darwin",
+    name: "Darwin",
+    slug: "darwin",
+    state: "Northern Territory",
+    country: "Australia",
+    image: "/placeholder.svg",
+    description: "Darwin is the Northern Territory's capital, known for its tropical climate, multicultural community and relaxed lifestyle.",
+    metaTitle: "Darwin SEO Services | Local Search Optimization",
+    metaDescription: "Our Darwin SEO services help local businesses improve their online visibility and attract more qualified customers."
   },
   {
     id: "wollongong",
@@ -284,11 +295,19 @@ const additionalCities: Location[] = [
     country: "Australia",
     image: "/placeholder.svg"
   },
-  {
+{
     id: "bathurst",
     name: "Bathurst",
     slug: "bathurst",
     state: "New South Wales",
+    country: "Australia",
+    image: "/placeholder.svg"
+  },
+  {
+    id: "palmerston",
+    name: "Palmerston",
+    slug: "palmerston",
+    state: "Northern Territory",
     country: "Australia",
     image: "/placeholder.svg"
   },
