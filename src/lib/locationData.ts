@@ -607,6 +607,7 @@ const southAustralianCities: Location[] = [
   // Original South Australian cities
   "Mintabie", "Mitchidy Moola", "Moana", "Mobilong", "Moculta", "Modbury", "Modbury Heights", "Modbury North", 
   "Kootaberra", "Koppamurra", "Koppio", "Korunye", "Kringin", "Krondorf", "Krongart", "Kudla", 
+  "Laffer", "Lake Albert", "Lake Alexandrina", "Lake Carlet", "Lake Everard", "Lake Eyre", "Lake Frome", "Lake Gairdner",
   "Kuitpo", "Kuitpo Colony", "Kulpara", "Kurralta Park", "Kyancutta", "Kybunga", "Kybybolite", "Kyeema", 
   "Modbury North Dc", "Moerlong", "Monarto", "Monarto South", "Monash", "Monbulla", "Mongolata", 
   "Montacute", "Montarra", "Monteith", "Moockra", "Moody", "Moolawatana", "Mooleulooloo", "Moolooloo", 
