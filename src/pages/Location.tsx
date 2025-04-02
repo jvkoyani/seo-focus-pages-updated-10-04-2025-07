@@ -1,5 +1,6 @@
+
 import React, { useEffect } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, MapPin, TrendingUp, BarChart, 
   CheckCircle, Award, Users, Target, Star, 
@@ -12,7 +13,8 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import ResourcesSection from '@/components/ResourcesSection';
 import Services from '@/components/Services';
-import { allAustralianCities } from '@/lib/locationData';
+import { extendedAustralianCities, findLocationBySlug } from '@/lib/additionalLocationData';
+import LocationIndustries from '@/components/LocationIndustries';
 import InfoCard from '@/components/InfoCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -21,6 +23,7 @@ import LocationBreadcrumbs from '@/components/LocationBreadcrumbs';
 const Location = () => {
   const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   
   useEffect(() => {
     window.scrollTo({
@@ -29,7 +32,7 @@ const Location = () => {
     });
   }, [location.pathname]);
   
-  const locationData = allAustralianCities.find(loc => loc.slug === slug);
+  const locationData = findLocationBySlug(slug || '');
   
   const handleLinkClick = () => {
     window.scrollTo({
@@ -37,6 +40,12 @@ const Location = () => {
       behavior: 'smooth'
     });
   };
+  
+  useEffect(() => {
+    if (!locationData && slug) {
+      navigate('/not-found');
+    }
+  }, [locationData, slug, navigate]);
   
   if (!locationData) {
     return (
@@ -225,6 +234,14 @@ const Location = () => {
       
       {/* Our Services Section */}
       <Services location={locationData.name} locationSlug={locationData.slug} />
+      
+      {/* Industry-Specific SEO Section */}
+      <LocationIndustries 
+        locationName={locationData.name}
+        locationSlug={locationData.slug}
+        limit={6}
+        showAllLink={true}
+      />
       
       {/* Why Choose Us Section */}
       <section className="py-20 bg-seo-gray-light">

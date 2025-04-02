@@ -19,6 +19,8 @@ import CaseStudies from "./pages/CaseStudies";
 import CaseStudy from "./pages/CaseStudy";
 import LocationService from "./pages/LocationService";
 import LocationServicePage from "./pages/LocationServicePage";
+import LocationIndustries from "./pages/LocationIndustries";
+import LocationIndustryPage from "./pages/LocationIndustryPage";
 import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 import FreeConsultation from "./pages/FreeConsultation";
@@ -56,6 +58,11 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/location/:slug" element={<Location />} />
           <Route path="/location/:locationSlug/:serviceSlug" element={<LocationServicePage />} />
+          
+          {/* New industry location routes */}
+          <Route path="/location/:locationSlug/industries" element={<LocationIndustries />} />
+          <Route path="/location/:locationSlug/industry/:industrySlug" element={<LocationIndustryPage />} />
+          
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/case-studies" element={<CaseStudies />} />

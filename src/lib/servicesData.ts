@@ -1,3 +1,4 @@
+
 // Define the structure for a service
 export type Service = {
   id: string;
@@ -8,6 +9,7 @@ export type Service = {
   icon: string;
   image?: string;
   featured?: boolean;
+  forIndustries?: string[]; // Array of industry IDs this service is applicable to
 };
 
 // Define all available services
@@ -21,6 +23,7 @@ export const services: Service[] = [
     icon: "trending-up",
     image: "/service-images/search-engine-optimization.jpg",
     featured: true,
+    forIndustries: ["healthcare", "ecommerce", "legal", "real-estate", "hospitality", "education", "dental", "chiropractor", "accountant"]
   },
   {
     id: "local-seo",
@@ -31,6 +34,7 @@ export const services: Service[] = [
     icon: "map-pin",
     image: "/service-images/local-seo.jpg",
     featured: true,
+    forIndustries: ["healthcare", "legal", "real-estate", "hospitality", "dental", "chiropractor", "accountant"]
   },
   {
     id: "technical-seo",
@@ -41,6 +45,7 @@ export const services: Service[] = [
     icon: "settings",
     image: "/service-images/technical-seo.jpg",
     featured: false,
+    forIndustries: ["healthcare", "ecommerce", "legal", "education", "dental", "chiropractor", "accountant"]
   },
   {
     id: "content-marketing",
@@ -51,6 +56,7 @@ export const services: Service[] = [
     icon: "file-text",
     image: "/service-images/content-marketing.jpg",
     featured: true,
+    forIndustries: ["healthcare", "ecommerce", "legal", "real-estate", "hospitality", "education", "dental", "chiropractor", "accountant"]
   },
   {
     id: "link-building",
@@ -61,6 +67,7 @@ export const services: Service[] = [
     icon: "link",
     image: "/service-images/link-building.jpg",
     featured: false,
+    forIndustries: ["healthcare", "ecommerce", "legal", "education", "dental", "chiropractor", "accountant"]
   },
   {
     id: "ecommerce-seo",
@@ -71,6 +78,7 @@ export const services: Service[] = [
     icon: "shopping-cart",
     image: "/service-images/ecommerce-seo.jpg",
     featured: true,
+    forIndustries: ["ecommerce"]
   },
   // Add more services as needed
 ];
@@ -100,4 +108,11 @@ export const getFeaturedServices = (limit: number = 6): Service[] => {
   
   // Combine featured with some regular services to meet the limit
   return [...featured, ...remaining].slice(0, limit);
+};
+
+// Get services for a specific industry
+export const getServicesForIndustry = (industryId: string): Service[] => {
+  return services.filter(service => 
+    service.forIndustries && service.forIndustries.includes(industryId)
+  );
 };

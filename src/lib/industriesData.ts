@@ -1,3 +1,4 @@
+
 // Define the structure for an industry
 export type Industry = {
   id: string;
@@ -8,6 +9,7 @@ export type Industry = {
   icon: string;
   image?: string;
   featured?: boolean;
+  benefits: string[];
 };
 
 // Define all available industries
@@ -21,6 +23,56 @@ export const industries: Industry[] = [
     icon: "heart-pulse",
     image: "/industry-images/healthcare.jpg",
     featured: true,
+    benefits: [
+      "Increase new patient inquiries through organic search",
+      "Build trust through optimized reviews and testimonials",
+      "Target specific medical conditions and treatments in search"
+    ]
+  },
+  {
+    id: "dental",
+    title: "Dental SEO",
+    slug: "dental",
+    description: "Results-driven SEO for dental practices focused on patient acquisition and practice growth.",
+    shortDescription: "Grow your dental practice online",
+    icon: "stethoscope",
+    image: "/industry-images/dental.jpg",
+    featured: true,
+    benefits: [
+      "Increase new patient inquiries through organic search",
+      "Rank higher for profitable treatment keywords",
+      "Optimize for local search to attract nearby patients"
+    ]
+  },
+  {
+    id: "chiropractor",
+    title: "Chiropractor SEO",
+    slug: "chiropractor",
+    description: "Custom SEO solutions for chiropractors to increase patient acquisition and boost local visibility.",
+    shortDescription: "Attract more chiropractic patients",
+    icon: "activity",
+    image: "/industry-images/chiropractor.jpg",
+    featured: true,
+    benefits: [
+      "Attract more patients searching for chiropractic care",
+      "Build trust through optimized reviews and testimonials",
+      "Target specific conditions and treatments in search"
+    ]
+  },
+  {
+    id: "accountant",
+    title: "Accountant SEO",
+    slug: "accountant",
+    description: "Specialized SEO strategies to help accounting firms attract more qualified leads and grow their client base.",
+    shortDescription: "Grow your accounting practice",
+    icon: "calculator",
+    image: "/industry-images/accountant.jpg",
+    featured: true,
+    benefits: [
+      "Attract more qualified leads looking for accounting services",
+      "Establish authority in specialized financial niches",
+      "Target seasonal tax and accounting keywords"
+    ]
   },
   {
     id: "ecommerce",
@@ -31,6 +83,11 @@ export const industries: Industry[] = [
     icon: "shopping-bag",
     image: "/industry-images/ecommerce.jpg",
     featured: true,
+    benefits: [
+      "Optimize product pages for better conversion rates",
+      "Improve visibility in Google Shopping results",
+      "Increase organic traffic to boost sales"
+    ]
   },
   {
     id: "legal",
@@ -41,6 +98,11 @@ export const industries: Industry[] = [
     icon: "scale",
     image: "/industry-images/legal.jpg",
     featured: true,
+    benefits: [
+      "Target high-value legal keywords in your practice area",
+      "Establish authority through content marketing",
+      "Optimize for local search to attract nearby clients"
+    ]
   },
   {
     id: "real-estate",
@@ -51,6 +113,11 @@ export const industries: Industry[] = [
     icon: "home",
     image: "/industry-images/real-estate.jpg",
     featured: false,
+    benefits: [
+      "Improve visibility for property listings in search results",
+      "Target neighborhood-specific keywords",
+      "Build authority through local market insights"
+    ]
   },
   {
     id: "hospitality",
@@ -61,6 +128,11 @@ export const industries: Industry[] = [
     icon: "utensils",
     image: "/industry-images/hospitality.jpg",
     featured: false,
+    benefits: [
+      "Improve visibility in travel-related searches",
+      "Optimize for local attraction and event keywords",
+      "Target seasonal and event-based tourism traffic"
+    ]
   },
   {
     id: "education",
@@ -71,6 +143,11 @@ export const industries: Industry[] = [
     icon: "graduation-cap",
     image: "/industry-images/education.jpg",
     featured: true,
+    benefits: [
+      "Target keywords related to specific courses and programs",
+      "Improve visibility during key enrollment periods",
+      "Build authority through educational content"
+    ]
   },
   // Add more industries as needed
 ];
