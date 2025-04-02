@@ -39,15 +39,20 @@ export const additionalLocations: Location[] = [
 export const extendedAustralianCities = [...allAustralianCities, ...additionalLocations];
 
 // Utility to get all locations, original + additional
-export const getAllLocations = () => {
+export const getAllLocations = (): Location[] => {
   return extendedAustralianCities;
 };
 
 // Utility to find a location by slug
-export const findLocationBySlug = (slug: string) => {
-  return extendedAustralianCities.find(loc => 
-    typeof loc === 'string' 
-      ? loc.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') === slug 
-      : loc.slug === slug
-  );
+export const findLocationBySlug = (slug: string): Location | undefined => {
+  return extendedAustralianCities.find(loc => {
+    if (typeof loc === 'object') {
+      return loc.slug === slug;
+    }
+    // Handle string locations if any exist in the original data
+    if (typeof loc === 'string') {
+      return loc.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') === slug;
+    }
+    return false;
+  });
 };

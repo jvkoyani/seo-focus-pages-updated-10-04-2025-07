@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
-import { getAllLocations } from '@/lib/additionalLocationData';
+import { getAllLocations, Location } from '@/lib/additionalLocationData';
 
 const CountryCities = () => {
   // Group cities by state (excluding "Various" state) using our extended data
@@ -19,7 +20,7 @@ const CountryCities = () => {
     }
     groups[city.state].push(city);
     return groups;
-  }, {} as Record<string, typeof getAllLocations>);
+  }, {} as Record<string, Location[]>);
 
   return (
     <section className="py-16 bg-white">

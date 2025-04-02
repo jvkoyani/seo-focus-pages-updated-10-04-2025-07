@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
 import { ArrowRight, MapPin, TrendingUp, Award, Users, Activity, Star, Clock, Building } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getAllLocations } from '@/lib/additionalLocationData';
+import { getAllLocations, Location } from '@/lib/additionalLocationData';
+import { services } from '@/lib/data';
 
 interface LocationLinksProps {
   service: {
@@ -33,7 +34,7 @@ const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksPro
   const displayedLocations = filteredLocations.slice(0, limit);
 
   // Get a location image, with fallback to placeholder
-  const getLocationImage = (location: typeof allAustralianCities[0]) => {
+  const getLocationImage = (location: Location) => {
     // If location has an image defined, use it
     if (location.image) {
       return location.image;

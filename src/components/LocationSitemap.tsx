@@ -4,7 +4,8 @@ import { MapPin, ArrowRight, Globe, Search } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { getAllLocations } from '@/lib/additionalLocationData';
+import { getAllLocations, Location } from '@/lib/additionalLocationData';
+import { services } from '@/lib/data';
 
 const LocationSitemap = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,7 +31,7 @@ const LocationSitemap = () => {
   
   // Group cities by state
   const citiesByState = useMemo(() => {
-    const result: Record<string, typeof allCities> = {};
+    const result: Record<string, Location[]> = {};
     
     allCities.forEach(city => {
       const state = city.state === "Various" ? "Other Locations" : city.state;
@@ -47,7 +48,7 @@ const LocationSitemap = () => {
   const states = useMemo(() => Object.keys(citiesByState).sort(), [citiesByState]);
   
   // Filter locations based on search term
-  const filterLocations = (locations: typeof allCities) => {
+  const filterLocations = (locations: Location[]) => {
     if (!searchTerm) return locations;
     return locations.filter(location => 
       location.name.toLowerCase().includes(searchTerm.toLowerCase())
