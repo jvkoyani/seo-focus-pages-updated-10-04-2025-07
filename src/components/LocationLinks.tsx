@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
-import { allAustralianCities } from '@/lib/locationData';
 import { ArrowRight, MapPin, TrendingUp, Award, Users, Activity, Star, Clock, Building } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getAllLocations } from '@/lib/additionalLocationData';
 
 interface LocationLinksProps {
   service: {
@@ -15,10 +16,18 @@ interface LocationLinksProps {
 }
 
 const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksProps) => {
-  // Filter out the excluded location if provided
+  // Filter out the excluded location if provided, using our extended data
+  const allLocations = getAllLocations();
+  
   const filteredLocations = excludeLocation 
-    ? allAustralianCities.filter(loc => loc.slug !== excludeLocation)
-    : allAustralianCities;
+    ? allLocations.filter(loc => {
+        if (typeof loc === 'string') {
+          const slug = loc.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+          return slug !== excludeLocation;
+        }
+        return loc.slug !== excludeLocation;
+      })
+    : allLocations;
     
   // Only display the specified number of locations (defaults to 9)
   const displayedLocations = filteredLocations.slice(0, limit);

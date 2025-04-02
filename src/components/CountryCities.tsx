@@ -1,13 +1,17 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { allAustralianCities } from '@/lib/locationData';
 import { MapPin } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
+import { getAllLocations } from '@/lib/additionalLocationData';
 
 const CountryCities = () => {
-  // Group cities by state (excluding "Various" state)
-  const stateGroups = allAustralianCities.reduce((groups, city) => {
+  // Group cities by state (excluding "Various" state) using our extended data
+  const stateGroups = getAllLocations().reduce((groups, city) => {
+    if (typeof city === 'string') {
+      // Skip string cities or handle them differently
+      return groups;
+    }
+    
     if (city.state === "Various") return groups;
     
     if (!groups[city.state]) {
@@ -15,7 +19,7 @@ const CountryCities = () => {
     }
     groups[city.state].push(city);
     return groups;
-  }, {} as Record<string, typeof allAustralianCities>);
+  }, {} as Record<string, typeof getAllLocations>);
 
   return (
     <section className="py-16 bg-white">

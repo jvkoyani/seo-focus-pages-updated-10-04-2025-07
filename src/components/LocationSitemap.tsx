@@ -1,20 +1,18 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { allAustralianCities } from '@/lib/locationData';
-import { services } from '@/lib/data';
 import { MapPin, ArrowRight, Globe, Search } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { getAllLocations } from '@/lib/additionalLocationData';
 
 const LocationSitemap = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loadedCities, setLoadedCities] = useState<number>(50);
   
-  // Process all cities to ensure consistent format
+  // Process all cities to ensure consistent format using our extended data
   const allCities = useMemo(() => {
-    return allAustralianCities.map(city => {
+    return getAllLocations().map(city => {
       if (typeof city === 'string') {
         const slug = city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
         return {
