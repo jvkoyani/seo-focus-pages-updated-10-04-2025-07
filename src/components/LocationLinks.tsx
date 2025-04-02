@@ -5,7 +5,7 @@ import AnimatedSection from './AnimatedSection';
 import { ArrowRight, MapPin, TrendingUp, Award, Users, Activity, Star, Clock, Building } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getAllLocations, Location } from '@/lib/additionalLocationData';
-import { services } from '@/lib/data';
+import { Service, findServiceBySlug } from '@/lib/servicesData';
 
 interface LocationLinksProps {
   service: {
@@ -17,6 +17,9 @@ interface LocationLinksProps {
 }
 
 const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksProps) => {
+  // Find the full service data
+  const serviceData = findServiceBySlug(service.slug);
+  
   // Filter out the excluded location if provided, using our extended data
   const allLocations = getAllLocations();
   
@@ -84,7 +87,7 @@ const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksPro
           <div className="p-6">
             <div className="mb-4 bg-gradient-to-r from-seo-blue/5 to-seo-blue/0 p-3 rounded-lg border-l-2 border-seo-blue">
               <p className="text-seo-gray-dark">
-                Customized {service.title.toLowerCase()} solutions for {location.name} businesses to boost rankings and drive targeted traffic.
+                {serviceData?.shortDescription || `Customized ${service.title.toLowerCase()} solutions for ${location.name} businesses to boost rankings and drive targeted traffic.`}
               </p>
             </div>
             

@@ -3,9 +3,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
-import { getAllLocations, Location } from '@/lib/additionalLocationData';
+import { getAllLocations, getAllStates, Location } from '@/lib/additionalLocationData';
 
-const CountryCities = () => {
+interface CountryCitiesProps {
+  country?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const CountryCities: React.FC<CountryCitiesProps> = ({
+  country = "Australia",
+  title = "SEO Services Across Australia",
+  subtitle = "We provide specialized SEO solutions for businesses in all major Australian cities",
+}) => {
   // Group cities by state (excluding "Various" state) using our extended data
   const stateGroups = getAllLocations().reduce((groups, city) => {
     if (typeof city === 'string') {
@@ -13,7 +23,9 @@ const CountryCities = () => {
       return groups;
     }
     
-    if (city.state === "Various") return groups;
+    if (city.state === "Various" || city.country.toLowerCase() !== country.toLowerCase()) {
+      return groups;
+    }
     
     if (!groups[city.state]) {
       groups[city.state] = [];
@@ -30,10 +42,10 @@ const CountryCities = () => {
             Our Service Locations
           </span>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-            SEO Services Across Australia
+            {title}
           </h2>
           <p className="text-lg text-seo-gray-dark">
-            We provide specialized SEO solutions for businesses in all major Australian cities
+            {subtitle}
           </p>
         </AnimatedSection>
 
@@ -47,7 +59,7 @@ const CountryCities = () => {
             >
               <h3 className="text-xl font-bold text-seo-dark mb-4 pb-2 border-b">
                 <Link 
-                  to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`}
+                  to={`/${country.toLowerCase()}/${state.toLowerCase().replace(/\s+/g, '-')}`}
                   className="hover:text-seo-blue transition-colors"
                 >
                   {state}
@@ -70,7 +82,7 @@ const CountryCities = () => {
                 
                 {cities.length > 8 && (
                   <Link 
-                    to={`/australia/${state.toLowerCase().replace(/\s+/g, '-')}`}
+                    to={`/${country.toLowerCase()}/${state.toLowerCase().replace(/\s+/g, '-')}`}
                     className="flex items-center justify-center p-2 rounded-md bg-seo-blue/5 hover:bg-seo-blue/10 text-seo-blue text-sm font-medium transition-colors col-span-2 mt-2"
                   >
                     View all {cities.length} cities
