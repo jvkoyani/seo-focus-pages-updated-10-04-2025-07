@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { getAllIndustries } from '@/lib/industriesData';
 import { icons } from 'lucide-react';
