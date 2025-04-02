@@ -52,7 +52,9 @@ export const findLocationBySlug = (slug: string): Location | undefined => {
     }
     // Handle string locations if any exist in the original data
     if (typeof loc === 'string') {
-      const locSlug = loc.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+      // Need to ensure proper type narrowing
+      const locString: string = loc;
+      const locSlug = locString.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
       return locSlug === slug;
     }
     return false;

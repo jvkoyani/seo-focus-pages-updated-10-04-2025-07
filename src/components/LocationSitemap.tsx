@@ -17,7 +17,9 @@ const LocationSitemap = () => {
     return getAllLocations().map(city => {
       if (typeof city === 'string') {
         // Explicitly ensure type checking before calling string methods
-        const slug = city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+        // Use type assertion to explicitly make TypeScript understand this is a string
+        const cityString: string = city;
+        const slug = cityString.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
         return {
           id: slug,
           name: city,
