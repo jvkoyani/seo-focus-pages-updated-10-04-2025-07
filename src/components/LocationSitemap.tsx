@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, Globe, Search } from 'lucide-react';
@@ -15,6 +16,7 @@ const LocationSitemap = () => {
   const allCities = useMemo(() => {
     return getAllLocations().map(city => {
       if (typeof city === 'string') {
+        // Explicitly ensure type checking before calling string methods
         const slug = city.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
         return {
           id: slug,

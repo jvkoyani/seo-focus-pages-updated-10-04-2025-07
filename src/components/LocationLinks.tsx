@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
@@ -22,6 +21,7 @@ const LocationLinks = ({ service, limit = 9, excludeLocation }: LocationLinksPro
   
   const filteredLocations = excludeLocation 
     ? allLocations.filter(loc => {
+        // Explicitly check the type before attempting to use string methods
         if (typeof loc === 'string') {
           const slug = loc.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
           return slug !== excludeLocation;

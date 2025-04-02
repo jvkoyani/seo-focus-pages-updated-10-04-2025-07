@@ -46,12 +46,14 @@ export const getAllLocations = (): Location[] => {
 // Utility to find a location by slug
 export const findLocationBySlug = (slug: string): Location | undefined => {
   return extendedAustralianCities.find(loc => {
-    if (typeof loc === 'object') {
+    // Explicitly check the type before attempting to use string methods
+    if (typeof loc === 'object' && loc !== null) {
       return loc.slug === slug;
     }
     // Handle string locations if any exist in the original data
     if (typeof loc === 'string') {
-      return loc.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-') === slug;
+      const locSlug = loc.toLowerCase().replace(/[\s(),'&-]+/g, '-').replace(/--+/g, '-');
+      return locSlug === slug;
     }
     return false;
   });
