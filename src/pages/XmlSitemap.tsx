@@ -97,6 +97,26 @@ const XmlSitemap = () => {
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
+          
+          // Add service-industry-location combinations with SEO-friendly URL pattern
+          services.forEach(service => {
+            xml += `
+  <url>
+    <loc>${baseUrl}/${service.slug}-for-${industry.slug}-in-${citySlug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`;
+            
+            // Add service-industry-location combinations with path-based URL pattern
+            xml += `
+  <url>
+    <loc>${baseUrl}/service/${service.slug}/industry/${industry.slug}/location/${citySlug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`;
+          });
         });
 
         // Add service-location combinations for all services using the correct URL pattern

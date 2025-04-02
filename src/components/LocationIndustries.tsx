@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Industry, getAllIndustries } from '@/lib/industriesData';
+import { Service, getFeaturedServices } from '@/lib/servicesData';
 import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
 import { icons } from 'lucide-react';
@@ -23,6 +24,7 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
   className,
 }) => {
   const industries = getAllIndustries().slice(0, limit);
+  const featuredServices = getFeaturedServices(3);
   
   // Dynamically get the icon component based on icon name
   const getIconComponent = (iconName: string) => {
@@ -93,6 +95,25 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   <div className="absolute inset-0 bg-seo-blue/5 scale-0 group-hover:scale-100 rounded-md transition-transform duration-300 -z-10"></div>
                 </Link>
+                
+                {/* Service combinations for this industry */}
+                {index < 3 && (
+                  <div className="mt-6 pt-4 border-t border-gray-100">
+                    <h4 className="font-medium text-seo-dark mb-2 text-sm">Popular services for {industry.title}:</h4>
+                    <ul className="space-y-2">
+                      {featuredServices.slice(0, 2).map((service) => (
+                        <li key={service.id}>
+                          <Link 
+                            to={`/${service.slug}-for-${industry.slug}-in-${locationSlug}`}
+                            className="text-sm text-seo-gray-dark hover:text-seo-blue transition-colors"
+                          >
+                            {service.title} for {industry.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </AnimatedSection>
           ))}

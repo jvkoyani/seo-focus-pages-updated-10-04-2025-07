@@ -21,6 +21,7 @@ import LocationService from "./pages/LocationService";
 import LocationServicePage from "./pages/LocationServicePage";
 import LocationIndustries from "./pages/LocationIndustries";
 import LocationIndustryPage from "./pages/LocationIndustryPage";
+import ServiceIndustryLocation from "./pages/ServiceIndustryLocation";
 import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 import FreeConsultation from "./pages/FreeConsultation";
@@ -59,9 +60,13 @@ const App = () => (
           <Route path="/location/:slug" element={<Location />} />
           <Route path="/location/:locationSlug/:serviceSlug" element={<LocationServicePage />} />
           
-          {/* New industry location routes */}
+          {/* Industry location routes */}
           <Route path="/location/:locationSlug/industries" element={<LocationIndustries />} />
           <Route path="/location/:locationSlug/industry/:industrySlug" element={<LocationIndustryPage />} />
+          
+          {/* Service-Industry-Location combinations */}
+          <Route path="/service/:serviceSlug/industry/:industrySlug/location/:locationSlug" element={<ServiceIndustryLocation />} />
+          <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<ServiceIndustryLocation />} />
           
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
