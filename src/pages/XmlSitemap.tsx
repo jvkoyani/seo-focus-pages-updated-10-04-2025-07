@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { services } from '@/lib/data';
 import { allAustralianCities } from '@/lib/locationData';
+import { industries } from '@/lib/industriesData';
 
 const XmlSitemap = () => {
   const [xmlContent, setXmlContent] = useState<string>('');
@@ -50,6 +51,17 @@ const XmlSitemap = () => {
   </url>`;
       });
 
+      // Add industry pages
+      industries.forEach(industry => {
+        xml += `
+  <url>
+    <loc>${baseUrl}/industry/${industry.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+      });
+
       // Create a combined array of all cities
       const processCity = (city: any) => {
         // Handle both object-based city data and string-based city data
@@ -66,6 +78,26 @@ const XmlSitemap = () => {
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
+
+        // Add industries page for this location
+        xml += `
+  <url>
+    <loc>${baseUrl}/location/${citySlug}/industries</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+
+        // Add industry-location combinations
+        industries.forEach(industry => {
+          xml += `
+  <url>
+    <loc>${baseUrl}/location/${citySlug}/industry/${industry.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`;
+        });
 
         // Add service-location combinations for all services using the correct URL pattern
         services.forEach(service => {
