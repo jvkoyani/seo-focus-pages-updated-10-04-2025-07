@@ -1,3 +1,4 @@
+
 import { allAustralianCities } from './locationData';
 
 // Create a type that matches the structure in the original locationData
@@ -80,7 +81,7 @@ export const findLocationBySlug = (slug: string): Location | undefined => {
 export const getFeaturedLocations = (limit: number = 6): Location[] => {
   // First try to find featured locations
   const featured = extendedAustralianCities.filter(loc => 
-    typeof loc === 'object' && loc.featured
+    typeof loc === 'object' && loc !== null && 'featured' in loc && loc.featured
   ) as Location[];
   
   // If we have enough featured locations, return them with the limit
@@ -90,7 +91,7 @@ export const getFeaturedLocations = (limit: number = 6): Location[] => {
   
   // Otherwise, get the remaining from the regular locations
   const remaining = extendedAustralianCities.filter(loc => 
-    typeof loc === 'object' && !loc.featured
+    typeof loc === 'object' && loc !== null && (!('featured' in loc) || !loc.featured)
   ) as Location[];
   
   // Combine featured with some regular locations to meet the limit
