@@ -7,6 +7,7 @@ import { Service, getFeaturedServices } from '@/lib/servicesData';
 import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
 import { icons } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface LocationIndustriesProps {
   locationName: string;
@@ -125,14 +126,24 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
             animation="slide-up"
             delay={300}
           >
-            <Link 
-              to={`/location/${locationSlug}/industries`} 
-              className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-8 rounded-md transition-colors relative overflow-hidden group"
-            >
-              <span className="relative z-10">View All Industry Solutions for {locationName}</span>
-              <ArrowRight className="ml-2 h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform" />
-              <div className="absolute inset-0 bg-gradient-to-r from-seo-blue-light to-seo-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link 
+                to={`/location/${locationSlug}/industries`} 
+                className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-8 rounded-md transition-colors relative overflow-hidden group"
+              >
+                <span className="relative z-10">View All Industry Solutions</span>
+                <ArrowRight className="ml-2 h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 bg-gradient-to-r from-seo-blue-light to-seo-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </Link>
+              
+              <Link 
+                to={`/location/${locationSlug}/all`} 
+                className="inline-flex items-center border border-seo-blue text-seo-blue hover:bg-seo-blue/5 font-medium py-3 px-8 rounded-md transition-colors group"
+              >
+                <span>View All Services & Industries</span>
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </AnimatedSection>
         )}
       </div>

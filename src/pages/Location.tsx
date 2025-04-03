@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
@@ -74,7 +73,6 @@ const Location = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-seo-blue rounded-full"></div>
@@ -124,7 +122,10 @@ const Location = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
-                  View Case Studies
+                  <Link to={`/location/${locationData.slug}/all`} className="w-full flex items-center justify-center">
+                    View All Services & Industries
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
               </div>
             </AnimatedSection>
@@ -173,7 +174,6 @@ const Location = () => {
         </div>
       </section>
       
-      {/* Why Businesses Need SEO in Location */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
@@ -232,10 +232,8 @@ const Location = () => {
         </div>
       </section>
       
-      {/* Our Services Section */}
       <Services location={locationData.name} locationSlug={locationData.slug} />
       
-      {/* Industry-Specific SEO Section */}
       <LocationIndustries 
         locationName={locationData.name}
         locationSlug={locationData.slug}
@@ -243,7 +241,30 @@ const Location = () => {
         showAllLink={true}
       />
       
-      {/* Why Choose Us Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center" animation="fade-in">
+            <div className="bg-gradient-to-r from-seo-blue/10 to-purple-100/30 p-8 rounded-2xl">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-seo-dark mb-4">
+                Explore All {locationData.name} SEO Solutions
+              </h2>
+              <p className="text-lg text-seo-gray-dark mb-6 max-w-3xl mx-auto">
+                Need a comprehensive view of all our services and industry-specific solutions for {locationData.name}? 
+                Check out our dedicated page.
+              </p>
+              <Link 
+                to={`/location/${locationData.slug}/all`}
+                className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-8 rounded-md transition-colors relative overflow-hidden group"
+              >
+                <span className="relative z-10">View All {locationData.name} Services & Industries</span>
+                <ArrowRight className="ml-2 h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 bg-gradient-to-r from-seo-blue-light to-seo-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </Link>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+      
       <section className="py-20 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
@@ -385,7 +406,6 @@ const Location = () => {
         </div>
       </section>
       
-      {/* Resources Section */}
       <ResourcesSection 
         filterTag={locationData.name} 
         className="bg-white"

@@ -21,6 +21,7 @@ import LocationService from "./pages/LocationService";
 import LocationServicePage from "./pages/LocationServicePage";
 import LocationIndustries from "./pages/LocationIndustries";
 import LocationIndustryPage from "./pages/LocationIndustryPage";
+import LocationServicesIndustries from "./pages/LocationServicesIndustries";
 import ServiceIndustryLocation from "./pages/ServiceIndustryLocation";
 import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
@@ -63,6 +64,9 @@ const App = () => (
           {/* Industry location routes */}
           <Route path="/location/:locationSlug/industries" element={<LocationIndustries />} />
           <Route path="/location/:locationSlug/industry/:industrySlug" element={<LocationIndustryPage />} />
+          
+          {/* New all services and industries for location page */}
+          <Route path="/location/:locationSlug/all" element={<LocationServicesIndustries />} />
           
           {/* Service-Industry-Location combinations */}
           <Route path="/service/:serviceSlug/industry/:industrySlug/location/:locationSlug" element={<ServiceIndustryLocation />} />
