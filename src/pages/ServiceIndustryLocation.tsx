@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp } from 'lucide-react';
@@ -37,6 +38,11 @@ const ServiceIndustryLocation = () => {
   if (!serviceData || !industryData || !locationData) {
     return null; // Will redirect to 404
   }
+  
+  // Generate the SEO-friendly URL for this combination
+  const getSeoFriendlyUrl = (service: any, industry: any, location: any) => {
+    return `/${service.slug}-for-${industry.slug}-in-${location.slug}`;
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -258,7 +264,7 @@ const ServiceIndustryLocation = () => {
                 {allServices.filter(s => s.id !== serviceData.id).map((service, index) => (
                   <Link 
                     key={service.id}
-                    to={`/${service.slug}-for-${industryData.slug}-in-${locationData.slug}`}
+                    to={getSeoFriendlyUrl(service, industryData, locationData)}
                     className="block p-3 rounded-lg hover:bg-seo-blue/5 transition-colors"
                   >
                     <div className="flex items-center">
@@ -287,7 +293,7 @@ const ServiceIndustryLocation = () => {
                 {allIndustries.filter(i => i.id !== industryData.id).map((industry, index) => (
                   <Link 
                     key={industry.id}
-                    to={`/${serviceData.slug}-for-${industry.slug}-in-${locationData.slug}`}
+                    to={getSeoFriendlyUrl(serviceData, industry, locationData)}
                     className="block p-3 rounded-lg hover:bg-seo-blue/5 transition-colors"
                   >
                     <div className="flex items-center">

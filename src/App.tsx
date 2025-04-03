@@ -70,6 +70,8 @@ const App = () => (
           
           {/* Service-Industry-Location combinations */}
           <Route path="/service/:serviceSlug/industry/:industrySlug/location/:locationSlug" element={<ServiceIndustryLocation />} />
+          
+          {/* SEO-friendly URL patterns for service-industry-location combinations */}
           <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<ServiceIndustryLocation />} />
           
           <Route path="/blogs" element={<Blogs />} />
@@ -99,14 +101,7 @@ const App = () => (
           <Route path="/:country/:state/:county" element={<County />} />
           
           {/* SEO-friendly URL patterns for service-location combinations */}
-          <Route path="/local-seo-:locationSlug" element={<LocationService />} />
-          <Route path="/technical-seo-:locationSlug" element={<LocationService />} />
-          <Route path="/ecommerce-seo-:locationSlug" element={<LocationService />} />
-          <Route path="/content-marketing-:locationSlug" element={<LocationService />} />
-          <Route path="/link-building-:locationSlug" element={<LocationService />} />
-          <Route path="/seo-audits-:locationSlug" element={<LocationService />} />
-          <Route path="/digital-pr-:locationSlug" element={<LocationService />} />
-          <Route path="/analytics-reporting-:locationSlug" element={<LocationService />} />
+          <Route path="/:serviceSlug-:locationSlug" element={<LocationService />} />
           
           {/* Generic pattern for any service-location combination */}
           <Route path="/:serviceLocationSlug" element={<LocationService />} />
