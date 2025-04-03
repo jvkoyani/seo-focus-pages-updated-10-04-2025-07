@@ -1,13 +1,13 @@
 
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, MapPin, ChevronRight, CheckCircle } from 'lucide-react';
+import { ArrowRight, MapPin, ChevronRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { Button } from '@/components/ui/button';
-import LocationBreadcrumbs from '@/components/LocationBreadcrumbs';
+import { Card, CardContent } from '@/components/ui/card';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { getAllIndustries } from '@/lib/industriesData';
 import { getAllServices } from '@/lib/servicesData';
@@ -21,8 +21,8 @@ const LocationServicesIndustries = () => {
   const locationData = findLocationBySlug(locationSlug || '');
   
   // Get all industries and services
-  const allIndustries = getAllIndustries();
-  const allServices = getAllServices();
+  const industries = getAllIndustries();
+  const services = getAllServices();
   
   // Redirect if location not found
   useEffect(() => {
@@ -38,7 +38,7 @@ const LocationServicesIndustries = () => {
   // Dynamically get the icon component based on icon name
   const getIconComponent = (iconName: string) => {
     const IconComponent = icons[iconName as keyof typeof icons];
-    return IconComponent ? <IconComponent className="h-5 w-5 text-seo-blue" /> : null;
+    return IconComponent ? <IconComponent className="h-10 w-10 text-seo-blue" /> : null;
   };
 
   return (
@@ -55,10 +55,23 @@ const LocationServicesIndustries = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection className="mb-4" animation="fade-in">
-            <LocationBreadcrumbs 
-              locationSlug={locationData.slug} 
-              className="mb-4" 
-            />
+            <div className="inline-flex items-center space-x-2">
+              <Link 
+                to="/" 
+                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+              >
+                Home
+              </Link>
+              <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
+              <Link 
+                to={`/location/${locationData.slug}`} 
+                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
+              >
+                {locationData.name}
+              </Link>
+              <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
+              <span className="text-seo-blue font-medium">All Services & Industries</span>
+            </div>
           </AnimatedSection>
           
           <AnimatedSection className="max-w-3xl" animation="fade-in">
@@ -70,121 +83,193 @@ const LocationServicesIndustries = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
-              All SEO Services & Industries in {locationData.name}
+              Complete SEO Solutions for {locationData.name}
             </h1>
             
             <p className="text-xl text-seo-gray-dark mb-8">
-              Comprehensive directory of all our specialized SEO services and industry solutions available in {locationData.name}. Find the perfect match for your business needs.
+              Explore our full range of services and industry-specific SEO solutions tailored for {locationData.name} businesses.
             </p>
           </AnimatedSection>
         </div>
       </section>
       
-      {/* All Services Section */}
+      {/* Services Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <AnimatedSection animation="fade-in" className="mb-16">
-            <h2 className="text-3xl font-bold text-seo-dark mb-8 border-b pb-4">
-              SEO Services Available in {locationData.name}
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Our Services
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              SEO Services in {locationData.name}
             </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allServices.map((service) => (
-                <div 
-                  key={service.id}
-                  className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center mb-4">
+            <p className="text-lg text-seo-gray-dark">
+              Comprehensive SEO solutions tailored specifically for businesses in {locationData.name}
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <AnimatedSection 
+                key={service.id}
+                className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 group"
+                animation="fade-in"
+                delay={100 * index}
+              >
+                <div className="p-8 relative">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-seo-blue/5 to-transparent rounded-bl-full"></div>
+                  
+                  <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     {getIconComponent(service.icon)}
-                    <h3 className="text-lg font-bold ml-3">{service.title}</h3>
                   </div>
-                  <p className="text-seo-gray-dark mb-4">
-                    {service.shortDescription} for businesses in {locationData.name}.
+                  
+                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
+                    {service.title} in {locationData.name}
+                  </h3>
+                  
+                  <p className="text-seo-gray-dark mb-6">
+                    {service.description}
                   </p>
+                  
                   <Link 
-                    to={`/location/${locationData.slug}/${service.slug}`}
-                    className="inline-flex items-center text-seo-blue font-medium group"
+                    to={`/${service.slug}-${locationData.slug}`} 
+                    className="inline-flex items-center text-seo-blue font-medium group mt-2 relative"
                   >
                     <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
                       Learn more
                     </span>
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <div className="absolute inset-0 bg-seo-blue/5 scale-0 group-hover:scale-100 rounded-md transition-transform duration-300 -z-10"></div>
                   </Link>
                 </div>
-              ))}
-            </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Industry Section */}
+      <section className="py-16 bg-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Industry Expertise
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              Industry-Specific SEO in {locationData.name}
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Tailored SEO strategies for different business sectors in {locationData.name}
+            </p>
           </AnimatedSection>
           
-          {/* All Industries Section */}
-          <AnimatedSection animation="fade-in">
-            <h2 className="text-3xl font-bold text-seo-dark mb-8 border-b pb-4">
-              Industries We Serve in {locationData.name}
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allIndustries.map((industry) => (
-                <div 
-                  key={industry.id}
-                  className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {industries.map((industry, index) => (
+              <AnimatedSection 
+                key={industry.id}
+                className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 group"
+                animation="fade-in"
+                delay={100 * index}
+              >
+                <div className="p-8 relative">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-seo-blue/5 to-transparent rounded-bl-full"></div>
+                  
+                  <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     {getIconComponent(industry.icon)}
-                    <h3 className="text-lg font-bold ml-3">{industry.title}</h3>
                   </div>
-                  <p className="text-seo-gray-dark mb-4">
+                  
+                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
+                    {industry.title} in {locationData.name}
+                  </h3>
+                  
+                  <p className="text-seo-gray-dark mb-6">
                     {industry.description}
                   </p>
+                  
                   <Link 
-                    to={`/location/${locationData.slug}/industry/${industry.slug}`}
-                    className="inline-flex items-center text-seo-blue font-medium group"
+                    to={`/location/${locationData.slug}/industry/${industry.slug}`} 
+                    className="inline-flex items-center text-seo-blue font-medium group mt-2 relative"
                   >
                     <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
                       Learn more
                     </span>
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <div className="absolute inset-0 bg-seo-blue/5 scale-0 group-hover:scale-100 rounded-md transition-transform duration-300 -z-10"></div>
                   </Link>
                 </div>
-              ))}
-            </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Service-Industry Combinations Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Specialized Solutions
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              Industry-Specific SEO Services in {locationData.name}
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Explore our specialized service combinations tailored for specific industries in {locationData.name}
+            </p>
           </AnimatedSection>
           
-          {/* Service-Industry Combinations Section */}
-          <AnimatedSection animation="fade-in" className="mt-16">
-            <h2 className="text-3xl font-bold text-seo-dark mb-8 border-b pb-4">
-              Specialized Solutions by Industry in {locationData.name}
-            </h2>
-            
-            {allIndustries.map((industry) => (
-              <div key={industry.id} className="mb-12">
-                <h3 className="text-xl font-bold text-seo-dark mb-4">
-                  {industry.title} Solutions
-                </h3>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {allServices.slice(0, 6).map((service) => (
-                    <Link 
-                      key={`${service.id}-${industry.id}`}
-                      to={`/${service.slug}-for-${industry.slug}-in-${locationData.slug}`}
-                      className="bg-seo-gray-light p-4 rounded-lg hover:bg-seo-blue/10 transition-colors group flex justify-between items-center"
-                    >
-                      <span className="font-medium">{service.title} for {industry.title}</span>
-                      <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </Link>
-                  ))}
-                </div>
-                
-                <Link 
-                  to={`/location/${locationData.slug}/industry/${industry.slug}`}
-                  className="inline-flex items-center mt-4 text-seo-blue font-medium group"
-                >
-                  <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
-                    View all {industry.title} solutions
-                  </span>
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+          <div className="space-y-12">
+            {services.slice(0, 4).map((service, serviceIndex) => (
+              <div key={service.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <AnimatedSection animation="fade-in" delay={serviceIndex * 100}>
+                  <h3 className="text-2xl font-bold text-seo-dark mb-6 flex items-center">
+                    <div className="bg-seo-blue/10 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                      {getIconComponent(service.icon)}
+                    </div>
+                    {service.title} for Industries in {locationData.name}
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {industries.slice(0, 6).map((industry, industryIndex) => (
+                      <Card 
+                        key={industry.id} 
+                        className="hover:shadow-md transition-all border-gray-100"
+                      >
+                        <CardContent className="p-5">
+                          <div className="flex items-start">
+                            <div className="bg-seo-blue/5 rounded-full w-10 h-10 flex items-center justify-center mr-3 mt-1">
+                              {getIconComponent(industry.icon)}
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-seo-dark mb-1">{service.title} for {industry.title}</h4>
+                              <p className="text-sm text-seo-gray-dark mb-3">
+                                Specialized {service.title.toLowerCase()} solutions for {industry.title.toLowerCase()} businesses in {locationData.name}.
+                              </p>
+                              <Link 
+                                to={`/${service.slug}-for-${industry.slug}-in-${locationData.slug}`}
+                                className="text-sm text-seo-blue flex items-center"
+                              >
+                                Learn more
+                                <ArrowRight className="ml-1 h-3 w-3" />
+                              </Link>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  
+                  {industry.forIndustries && industry.forIndustries.length > 6 && (
+                    <div className="mt-6 text-center">
+                      <Button variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
+                        View All {service.title} Industry Solutions
+                      </Button>
+                    </div>
+                  )}
+                </AnimatedSection>
               </div>
             ))}
-          </AnimatedSection>
+          </div>
         </div>
       </section>
       
@@ -203,13 +288,13 @@ const LocationServicesIndustries = () => {
                       Need help choosing the right solution?
                     </h2>
                     <p className="text-white/90 text-lg mb-0">
-                      Our experts can help you select the best SEO strategy for your business in {locationData.name}.
+                      Get expert advice on which SEO approach is best for your business in {locationData.name}.
                     </p>
                   </div>
                   <div className="flex-shrink-0">
                     <Link to="/free-consultation">
                       <Button size="lg" className="bg-white text-seo-blue hover:bg-gray-100 w-full md:w-auto">
-                        Get Free Consultation
+                        Get Free Advice
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>
