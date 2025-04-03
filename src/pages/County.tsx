@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, MapPin, ArrowRight } from 'lucide-react';
@@ -18,7 +17,6 @@ const County = () => {
   const stateFormatted = state ? state.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : '';
   const countyFormatted = county ? county.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : '';
   
-  // Get locations for this county
   const countyLocations = locations.filter(
     location => 
       location.country.toLowerCase() === country &&
@@ -26,10 +24,12 @@ const County = () => {
       location.county?.toLowerCase().replace(/\s+/g, '-') === county
   );
   
-  // Get popular industries for linking
   const popularIndustries = getAllIndustries().slice(0, 3);
   
-  // If no locations found, redirect to 404
+  const getSeoFriendlyUrl = (serviceSlug: string, industrySlug: string, locationSlug: string) => {
+    return `/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`;
+  };
+  
   React.useEffect(() => {
     if (countyLocations.length === 0) {
       navigate('/not-found');
@@ -44,7 +44,6 @@ const County = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-seo-blue rounded-full"></div>
@@ -113,7 +112,6 @@ const County = () => {
         </div>
       </section>
       
-      {/* Locations Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -160,8 +158,8 @@ const County = () => {
                     {popularIndustries.map((industry, i) => (
                       <Link
                         key={i}
-                        to={`/local-seo-for-${industry.slug}-in-${location.slug}`}
-                        className="block text-sm text-seo-blue hover:underline"
+                        to={getSeoFriendlyUrl('local-seo', industry.slug, location.slug)}
+                        className="block text-sm text-seo-gray-dark hover:text-seo-blue transition-colors"
                       >
                         Local SEO for {industry.title} in {location.name}
                       </Link>
@@ -182,7 +180,6 @@ const County = () => {
         </div>
       </section>
       
-      {/* Services Section */}
       <section className="py-16 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -223,7 +220,7 @@ const County = () => {
                     {popularIndustries.slice(0, 1).map((industry) => (
                       <Link
                         key={industry.id}
-                        to={`/${service.slug}-for-${industry.slug}-in-${countyLocations[0].slug}`}
+                        to={getSeoFriendlyUrl(service.slug, industry.slug, countyLocations[0].slug)}
                         className="block text-sm text-seo-blue hover:underline"
                       >
                         {service.title} for {industry.title} in {countyLocations[0].name}
@@ -237,7 +234,6 @@ const County = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">

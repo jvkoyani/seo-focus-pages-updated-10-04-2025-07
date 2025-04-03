@@ -74,6 +74,9 @@ const App = () => (
           {/* SEO-friendly URL patterns for service-industry-location combinations */}
           <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<ServiceIndustryLocation />} />
           
+          {/* Direct access to service-industry-location pages without hyphens */}
+          <Route path="/:fullSeoPath" element={<ServiceIndustryLocation />} />
+          
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/case-studies" element={<CaseStudies />} />

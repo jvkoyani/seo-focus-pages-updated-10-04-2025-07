@@ -1,28 +1,85 @@
 
-import React, { useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { Button } from '@/components/ui/button';
-import { findLocationBySlug } from '@/lib/additionalLocationData';
+import { findLocationBySlug, getAllLocations } from '@/lib/additionalLocationData';
 import { findIndustryBySlug, getAllIndustries } from '@/lib/industriesData';
 import { findServiceBySlug, getAllServices } from '@/lib/servicesData';
 
 const ServiceIndustryLocation = () => {
-  const { serviceSlug, industrySlug, locationSlug } = useParams<{ 
-    serviceSlug: string; 
-    industrySlug: string; 
-    locationSlug: string;
+  const { 
+    serviceSlug, 
+    industrySlug, 
+    locationSlug,
+    fullSeoPath
+  } = useParams<{ 
+    serviceSlug?: string; 
+    industrySlug?: string; 
+    locationSlug?: string;
+    fullSeoPath?: string;
   }>();
+  
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Extract slugs from the fullSeoPath if available
+  const [extractedService, setExtractedService] = useState<string | null>(null);
+  const [extractedIndustry, setExtractedIndustry] = useState<string | null>(null);
+  const [extractedLocation, setExtractedLocation] = useState<string | null>(null);
+  
+  useEffect(() => {
+    // If we have a full SEO path like "search-engine-optimization-for-healthcare-in-melbourne"
+    if (fullSeoPath) {
+      console.log("Parsing fullSeoPath:", fullSeoPath);
+      
+      // Try to extract the service, industry and location from the URL
+      const forIndex = fullSeoPath.indexOf('-for-');
+      const inIndex = fullSeoPath.indexOf('-in-');
+      
+      if (forIndex !== -1 && inIndex !== -1 && inIndex > forIndex) {
+        const extractedServiceSlug = fullSeoPath.substring(0, forIndex);
+        const extractedIndustrySlug = fullSeoPath.substring(forIndex + 5, inIndex);
+        const extractedLocationSlug = fullSeoPath.substring(inIndex + 4);
+        
+        console.log("Extracted slugs:", {
+          service: extractedServiceSlug,
+          industry: extractedIndustrySlug,
+          location: extractedLocationSlug
+        });
+        
+        setExtractedService(extractedServiceSlug);
+        setExtractedIndustry(extractedIndustrySlug);
+        setExtractedLocation(extractedLocationSlug);
+      }
+    }
+  }, [fullSeoPath]);
+  
+  // Determine which slugs to use
+  const finalServiceSlug = extractedService || serviceSlug || '';
+  const finalIndustrySlug = extractedIndustry || industrySlug || '';
+  const finalLocationSlug = extractedLocation || locationSlug || '';
   
   // Get service, industry, and location data
-  const serviceData = findServiceBySlug(serviceSlug || '');
-  const industryData = findIndustryBySlug(industrySlug || '');
-  const locationData = findLocationBySlug(locationSlug || '');
+  const serviceData = findServiceBySlug(finalServiceSlug);
+  const industryData = findIndustryBySlug(finalIndustrySlug);
+  const locationData = findLocationBySlug(finalLocationSlug);
+  
+  console.log("Looking for data with slugs:", {
+    service: finalServiceSlug,
+    industry: finalIndustrySlug,
+    location: finalLocationSlug
+  });
+  
+  console.log("Found data:", {
+    service: serviceData,
+    industry: industryData,
+    location: locationData
+  });
   
   // Get related services and industries (for navigation)
   const allServices = getAllServices().slice(0, 5);
@@ -31,9 +88,15 @@ const ServiceIndustryLocation = () => {
   // Redirect if any of the data is not found
   useEffect(() => {
     if (!serviceData || !industryData || !locationData) {
+      console.error("Missing data, redirecting to 404", {
+        serviceData,
+        industryData,
+        locationData,
+        url: location.pathname
+      });
       navigate('/not-found');
     }
-  }, [serviceData, industryData, locationData, navigate]);
+  }, [serviceData, industryData, locationData, navigate, location.pathname]);
   
   if (!serviceData || !industryData || !locationData) {
     return null; // Will redirect to 404

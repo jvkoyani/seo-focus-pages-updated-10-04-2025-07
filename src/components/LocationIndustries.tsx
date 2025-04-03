@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -27,10 +26,13 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
   const industries = getAllIndustries().slice(0, limit);
   const featuredServices = getFeaturedServices(3);
   
-  // Dynamically get the icon component based on icon name
   const getIconComponent = (iconName: string) => {
     const IconComponent = icons[iconName as keyof typeof icons];
     return IconComponent ? <IconComponent className="h-8 w-8 text-seo-blue" /> : null;
+  };
+
+  const getSeoFriendlyUrl = (service: Service, industry: Industry, locationSlug: string) => {
+    return `/${service.slug}-for-${industry.slug}-in-${locationSlug}`;
   };
 
   return (
@@ -97,7 +99,6 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
                   <div className="absolute inset-0 bg-seo-blue/5 scale-0 group-hover:scale-100 rounded-md transition-transform duration-300 -z-10"></div>
                 </Link>
                 
-                {/* Service combinations for this industry */}
                 {index < 3 && (
                   <div className="mt-6 pt-4 border-t border-gray-100">
                     <h4 className="font-medium text-seo-dark mb-2 text-sm">Popular services for {industry.title}:</h4>
@@ -105,7 +106,7 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
                       {featuredServices.slice(0, 2).map((service) => (
                         <li key={service.id}>
                           <Link 
-                            to={`/${service.slug}-for-${industry.slug}-in-${locationSlug}`}
+                            to={getSeoFriendlyUrl(service, industry, locationSlug)}
                             className="text-sm text-seo-gray-dark hover:text-seo-blue transition-colors"
                           >
                             {service.title} for {industry.title}
