@@ -8,6 +8,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { Button } from '@/components/ui/button';
 import { services, locations } from '@/lib/data';
+import { getAllIndustries } from '@/lib/industriesData';
 
 const County = () => {
   const { country, state, county } = useParams<{ country: string; state: string; county: string }>();
@@ -24,6 +25,9 @@ const County = () => {
       location.state.toLowerCase().replace(/\s+/g, '-') === state &&
       location.county?.toLowerCase().replace(/\s+/g, '-') === county
   );
+  
+  // Get popular industries for linking
+  const popularIndustries = getAllIndustries().slice(0, 3);
   
   // If no locations found, redirect to 404
   React.useEffect(() => {
@@ -151,6 +155,19 @@ const County = () => {
                     Specialized SEO solutions for businesses in {location.name}, helping you improve online visibility and attract more local customers.
                   </p>
                   
+                  <div className="space-y-3 mb-5">
+                    <h4 className="font-medium text-seo-dark">Popular service combinations:</h4>
+                    {popularIndustries.map((industry, i) => (
+                      <Link
+                        key={i}
+                        to={`/local-seo-for-${industry.slug}-in-${location.slug}`}
+                        className="block text-sm text-seo-blue hover:underline"
+                      >
+                        Local SEO for {industry.title} in {location.name}
+                      </Link>
+                    ))}
+                  </div>
+                  
                   <Link
                     to={`/location/${location.slug}`}
                     className="inline-flex items-center justify-center bg-seo-blue text-white px-5 py-3 rounded-md hover:bg-seo-blue-light transition-colors w-full group"
@@ -192,15 +209,27 @@ const County = () => {
                 <p className="text-seo-gray-dark mb-4">{service.description}</p>
                 
                 {countyLocations[0] && (
-                  <Link
-                    to={`/${service.slug}-${countyLocations[0].slug}`}
-                    className="inline-flex items-center text-seo-blue font-medium group"
-                  >
-                    <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
-                      {service.title} in {countyFormatted}
-                    </span>
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
+                  <div className="space-y-2 mb-4">
+                    <Link
+                      to={`/${service.slug}-${countyLocations[0].slug}`}
+                      className="inline-flex items-center text-seo-blue font-medium group"
+                    >
+                      <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
+                        {service.title} in {countyFormatted}
+                      </span>
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                    
+                    {popularIndustries.slice(0, 1).map((industry) => (
+                      <Link
+                        key={industry.id}
+                        to={`/${service.slug}-for-${industry.slug}-in-${countyLocations[0].slug}`}
+                        className="block text-sm text-seo-blue hover:underline"
+                      >
+                        {service.title} for {industry.title} in {countyLocations[0].name}
+                      </Link>
+                    ))}
+                  </div>
                 )}
               </AnimatedSection>
             ))}

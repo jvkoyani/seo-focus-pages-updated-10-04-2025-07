@@ -79,6 +79,15 @@ const XmlSitemap = () => {
     <priority>0.7</priority>
   </url>`;
 
+        // Add all services and industries page for this location
+        xml += `
+  <url>
+    <loc>${baseUrl}/location/${citySlug}/all</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+
         // Add industries page for this location
         xml += `
   <url>

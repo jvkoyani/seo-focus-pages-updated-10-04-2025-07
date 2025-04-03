@@ -258,14 +258,6 @@ const LocationServicesIndustries = () => {
                       </Card>
                     ))}
                   </div>
-                  
-                  {industry.forIndustries && industry.forIndustries.length > 6 && (
-                    <div className="mt-6 text-center">
-                      <Button variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
-                        View All {service.title} Industry Solutions
-                      </Button>
-                    </div>
-                  )}
                 </AnimatedSection>
               </div>
             ))}

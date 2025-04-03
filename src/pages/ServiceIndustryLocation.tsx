@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp } from 'lucide-react';
@@ -8,8 +7,8 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
-import { findIndustryBySlug } from '@/lib/industriesData';
-import { findServiceBySlug } from '@/lib/servicesData';
+import { findIndustryBySlug, getAllIndustries } from '@/lib/industriesData';
+import { findServiceBySlug, getAllServices } from '@/lib/servicesData';
 
 const ServiceIndustryLocation = () => {
   const { serviceSlug, industrySlug, locationSlug } = useParams<{ 
@@ -23,6 +22,10 @@ const ServiceIndustryLocation = () => {
   const serviceData = findServiceBySlug(serviceSlug || '');
   const industryData = findIndustryBySlug(industrySlug || '');
   const locationData = findLocationBySlug(locationSlug || '');
+  
+  // Get related services and industries (for navigation)
+  const allServices = getAllServices().slice(0, 5);
+  const allIndustries = getAllIndustries().slice(0, 5);
   
   // Redirect if any of the data is not found
   useEffect(() => {
@@ -232,8 +235,85 @@ const ServiceIndustryLocation = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
+      {/* Navigation Options Section */}
       <section className="py-16 bg-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              More Options
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              Explore Related Services and Industries
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Discover other specialized SEO solutions for businesses in {locationData.name}
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Other Services for This Industry */}
+            <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+              <h3 className="text-xl font-bold text-seo-dark mb-4">Other Services for {industryData.title}</h3>
+              <div className="space-y-3">
+                {allServices.filter(s => s.id !== serviceData.id).map((service, index) => (
+                  <Link 
+                    key={service.id}
+                    to={`/${service.slug}-for-${industryData.slug}-in-${locationData.slug}`}
+                    className="block p-3 rounded-lg hover:bg-seo-blue/5 transition-colors"
+                  >
+                    <div className="flex items-center">
+                      <span className="text-seo-blue mr-2">•</span>
+                      <span className="text-seo-dark font-medium">
+                        {service.title} for {industryData.title} in {locationData.name}
+                      </span>
+                      <ArrowRight className="ml-auto h-4 w-4 text-seo-blue" />
+                    </div>
+                  </Link>
+                ))}
+                
+                <Link 
+                  to={`/location/${locationData.slug}/industry/${industryData.slug}`}
+                  className="block p-3 rounded-lg bg-seo-blue/5 text-center mt-4 font-medium text-seo-blue"
+                >
+                  View All Services for {industryData.title} in {locationData.name}
+                </Link>
+              </div>
+            </div>
+            
+            {/* This Service for Other Industries */}
+            <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+              <h3 className="text-xl font-bold text-seo-dark mb-4">{serviceData.title} for Other Industries</h3>
+              <div className="space-y-3">
+                {allIndustries.filter(i => i.id !== industryData.id).map((industry, index) => (
+                  <Link 
+                    key={industry.id}
+                    to={`/${serviceData.slug}-for-${industry.slug}-in-${locationData.slug}`}
+                    className="block p-3 rounded-lg hover:bg-seo-blue/5 transition-colors"
+                  >
+                    <div className="flex items-center">
+                      <span className="text-seo-blue mr-2">•</span>
+                      <span className="text-seo-dark font-medium">
+                        {serviceData.title} for {industry.title} in {locationData.name}
+                      </span>
+                      <ArrowRight className="ml-auto h-4 w-4 text-seo-blue" />
+                    </div>
+                  </Link>
+                ))}
+                
+                <Link 
+                  to={`/location/${locationData.slug}/all`}
+                  className="block p-3 rounded-lg bg-seo-blue/5 text-center mt-4 font-medium text-seo-blue"
+                >
+                  View All Service-Industry Combinations in {locationData.name}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <AnimatedSection 
