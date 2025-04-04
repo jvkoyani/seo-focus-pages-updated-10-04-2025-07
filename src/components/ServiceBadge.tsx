@@ -15,6 +15,7 @@ export interface ServiceBadgeProps {
   className?: string;
 }
 
+// Ensure all icon mappings are correctly defined
 const iconComponents = {
   'award': Award,
   'star': Star,
@@ -42,7 +43,8 @@ const ServiceBadge: React.FC<ServiceBadgeProps> = ({
   size = 'md',
   className 
 }) => {
-  const IconComponent = iconComponents[icon];
+  // Make sure we have a fallback if the icon is not found
+  const IconComponent = iconComponents[icon] || Check;
   
   const sizeClasses = {
     sm: 'text-xs px-2 py-1',
@@ -59,10 +61,10 @@ const ServiceBadge: React.FC<ServiceBadgeProps> = ({
         className
       )}
     >
-      <IconComponent className={cn(
+      {IconComponent && <IconComponent className={cn(
         'flex-shrink-0',
         size === 'sm' ? 'h-3 w-3' : size === 'md' ? 'h-4 w-4' : 'h-5 w-5'
-      )} />
+      )} />}
       <span>{text}</span>
     </Badge>
   );
