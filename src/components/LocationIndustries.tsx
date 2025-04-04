@@ -8,6 +8,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
 import { icons } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import BadgeContainer from '@/components/BadgeContainer';
 
 interface LocationIndustriesProps {
   locationName: string;
@@ -35,6 +36,20 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
   const getSeoFriendlyUrl = (service: Service, industry: Industry, locationSlug: string) => {
     return `/${service.slug}-for-${industry.slug}-in-${locationSlug}`;
   };
+
+  // Create industry-specific badges
+  const getIndustryBadges = (industry: Industry) => [
+    { 
+      text: `#1 ${industry.title} SEO Provider`, 
+      icon: "award", 
+      variant: "primary" as any
+    },
+    { 
+      text: "95% Success Rate", 
+      icon: "check", 
+      variant: "success" as any 
+    }
+  ];
 
   return (
     <section className={cn("py-16 bg-seo-gray-light", className)}>
@@ -72,6 +87,11 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
                 <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
                   {industry.title} in {locationName}
                 </h3>
+                
+                {/* Industry Badges */}
+                <div className="mb-4">
+                  <BadgeContainer badges={getIndustryBadges(industry)} />
+                </div>
                 
                 <p className="text-seo-gray-dark mb-6">
                   {industry.description}

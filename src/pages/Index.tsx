@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -13,16 +12,61 @@ import { locations, blogPosts, caseStudies } from '@/lib/data';
 import BlogPreview from '@/components/BlogPreview';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
 import InfoCard from '@/components/InfoCard';
+import BadgeContainer from '@/components/BadgeContainer';
+import FaqSection from '@/components/FaqSection';
 
 const Index = () => {
   // Get featured blog posts and case studies
   const featuredBlogs = blogPosts.slice(0, 3);
   const featuredCaseStudies = caseStudies.slice(0, 2);
 
+  // Define badges for the home page
+  const homeBadges = [
+    { text: "Award-Winning Agency", icon: "award", variant: "warning" },
+    { text: "Google Partner", icon: "check", variant: "success" },
+    { text: "98% Client Retention", icon: "shield", variant: "info" },
+    { text: "4.9/5 Client Rating", icon: "star", variant: "primary" },
+    { text: "#1 SEO Service Provider", icon: "award", variant: "danger" },
+    { text: "175% Avg. Traffic Growth", icon: "trending-up", variant: "secondary" },
+    { text: "Top-Rated Service", icon: "thumbs-up", variant: "default" },
+    { text: "Fast Implementation", icon: "zap", variant: "info" }
+  ];
+
+  // Define FAQs for the home page
+  const homeFaqs = [
+    {
+      question: "What makes your SEO agency different from others?",
+      answer: "We take a data-driven approach customized to your specific business needs. Unlike other agencies that use a one-size-fits-all strategy, we develop tailored SEO plans based on thorough research of your industry, competition, and target audience. Our proven methodology consistently delivers measurable results with a focus on ROI."
+    },
+    {
+      question: "How long does it take to see results from SEO?",
+      answer: "SEO is a long-term strategy that typically shows initial results within 3-6 months. However, significant improvements are often seen around the 6-12 month mark. The timeline depends on factors like your website's current condition, competition in your industry, and the aggressiveness of your strategy. We provide regular reports to track progress throughout the journey."
+    },
+    {
+      question: "Do you guarantee first-page rankings?",
+      answer: "While we can't ethically guarantee specific rankings (and you should be wary of any agency that does), we have a strong track record of getting our clients to page one for valuable keywords. Our approach focuses on sustainable growth through white-hat techniques that adhere to search engine guidelines, ensuring long-term success rather than quick fixes."
+    },
+    {
+      question: "What types of businesses do you work with?",
+      answer: "We work with businesses of all sizes across various industries, including healthcare, dental, e-commerce, legal, real estate, and more. Our specialized teams understand the unique challenges and opportunities in each sector, allowing us to develop highly effective industry-specific strategies."
+    },
+    {
+      question: "How much does SEO cost?",
+      answer: "Our SEO packages start at $1,500 per month, with costs varying based on the competitiveness of your industry, your business goals, and the scope of work required. We believe in transparency and will provide a detailed proposal outlining exactly what you're getting for your investment. We focus on delivering measurable ROI rather than just selling services."
+    }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <Hero />
+      
+      {/* Badges Section */}
+      <section className="py-8 bg-gradient-to-r from-seo-dark to-gray-900">
+        <div className="container mx-auto px-4">
+          <BadgeContainer badges={homeBadges} />
+        </div>
+      </section>
       
       {/* Why Choose Us Section */}
       <section className="py-16 bg-white relative overflow-hidden">
@@ -335,6 +379,13 @@ const Index = () => {
           </AnimatedSection>
         </div>
       </section>
+      
+      {/* FAQ Section */}
+      <FaqSection 
+        title="Frequently Asked Questions About SEO"
+        description="Get answers to common questions about our SEO services and approach"
+        faqs={homeFaqs}
+      />
       
       <ContactForm />
       <Footer />
