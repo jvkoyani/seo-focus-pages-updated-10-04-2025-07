@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -18,12 +19,12 @@ const ServicePage = () => {
     return <div>Service not found</div>;
   }
 
-  // Service-specific badges
+  // Service-specific badges with correct icon types
   const serviceBadges = [
-    { text: `#1 ${service.title} Provider`, icon: "award", variant: "danger" as any },
-    { text: "Top-Rated Service", icon: "thumbs-up", variant: "success" as any },
-    { text: "97% Client Satisfaction", icon: "star", variant: "warning" as any },
-    { text: "Fast Implementation", icon: "zap", variant: "info" as any }
+    { text: `#1 ${service.title} Provider`, icon: "award" as const, variant: "danger" },
+    { text: "Top-Rated Service", icon: "thumbs-up" as const, variant: "success" },
+    { text: "97% Client Satisfaction", icon: "star" as const, variant: "warning" },
+    { text: "Fast Implementation", icon: "zap" as const, variant: "info" }
   ];
 
   // Service-specific FAQs

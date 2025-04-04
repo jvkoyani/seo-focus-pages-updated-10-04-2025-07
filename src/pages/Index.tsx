@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -20,16 +21,16 @@ const Index = () => {
   const featuredBlogs = blogPosts.slice(0, 3);
   const featuredCaseStudies = caseStudies.slice(0, 2);
 
-  // Define badges for the home page
+  // Define badges for the home page with correct icon types
   const homeBadges = [
-    { text: "Award-Winning Agency", icon: "award", variant: "warning" },
-    { text: "Google Partner", icon: "check", variant: "success" },
-    { text: "98% Client Retention", icon: "shield", variant: "info" },
-    { text: "4.9/5 Client Rating", icon: "star", variant: "primary" },
-    { text: "#1 SEO Service Provider", icon: "award", variant: "danger" },
-    { text: "175% Avg. Traffic Growth", icon: "trending-up", variant: "secondary" },
-    { text: "Top-Rated Service", icon: "thumbs-up", variant: "default" },
-    { text: "Fast Implementation", icon: "zap", variant: "info" }
+    { text: "Award-Winning Agency", icon: "award" as const, variant: "warning" },
+    { text: "Google Partner", icon: "check" as const, variant: "success" },
+    { text: "98% Client Retention", icon: "shield" as const, variant: "info" },
+    { text: "4.9/5 Client Rating", icon: "star" as const, variant: "primary" },
+    { text: "#1 SEO Service Provider", icon: "award" as const, variant: "danger" },
+    { text: "175% Avg. Traffic Growth", icon: "trending-up" as const, variant: "secondary" },
+    { text: "Top-Rated Service", icon: "thumbs-up" as const, variant: "default" },
+    { text: "Fast Implementation", icon: "zap" as const, variant: "info" }
   ];
 
   // Define FAQs for the home page

@@ -37,17 +37,17 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
     return `/${service.slug}-for-${industry.slug}-in-${locationSlug}`;
   };
 
-  // Create industry-specific badges
+  // Create industry-specific badges with correct icon types
   const getIndustryBadges = (industry: Industry) => [
     { 
       text: `#1 ${industry.title} SEO Provider`, 
-      icon: "award", 
-      variant: "primary" as any
+      icon: "award" as const, 
+      variant: "primary" 
     },
     { 
       text: "95% Success Rate", 
-      icon: "check", 
-      variant: "success" as any 
+      icon: "check" as const, 
+      variant: "success" 
     }
   ];
 
