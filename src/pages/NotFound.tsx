@@ -2,10 +2,11 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NotFound = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.error(
@@ -25,14 +26,24 @@ const NotFound = () => {
         const industrySlug = path.substring(forIndex + 5, inIndex);
         const locationSlug = path.substring(inIndex + 4);
         
-        console.log("Attempted to access service-industry-location page with parsed slugs:", {
+        console.log("Parsed SEO URL components:", {
           service: serviceSlug,
           industry: industrySlug,
           location: locationSlug
         });
+        
+        // Attempt to redirect to the ServiceIndustryLocation page
+        const seoUrl = `/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`;
+        console.log("Redirecting to:", seoUrl);
+        
+        // Only redirect if it's an actual SEO URL not the current URL (to avoid loops)
+        if (seoUrl !== location.pathname) {
+          navigate(`/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`);
+          return;
+        }
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

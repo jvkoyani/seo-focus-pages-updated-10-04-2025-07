@@ -16,37 +16,73 @@ const ServiceIndustryLocation = () => {
     serviceSlug, 
     industrySlug, 
     locationSlug,
-    fullSeoPath
+    fullPath
   } = useParams<{ 
     serviceSlug?: string; 
     industrySlug?: string; 
     locationSlug?: string;
-    fullSeoPath?: string;
+    fullPath?: string;
   }>();
   
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Extract slugs from the fullSeoPath if available
+  // Extract slugs from the fullPath if available
   const [extractedService, setExtractedService] = useState<string | null>(null);
   const [extractedIndustry, setExtractedIndustry] = useState<string | null>(null);
   const [extractedLocation, setExtractedLocation] = useState<string | null>(null);
   
   useEffect(() => {
-    // If we have a full SEO path like "search-engine-optimization-for-healthcare-in-melbourne"
-    if (fullSeoPath) {
-      console.log("Parsing fullSeoPath:", fullSeoPath);
+    // Log initial parameters for debugging
+    console.log("Initial URL parameters:", { 
+      serviceSlug, 
+      industrySlug, 
+      locationSlug,
+      fullPath,
+      pathname: location.pathname
+    });
+    
+    // Check for direct pattern match in URL path
+    const pathWithoutSlash = location.pathname.substring(1);
+    
+    // Method 1: Try to extract from fullPath parameter
+    if (fullPath) {
+      console.log("Trying to parse fullPath:", fullPath);
       
-      // Try to extract the service, industry and location from the URL
-      const forIndex = fullSeoPath.indexOf('-for-');
-      const inIndex = fullSeoPath.indexOf('-in-');
+      if (fullPath.includes("-for-") && fullPath.includes("-in-")) {
+        const forIndex = fullPath.indexOf("-for-");
+        const inIndex = fullPath.indexOf("-in-");
+        
+        if (forIndex !== -1 && inIndex !== -1 && inIndex > forIndex) {
+          const extractedServiceSlug = fullPath.substring(0, forIndex);
+          const extractedIndustrySlug = fullPath.substring(forIndex + 5, inIndex);
+          const extractedLocationSlug = fullPath.substring(inIndex + 4);
+          
+          console.log("Extracted from fullPath:", {
+            service: extractedServiceSlug,
+            industry: extractedIndustrySlug,
+            location: extractedLocationSlug
+          });
+          
+          setExtractedService(extractedServiceSlug);
+          setExtractedIndustry(extractedIndustrySlug);
+          setExtractedLocation(extractedLocationSlug);
+        }
+      }
+    }
+    // Method 2: Try to extract from pathname directly
+    else if (pathWithoutSlash.includes("-for-") && pathWithoutSlash.includes("-in-")) {
+      console.log("Trying to parse from pathname:", pathWithoutSlash);
+      
+      const forIndex = pathWithoutSlash.indexOf("-for-");
+      const inIndex = pathWithoutSlash.indexOf("-in-");
       
       if (forIndex !== -1 && inIndex !== -1 && inIndex > forIndex) {
-        const extractedServiceSlug = fullSeoPath.substring(0, forIndex);
-        const extractedIndustrySlug = fullSeoPath.substring(forIndex + 5, inIndex);
-        const extractedLocationSlug = fullSeoPath.substring(inIndex + 4);
+        const extractedServiceSlug = pathWithoutSlash.substring(0, forIndex);
+        const extractedIndustrySlug = pathWithoutSlash.substring(forIndex + 5, inIndex);
+        const extractedLocationSlug = pathWithoutSlash.substring(inIndex + 4);
         
-        console.log("Extracted slugs:", {
+        console.log("Extracted from pathname:", {
           service: extractedServiceSlug,
           industry: extractedIndustrySlug,
           location: extractedLocationSlug
@@ -57,28 +93,29 @@ const ServiceIndustryLocation = () => {
         setExtractedLocation(extractedLocationSlug);
       }
     }
-  }, [fullSeoPath]);
+    
+  }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug]);
   
   // Determine which slugs to use
-  const finalServiceSlug = extractedService || serviceSlug || '';
-  const finalIndustrySlug = extractedIndustry || industrySlug || '';
-  const finalLocationSlug = extractedLocation || locationSlug || '';
+  const finalServiceSlug = serviceSlug || extractedService || '';
+  const finalIndustrySlug = industrySlug || extractedIndustry || '';
+  const finalLocationSlug = locationSlug || extractedLocation || '';
   
   // Get service, industry, and location data
   const serviceData = findServiceBySlug(finalServiceSlug);
   const industryData = findIndustryBySlug(finalIndustrySlug);
   const locationData = findLocationBySlug(finalLocationSlug);
   
-  console.log("Looking for data with slugs:", {
+  console.log("Final lookup slugs:", {
     service: finalServiceSlug,
     industry: finalIndustrySlug,
     location: finalLocationSlug
   });
   
   console.log("Found data:", {
-    service: serviceData,
-    industry: industryData,
-    location: locationData
+    service: serviceData ? serviceData.title : 'Not found',
+    industry: industryData ? industryData.title : 'Not found',
+    location: locationData ? locationData.name : 'Not found'
   });
   
   // Get related services and industries (for navigation)
