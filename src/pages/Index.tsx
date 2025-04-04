@@ -23,14 +23,14 @@ const Index = () => {
 
   // Define badges for the home page with correct icon types
   const homeBadges = [
-    { text: "Award-Winning Agency", icon: "award" as const, variant: "warning" },
-    { text: "Google Partner", icon: "check" as const, variant: "success" },
-    { text: "98% Client Retention", icon: "shield" as const, variant: "info" },
-    { text: "4.9/5 Client Rating", icon: "star" as const, variant: "primary" },
-    { text: "#1 SEO Service Provider", icon: "award" as const, variant: "danger" },
-    { text: "175% Avg. Traffic Growth", icon: "trending-up" as const, variant: "secondary" },
-    { text: "Top-Rated Service", icon: "thumbs-up" as const, variant: "default" },
-    { text: "Fast Implementation", icon: "zap" as const, variant: "info" }
+    { text: "Award-Winning Agency", icon: "award" as const, variant: "warning" as const },
+    { text: "Google Partner", icon: "check" as const, variant: "success" as const },
+    { text: "98% Client Retention", icon: "shield" as const, variant: "info" as const },
+    { text: "4.9/5 Client Rating", icon: "star" as const, variant: "primary" as const },
+    { text: "#1 SEO Service Provider", icon: "award" as const, variant: "danger" as const },
+    { text: "175% Avg. Traffic Growth", icon: "trending-up" as const, variant: "secondary" as const },
+    { text: "Top-Rated Service", icon: "thumbs-up" as const, variant: "default" as const },
+    { text: "Fast Implementation", icon: "zap" as const, variant: "info" as const }
   ];
 
   // Define FAQs for the home page

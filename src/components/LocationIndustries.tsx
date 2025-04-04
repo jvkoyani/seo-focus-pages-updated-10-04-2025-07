@@ -42,12 +42,12 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
     { 
       text: `#1 ${industry.title} SEO Provider`, 
       icon: "award" as const, 
-      variant: "primary" 
+      variant: "primary" as const
     },
     { 
       text: "95% Success Rate", 
       icon: "check" as const, 
-      variant: "success" 
+      variant: "success" as const
     }
   ];
 

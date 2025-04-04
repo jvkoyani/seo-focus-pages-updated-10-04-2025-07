@@ -21,10 +21,10 @@ const ServicePage = () => {
 
   // Service-specific badges with correct icon types
   const serviceBadges = [
-    { text: `#1 ${service.title} Provider`, icon: "award" as const, variant: "danger" },
-    { text: "Top-Rated Service", icon: "thumbs-up" as const, variant: "success" },
-    { text: "97% Client Satisfaction", icon: "star" as const, variant: "warning" },
-    { text: "Fast Implementation", icon: "zap" as const, variant: "info" }
+    { text: `#1 ${service.title} Provider`, icon: "award" as const, variant: "danger" as const },
+    { text: "Top-Rated Service", icon: "thumbs-up" as const, variant: "success" as const },
+    { text: "97% Client Satisfaction", icon: "star" as const, variant: "warning" as const },
+    { text: "Fast Implementation", icon: "zap" as const, variant: "info" as const }
   ];
 
   // Service-specific FAQs
