@@ -1,10 +1,11 @@
+
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { services } from '@/lib/data';
-import ServiceBadge from '@/components/ServiceBadge';
+import ServiceBadge, { ServiceBadgeIconType, ServiceBadgeVariantType } from '@/components/ServiceBadge';
 import FAQ from '@/components/FAQ';
 import MetaTags from '@/components/MetaTags';
 import { useDynamicMetaTags } from '@/hooks/useDynamicMetaTags';
@@ -42,6 +43,18 @@ const ServicePage = () => {
     slug: slug,
     basePath: '/service'
   });
+
+  // Map the service icon to a valid ServiceBadgeIconType
+  const getServiceIcon = (iconStr: string): ServiceBadgeIconType => {
+    // Default to 'check' if the icon is not in our allowed types
+    const validIcons: ServiceBadgeIconType[] = ['award', 'star', 'trending-up', 'thumbs-up', 'zap', 'shield', 'check'];
+    return (validIcons.includes(iconStr as ServiceBadgeIconType) 
+      ? iconStr as ServiceBadgeIconType 
+      : 'check');
+  };
+
+  // Default variant to use when service doesn't specify one
+  const defaultVariant: ServiceBadgeVariantType = 'primary';
 
   if (!service) {
     return (
@@ -85,8 +98,8 @@ const ServicePage = () => {
             <div className="flex flex-wrap justify-center gap-2 mb-4">
               <ServiceBadge 
                 text={service.title} 
-                icon={service.icon} 
-                variant={service.variant} 
+                icon={getServiceIcon(service.icon)}
+                variant={defaultVariant}
                 size="lg"
               />
             </div>
