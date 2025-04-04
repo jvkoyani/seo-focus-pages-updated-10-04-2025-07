@@ -8,6 +8,10 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { Button } from '@/components/ui/button';
 import { services, locations } from '@/lib/data';
+import ServiceBadge from '@/components/ServiceBadge';
+import { ServiceBadgeProps } from '@/components/ServiceBadge';
+import FAQ, { FAQItem } from '@/components/FAQ';
+import ContextualBlog from '@/components/ContextualBlog';
 
 const State = () => {
   const { country, state } = useParams<{ country: string; state: string }>();
@@ -39,10 +43,60 @@ const State = () => {
     }
   }, [stateLocations.length, navigate]);
   
+  // Authority badges for this state
+  const authorityBadges: ServiceBadgeProps[] = [
+    {
+      text: `#1 SEO Provider in ${stateFormatted}`,
+      icon: "award" as const,
+      variant: "primary" as const,
+      size: "lg"
+    },
+    {
+      text: "Top-Rated Agency",
+      icon: "star" as const,
+      variant: "warning" as const,
+      size: "md"
+    },
+    {
+      text: "Proven Results",
+      icon: "trending-up" as const,
+      variant: "success" as const,
+      size: "md"
+    }
+  ];
+
+  // FAQ items for this state
+  const stateFAQs: FAQItem[] = [
+    {
+      question: `Why is SEO important for businesses in ${stateFormatted}?`,
+      answer: `SEO is crucial for ${stateFormatted} businesses because it helps you connect with customers actively searching for your products or services. With the growing competition in ${stateFormatted}'s business landscape, appearing prominently in search results gives you a competitive advantage. Effective SEO increases your visibility, drives targeted traffic to your website, and ultimately leads to higher conversions and revenue growth.`
+    },
+    {
+      question: `What makes SEO in ${stateFormatted} different from other states?`,
+      answer: `SEO in ${stateFormatted} has unique characteristics due to the state's specific search patterns, local business ecosystems, and regional consumer behavior. The competitive landscape varies across different regions within ${stateFormatted}, requiring tailored approaches. Additionally, ${stateFormatted} has its own set of local directories, publications, and organizations that influence local search rankings. Our strategies are customized to leverage these ${stateFormatted}-specific factors for optimal results.`
+    },
+    {
+      question: `How long does it take to see results from SEO in ${stateFormatted}?`,
+      answer: `Most businesses in ${stateFormatted} begin seeing initial improvements within 3-4 months of implementing our SEO strategies. More significant results typically appear within 6-12 months. The timeline varies depending on factors such as your industry's competitiveness in ${stateFormatted}, your website's current condition, and your specific business goals. We focus on sustainable, long-term results rather than quick fixes that might harm your site in the long run.`
+    },
+    {
+      question: `How do you approach local SEO for businesses in ${stateFormatted}?`,
+      answer: `Our local SEO approach for ${stateFormatted} businesses includes optimizing your Google Business Profile, building citations in ${stateFormatted}-specific directories, creating localized content that mentions relevant neighborhoods and landmarks, implementing local schema markup, building relationships with other ${stateFormatted} businesses for natural backlinks, and optimizing for mobile searches (which are particularly important for local searches). We also focus on review management, as reviews significantly impact local search rankings.`
+    },
+    {
+      question: `What industries in ${stateFormatted} benefit most from SEO?`,
+      answer: `While all industries can benefit from SEO, we've seen particularly strong results in ${stateFormatted} for service-based businesses (like healthcare providers, lawyers, and home services), retail businesses, hospitality and tourism companies, educational institutions, and professional services. The effectiveness of SEO for your specific industry in ${stateFormatted} depends on factors like competition level, search volume, and customer acquisition costs. We can provide a tailored assessment for your particular business.`
+    },
+    {
+      question: `How much does SEO cost for businesses in ${stateFormatted}?`,
+      answer: `SEO investment for ${stateFormatted} businesses varies based on factors such as your business size, goals, current online presence, and the competitiveness of your industry in ${stateFormatted}. Our packages typically range from $1,500 to $5,000 per month. We believe in transparency, so we provide detailed proposals outlining exactly what you'll receive for your investment. We also offer flexible packages to accommodate different budget levels while still delivering meaningful results.`
+    }
+  ];
+  
   if (stateLocations.length === 0) {
     return null; // Will redirect to 404
   }
-  
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -82,6 +136,18 @@ const State = () => {
                 <MapPin className="h-4 w-4 mr-1" />
                 {stateFormatted}
               </span>
+            </div>
+            
+            <div className="flex flex-wrap gap-2 mb-4">
+              {authorityBadges.map((badge, index) => (
+                <ServiceBadge
+                  key={index}
+                  text={badge.text}
+                  icon={badge.icon}
+                  variant={badge.variant}
+                  size={badge.size}
+                />
+              ))}
             </div>
             
             <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
@@ -176,8 +242,15 @@ const State = () => {
         </div>
       </section>
       
+      {/* Contextual Blog Section */}
+      <ContextualBlog 
+        title={`SEO Insights for ${stateFormatted} Businesses`}
+        subtitle={`Latest trends and strategies specifically for ${stateFormatted}`}
+        className="bg-seo-gray-light"
+      />
+      
       {/* Services Overview */}
-      <section className="py-16 bg-seo-gray-light">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
             <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
@@ -216,6 +289,14 @@ const State = () => {
           </div>
         </div>
       </section>
+      
+      {/* FAQ Section */}
+      <FAQ 
+        title={`Frequently Asked Questions About SEO in ${stateFormatted}`}
+        subtitle={`Get answers to common SEO questions for ${stateFormatted} businesses`}
+        faqs={stateFAQs}
+        className="bg-seo-gray-light"
+      />
       
       {/* CTA Section */}
       <section className="py-16 bg-white">

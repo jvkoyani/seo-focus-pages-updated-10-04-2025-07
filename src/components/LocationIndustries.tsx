@@ -8,6 +8,8 @@ import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
 import { icons } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ServiceBadge from '@/components/ServiceBadge';
+import { ServiceBadgeProps } from '@/components/ServiceBadge';
 
 interface LocationIndustriesProps {
   locationName: string;
@@ -36,6 +38,20 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
     return `/${service.slug}-for-${industry.slug}-in-${locationSlug}`;
   };
 
+  // Location-specific authority badges
+  const authorityBadges: ServiceBadgeProps[] = [
+    {
+      text: `#1 in ${locationName}`,
+      icon: "award" as const,
+      variant: "warning" as const
+    },
+    {
+      text: "Industry Leaders",
+      icon: "check" as const,
+      variant: "success" as const
+    }
+  ];
+
   return (
     <section className={cn("py-16 bg-seo-gray-light", className)}>
       <div className="container mx-auto px-4">
@@ -52,6 +68,18 @@ const LocationIndustries: React.FC<LocationIndustriesProps> = ({
           <p className="text-lg text-seo-gray-dark">
             Tailored SEO strategies for different business sectors in {locationName}
           </p>
+          
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            {authorityBadges.map((badge, index) => (
+              <ServiceBadge
+                key={index}
+                text={badge.text}
+                icon={badge.icon}
+                variant={badge.variant}
+                size="lg"
+              />
+            ))}
+          </div>
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp } from 'lucide-react';
@@ -10,6 +9,10 @@ import { Button } from '@/components/ui/button';
 import { findLocationBySlug, getAllLocations } from '@/lib/additionalLocationData';
 import { findIndustryBySlug, getAllIndustries } from '@/lib/industriesData';
 import { findServiceBySlug, getAllServices } from '@/lib/servicesData';
+import ServiceBadge from '@/components/ServiceBadge';
+import { ServiceBadgeProps } from '@/components/ServiceBadge';
+import FAQ, { FAQItem } from '@/components/FAQ';
+import ContextualBlog from '@/components/ContextualBlog';
 
 const ServiceIndustryLocation = () => {
   const { 
@@ -93,7 +96,6 @@ const ServiceIndustryLocation = () => {
         setExtractedLocation(extractedLocationSlug);
       }
     }
-    
   }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug]);
   
   // Determine which slugs to use
@@ -143,6 +145,56 @@ const ServiceIndustryLocation = () => {
   const getSeoFriendlyUrl = (service: any, industry: any, location: any) => {
     return `/${service.slug}-for-${industry.slug}-in-${location.slug}`;
   };
+
+  // Authority badges specific to this service-industry-location combination
+  const authorityBadges: ServiceBadgeProps[] = [
+    {
+      text: `#1 ${serviceData.title} Provider for ${industryData.title}`,
+      icon: "award" as const,
+      variant: "primary" as const,
+      size: "lg"
+    },
+    {
+      text: `${locationData.name} ${industryData.title} Specialists`,
+      icon: "star" as const,
+      variant: "warning" as const,
+      size: "md"
+    },
+    {
+      text: "Guaranteed Results",
+      icon: "shield" as const,
+      variant: "success" as const,
+      size: "md"
+    }
+  ];
+
+  // Generate dynamic FAQs based on the current combination
+  const dynamicFAQs: FAQItem[] = [
+    {
+      question: `How can ${serviceData.title} help my ${industryData.title} business in ${locationData.name}?`,
+      answer: `${serviceData.title} is particularly effective for ${industryData.title} businesses in ${locationData.name} because it enables you to target potential customers who are actively searching for your specific services. By implementing tailored ${serviceData.title.toLowerCase()} strategies, we can help your business appear prominently in search results when ${locationData.name} residents search for ${industryData.title.toLowerCase()} services, driving qualified traffic to your website and increasing conversions.`
+    },
+    {
+      question: `What makes ${serviceData.title} different for ${industryData.title} businesses compared to other industries?`,
+      answer: `${industryData.title} businesses face unique challenges and opportunities in the digital landscape. Our ${serviceData.title.toLowerCase()} approach is customized to address industry-specific factors such as specialized terminology, competitive landscapes, and customer search patterns unique to ${industryData.title.toLowerCase()}. We focus on the keywords and content strategies that resonate with your target audience in ${locationData.name}, ensuring better visibility for searches that matter to your business.`
+    },
+    {
+      question: `How long does it take to see results from ${serviceData.title} for a ${industryData.title} business in ${locationData.name}?`,
+      answer: `While every business is different, most ${industryData.title} businesses in ${locationData.name} begin seeing initial improvements within 3-4 months of implementing our ${serviceData.title.toLowerCase()} strategies. More significant results typically become evident within 6-9 months. The timeline depends on factors such as your current online presence, competition level in the ${locationData.name} ${industryData.title.toLowerCase()} market, and the specific keywords targeted.`
+    },
+    {
+      question: `What specific ${serviceData.title} strategies will you use for my ${industryData.title} business in ${locationData.name}?`,
+      answer: `Our ${serviceData.title} strategies for ${industryData.title} businesses in ${locationData.name} include detailed keyword research focusing on local intent, optimization for ${locationData.name}-specific searches, creation of industry-specific content tailored to ${locationData.name} customers, local citation building, Google Business Profile optimization, review management, and competitor analysis. We also implement technical SEO improvements, mobile optimization, and structured data markup specific to ${industryData.title.toLowerCase()} businesses.`
+    },
+    {
+      question: `How do you measure the success of ${serviceData.title} campaigns for ${industryData.title} businesses?`,
+      answer: `We track multiple metrics to measure success, including rankings for ${industryData.title}-specific keywords in ${locationData.name}, organic traffic growth from ${locationData.name} visitors, conversion rates, phone calls, direction requests, contact form submissions, and ultimately, business growth. We provide detailed monthly reports that track these metrics and explain what they mean for your ${industryData.title.toLowerCase()} business in clear, jargon-free language.`
+    },
+    {
+      question: `Do you have experience with other ${industryData.title} businesses in ${locationData.name}?`,
+      answer: `Yes, we have extensive experience working with ${industryData.title} businesses in and around ${locationData.name}. Our team has helped numerous local ${industryData.title.toLowerCase()} businesses improve their online visibility, increase qualified traffic, and grow their customer base through tailored ${serviceData.title.toLowerCase()} strategies. We understand the unique aspects of the ${locationData.name} market and how ${industryData.title.toLowerCase()} businesses can best position themselves for success in local search results.`
+    }
+  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -206,6 +258,18 @@ const ServiceIndustryLocation = () => {
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-700">
                   Specialized Service
                 </span>
+              </div>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                {authorityBadges.map((badge, index) => (
+                  <ServiceBadge
+                    key={index}
+                    text={badge.text}
+                    icon={badge.icon}
+                    variant={badge.variant}
+                    size={badge.size}
+                  />
+                ))}
               </div>
               
               <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
@@ -340,6 +404,23 @@ const ServiceIndustryLocation = () => {
           </div>
         </div>
       </section>
+      
+      {/* Contextual Blog Section */}
+      <ContextualBlog 
+        title={`${serviceData.title} Resources for ${industryData.title} Businesses`}
+        subtitle={`Expert insights specifically for ${industryData.title} businesses in ${locationData.name}`}
+        serviceSlug={serviceData.slug}
+        industrySlug={industryData.slug}
+        locationSlug={locationData.slug}
+        className="bg-seo-gray-light"
+      />
+      
+      {/* FAQ Section */}
+      <FAQ 
+        title={`${serviceData.title} FAQs for ${industryData.title} Businesses`}
+        subtitle={`Common questions about ${serviceData.title} for ${industryData.title} businesses in ${locationData.name}`}
+        faqs={dynamicFAQs}
+      />
       
       {/* Navigation Options Section */}
       <section className="py-16 bg-seo-gray-light">

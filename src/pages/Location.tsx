@@ -18,6 +18,10 @@ import InfoCard from '@/components/InfoCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import LocationBreadcrumbs from '@/components/LocationBreadcrumbs';
+import ServiceBadge from '@/components/ServiceBadge';
+import { ServiceBadgeProps } from '@/components/ServiceBadge';
+import FAQ, { FAQItem } from '@/components/FAQ';
+import ContextualBlog from '@/components/ContextualBlog';
 
 const Location = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -45,6 +49,54 @@ const Location = () => {
       navigate('/not-found');
     }
   }, [locationData, slug, navigate]);
+
+  const authorityBadges: ServiceBadgeProps[] = [
+    {
+      text: `#1 SEO Agency in ${locationData?.name || ''}`,
+      icon: "award" as const,
+      variant: "primary" as const,
+      size: "lg"
+    },
+    {
+      text: "Results Guaranteed",
+      icon: "shield" as const,
+      variant: "success" as const,
+      size: "lg"
+    },
+    {
+      text: "5-Star Service",
+      icon: "star" as const,
+      variant: "warning" as const,
+      size: "lg"
+    }
+  ];
+
+  const locationFAQs: FAQItem[] = locationData ? [
+    {
+      question: `Why is local SEO important for businesses in ${locationData.name}?`,
+      answer: `Local SEO is crucial for businesses in ${locationData.name} because it helps you connect with nearby customers actively searching for your products or services. With proper local SEO optimization, your business appears in relevant local searches, Google Maps, and local directories, driving foot traffic and increasing conversions from ${locationData.name} residents.`
+    },
+    {
+      question: `How long does it take to see results from SEO in ${locationData.name}?`,
+      answer: `SEO is a long-term investment, but most businesses in ${locationData.name} begin seeing initial improvements within 3-4 months. Significant results typically appear between 6-12 months, depending on your industry competition, website condition, and the specific keywords targeted. Our strategies are tailored to the unique ${locationData.name} market to accelerate results where possible.`
+    },
+    {
+      question: `What makes your ${locationData.name} SEO services different from other agencies?`,
+      answer: `Our ${locationData.name} SEO services stand out because we combine deep local market knowledge with advanced technical expertise. We have established relationships with local business directories, publications, and organizations in ${locationData.name} that help strengthen your local presence. Additionally, we provide transparent reporting and personalized service with a dedicated account manager who understands the ${locationData.name} business landscape.`
+    },
+    {
+      question: `Do you guarantee first-page rankings for ${locationData.name} searches?`,
+      answer: `While we cannot ethically guarantee specific rankings (as Google prohibits such guarantees), we have an exceptional track record of helping ${locationData.name} businesses achieve first-page results. Our comprehensive approach focuses on sustainable strategies that comply with Google's guidelines and adapt to algorithm changes, giving your business the best opportunity to rank well for relevant ${locationData.name} searches long-term.`
+    },
+    {
+      question: `What local SEO strategies do you use for ${locationData.name} businesses?`,
+      answer: `For ${locationData.name} businesses, we implement a comprehensive local SEO strategy that includes Google Business Profile optimization, local citation building across ${locationData.name} directories, location-specific content creation, local link building with ${locationData.name} businesses and organizations, localized keyword research, review management, and mobile optimization. We adapt our approach based on your specific industry and the competitive landscape in ${locationData.name}.`
+    },
+    {
+      question: `How do you measure the success of ${locationData.name} SEO campaigns?`,
+      answer: `We measure success through multiple metrics including local ranking improvements, organic traffic growth from ${locationData.name} visitors, conversion rates, phone calls, direction requests, increases in local reviews, citation improvements, and ultimately, business growth. We provide detailed monthly reports that track these metrics and explain what they mean for your business in clear, jargon-free language.`
+    }
+  ] : [];
   
   if (!locationData) {
     return (
@@ -97,7 +149,7 @@ const Location = () => {
           
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <AnimatedSection className="max-w-2xl" animation="fade-in">
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-4 flex-wrap gap-2">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mr-2">
                   <MapPin className="h-4 w-4 mr-1" />
                   {locationData.name}
@@ -106,6 +158,18 @@ const Location = () => {
                   <Star className="h-4 w-4 mr-1" />
                   Experienced Team
                 </span>
+              </div>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                {authorityBadges.map((badge, index) => (
+                  <ServiceBadge
+                    key={index}
+                    text={badge.text}
+                    icon={badge.icon}
+                    variant={badge.variant}
+                    size={badge.size}
+                  />
+                ))}
               </div>
               
               <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
@@ -239,6 +303,18 @@ const Location = () => {
         locationSlug={locationData.slug}
         limit={6}
         showAllLink={true}
+      />
+      
+      <ContextualBlog 
+        title={`Latest SEO Insights for ${locationData.name} Businesses`}
+        subtitle={`Expert guides and tips specifically for businesses in ${locationData.name}`}
+        locationSlug={locationData.slug}
+      />
+      
+      <FAQ 
+        title={`Frequently Asked Questions About SEO in ${locationData.name}`}
+        subtitle={`Get answers to common questions about our SEO services for ${locationData.name} businesses`}
+        faqs={locationFAQs}
       />
       
       <section className="py-12 bg-white">
