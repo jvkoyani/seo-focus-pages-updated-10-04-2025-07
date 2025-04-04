@@ -11,6 +11,7 @@ import CaseStudyPreview from '@/components/CaseStudyPreview';
 import Hero from '@/components/Hero';
 import ResourcesSection from '@/components/ResourcesSection';
 import { services, blogPosts, caseStudies } from '@/lib/data';
+import SEO from '@/components/SEO';
 
 const Services = () => {
   // Find related blog posts and case studies about SEO services
@@ -19,6 +20,13 @@ const Services = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="Professional SEO Services"
+        description="Explore our comprehensive SEO services designed to increase your online visibility, drive qualified traffic, and boost conversions for your business."
+        keywords="SEO services, search engine optimization, digital marketing, SEO strategy, on-page SEO, off-page SEO, local SEO, technical SEO"
+        canonicalUrl="https://seofocus.com/services"
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

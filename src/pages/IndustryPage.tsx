@@ -1,6 +1,6 @@
 
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react'; // Correct import for useEffect
+import { useEffect } from 'react'; 
 import { ArrowRight, Check, CheckCircle, Star, Building, Award, ShoppingBag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -10,6 +10,7 @@ import { industries, testimonials } from '@/lib/data';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import IndustrySeoServices from '@/components/IndustrySeoServices';
+import SEO from '@/components/SEO';
 
 const IndustryPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -31,6 +32,11 @@ const IndustryPage = () => {
   if (!industry) {
     return (
       <div className="min-h-screen flex flex-col">
+        <SEO 
+          title="Industry Not Found"
+          description="The industry page you're looking for could not be found. Explore our other industry-specific SEO services."
+          canonicalUrl="https://seofocus.com/industries"
+        />
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -50,8 +56,18 @@ const IndustryPage = () => {
     );
   }
 
+  // Extract relevant industry name without "SEO" suffix for meta description
+  const industryName = industry.title.replace(' SEO', '');
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={`${industry.title} - Industry-Specific SEO Solutions`}
+        description={`Specialized SEO strategies for ${industryName} businesses. Increase your online visibility, attract more customers, and grow your ${industryName.toLowerCase()} business with our tailored SEO services.`}
+        keywords={`${industryName} SEO, ${industryName.toLowerCase()} digital marketing, ${industryName.toLowerCase()} search engine optimization, ${industryName.toLowerCase()} online presence, ${industryName.toLowerCase()} website ranking`}
+        canonicalUrl={`https://seofocus.com/industry/${slug}`}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

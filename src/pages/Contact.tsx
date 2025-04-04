@@ -3,10 +3,18 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import SEO from '@/components/SEO';
 
 const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="Contact Us For SEO Services"
+        description="Get in touch with our SEO experts to discuss your project needs. We offer personalized consultations to help your business achieve better search rankings."
+        keywords="SEO contact, SEO consultation, SEO services, SEO experts, search engine optimization help"
+        canonicalUrl="https://seofocus.com/contact"
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

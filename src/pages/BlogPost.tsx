@@ -7,6 +7,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import BlogPreview from '@/components/BlogPreview';
 import { blogPosts } from '@/lib/data';
+import SEO from '@/components/SEO';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -15,6 +16,11 @@ const BlogPost = () => {
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col">
+        <SEO 
+          title="Blog Post Not Found"
+          description="The blog post you're looking for could not be found. Browse our other SEO articles and resources."
+          canonicalUrl="https://seofocus.com/blogs"
+        />
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -45,6 +51,15 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={post.title}
+        description={post.excerpt || `Read our article about ${post.title}. Learn insights and strategies about SEO and digital marketing.`}
+        keywords={post.tags.join(', ')}
+        canonicalUrl={`https://seofocus.com/blog/${post.slug}`}
+        ogImage={post.image}
+        ogType="article"
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

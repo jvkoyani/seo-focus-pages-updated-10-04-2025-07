@@ -12,6 +12,7 @@ import ServiceBadge from '@/components/ServiceBadge';
 import { ServiceBadgeProps } from '@/components/ServiceBadge';
 import FAQ, { FAQItem } from '@/components/FAQ';
 import ContextualBlog from '@/components/ContextualBlog';
+import SEO from '@/components/SEO';
 
 const State = () => {
   const { country, state } = useParams<{ country: string; state: string }>();
@@ -99,6 +100,13 @@ const State = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={`SEO Services in ${stateFormatted}, ${countryName}`}
+        description={`Expert SEO services tailored for businesses in ${stateFormatted}, ${countryName}. Improve local search rankings and attract more customers in your area.`}
+        keywords={`${stateFormatted} SEO, ${stateFormatted.toLowerCase()} search engine optimization, local SEO ${stateFormatted}, ${stateFormatted.toLowerCase()} digital marketing, SEO agency ${stateFormatted}, ${stateFormatted.toLowerCase()} online marketing`}
+        canonicalUrl={`https://seofocus.com/${country}/${state}`}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

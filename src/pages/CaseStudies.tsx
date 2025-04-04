@@ -7,10 +7,18 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import { caseStudies } from '@/lib/data';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
+import SEO from '@/components/SEO';
 
 const CaseStudies = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="SEO Success Stories & Case Studies"
+        description="Explore our collection of SEO success stories and case studies. See the measurable results we've delivered for businesses across various industries."
+        keywords="SEO case studies, SEO results, SEO success stories, SEO ROI, search engine optimization examples, SEO client results"
+        canonicalUrl="https://seofocus.com/case-studies"
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

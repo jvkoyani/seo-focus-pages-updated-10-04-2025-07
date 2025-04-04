@@ -1,0 +1,12 @@
+
+# robots.txt file for SEO Focus
+User-agent: *
+Allow: /
+
+# Disallow admin and sensitive areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Allow search engines to access sitemap
+Sitemap: https://seofocus.com/sitemap.xml
