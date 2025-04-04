@@ -3,10 +3,20 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import MetaTags from '@/components/MetaTags';
 
 const About = () => {
+  // Meta tags for the About page
+  const pageTitle = "About SEO Focus - Your Trusted SEO Partner in Australia";
+  const pageDescription = "Learn about SEO Focus, our team of experts, our values, and how we've grown to become industry leaders in search engine optimization across Australia.";
+
   return (
     <div className="min-h-screen flex flex-col">
+      <MetaTags
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl="/about"
+      />
       <Navbar />
       
       {/* Hero Section */}

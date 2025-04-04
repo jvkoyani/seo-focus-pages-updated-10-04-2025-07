@@ -3,10 +3,20 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import MetaTags from '@/components/MetaTags';
 
 const Contact = () => {
+  // Meta tags for the Contact page
+  const pageTitle = "Contact SEO Focus - Get in Touch for SEO Solutions";
+  const pageDescription = "Contact SEO Focus for professional SEO services. Schedule a consultation, request a quote, or discuss how our SEO strategies can help your business grow online.";
+
   return (
     <div className="min-h-screen flex flex-col">
+      <MetaTags
+        title={pageTitle}
+        description={pageDescription}
+        canonicalUrl="/contact"
+      />
       <Navbar />
       
       {/* Hero Section */}
