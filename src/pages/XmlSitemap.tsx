@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { services } from '@/lib/data';
 import { allAustralianCities } from '@/lib/locationData';
 import { industries } from '@/lib/industriesData';
-import { Helmet } from 'react-helmet-async';
 
 const XmlSitemap = () => {
   const [xmlContent, setXmlContent] = useState<string>('');
-  const baseUrl = 'https://seo-focus.com'; // Replace with your actual domain
+  const baseUrl = 'https://yourwebsite.com'; // Replace with your actual domain
 
   useEffect(() => {
     // Generate sitemap XML
@@ -201,24 +200,32 @@ const XmlSitemap = () => {
     setXmlContent(generateSitemap());
   }, []);
 
+  // Set the proper content type for the XML
+  useEffect(() => {
+    document.title = 'XML Sitemap';
+    
+    // Set the content type to XML
+    const metaContentType = document.createElement('meta');
+    metaContentType.httpEquiv = 'Content-Type';
+    metaContentType.content = 'text/xml; charset=utf-8';
+    document.head.appendChild(metaContentType);
+
+    return () => {
+      document.head.removeChild(metaContentType);
+    };
+  }, []);
+
   return (
-    <>
-      <Helmet>
-        <title>XML Sitemap | SEO Focus</title>
-        <meta name="robots" content="noindex, follow" />
-        <meta httpEquiv="Content-Type" content="text/xml; charset=utf-8" />
-      </Helmet>
-      <div>
-        <pre style={{ 
-          whiteSpace: 'pre-wrap', 
-          fontFamily: 'monospace', 
-          fontSize: '12px',
-          padding: '20px' 
-        }}>
-          {xmlContent}
-        </pre>
-      </div>
-    </>
+    <div>
+      <pre style={{ 
+        whiteSpace: 'pre-wrap', 
+        fontFamily: 'monospace', 
+        fontSize: '12px',
+        padding: '20px' 
+      }}>
+        {xmlContent}
+      </pre>
+    </div>
   );
 };
 

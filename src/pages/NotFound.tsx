@@ -6,15 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Search, AlertTriangle, Home, Map, Briefcase, Building, ArrowLeft, ArrowRight } from "lucide-react";
 import ServiceBadge from "@/components/ServiceBadge";
 import AnimatedSection from "@/components/AnimatedSection";
-import MetaTags from "@/components/MetaTags";
 
 const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Meta tags for the 404 page
-  const pageTitle = "Page Not Found | SEO Focus";
-  const pageDescription = "Sorry, we couldn't find the page you were looking for. Explore our other SEO services and resources.";
 
   useEffect(() => {
     console.error(
@@ -55,12 +50,6 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <MetaTags
-        title={pageTitle}
-        description={pageDescription}
-        canonicalUrl="/not-found"
-      />
-      
       <div className="w-full max-w-4xl mx-auto p-8">
         <AnimatedSection animation="fade-in" className="text-center mb-8">
           <div className="inline-flex justify-center items-center w-20 h-20 rounded-full bg-red-100 mb-6">
