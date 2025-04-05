@@ -6,6 +6,8 @@ import ContactForm from '@/components/ContactForm';
 import SEO from '@/components/SEO';
 
 const Contact = ({ routeKey }: { routeKey?: string }) => {
+  console.log(`Contact page rendering with routeKey: ${routeKey}`);
+  
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 

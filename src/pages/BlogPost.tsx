@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, Calendar, User, Tag, ChevronLeft } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -12,6 +11,8 @@ import SEO from '@/components/SEO';
 const BlogPost = ({ routeKey }: { routeKey?: string }) => {
   const { slug } = useParams<{ slug: string }>();
   const post = blogPosts.find(p => p.slug === slug);
+
+  console.log(`BlogPost rendering for slug: ${slug} with routeKey: ${routeKey}`);
 
   if (!post) {
     return (

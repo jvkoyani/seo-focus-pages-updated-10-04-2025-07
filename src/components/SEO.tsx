@@ -27,6 +27,8 @@ const SEO: React.FC<SEOProps> = ({
   const fullCanonicalUrl = canonicalUrl ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${siteUrl}${canonicalUrl}`) : undefined;
   const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
   
+  console.log(`SEO Component rendering for: ${title} with routeKey: ${routeKey}`);
+  
   return (
     <Helmet key={routeKey || title}>
       {/* Basic Meta Tags */}

@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -13,6 +12,8 @@ import SEO from '@/components/SEO';
 const Blogs = ({ routeKey }: { routeKey?: string }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  
+  console.log(`Blogs page rendering with routeKey: ${routeKey}`);
   
   // Extract unique categories
   const categories = ['All', ...Array.from(new Set(blogPosts.map(post => post.category)))];

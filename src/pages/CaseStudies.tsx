@@ -10,6 +10,8 @@ import CaseStudyPreview from '@/components/CaseStudyPreview';
 import SEO from '@/components/SEO';
 
 const CaseStudies = ({ routeKey }: { routeKey?: string }) => {
+  console.log(`CaseStudies page rendering with routeKey: ${routeKey}`);
+  
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 

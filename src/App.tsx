@@ -58,6 +58,8 @@ const RouteWrapper = ({ Component }: { Component: React.ComponentType<any> }) =>
   // Create a unique key based on pathname and search parameters
   const routeKey = `${location.pathname}${location.search}`;
   
+  console.log(`RouteWrapper rendering for path: ${location.pathname} with key: ${routeKey}`);
+  
   return <Component routeKey={routeKey} />;
 };
 
