@@ -47,6 +47,9 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="twitter:title" content={fullTitle} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={fullOgImage} />
+      
+      {/* Key property to ensure meta tags are updated correctly when navigating */}
+      <meta name="key" content={fullTitle + description} />
     </Helmet>
   );
 };

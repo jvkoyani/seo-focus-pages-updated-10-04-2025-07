@@ -28,6 +28,9 @@ const Blogs = () => {
     return matchesSearch && matchesCategory;
   });
 
+  // Unique key for this route to ensure meta updates
+  const metaKey = `blogs-${Date.now()}`;
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
