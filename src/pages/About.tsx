@@ -1,17 +1,19 @@
+
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import SEO from '@/components/SEO';
 
-const About = () => {
+const About = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="About Our SEO Agency"
-        description="Learn about our SEO agency, our mission, values, and expert team. We help businesses improve their online visibility and achieve sustainable growth through search."
+        title="About Our Expert SEO Team & Approach"
+        description="Meet the experienced SEO specialists behind our success. Learn about our data-driven approach, values, and commitment to delivering measurable SEO results."
         keywords="SEO agency, SEO experts, SEO specialists, search engine optimization company, SEO professionals, digital marketing team"
-        canonicalUrl="https://seofocus.com/about"
+        canonicalUrl="/about"
+        routeKey={routeKey}
       />
       
       <Navbar />

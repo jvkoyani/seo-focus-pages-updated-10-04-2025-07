@@ -8,6 +8,7 @@ import { toast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
+import SEO from '@/components/SEO';
 import {
   Form,
   FormControl,
@@ -39,7 +40,7 @@ const formSchema = z.object({
   message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
 });
 
-const FreeConsultation = () => {
+const FreeConsultation = ({ routeKey }: { routeKey?: string }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,6 +70,14 @@ const FreeConsultation = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="Free SEO Consultation | Expert Strategy Session"
+        description="Get a free 30-minute SEO strategy session with our experts. Receive personalized recommendations to improve your search visibility and drive more traffic."
+        keywords="free SEO consultation, SEO strategy session, SEO analysis, website evaluation, search ranking analysis"
+        canonicalUrl="/free-consultation"
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       <section className="pt-32 pb-20 bg-gradient-to-b from-white to-seo-gray-light">

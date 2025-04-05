@@ -7,14 +7,21 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
 import { caseStudies } from '@/lib/data';
+import SEO from '@/components/SEO';
 
-const CaseStudy = () => {
+const CaseStudy = ({ routeKey }: { routeKey?: string }) => {
   const { slug } = useParams<{ slug: string }>();
   const caseStudy = caseStudies.find(c => c.slug === slug);
 
   if (!caseStudy) {
     return (
       <div className="min-h-screen flex flex-col">
+        <SEO 
+          title="Case Study Not Found"
+          description="The case study you're looking for isn't available. Explore our other success stories to see how we deliver SEO results for businesses like yours."
+          canonicalUrl="/case-studies"
+          routeKey={routeKey}
+        />
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -34,6 +41,10 @@ const CaseStudy = () => {
     );
   }
 
+  // Create custom meta title and description for this case study
+  const metaTitle = `${caseStudy.client} ${caseStudy.industry} SEO Success Story`;
+  const metaDescription = `Discover how we helped ${caseStudy.client} achieve ${caseStudy.results[0].toLowerCase()}. Real SEO results for ${caseStudy.industry} businesses.`;
+
   // Find related case studies
   const relatedCaseStudies = caseStudies
     .filter(c => 
@@ -46,6 +57,16 @@ const CaseStudy = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={metaTitle}
+        description={metaDescription}
+        keywords={`${caseStudy.industry} SEO, ${caseStudy.client}, SEO case study, SEO results, ${caseStudy.industry} marketing`}
+        canonicalUrl={`/case-study/${caseStudy.slug}`}
+        ogImage={caseStudy.image}
+        ogType="article"
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

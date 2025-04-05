@@ -5,14 +5,15 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import SEO from '@/components/SEO';
 
-const Contact = () => {
+const Contact = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="Contact Us For SEO Services"
-        description="Get in touch with our SEO experts to discuss your project needs. We offer personalized consultations to help your business achieve better search rankings."
+        title="Contact Our SEO Experts | Free Consultation"
+        description="Ready to improve your search rankings? Contact our SEO specialists for a personalized strategy session and discover how we can help your business grow online."
         keywords="SEO contact, SEO consultation, SEO services, SEO experts, search engine optimization help"
-        canonicalUrl="https://seofocus.com/contact"
+        canonicalUrl="/contact"
+        routeKey={routeKey}
       />
       
       <Navbar />

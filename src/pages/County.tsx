@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, MapPin, ArrowRight } from 'lucide-react';
@@ -8,8 +9,9 @@ import ContactForm from '@/components/ContactForm';
 import { Button } from '@/components/ui/button';
 import { services, locations } from '@/lib/data';
 import { getAllIndustries } from '@/lib/industriesData';
+import SEO from '@/components/SEO';
 
-const County = () => {
+const County = ({ routeKey }: { routeKey?: string }) => {
   const { country, state, county } = useParams<{ country: string; state: string; county: string }>();
   const navigate = useNavigate();
   
@@ -23,6 +25,10 @@ const County = () => {
       location.state.toLowerCase().replace(/\s+/g, '-') === state &&
       location.county?.toLowerCase().replace(/\s+/g, '-') === county
   );
+  
+  // Custom meta title and description for this county
+  const countyTitle = `Local SEO in ${countyFormatted}, ${stateFormatted} | Area-Specific Optimization`;
+  const countyDescription = `Specialized SEO services for businesses in ${countyFormatted}. Improve your local visibility and attract more customers in your area.`;
   
   const popularIndustries = getAllIndustries().slice(0, 3);
   
@@ -42,6 +48,14 @@ const County = () => {
   
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={countyTitle}
+        description={countyDescription}
+        keywords={`${countyFormatted} SEO, local SEO services, ${stateFormatted} SEO, search optimization, local business marketing`}
+        canonicalUrl={`/${country}/${state}/${county}`}
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       <section className="pt-32 pb-20 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">

@@ -9,14 +9,15 @@ import { caseStudies } from '@/lib/data';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
 import SEO from '@/components/SEO';
 
-const CaseStudies = () => {
+const CaseStudies = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="SEO Success Stories & Case Studies"
-        description="Explore our collection of SEO success stories and case studies. See the measurable results we've delivered for businesses across various industries."
+        title="Proven SEO Results & Success Stories"
+        description="Explore real-world SEO success stories with measurable results. See how we've helped businesses across industries improve rankings and drive qualified traffic."
         keywords="SEO case studies, SEO results, SEO success stories, SEO ROI, search engine optimization examples, SEO client results"
-        canonicalUrl="https://seofocus.com/case-studies"
+        canonicalUrl="/case-studies"
+        routeKey={routeKey}
       />
       
       <Navbar />

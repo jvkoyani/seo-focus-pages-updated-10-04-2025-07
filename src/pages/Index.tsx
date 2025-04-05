@@ -13,14 +13,23 @@ import { locations, blogPosts, caseStudies } from '@/lib/data';
 import BlogPreview from '@/components/BlogPreview';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
 import InfoCard from '@/components/InfoCard';
+import SEO from '@/components/SEO';
 
-const Index = () => {
+const Index = ({ routeKey }: { routeKey?: string }) => {
   // Get featured blog posts and case studies
   const featuredBlogs = blogPosts.slice(0, 3);
   const featuredCaseStudies = caseStudies.slice(0, 2);
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="Results-Driven SEO Services | Improve Rankings"
+        description="Get expert SEO services that deliver measurable results. Increase your search visibility, drive targeted traffic, and grow your business online."
+        keywords="SEO services, search engine optimization, digital marketing, website ranking, SEO experts, improve search rankings"
+        canonicalUrl="/"
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       <Hero />
       

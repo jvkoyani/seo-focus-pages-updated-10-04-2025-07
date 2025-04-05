@@ -8,6 +8,8 @@ interface SEOProps {
   canonicalUrl?: string;
   ogImage?: string;
   ogType?: string;
+  // Add key prop to force re-render on route change
+  routeKey?: string;
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -16,16 +18,17 @@ const SEO: React.FC<SEOProps> = ({
   keywords,
   canonicalUrl,
   ogImage = '/og-image.png',
-  ogType = 'website'
+  ogType = 'website',
+  routeKey
 }) => {
   const siteName = 'SEO Focus';
   const fullTitle = `${title} | ${siteName}`;
   const siteUrl = 'https://seofocus.com';
-  const fullCanonicalUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : undefined;
+  const fullCanonicalUrl = canonicalUrl ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${siteUrl}${canonicalUrl}`) : undefined;
   const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
   
   return (
-    <Helmet>
+    <Helmet key={routeKey || title}>
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
@@ -49,7 +52,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="twitter:image" content={fullOgImage} />
       
       {/* Key property to ensure meta tags are updated correctly when navigating */}
-      <meta name="key" content={fullTitle + description} />
+      <meta name="key" content={routeKey || fullTitle + description} />
     </Helmet>
   );
 };

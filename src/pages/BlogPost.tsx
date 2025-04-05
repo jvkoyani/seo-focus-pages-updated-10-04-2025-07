@@ -9,7 +9,7 @@ import BlogPreview from '@/components/BlogPreview';
 import { blogPosts } from '@/lib/data';
 import SEO from '@/components/SEO';
 
-const BlogPost = () => {
+const BlogPost = ({ routeKey }: { routeKey?: string }) => {
   const { slug } = useParams<{ slug: string }>();
   const post = blogPosts.find(p => p.slug === slug);
 
@@ -18,8 +18,9 @@ const BlogPost = () => {
       <div className="min-h-screen flex flex-col">
         <SEO 
           title="Blog Post Not Found"
-          description="The blog post you're looking for could not be found. Browse our other SEO articles and resources."
-          canonicalUrl="https://seofocus.com/blogs"
+          description="The article you're looking for isn't available. Browse our other SEO resources and insights to improve your search rankings."
+          canonicalUrl="/blogs"
+          routeKey={routeKey}
         />
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
@@ -48,16 +49,21 @@ const BlogPost = () => {
        p.tags.some(tag => post.tags.includes(tag)))
     )
     .slice(0, 3);
+    
+  // Create a custom meta title and description based on the post content
+  const metaTitle = `${post.title} | SEO Guide`;
+  const metaDescription = post.excerpt || `Learn expert insights about ${post.title}. Discover proven strategies to improve your SEO performance and drive more targeted traffic.`;
 
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title={post.title}
-        description={post.excerpt || `Read our article about ${post.title}. Learn insights and strategies about SEO and digital marketing.`}
+        title={metaTitle}
+        description={metaDescription}
         keywords={post.tags.join(', ')}
-        canonicalUrl={`https://seofocus.com/blog/${post.slug}`}
+        canonicalUrl={`/blog/${post.slug}`}
         ogImage={post.image}
         ogType="article"
+        routeKey={routeKey}
       />
       
       <Navbar />

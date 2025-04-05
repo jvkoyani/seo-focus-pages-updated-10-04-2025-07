@@ -10,8 +10,9 @@ import { ArrowRight, MapPin, Globe } from 'lucide-react';
 import { allAustralianCities } from '@/lib/locationData';
 import CountryCities from '@/components/CountryCities';
 import { services } from '@/lib/data';
+import SEO from '@/components/SEO';
 
-const Country = () => {
+const Country = ({ routeKey }: { routeKey?: string }) => {
   const { country } = useParams<{ country: string }>();
   
   useEffect(() => {
@@ -21,10 +22,21 @@ const Country = () => {
     });
   }, [country]);
   
+  // Format country name for display and SEO
+  const formattedCountry = country === 'australia' ? 'Australia' : country || '';
+  const countryTitle = `SEO Services in ${formattedCountry} | Local Search Optimization`;
+  const countryDescription = `Comprehensive SEO services tailored for businesses across ${formattedCountry}. Boost your local search visibility and attract more qualified customers.`;
+  
   // Only showing Australia for now
   if (country?.toLowerCase() !== 'australia') {
     return (
       <div className="min-h-screen flex flex-col">
+        <SEO 
+          title="Location Not Available"
+          description="We currently only offer SEO services in Australia. Explore our Australian SEO solutions to improve your local search rankings."
+          canonicalUrl="/australia"
+          routeKey={routeKey}
+        />
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
@@ -55,6 +67,14 @@ const Country = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={countryTitle}
+        description={countryDescription}
+        keywords={`${formattedCountry} SEO, local SEO, search engine optimization, ${formattedCountry} digital marketing, local business SEO`}
+        canonicalUrl={`/${country?.toLowerCase()}`}
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}
