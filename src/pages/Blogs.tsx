@@ -8,6 +8,7 @@ import ContactForm from '@/components/ContactForm';
 import { blogPosts } from '@/lib/data';
 import { useState } from 'react';
 import BlogPreview from '@/components/BlogPreview';
+import SEO from '@/components/SEO';
 
 const Blogs = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,6 +30,13 @@ const Blogs = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="SEO Blog - Latest SEO Strategies & Trends"
+        description="Stay updated with the latest SEO trends, strategies, and best practices on our blog. Expert insights to help improve your website's search engine rankings."
+        keywords="SEO blog, SEO strategies, search engine optimization tips, SEO best practices, digital marketing blog, SEO experts"
+        canonicalUrl="/blogs"
+      />
+      
       <Navbar />
       
       {/* Hero Section */}
