@@ -1,12 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { services } from '@/lib/data';
 import { allAustralianCities } from '@/lib/locationData';
 import { industries } from '@/lib/industriesData';
+import { Helmet } from 'react-helmet-async';
 
 const XmlSitemap = () => {
   const [xmlContent, setXmlContent] = useState<string>('');
-  const baseUrl = 'https://yourwebsite.com'; // Replace with your actual domain
+  const baseUrl = 'https://seofocus.com'; // Your actual domain
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Generate sitemap XML
@@ -28,6 +31,7 @@ const XmlSitemap = () => {
         { url: '/free-consultation', priority: '0.9' },
         { url: '/sitemap', priority: '0.7' },
         { url: '/location-sitemap', priority: '0.7' },
+        { url: '/seo-audit', priority: '0.8' },
       ];
 
       mainPages.forEach(page => {
@@ -191,6 +195,30 @@ const XmlSitemap = () => {
         }
       });
 
+      // Add blog posts
+      const { blogPosts } = require('@/lib/data');
+      blogPosts.forEach((post: any) => {
+        xml += `
+  <url>
+    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+      });
+
+      // Add case studies
+      const { caseStudies } = require('@/lib/data');
+      caseStudies.forEach((caseStudy: any) => {
+        xml += `
+  <url>
+    <loc>${baseUrl}/case-study/${caseStudy.slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+      });
+
       xml += `
 </urlset>`;
 
@@ -198,25 +226,40 @@ const XmlSitemap = () => {
     };
 
     setXmlContent(generateSitemap());
-  }, []);
-
-  // Set the proper content type for the XML
-  useEffect(() => {
-    document.title = 'XML Sitemap';
     
-    // Set the content type to XML
-    const metaContentType = document.createElement('meta');
-    metaContentType.httpEquiv = 'Content-Type';
-    metaContentType.content = 'text/xml; charset=utf-8';
-    document.head.appendChild(metaContentType);
+    // If we're accessing directly via /sitemap.xml, download or serve as XML
+    if (window.location.pathname === '/sitemap.xml') {
+      // Create XML document
+      const xmlDoc = new DOMParser().parseFromString(generateSitemap(), 'application/xml');
+      const serializer = new XMLSerializer();
+      const xmlString = serializer.serializeToString(xmlDoc);
+      
+      // Create a Blob with the XML content
+      const blob = new Blob([xmlString], { type: 'application/xml' });
+      
+      // Create a link element and download the file
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'sitemap.xml';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Redirect to the sitemap page after download
+      setTimeout(() => {
+        navigate('/sitemap');
+      }, 1000);
+    }
+  }, [navigate]);
 
-    return () => {
-      document.head.removeChild(metaContentType);
-    };
-  }, []);
-
+  // Set proper content type for XML
   return (
     <div>
+      <Helmet>
+        <title>XML Sitemap | SEO Focus</title>
+        <meta httpEquiv="Content-Type" content="text/xml; charset=utf-8" />
+      </Helmet>
       <pre style={{ 
         whiteSpace: 'pre-wrap', 
         fontFamily: 'monospace', 
