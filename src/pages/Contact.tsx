@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import SEO from '@/components/SEO';
+import ResourcesSection from '@/components/ResourcesSection';
 
 const Contact = ({ routeKey }: { routeKey?: string }) => {
   console.log(`Contact page rendering with routeKey: ${routeKey}`);
@@ -39,6 +40,10 @@ const Contact = ({ routeKey }: { routeKey?: string }) => {
       </section>
       
       <ContactForm />
+      
+      {/* Resources Section */}
+      <ResourcesSection filterTag="consultation" />
+      
       <Footer />
     </div>
   );

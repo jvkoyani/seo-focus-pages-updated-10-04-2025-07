@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { 
   ArrowRight, Check, Zap, Award, Target, BarChart, 
@@ -17,6 +16,7 @@ import InfoCard from '@/components/InfoCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { services, blogPosts, caseStudies } from '@/lib/data';
+import ContextualBlog from '@/components/ContextualBlog';
 
 const ServicePage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -434,78 +434,12 @@ const ServicePage = () => {
         </div>
       </section>
       
-      {/* Blog Posts Section with enhanced design */}
-      {relatedBlogs.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-            <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
-              <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-                Insights
-              </span>
-              <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
-                Latest {service.title} Articles
-              </h2>
-              <p className="text-lg text-seo-gray-dark">
-                Discover our latest insights and strategies on {service.title.toLowerCase()}
-              </p>
-            </AnimatedSection>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedBlogs.map((post, index) => (
-                <BlogPreview key={post.id} post={post} delay={index * 100} />
-              ))}
-            </div>
-            
-            <div className="text-center mt-12">
-              <Link 
-                to="/blogs" 
-                className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
-              >
-                <span>View All Articles</span>
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-      
-      {/* Case Studies Section with enhanced visuals */}
-      {relatedCaseStudies.length > 0 && (
-        <section className="py-20 bg-gradient-to-b from-seo-gray-light to-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-seo-blue/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-seo-blue/5 rounded-full blur-3xl"></div>
-          
-          <div className="container mx-auto px-4 relative">
-            <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
-              <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-                Success Stories
-              </span>
-              <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
-                {service.title} Success Stories
-              </h2>
-              <p className="text-lg text-seo-gray-dark">
-                See how we've helped businesses achieve results with our {service.title.toLowerCase()} services
-              </p>
-            </AnimatedSection>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {relatedCaseStudies.map((study, index) => (
-                <CaseStudyPreview key={study.id} caseStudy={study} delay={index * 100} />
-              ))}
-            </div>
-            
-            <div className="text-center mt-12">
-              <Link 
-                to="/case-studies" 
-                className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-6 rounded-md transition-colors"
-              >
-                <span>View All Case Studies</span>
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Resources Section - Using the ContextualBlog component for better context-awareness */}
+      <ContextualBlog 
+        title={`Latest ${service.title} Resources`}
+        subtitle={`Expert insights and success stories about ${service.title.toLowerCase()}`}
+        serviceSlug={service.slug}
+      />
       
       {/* Related Services Section with enhanced cards */}
       <section className="py-20 bg-white">

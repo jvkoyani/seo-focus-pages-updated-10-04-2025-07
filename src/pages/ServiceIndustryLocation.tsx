@@ -30,13 +30,11 @@ const ServiceIndustryLocation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Extract slugs from the fullPath if available
   const [extractedService, setExtractedService] = useState<string | null>(null);
   const [extractedIndustry, setExtractedIndustry] = useState<string | null>(null);
   const [extractedLocation, setExtractedLocation] = useState<string | null>(null);
   
   useEffect(() => {
-    // Log initial parameters for debugging
     console.log("Initial URL parameters:", { 
       serviceSlug, 
       industrySlug, 
@@ -45,10 +43,8 @@ const ServiceIndustryLocation = () => {
       pathname: location.pathname
     });
     
-    // Check for direct pattern match in URL path
     const pathWithoutSlash = location.pathname.substring(1);
     
-    // Method 1: Try to extract from fullPath parameter
     if (fullPath) {
       console.log("Trying to parse fullPath:", fullPath);
       
@@ -73,7 +69,6 @@ const ServiceIndustryLocation = () => {
         }
       }
     }
-    // Method 2: Try to extract from pathname directly
     else if (pathWithoutSlash.includes("-for-") && pathWithoutSlash.includes("-in-")) {
       console.log("Trying to parse from pathname:", pathWithoutSlash);
       
@@ -98,12 +93,10 @@ const ServiceIndustryLocation = () => {
     }
   }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug]);
   
-  // Determine which slugs to use
   const finalServiceSlug = serviceSlug || extractedService || '';
   const finalIndustrySlug = industrySlug || extractedIndustry || '';
   const finalLocationSlug = locationSlug || extractedLocation || '';
   
-  // Get service, industry, and location data
   const serviceData = findServiceBySlug(finalServiceSlug);
   const industryData = findIndustryBySlug(finalIndustrySlug);
   const locationData = findLocationBySlug(finalLocationSlug);
@@ -120,11 +113,9 @@ const ServiceIndustryLocation = () => {
     location: locationData ? locationData.name : 'Not found'
   });
   
-  // Get related services and industries (for navigation)
   const allServices = getAllServices().slice(0, 5);
   const allIndustries = getAllIndustries().slice(0, 5);
   
-  // Redirect if any of the data is not found
   useEffect(() => {
     if (!serviceData || !industryData || !locationData) {
       console.error("Missing data, redirecting to 404", {
@@ -138,15 +129,13 @@ const ServiceIndustryLocation = () => {
   }, [serviceData, industryData, locationData, navigate, location.pathname]);
   
   if (!serviceData || !industryData || !locationData) {
-    return null; // Will redirect to 404
+    return null;
   }
   
-  // Generate the SEO-friendly URL for this combination
   const getSeoFriendlyUrl = (service: any, industry: any, location: any) => {
     return `/${service.slug}-for-${industry.slug}-in-${location.slug}`;
   };
 
-  // Authority badges specific to this service-industry-location combination
   const authorityBadges: ServiceBadgeProps[] = [
     {
       text: `#1 ${serviceData.title} Provider for ${industryData.title}`,
@@ -168,7 +157,6 @@ const ServiceIndustryLocation = () => {
     }
   ];
 
-  // Generate dynamic FAQs based on the current combination
   const dynamicFAQs: FAQItem[] = [
     {
       question: `How can ${serviceData.title} help my ${industryData.title} business in ${locationData.name}?`,
@@ -200,7 +188,6 @@ const ServiceIndustryLocation = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-seo-blue rounded-full"></div>
@@ -331,7 +318,6 @@ const ServiceIndustryLocation = () => {
         </div>
       </section>
       
-      {/* Service Details */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -405,7 +391,6 @@ const ServiceIndustryLocation = () => {
         </div>
       </section>
       
-      {/* Contextual Blog Section */}
       <ContextualBlog 
         title={`${serviceData.title} Resources for ${industryData.title} Businesses`}
         subtitle={`Expert insights specifically for ${industryData.title} businesses in ${locationData.name}`}
@@ -415,14 +400,12 @@ const ServiceIndustryLocation = () => {
         className="bg-seo-gray-light"
       />
       
-      {/* FAQ Section */}
       <FAQ 
         title={`${serviceData.title} FAQs for ${industryData.title} Businesses`}
         subtitle={`Common questions about ${serviceData.title} for ${industryData.title} businesses in ${locationData.name}`}
         faqs={dynamicFAQs}
       />
       
-      {/* Navigation Options Section */}
       <section className="py-16 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -438,7 +421,6 @@ const ServiceIndustryLocation = () => {
           </AnimatedSection>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Other Services for This Industry */}
             <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-seo-dark mb-4">Other Services for {industryData.title}</h3>
               <div className="space-y-3">
@@ -467,7 +449,6 @@ const ServiceIndustryLocation = () => {
               </div>
             </div>
             
-            {/* This Service for Other Industries */}
             <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-seo-dark mb-4">{serviceData.title} for Other Industries</h3>
               <div className="space-y-3">
@@ -499,7 +480,6 @@ const ServiceIndustryLocation = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
