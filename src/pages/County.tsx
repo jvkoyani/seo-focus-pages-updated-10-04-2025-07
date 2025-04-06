@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, MapPin, ArrowRight } from 'lucide-react';
@@ -10,6 +9,8 @@ import { Button } from '@/components/ui/button';
 import { services, locations } from '@/lib/data';
 import { getAllIndustries } from '@/lib/industriesData';
 import SEO from '@/components/SEO';
+import ResourcesSection from '@/components/ResourcesSection';
+import ContextualBlog from '@/components/ContextualBlog';
 
 const County = ({ routeKey }: { routeKey?: string }) => {
   const { country, state, county } = useParams<{ country: string; state: string; county: string }>();
@@ -45,7 +46,7 @@ const County = ({ routeKey }: { routeKey?: string }) => {
   if (countyLocations.length === 0) {
     return null; // Will redirect to 404
   }
-  
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
@@ -125,6 +126,12 @@ const County = ({ routeKey }: { routeKey?: string }) => {
           </AnimatedSection>
         </div>
       </section>
+      
+      <ContextualBlog 
+        title={`SEO Resources for ${countyFormatted} Businesses`}
+        subtitle={`Expert insights and success stories for businesses operating in ${countyFormatted}, ${stateFormatted}`}
+        locationSlug={countyLocations[0]?.slug}
+      />
       
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -279,6 +286,13 @@ const County = ({ routeKey }: { routeKey?: string }) => {
           </div>
         </div>
       </section>
+      
+      <ResourcesSection
+        locationSlug={countyLocations[0]?.slug}
+        className="bg-seo-gray-light"
+        title={`More Resources for ${countyFormatted}`}
+        subtitle={`Discover more insights and success stories for businesses in ${countyFormatted}`}
+      />
       
       <ContactForm />
       <Footer />

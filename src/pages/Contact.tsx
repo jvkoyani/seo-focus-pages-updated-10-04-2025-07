@@ -41,7 +41,7 @@ const Contact = ({ routeKey }: { routeKey?: string }) => {
       
       <ContactForm />
       
-      {/* Resources Section */}
+      {/* Resources Section - Using 'consultation' as a context tag */}
       <ResourcesSection filterTag="consultation" />
       
       <Footer />
