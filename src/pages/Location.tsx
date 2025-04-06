@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
@@ -484,10 +483,8 @@ const Location = () => {
       </section>
       
       <ResourcesSection 
-        locationSlug={locationData.slug} 
+        filterTag={locationData.name} 
         className="bg-white"
-        title={`Resources & Insights for ${locationData.name} Businesses`}
-        subtitle={`Stay updated with our latest SEO guides, success stories, and industry insights specific to the ${locationData.name} market`}
       />
       
       <ContactForm />
