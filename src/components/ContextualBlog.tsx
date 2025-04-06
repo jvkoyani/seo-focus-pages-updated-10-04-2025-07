@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, User, Tag, Briefcase, Building, TrendingUp } from 'lucide-react';
+import { ArrowRight, Calendar, User, Tag, Briefcase, Building, TrendingUp, FileText } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
