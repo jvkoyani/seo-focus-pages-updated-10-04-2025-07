@@ -135,6 +135,96 @@ export const industries: Industry[] = [
     ]
   },
   {
+  id: "automotive-transportation",
+  title: "Automotive & Transportation",
+  slug: "automotive-transportation",
+  description: "Comprehensive SEO solutions for businesses in the automotive and transportation sectors to drive more traffic, leads, and sales.",
+  shortDescription: "Fuel growth across auto and transport sectors",
+  icon: "car-front",
+  image: "/industry-images/automotive-transportation.jpg",
+  featured: true,
+  benefits: [
+    "Increase visibility for vehicle and service-based businesses",
+    "Target customers searching for auto repairs, sales, and logistics",
+    "Boost bookings, inquiries, and showroom traffic"
+  ]
+},
+  {
+  id: "auto-manufacturing",
+  title: "Auto Manufacturing",
+  slug: "auto-manufacturing",
+  description: "Boost visibility for vehicle manufacturers with SEO strategies focused on brand visibility, innovation, and dealer support.",
+  shortDescription: "Drive brand and dealer growth",
+  icon: "car",
+  image: "/industry-images/auto-manufacturing.jpg",
+  featured: false,
+  benefits: [
+    "Rank for vehicle model and brand-related keywords",
+    "Improve search presence for dealerships and distributors",
+    "Build authority through industry news and product launches"
+  ]
+},
+{
+  id: "auto-repairs",
+  title: "Auto Repairs",
+  slug: "auto-repairs",
+  description: "Help auto repair shops get discovered by more local customers searching for reliable car repair services.",
+  shortDescription: "Get more repair customers",
+  icon: "wrench",
+  image: "/industry-images/auto-repairs.jpg",
+  featured: true,
+  benefits: [
+    "Rank higher for local auto repair keywords",
+    "Increase bookings with optimized service pages",
+    "Build trust with reviews and service certifications"
+  ]
+},
+{
+  id: "auto-service",
+  title: "Auto Service",
+  slug: "auto-service",
+  description: "Target car owners looking for regular maintenance with SEO strategies tailored for auto service centers.",
+  shortDescription: "Boost your service appointments",
+  icon: "tool",
+  image: "/industry-images/auto-service.jpg",
+  featured: true,
+  benefits: [
+    "Attract more local maintenance clients",
+    "Target service-specific keywords like oil change or tire rotation",
+    "Improve visibility in Google Maps and local listings"
+  ]
+},
+{
+  id: "motorcycle-dealers",
+  title: "Motorcycle Dealers",
+  slug: "motorcycle-dealers",
+  description: "Drive more sales and showroom visits with SEO tailored to motorcycle brands and dealerships.",
+  shortDescription: "Sell more bikes online and offline",
+  icon: "bike",
+  image: "/industry-images/motorcycle-dealers.jpg",
+  featured: false,
+  benefits: [
+    "Rank for specific motorcycle brands and models",
+    "Attract enthusiasts and first-time buyers",
+    "Increase traffic to showroom and booking pages"
+  ]
+},
+{
+  id: "truck-trailer",
+  title: "Truck & Trailer Companies",
+  slug: "truck-trailer",
+  description: "Improve lead generation and fleet visibility for truck and trailer businesses with targeted SEO strategies.",
+  shortDescription: "Grow leads for truck and trailer services",
+  icon: "truck",
+  image: "/industry-images/truck-trailer.jpg",
+  featured: false,
+  benefits: [
+    "Target B2B and B2C truck-related keywords",
+    "Rank for fleet services and vehicle sales",
+    "Improve visibility for service locations and logistics"
+  ]
+},
+  {
     id: "education",
     title: "Education",
     slug: "education",
