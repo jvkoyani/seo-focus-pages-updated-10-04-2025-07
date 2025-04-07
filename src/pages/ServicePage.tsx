@@ -24,10 +24,19 @@ const ServicePage = () => {
   const seoMetadata = getPageSEO('service', {
     serviceSlug: slug
   }, {
-    // Optional custom data
-    title: serviceData?.metaTitle,
-    description: serviceData?.metaDescription
+    // Use the title or fallback to the service title
+    title: serviceData?.metaTitle || serviceData?.title,
+    // Use metaDescription or fallback to the regular description
+    description: serviceData?.metaDescription || serviceData?.description
   });
+  
+  // Default empty steps array if the service doesn't have steps defined
+  const serviceSteps = serviceData.steps || [
+    { title: "Initial Analysis", description: "We analyze your current SEO performance and identify opportunities." },
+    { title: "Strategy Development", description: "We create a custom strategy based on your specific needs." },
+    { title: "Implementation", description: "Our team executes the strategy with precision and attention to detail." },
+    { title: "Monitoring & Optimization", description: "We continuously track results and optimize for maximum performance." }
+  ];
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -99,7 +108,7 @@ const ServicePage = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {serviceData.steps.map((step, index) => (
+            {serviceSteps.map((step, index) => (
               <AnimatedSection
                 key={index}
                 className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
