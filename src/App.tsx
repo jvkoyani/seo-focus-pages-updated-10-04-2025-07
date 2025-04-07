@@ -28,6 +28,7 @@ import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 import FreeConsultation from "./pages/FreeConsultation";
 import ServiceBlog from "./pages/ServiceBlog";
+import LocationSeoBlog from "./pages/LocationSeoBlog";
 import Sitemap from "./pages/Sitemap";
 import XmlSitemap from "./pages/XmlSitemap";
 
@@ -72,6 +73,7 @@ const App = () => {
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
+            {/* Main routes */}
             <Route path="/" element={<RouteWrapper Component={Index} />} />
             <Route path="/services" element={<RouteWrapper Component={Services} />} />
             <Route path="/service/:slug" element={<RouteWrapper Component={ServicePage} />} />
@@ -79,6 +81,8 @@ const App = () => {
             <Route path="/industry/:slug" element={<RouteWrapper Component={IndustryPage} />} />
             <Route path="/about" element={<RouteWrapper Component={About} />} />
             <Route path="/contact" element={<RouteWrapper Component={Contact} />} />
+            
+            {/* Location routes */}
             <Route path="/location/:slug" element={<RouteWrapper Component={Location} />} />
             <Route path="/location/:locationSlug/:serviceSlug" element={<RouteWrapper Component={LocationServicePage} />} />
             
@@ -94,6 +98,9 @@ const App = () => {
             
             {/* SEO-friendly URL patterns for service-industry-location combinations */}
             <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
+            
+            {/* New dynamic SEO blog routes */}
+            <Route path="/seo-service-:locationSlug" element={<RouteWrapper Component={LocationSeoBlog} />} />
             
             {/* Service-location combinations */}
             <Route path="/:serviceSlug-:locationSlug" element={<RouteWrapper Component={LocationService} />} />

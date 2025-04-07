@@ -151,6 +151,15 @@ const XmlSitemap = () => {
     <priority>0.6</priority>
   </url>`;
         });
+        
+        // Add the new dynamic SEO blog URL for each location
+        xml += `
+  <url>
+    <loc>${baseUrl}/seo-service-${citySlug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
       };
 
       // Process all cities in the allAustralianCities array
