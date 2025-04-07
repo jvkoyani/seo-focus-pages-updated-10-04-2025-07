@@ -28,7 +28,6 @@ import SeoAudit from "./pages/SeoAudit";
 import NotFound from "./pages/NotFound";
 import FreeConsultation from "./pages/FreeConsultation";
 import ServiceBlog from "./pages/ServiceBlog";
-import LocationSeoBlog from "./pages/LocationSeoBlog";
 import Sitemap from "./pages/Sitemap";
 import XmlSitemap from "./pages/XmlSitemap";
 
@@ -73,7 +72,6 @@ const App = () => {
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
-            {/* Main routes */}
             <Route path="/" element={<RouteWrapper Component={Index} />} />
             <Route path="/services" element={<RouteWrapper Component={Services} />} />
             <Route path="/service/:slug" element={<RouteWrapper Component={ServicePage} />} />
@@ -81,8 +79,6 @@ const App = () => {
             <Route path="/industry/:slug" element={<RouteWrapper Component={IndustryPage} />} />
             <Route path="/about" element={<RouteWrapper Component={About} />} />
             <Route path="/contact" element={<RouteWrapper Component={Contact} />} />
-            
-            {/* Location routes */}
             <Route path="/location/:slug" element={<RouteWrapper Component={Location} />} />
             <Route path="/location/:locationSlug/:serviceSlug" element={<RouteWrapper Component={LocationServicePage} />} />
             
@@ -98,9 +94,6 @@ const App = () => {
             
             {/* SEO-friendly URL patterns for service-industry-location combinations */}
             <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
-            
-            {/* SEO blog routes - Make sure these come BEFORE the generic patterns */}
-            <Route path="/seo-service-:locationSlug" element={<RouteWrapper Component={LocationSeoBlog} />} />
             
             {/* Service-location combinations */}
             <Route path="/:serviceSlug-:locationSlug" element={<RouteWrapper Component={LocationService} />} />
@@ -132,7 +125,7 @@ const App = () => {
             <Route path="/:country/:state" element={<RouteWrapper Component={State} />} />
             <Route path="/:country/:state/:county" element={<RouteWrapper Component={County} />} />
             
-            {/* Generic patterns - MUST be LAST as they are least specific */}
+            {/* Generic patterns - these should be LAST as they are less specific */}
             <Route path="/:serviceLocationSlug" element={<RouteWrapper Component={LocationService} />} />
             
             {/* 404 route should always be last */}
