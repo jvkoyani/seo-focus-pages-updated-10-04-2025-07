@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -12,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import ResourcesSection from '@/components/ResourcesSection';
 import { locations, services, industries } from '@/lib/data';
 import SEO from '@/components/SEO';
-import { Location as LocationType } from '@/lib/locationData';
+import { findLocationBySlug, Location as LocationType } from '@/lib/additionalLocationData';
 
 const Location = ({ routeKey }: { routeKey?: string }) => {
   const { slug } = useParams<{ slug: string }>();
@@ -49,7 +50,6 @@ const Location = ({ routeKey }: { routeKey?: string }) => {
       
       <main className="flex-1 pt-32 pb-16">
         <LocationBreadcrumbs
-          locationName={cityName}
           locationSlug={slug || ''}
         />
         
@@ -97,7 +97,10 @@ const Location = ({ routeKey }: { routeKey?: string }) => {
           </div>
         </section>
         
-        <LocationIndustries locationSlug={slug} />
+        <LocationIndustries 
+          locationSlug={slug || ''}
+          locationName={cityName}
+        />
       </main>
       
       <ResourcesSection filterTag={slug} />
