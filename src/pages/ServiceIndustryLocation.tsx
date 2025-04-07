@@ -13,8 +13,6 @@ import ServiceBadge from '@/components/ServiceBadge';
 import { ServiceBadgeProps } from '@/components/ServiceBadge';
 import FAQ, { FAQItem } from '@/components/FAQ';
 import ContextualBlog from '@/components/ContextualBlog';
-import SEO from '@/components/SEO';
-import { getPageSEO } from '@/lib/seoUtils';
 
 const ServiceIndustryLocation = () => {
   const { 
@@ -186,22 +184,8 @@ const ServiceIndustryLocation = () => {
     }
   ];
 
-  const seoMetadata = getPageSEO('service-industry-location', {
-    serviceSlug: finalServiceSlug,
-    industrySlug: finalIndustrySlug,
-    locationSlug: finalLocationSlug
-  });
-
   return (
     <div className="min-h-screen flex flex-col">
-      <SEO
-        title={seoMetadata.title}
-        description={seoMetadata.description}
-        keywords={seoMetadata.keywords}
-        canonicalUrl={seoMetadata.canonicalUrl}
-        routeKey={`${finalServiceSlug}-${finalIndustrySlug}-${finalLocationSlug}`}
-      />
-      
       <Navbar />
       
       <section className="pt-32 pb-16 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">

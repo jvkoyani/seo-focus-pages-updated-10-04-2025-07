@@ -1,8 +1,13 @@
 
 import { Helmet } from 'react-helmet-async';
-import { SEOMetaData } from '@/lib/seoUtils';
 
-interface SEOProps extends SEOMetaData {
+interface SEOProps {
+  title: string;
+  description: string;
+  keywords?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: string;
   // Add key prop to force re-render on route change
   routeKey?: string;
 }
@@ -17,7 +22,7 @@ const SEO: React.FC<SEOProps> = ({
   routeKey
 }) => {
   const siteName = 'SEO Focus';
-  const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+  const fullTitle = `${title} | ${siteName}`;
   const siteUrl = 'https://seofocus.com';
   const fullCanonicalUrl = canonicalUrl ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${siteUrl}${canonicalUrl}`) : undefined;
   const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;

@@ -19,7 +19,6 @@ const CaseStudy = ({ routeKey }: { routeKey?: string }) => {
         <SEO 
           title="Case Study Not Found"
           description="The case study you're looking for isn't available. Explore our other success stories to see how we deliver SEO results for businesses like yours."
-          keywords="seo case studies, seo results, digital marketing success stories"
           canonicalUrl="/case-studies"
           routeKey={routeKey}
         />

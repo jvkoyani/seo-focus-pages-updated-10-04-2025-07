@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, Calendar, User, Tag, ChevronLeft } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -21,7 +20,6 @@ const BlogPost = ({ routeKey }: { routeKey?: string }) => {
         <SEO 
           title="Blog Post Not Found"
           description="The article you're looking for isn't available. Browse our other SEO resources and insights to improve your search rankings."
-          keywords="blog, seo resources, seo insights, search engine optimization"
           canonicalUrl="/blogs"
           routeKey={routeKey}
         />

@@ -35,7 +35,6 @@ const IndustryPage = () => {
         <SEO 
           title="Industry Not Found"
           description="The industry page you're looking for could not be found. Explore our other industry-specific SEO services."
-          keywords="industry SEO, specialized SEO, SEO by industry"
           canonicalUrl="https://seofocus.com/industries"
         />
         <Navbar />

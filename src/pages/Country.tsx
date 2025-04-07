@@ -34,7 +34,6 @@ const Country = ({ routeKey }: { routeKey?: string }) => {
         <SEO 
           title="Location Not Available"
           description="We currently only offer SEO services in Australia. Explore our Australian SEO solutions to improve your local search rankings."
-          keywords="Australia SEO, Australian digital marketing, local SEO services"
           canonicalUrl="/australia"
           routeKey={routeKey}
         />
