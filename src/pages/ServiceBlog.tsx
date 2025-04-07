@@ -13,6 +13,7 @@ import { ServiceBadgeProps } from '@/components/ServiceBadge';
 import FAQ, { FAQItem } from '@/components/FAQ';
 import ContextualBlog from '@/components/ContextualBlog';
 
+// Sample blog content for different service types
 const serviceBlogContents: Record<string, {
   title: string;
   content: string[];
@@ -98,6 +99,7 @@ const serviceBlogContents: Record<string, {
   }
 };
 
+// Create FAQs based on service type
 const getServiceFAQs = (serviceSlug: string, locationName?: string): FAQItem[] => {
   const cityName = locationName || "your city";
   
@@ -164,6 +166,7 @@ const getServiceFAQs = (serviceSlug: string, locationName?: string): FAQItem[] =
   ];
 };
 
+// Authority badges based on service type
 const getServiceBadges = (serviceSlug: string, locationName?: string): ServiceBadgeProps[] => {
   const cityName = locationName || "your city";
   const serviceName = serviceSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
@@ -193,16 +196,21 @@ const getServiceBadges = (serviceSlug: string, locationName?: string): ServiceBa
 const ServiceBlog = () => {
   const { slug, locationSlug } = useParams<{ slug: string; locationSlug?: string }>();
   
+  // Find the service based on slug
   const service = services.find(s => s.slug === slug);
   
+  // Get blog content based on service type
   const blogContent = serviceBlogContents[slug as keyof typeof serviceBlogContents];
   
+  // Find location if locationSlug is provided
   const location = locationSlug 
     ? allAustralianCities.find(loc => loc.slug === locationSlug)
     : undefined;
   
+  // Get FAQs for this service/location
   const faqs = getServiceFAQs(slug || '', location?.name);
   
+  // Get authority badges for this service/location
   const authorityBadges = getServiceBadges(slug || '', location?.name);
   
   if (!service || !blogContent) {
@@ -280,6 +288,7 @@ const ServiceBlog = () => {
             locationSlug={locationSlug}
           />
           
+          {/* Additional relevant blogs based on context */}
           <div className="mt-16">
             <ContextualBlog 
               title="Related Articles"
@@ -289,6 +298,7 @@ const ServiceBlog = () => {
             />
           </div>
           
+          {/* FAQ Section */}
           <FAQ 
             title={`Frequently Asked Questions About ${service.title}${location ? ` in ${location.name}` : ''}`}
             subtitle={`Get answers to common questions about our ${service.title.toLowerCase()} services${location ? ` for businesses in ${location.name}` : ''}`}

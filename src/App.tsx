@@ -95,10 +95,9 @@ const App = () => {
             {/* SEO-friendly URL patterns for service-industry-location combinations */}
             <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
             
-            {/* Service-location combinations */}
-            <Route path="/:serviceSlug-:locationSlug" element={<RouteWrapper Component={LocationService} />} />
+            {/* IMPROVED: Catch-all pattern for service-industry-location SEO URLs */}
+            <Route path="/:fullPath" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
             
-            {/* Blog and case study routes */}
             <Route path="/blogs" element={<RouteWrapper Component={Blogs} />} />
             <Route path="/blog/:slug" element={<RouteWrapper Component={BlogPost} />} />
             <Route path="/case-studies" element={<RouteWrapper Component={CaseStudies} />} />
@@ -125,10 +124,12 @@ const App = () => {
             <Route path="/:country/:state" element={<RouteWrapper Component={State} />} />
             <Route path="/:country/:state/:county" element={<RouteWrapper Component={County} />} />
             
-            {/* Generic patterns - these should be LAST as they are less specific */}
+            {/* SEO-friendly URL patterns for service-location combinations */}
+            <Route path="/:serviceSlug-:locationSlug" element={<RouteWrapper Component={LocationService} />} />
+            
+            {/* Generic pattern for any service-location combination */}
             <Route path="/:serviceLocationSlug" element={<RouteWrapper Component={LocationService} />} />
             
-            {/* 404 route should always be last */}
             <Route path="*" element={<RouteWrapper Component={NotFound} />} />
           </Routes>
         </BrowserRouter>
