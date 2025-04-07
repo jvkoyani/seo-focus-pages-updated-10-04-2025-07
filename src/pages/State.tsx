@@ -215,20 +215,28 @@ const State = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {countyLocations.map(location => (
-                      <Link
-                        key={location.id}
-                        to={`/location/${location.slug}`}
-                        className="flex items-center p-4 rounded-md hover:bg-gray-50 border border-gray-100 transition-colors"
-                      >
-                        <MapPin className="h-5 w-5 text-seo-blue mr-3" />
-                        <div>
-                          <span className="font-medium block">{location.name}</span>
-                          <span className="text-sm text-seo-gray-dark">
-                            {services.length} services available
-                          </span>
-                        </div>
-                        <ChevronRight className="h-4 w-4 ml-auto text-gray-400" />
-                      </Link>
+                      <div key={location.id} className="flex flex-col gap-2">
+                        <Link
+                          to={`/location/${location.slug}`}
+                          className="flex items-center p-4 rounded-md hover:bg-gray-50 border border-gray-100 transition-colors"
+                        >
+                          <MapPin className="h-5 w-5 text-seo-blue mr-3" />
+                          <div>
+                            <span className="font-medium block">{location.name}</span>
+                            <span className="text-sm text-seo-gray-dark">
+                              {services.length} services available
+                            </span>
+                          </div>
+                          <ChevronRight className="h-4 w-4 ml-auto text-gray-400" />
+                        </Link>
+                        <Link
+                          to={`/seo-service-${location.slug}`}
+                          className="text-sm text-seo-blue hover:text-seo-blue-dark flex items-center px-4"
+                        >
+                          <ArrowRight className="h-4 w-4 mr-1" />
+                          <span>SEO Service in {location.name}</span>
+                        </Link>
+                      </div>
                     ))}
                   </div>
                   

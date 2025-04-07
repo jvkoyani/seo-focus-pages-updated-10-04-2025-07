@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -16,6 +16,11 @@ const LocationSeoBlog = ({ routeKey }: { routeKey?: string }) => {
   };
   
   const cityName = formatCityName(locationSlug);
+  
+  // Log for debugging
+  useEffect(() => {
+    console.log(`LocationSeoBlog rendering for: ${locationSlug}, formatted as: ${cityName}`);
+  }, [locationSlug, cityName]);
   
   return (
     <div className="min-h-screen flex flex-col">

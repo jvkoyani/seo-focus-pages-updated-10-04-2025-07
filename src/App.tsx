@@ -99,7 +99,7 @@ const App = () => {
             {/* SEO-friendly URL patterns for service-industry-location combinations */}
             <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
             
-            {/* New dynamic SEO blog routes */}
+            {/* SEO blog routes - Make sure these come BEFORE the generic patterns */}
             <Route path="/seo-service-:locationSlug" element={<RouteWrapper Component={LocationSeoBlog} />} />
             
             {/* Service-location combinations */}
@@ -132,7 +132,7 @@ const App = () => {
             <Route path="/:country/:state" element={<RouteWrapper Component={State} />} />
             <Route path="/:country/:state/:county" element={<RouteWrapper Component={County} />} />
             
-            {/* Generic patterns - these should be LAST as they are less specific */}
+            {/* Generic patterns - MUST be LAST as they are least specific */}
             <Route path="/:serviceLocationSlug" element={<RouteWrapper Component={LocationService} />} />
             
             {/* 404 route should always be last */}
