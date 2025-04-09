@@ -1,6 +1,6 @@
 
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, AlertTriangle, Home, Map, Briefcase, Building, ArrowLeft, ArrowRight } from "lucide-react";
@@ -10,17 +10,12 @@ import AnimatedSection from "@/components/AnimatedSection";
 const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [redirectAttempted, setRedirectAttempted] = useState(false);
 
   useEffect(() => {
     console.error(
       "404 Error: User attempted to access non-existent route:",
       location.pathname
     );
-    
-    if (redirectAttempted) {
-      return; // Prevent redirect loops
-    }
     
     // Try to parse the path to see if it's a service-industry-location combination
     const path = location.pathname.substring(1); // Remove leading slash
@@ -40,19 +35,18 @@ const NotFound = () => {
           location: locationSlug
         });
         
-        // Stop redirect to avoid loop
-        setRedirectAttempted(true);
+        // Attempt to redirect to the ServiceIndustryLocation page
+        const seoUrl = `/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`;
+        console.log("Redirecting to:", seoUrl);
         
-        // Use replace:true to replace the current entry in history instead of adding a new one
-        // This ensures the URL in the browser changes completely
-        navigate(`/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`, { 
-          replace: true,
-          state: { fromNotFound: true }  // Add state to track the source of navigation
-        });
-        return;
+        // Only redirect if it's an actual SEO URL not the current URL (to avoid loops)
+        if (seoUrl !== location.pathname) {
+          navigate(`/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`);
+          return;
+        }
       }
     }
-  }, [location.pathname, navigate, redirectAttempted]);
+  }, [location.pathname, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">

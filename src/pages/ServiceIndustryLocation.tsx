@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp } from 'lucide-react';
@@ -36,19 +35,7 @@ const ServiceIndustryLocation = () => {
   const [extractedIndustry, setExtractedIndustry] = useState<string | null>(null);
   const [extractedLocation, setExtractedLocation] = useState<string | null>(null);
   
-  // State to track if we should prevent redirect
-  const [preventRedirect, setPreventRedirect] = useState<boolean>(false);
-  
   useEffect(() => {
-    // Check if we came from NotFound page with a state indicating redirect
-    if (location.state && (location.state as any).fromNotFound) {
-      console.log("Received navigation from NotFound page, preventing further redirects");
-      setPreventRedirect(true);
-      
-      // Clean up the state to prevent issues with browser back button
-      window.history.replaceState({}, document.title);
-    }
-  
     // Log initial parameters for debugging
     console.log("Initial URL parameters:", { 
       serviceSlug, 
@@ -83,15 +70,6 @@ const ServiceIndustryLocation = () => {
           setExtractedService(extractedServiceSlug);
           setExtractedIndustry(extractedIndustrySlug);
           setExtractedLocation(extractedLocationSlug);
-          setPreventRedirect(true);
-          
-          // Ensure the URL is correctly formatted in the browser
-          if (location.pathname !== `/${extractedServiceSlug}-for-${extractedIndustrySlug}-in-${extractedLocationSlug}`) {
-            navigate(`/${extractedServiceSlug}-for-${extractedIndustrySlug}-in-${extractedLocationSlug}`, {
-              replace: true,
-              state: { preserveContent: true }
-            });
-          }
         }
       }
     }
@@ -116,10 +94,9 @@ const ServiceIndustryLocation = () => {
         setExtractedService(extractedServiceSlug);
         setExtractedIndustry(extractedIndustrySlug);
         setExtractedLocation(extractedLocationSlug);
-        setPreventRedirect(true);
       }
     }
-  }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug, navigate, location.state]);
+  }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug]);
   
   // Determine which slugs to use
   const finalServiceSlug = serviceSlug || extractedService || '';
@@ -147,9 +124,9 @@ const ServiceIndustryLocation = () => {
   const allServices = getAllServices().slice(0, 5);
   const allIndustries = getAllIndustries().slice(0, 5);
   
-  // Redirect if any of the data is not found and preventRedirect is false
+  // Redirect if any of the data is not found
   useEffect(() => {
-    if (!preventRedirect && (!serviceData || !industryData || !locationData)) {
+    if (!serviceData || !industryData || !locationData) {
       console.error("Missing data, redirecting to 404", {
         serviceData,
         industryData,
@@ -158,10 +135,10 @@ const ServiceIndustryLocation = () => {
       });
       navigate('/not-found');
     }
-  }, [serviceData, industryData, locationData, navigate, location.pathname, preventRedirect]);
+  }, [serviceData, industryData, locationData, navigate, location.pathname]);
   
   if (!serviceData || !industryData || !locationData) {
-    return null; // Will redirect to 404 if preventRedirect is false
+    return null; // Will redirect to 404
   }
   
   // Generate the SEO-friendly URL for this combination

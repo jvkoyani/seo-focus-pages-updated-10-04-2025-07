@@ -89,9 +89,14 @@ const App = () => {
             {/* New all services and industries for location page */}
             <Route path="/location/:locationSlug/all" element={<RouteWrapper Component={LocationServicesIndustries} />} />
             
-            {/* Service-Industry-Location combinations - MOST SPECIFIC ROUTES FIRST */}
-            <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
+            {/* Service-Industry-Location combinations */}
             <Route path="/service/:serviceSlug/industry/:industrySlug/location/:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
+            
+            {/* SEO-friendly URL patterns for service-industry-location combinations */}
+            <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
+            
+            {/* IMPROVED: Catch-all pattern for service-industry-location SEO URLs */}
+            <Route path="/:fullPath" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
             
             <Route path="/blogs" element={<RouteWrapper Component={Blogs} />} />
             <Route path="/blog/:slug" element={<RouteWrapper Component={BlogPost} />} />
@@ -124,9 +129,6 @@ const App = () => {
             
             {/* Generic pattern for any service-location combination */}
             <Route path="/:serviceLocationSlug" element={<RouteWrapper Component={LocationService} />} />
-            
-            {/* MOVED CATCH-ALL ROUTE TO END - to only trigger as a last resort */}
-            <Route path="/:fullPath" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
             
             <Route path="*" element={<RouteWrapper Component={NotFound} />} />
           </Routes>
