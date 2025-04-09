@@ -35,6 +35,9 @@ const ServiceIndustryLocation = () => {
   const [extractedIndustry, setExtractedIndustry] = useState<string | null>(null);
   const [extractedLocation, setExtractedLocation] = useState<string | null>(null);
   
+  // State to track if we should prevent redirect
+  const [preventRedirect, setPreventRedirect] = useState<boolean>(false);
+  
   useEffect(() => {
     // Log initial parameters for debugging
     console.log("Initial URL parameters:", { 
@@ -70,6 +73,7 @@ const ServiceIndustryLocation = () => {
           setExtractedService(extractedServiceSlug);
           setExtractedIndustry(extractedIndustrySlug);
           setExtractedLocation(extractedLocationSlug);
+          setPreventRedirect(true);
         }
       }
     }
@@ -94,6 +98,7 @@ const ServiceIndustryLocation = () => {
         setExtractedService(extractedServiceSlug);
         setExtractedIndustry(extractedIndustrySlug);
         setExtractedLocation(extractedLocationSlug);
+        setPreventRedirect(true);
       }
     }
   }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug]);
@@ -124,9 +129,9 @@ const ServiceIndustryLocation = () => {
   const allServices = getAllServices().slice(0, 5);
   const allIndustries = getAllIndustries().slice(0, 5);
   
-  // Redirect if any of the data is not found
+  // Redirect if any of the data is not found and preventRedirect is false
   useEffect(() => {
-    if (!serviceData || !industryData || !locationData) {
+    if (!preventRedirect && (!serviceData || !industryData || !locationData)) {
       console.error("Missing data, redirecting to 404", {
         serviceData,
         industryData,
@@ -135,10 +140,10 @@ const ServiceIndustryLocation = () => {
       });
       navigate('/not-found');
     }
-  }, [serviceData, industryData, locationData, navigate, location.pathname]);
+  }, [serviceData, industryData, locationData, navigate, location.pathname, preventRedirect]);
   
   if (!serviceData || !industryData || !locationData) {
-    return null; // Will redirect to 404
+    return null; // Will redirect to 404 if preventRedirect is false
   }
   
   // Generate the SEO-friendly URL for this combination
