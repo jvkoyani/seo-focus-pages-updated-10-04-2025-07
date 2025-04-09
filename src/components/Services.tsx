@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
-import { services } from '@/lib/data';
+import { getAllServices } from '@/lib/servicesData';
 
 const iconMap: Record<string, React.ReactNode> = {
   'map-pin': <MapPin className="h-8 w-8 text-seo-blue" />,
@@ -31,19 +31,15 @@ const iconMap: Record<string, React.ReactNode> = {
   'video': <Video className="h-8 w-8 text-seo-blue" />
 };
 
-// Remove the serviceImages mapping as we now use direct image paths from the service data
-
-// Use a placeholder image for any service that doesn't have a specific image defined
-const getServiceImage = (service: any) => {
-  return service.image || '/placeholder.svg';
-};
-
 interface ServicesProps {
   location?: string;
   locationSlug?: string;
 }
 
 const Services = ({ location, locationSlug }: ServicesProps) => {
+  // Get services from servicesData instead of using the data.ts services
+  const services = getAllServices();
+  
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4">
@@ -84,10 +80,10 @@ const Services = ({ location, locationSlug }: ServicesProps) => {
                 {service.description}
               </p>
               
-              {/* Service Feature Image */}
+              {/* Service Feature Image - Now using the image directly from service data */}
               <div className="mb-6 rounded-lg overflow-hidden">
                 <img 
-                  src={getServiceImage(service)} 
+                  src={service.image} 
                   alt={service.title}
                   className="w-full h-48 object-cover transition-transform hover:scale-105 duration-300"
                 />
