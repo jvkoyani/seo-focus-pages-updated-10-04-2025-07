@@ -7,7 +7,7 @@ export type Service = {
   description: string;
   shortDescription: string;
   icon: string;
-  image?: string;
+  image: string; // Make this non-optional to ensure all services have images
   featured?: boolean;
   forIndustries?: string[]; // Array of industry IDs this service is applicable to
 };
@@ -23,7 +23,7 @@ export const services: Service[] = [
     icon: "trending-up",
     image: "/service-images/search-engine-optimization.jpg",
     featured: true,
-    forIndustries: ["healthcare", "ecommerce", "legal", "real-estate", "hospitality", "education", "dental", "chiropractor", "accountant"]
+    forIndustries: ["healthcare", "ecommerce", "legal", "real-estate", "hospitality", "education", "dental", "chiropractor", "accountant", "automotive-transportation", "auto-repairs", "auto-service"]
   },
   {
     id: "local-seo",
@@ -34,7 +34,7 @@ export const services: Service[] = [
     icon: "map-pin",
     image: "/service-images/local-seo.jpg",
     featured: true,
-    forIndustries: ["healthcare", "legal", "real-estate", "hospitality", "dental", "chiropractor", "accountant"]
+    forIndustries: ["healthcare", "legal", "real-estate", "hospitality", "dental", "chiropractor", "accountant", "auto-repairs", "auto-service"]
   },
   {
     id: "technical-seo",
@@ -80,7 +80,72 @@ export const services: Service[] = [
     featured: true,
     forIndustries: ["ecommerce"]
   },
-  // Add more services as needed
+  {
+    id: "seo-audits",
+    title: "SEO Audits",
+    slug: "seo-audits",
+    description: "Comprehensive analysis of your website to identify issues affecting your search performance and recommend improvements.",
+    shortDescription: "Identify and fix SEO issues",
+    icon: "search",
+    image: "/service-images/seo-audits.jpg",
+    featured: false,
+    forIndustries: ["healthcare", "ecommerce", "legal", "real-estate", "education", "dental", "chiropractor", "accountant", "automotive-transportation"]
+  },
+  {
+    id: "digital-pr",
+    title: "Digital PR",
+    slug: "digital-pr",
+    description: "Build your online reputation and authority through strategic digital public relations and brand mentions.",
+    shortDescription: "Amplify your online presence",
+    icon: "globe",
+    image: "/service-images/digital-pr.jpg",
+    featured: false,
+    forIndustries: ["healthcare", "ecommerce", "legal", "hospitality", "education"]
+  },
+  {
+    id: "analytics-reporting",
+    title: "Analytics & Reporting",
+    slug: "analytics-reporting",
+    description: "Gain valuable insights into your website's performance with comprehensive analytics and regular performance reporting.",
+    shortDescription: "Track and measure your success",
+    icon: "bar-chart",
+    image: "/service-images/analytics-reporting.jpg",
+    featured: false,
+    forIndustries: ["healthcare", "ecommerce", "legal", "real-estate", "hospitality", "education"]
+  },
+  {
+    id: "automotive-seo",
+    title: "Automotive SEO",
+    slug: "automotive-seo",
+    description: "Specialized SEO strategies for auto dealers, repair shops, and other automotive businesses to drive traffic and conversions.",
+    shortDescription: "Boost your automotive business visibility",
+    icon: "car",
+    image: "/service-images/automotive-seo.jpg",
+    featured: true,
+    forIndustries: ["automotive-transportation", "auto-manufacturing", "auto-repairs", "auto-service", "motorcycle-dealers", "truck-trailer"]
+  },
+  {
+    id: "video-seo",
+    title: "Video SEO",
+    slug: "video-seo",
+    description: "Optimize your video content to rank higher in search results and increase visibility on platforms like YouTube.",
+    shortDescription: "Get your videos discovered",
+    icon: "video",
+    image: "/service-images/video-seo.jpg",
+    featured: false,
+    forIndustries: ["ecommerce", "education", "automotive-transportation"]
+  },
+  {
+    id: "international-seo",
+    title: "International SEO",
+    slug: "international-seo",
+    description: "Expand your global reach with targeted optimization strategies for international markets and multilingual websites.",
+    shortDescription: "Reach global markets",
+    icon: "globe",
+    image: "/service-images/international-seo.jpg",
+    featured: false,
+    forIndustries: ["ecommerce", "education", "automotive-transportation"]
+  }
 ];
 
 // Get all services

@@ -67,7 +67,7 @@ const ServicesList: React.FC<ServicesListProps> = ({
               animation="fade-in"
               delay={index * 100}
             >
-              {showImages && service.image && (
+              {showImages && (
                 <div className="relative h-48 overflow-hidden">
                   <img 
                     src={service.image} 

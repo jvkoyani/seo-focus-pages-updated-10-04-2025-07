@@ -6,7 +6,12 @@ import {
   Link as LinkIcon, 
   ShoppingCart, 
   BarChart,
-  ArrowRight
+  ArrowRight,
+  TrendingUp,
+  Search,
+  Globe,
+  Car,
+  Video
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection';
@@ -18,24 +23,19 @@ const iconMap: Record<string, React.ReactNode> = {
   'file-text': <FileText className="h-8 w-8 text-seo-blue" />,
   'link': <LinkIcon className="h-8 w-8 text-seo-blue" />,
   'shopping-cart': <ShoppingCart className="h-8 w-8 text-seo-blue" />,
-  'bar-chart': <BarChart className="h-8 w-8 text-seo-blue" />
+  'bar-chart': <BarChart className="h-8 w-8 text-seo-blue" />,
+  'trending-up': <TrendingUp className="h-8 w-8 text-seo-blue" />,
+  'search': <Search className="h-8 w-8 text-seo-blue" />,
+  'globe': <Globe className="h-8 w-8 text-seo-blue" />,
+  'car': <Car className="h-8 w-8 text-seo-blue" />,
+  'video': <Video className="h-8 w-8 text-seo-blue" />
 };
 
-// Service images mapping
-const serviceImages: Record<string, string> = {
-  'local-seo': '/service-images/local-seo.jpg',
-  'technical-seo': '/service-images/technical-seo.jpg',
-  'ecommerce-seo': '/service-images/ecommerce-seo.jpg',
-  'content-marketing': '/service-images/content-marketing.jpg',
-  'link-building': '/service-images/link-building.jpg',
-  'seo-audits': '/service-images/seo-audits.jpg',
-  'digital-pr': '/service-images/digital-pr.jpg',
-  'analytics-reporting': '/service-images/analytics-reporting.jpg'
-};
+// Remove the serviceImages mapping as we now use direct image paths from the service data
 
 // Use a placeholder image for any service that doesn't have a specific image defined
-const getServiceImage = (slug: string) => {
-  return serviceImages[slug] || '/placeholder.svg';
+const getServiceImage = (service: any) => {
+  return service.image || '/placeholder.svg';
 };
 
 interface ServicesProps {
@@ -87,14 +87,14 @@ const Services = ({ location, locationSlug }: ServicesProps) => {
               {/* Service Feature Image */}
               <div className="mb-6 rounded-lg overflow-hidden">
                 <img 
-                  src={getServiceImage(service.slug)} 
+                  src={getServiceImage(service)} 
                   alt={service.title}
                   className="w-full h-48 object-cover transition-transform hover:scale-105 duration-300"
                 />
               </div>
               
               <ul className="space-y-2 mb-6">
-                {service.features.map((feature, i) => (
+                {service.features && service.features.map((feature: string, i: number) => (
                   <li key={i} className="flex items-start">
                     <svg className="h-5 w-5 text-seo-blue mt-0.5 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
