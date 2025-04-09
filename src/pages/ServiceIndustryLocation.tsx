@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp } from 'lucide-react';
@@ -39,6 +40,15 @@ const ServiceIndustryLocation = () => {
   const [preventRedirect, setPreventRedirect] = useState<boolean>(false);
   
   useEffect(() => {
+    // Check if we came from NotFound page with a state indicating redirect
+    if (location.state && (location.state as any).fromNotFound) {
+      console.log("Received navigation from NotFound page, preventing further redirects");
+      setPreventRedirect(true);
+      
+      // Clean up the state to prevent issues with browser back button
+      window.history.replaceState({}, document.title);
+    }
+  
     // Log initial parameters for debugging
     console.log("Initial URL parameters:", { 
       serviceSlug, 
@@ -74,6 +84,14 @@ const ServiceIndustryLocation = () => {
           setExtractedIndustry(extractedIndustrySlug);
           setExtractedLocation(extractedLocationSlug);
           setPreventRedirect(true);
+          
+          // Ensure the URL is correctly formatted in the browser
+          if (location.pathname !== `/${extractedServiceSlug}-for-${extractedIndustrySlug}-in-${extractedLocationSlug}`) {
+            navigate(`/${extractedServiceSlug}-for-${extractedIndustrySlug}-in-${extractedLocationSlug}`, {
+              replace: true,
+              state: { preserveContent: true }
+            });
+          }
         }
       }
     }
@@ -101,7 +119,7 @@ const ServiceIndustryLocation = () => {
         setPreventRedirect(true);
       }
     }
-  }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug]);
+  }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug, navigate, location.state]);
   
   // Determine which slugs to use
   const finalServiceSlug = serviceSlug || extractedService || '';

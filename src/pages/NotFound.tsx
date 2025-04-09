@@ -43,8 +43,12 @@ const NotFound = () => {
         // Stop redirect to avoid loop
         setRedirectAttempted(true);
         
-        // Redirect to the same URL to trigger the correct route with extracted slugs
-        navigate(`/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`, { replace: true });
+        // Use replace:true to replace the current entry in history instead of adding a new one
+        // This ensures the URL in the browser changes completely
+        navigate(`/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`, { 
+          replace: true,
+          state: { fromNotFound: true }  // Add state to track the source of navigation
+        });
         return;
       }
     }
