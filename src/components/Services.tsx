@@ -1,13 +1,13 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { cn } from '@/lib/utils';
 import { Service, getAllServices } from '@/lib/servicesData';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import * as LucideIcons from 'lucide-react';
+import { Separator } from "@/components/ui/separator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface ServicesProps {
   title?: string;
@@ -30,11 +30,11 @@ const Services: React.FC<ServicesProps> = ({
 }) => {
   const services = getAllServices();
   const displayedServices = showFull ? services : services.slice(0, limit);
-  const [activeTab, setActiveTab] = useState<string>(services[0]?.slug || "");
-  const [isHovering, setIsHovering] = useState<string | null>(null);
+  const [activeService, setActiveService] = useState<string>(services[0]?.slug || "");
+  const [expandedPanel, setExpandedPanel] = useState<string>("main-panel");
 
   // Find the active service
-  const activeService = services.find(service => service.slug === activeTab) || services[0];
+  const selectedService = services.find(service => service.slug === activeService) || services[0];
 
   // Determine link path based on whether location is provided
   const getLinkPath = (service: Service) => {
@@ -52,11 +52,16 @@ const Services: React.FC<ServicesProps> = ({
     return service.title;
   };
 
-  // Get the correct icon component from Lucide icons
-  const getIconComponent = (iconName: string) => {
-    const IconComponent = (LucideIcons as Record<string, React.ComponentType<any>>)[iconName] || 
-                          (LucideIcons as Record<string, React.ComponentType<any>>)["Bookmark"];
-    return IconComponent;
+  // Get the correct icon component dynamically from Lucide
+  const renderIcon = (iconName: string) => {
+    // Type assertion to handle the TypeScript error
+    const LucideIcons = require('lucide-react') as Record<string, React.FC<any>>;
+    const IconComponent = LucideIcons[iconName] || LucideIcons.Bookmark;
+    return <IconComponent className="h-5 w-5" />;
+  };
+
+  const togglePanel = (panel: string) => {
+    setExpandedPanel(expandedPanel === panel ? "" : panel);
   };
 
   return (
@@ -74,99 +79,101 @@ const Services: React.FC<ServicesProps> = ({
           </p>
         </AnimatedSection>
 
-        <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
-          {/* Service Tabs on the Left */}
-          <div className="md:w-1/3">
-            <Tabs 
-              defaultValue={activeTab} 
-              orientation="vertical" 
-              onValueChange={setActiveTab}
-              className="w-full"
-            >
-              <TabsList className="flex flex-col h-auto space-y-2 bg-white p-3 rounded-xl shadow-sm border border-gray-100">
-                {services.map((service) => {
-                  const IconComponent = getIconComponent(service.icon);
-                  return (
-                    <TabsTrigger 
-                      key={service.slug} 
-                      value={service.slug}
+        <div className="flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto bg-white rounded-xl overflow-hidden shadow-md">
+          {/* Left side - Services list */}
+          <div className="lg:w-2/5 xl:w-1/3 bg-gradient-to-b from-gray-50 to-white border-r border-gray-100">
+            <div className="p-1">
+              {services.map((service) => (
+                <Collapsible
+                  key={service.slug}
+                  open={activeService === service.slug}
+                  onOpenChange={() => setActiveService(service.slug)}
+                >
+                  <CollapsibleTrigger className="w-full">
+                    <div 
                       className={cn(
-                        "justify-start gap-3 p-4 text-left rounded-lg transition-all duration-300",
-                        "data-[state=active]:bg-seo-blue data-[state=active]:text-white",
-                        "data-[state=inactive]:bg-white data-[state=inactive]:hover:bg-seo-gray-light"
+                        "flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-all duration-200",
+                        activeService === service.slug ? "border-l-4 border-seo-blue bg-blue-50/50" : "border-l-4 border-transparent"
                       )}
-                      onMouseEnter={() => setIsHovering(service.slug)}
-                      onMouseLeave={() => setIsHovering(null)}
                     >
-                      <div className="flex items-center w-full">
+                      <div className="flex items-center gap-3">
                         <div className={cn(
-                          "rounded-full p-2 mr-3 transition-all duration-300",
-                          service.slug === activeTab ? "bg-white/20" : "bg-seo-blue/10"
+                          "rounded-full p-2 transition-all duration-300",
+                          activeService === service.slug ? "bg-seo-blue/10" : "bg-gray-100"
                         )}>
-                          <IconComponent className={cn(
-                            "h-5 w-5 transition-all duration-300",
-                            service.slug === activeTab ? "text-white" : "text-seo-blue"
-                          )} />
+                          {renderIcon(service.icon)}
                         </div>
-                        <div className="flex flex-col">
-                          <span className="font-medium">{service.title}</span>
-                          {isHovering === service.slug && service.slug !== activeTab && (
-                            <span className="text-xs mt-1 text-seo-gray-dark opacity-80">Click to view details</span>
-                          )}
-                        </div>
-                        {service.slug === activeTab && (
-                          <ArrowRight className="ml-auto h-4 w-4" />
-                        )}
+                        <span className={cn(
+                          "font-medium text-lg transition-all duration-200",
+                          activeService === service.slug ? "text-seo-blue" : "text-seo-dark"
+                        )}>{service.title}</span>
                       </div>
-                    </TabsTrigger>
-                  );
-                })}
-              </TabsList>
-            </Tabs>
+                      {activeService === service.slug ? (
+                        <ChevronUp className="h-5 w-5 text-seo-blue" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5 text-gray-400" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="px-6 py-3 bg-blue-50/30">
+                      <p className="text-sm text-seo-gray-dark mb-3">{service.shortDescription}</p>
+                      <Button
+                        asChild
+                        variant="link"
+                        className="p-0 h-auto text-seo-blue hover:text-seo-blue-light font-medium"
+                      >
+                        <Link to={getLinkPath(service)} className="group flex items-center">
+                          <span>View details</span>
+                          <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </CollapsibleContent>
+                  <Separator />
+                </Collapsible>
+              ))}
+            </div>
           </div>
 
-          {/* Service Details on the Right */}
-          <div className="md:w-2/3">
+          {/* Right side - Service details */}
+          <div className="lg:w-3/5 xl:w-2/3 p-6 lg:p-8">
             <AnimatedSection 
-              key={activeService.slug}
-              className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-md"
+              key={selectedService.slug}
+              className="transition-all duration-500"
               animation="fade-in"
             >
-              <div className="md:flex">
-                <div className="md:w-1/2 p-6">
-                  <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mb-6 transform transition-transform duration-500 hover:scale-110">
-                    {React.createElement(getIconComponent(activeService.icon), { 
-                      className: "h-8 w-8 text-seo-blue" 
-                    })}
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="md:w-1/2">
+                  <div className="bg-seo-blue/5 rounded-full w-16 h-16 flex items-center justify-center mb-6 transform transition-transform duration-500 hover:scale-110">
+                    {renderIcon(selectedService.icon)}
                   </div>
                   
                   <h3 className="text-2xl font-bold text-seo-dark mb-4">
-                    {getServiceTitle(activeService)}
+                    {getServiceTitle(selectedService)}
                   </h3>
                   
                   <p className="text-seo-gray-dark mb-6 leading-relaxed">
-                    {activeService.description}
+                    {selectedService.description}
                   </p>
                   
-                  <div className="mb-6 p-4 rounded-lg bg-seo-gray-light border-l-3 border-seo-blue">
+                  <div className="mb-6 p-4 rounded-lg bg-seo-gray-light border-l-4 border-seo-blue">
                     <h4 className="font-semibold text-seo-dark mb-3">Key benefits:</h4>
                     <ul className="space-y-2">
-                      {activeService.shortDescription && (
+                      {selectedService.shortDescription && (
                         <li className="flex items-start group">
                           <div className="mt-1 mr-3 bg-seo-blue/20 rounded-full p-1">
                             <div className="h-2 w-2 bg-seo-blue rounded-full group-hover:animate-pulse"></div>
                           </div>
-                          <span className="text-seo-gray-dark">{activeService.shortDescription}</span>
+                          <span className="text-seo-gray-dark">{selectedService.shortDescription}</span>
                         </li>
                       )}
-                      {activeService.forIndustries && (
-                        <li className="flex items-start group">
-                          <div className="mt-1 mr-3 bg-seo-blue/20 rounded-full p-1">
-                            <div className="h-2 w-2 bg-seo-blue rounded-full group-hover:animate-pulse"></div>
-                          </div>
-                          <span className="text-seo-gray-dark">Specialized solutions for various industries</span>
-                        </li>
-                      )}
+                      <li className="flex items-start group">
+                        <div className="mt-1 mr-3 bg-seo-blue/20 rounded-full p-1">
+                          <div className="h-2 w-2 bg-seo-blue rounded-full group-hover:animate-pulse"></div>
+                        </div>
+                        <span className="text-seo-gray-dark">Customized strategies for your specific business needs</span>
+                      </li>
                       <li className="flex items-start group">
                         <div className="mt-1 mr-3 bg-seo-blue/20 rounded-full p-1">
                           <div className="h-2 w-2 bg-seo-blue rounded-full group-hover:animate-pulse"></div>
@@ -180,20 +187,20 @@ const Services: React.FC<ServicesProps> = ({
                     asChild
                     className="group bg-seo-blue hover:bg-seo-blue-light text-white"
                   >
-                    <Link to={getLinkPath(activeService)}>
+                    <Link to={getLinkPath(selectedService)}>
                       <span>Learn More</span>
                       <ArrowRight className="transition-transform group-hover:translate-x-1" />
                     </Link>
                   </Button>
                 </div>
                 
-                <div className="md:w-1/2 relative h-full min-h-[300px]">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-seo-blue/10 z-10"></div>
+                <div className="md:w-1/2 relative rounded-xl overflow-hidden shadow-md h-72 md:h-auto">
                   <img 
-                    src={activeService.image || `/service-images/${activeService.slug}.jpg`} 
-                    alt={activeService.title}
+                    src={selectedService.image || `/service-images/${selectedService.slug}.jpg`} 
+                    alt={selectedService.title}
                     className="w-full h-full object-cover transition-all duration-700 hover:scale-105" 
                   />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-seo-blue/20 to-transparent"></div>
                 </div>
               </div>
             </AnimatedSection>
