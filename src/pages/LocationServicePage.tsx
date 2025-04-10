@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowRight, MapPin, Award, CheckCircle } from 'lucide-react';
+import { ArrowRight, MapPin, Award, CheckCircle, FileText, Target, Users, ChartBar, BarChart2 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { findServiceBySlug } from '@/lib/servicesData';
+import FAQ from '@/components/FAQ';
 
 const LocationServicePage = () => {
   const { locationSlug, serviceSlug } = useParams<{ locationSlug: string; serviceSlug: string }>();
@@ -38,6 +39,22 @@ const LocationServicePage = () => {
   if (!locationData || !serviceData) {
     return null; // Will be redirected
   }
+  
+  // Sample FAQs related to the service and location
+  const faqs = [
+    {
+      question: `How does ${serviceData.title} help businesses in ${locationData.name}?`,
+      answer: `${serviceData.title} helps ${locationData.name} businesses increase visibility in local search results, attract qualified leads from your target audience, and outrank competitors in the local market.`
+    },
+    {
+      question: `How long does it take to see results from ${serviceData.title} in ${locationData.name}?`,
+      answer: `Most businesses start seeing initial results within 3-6 months, with significant improvements typically appearing after 6-12 months of consistent effort. This timeline varies depending on your industry competition in ${locationData.name} and your current online presence.`
+    },
+    {
+      question: `What makes your ${serviceData.title} services different from other providers in ${locationData.name}?`,
+      answer: `Our approach combines deep local market knowledge of ${locationData.name}, data-driven strategies, custom solutions for each business, and transparent reporting so you always know what we're doing and the results we're achieving.`
+    },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -148,54 +165,145 @@ const LocationServicePage = () => {
         </div>
       </section>
       
-      {/* Main Content Section */}
-      <section className="py-16 bg-white">
+      {/* Main Content Section - IMPROVED UI */}
+      <section className="py-16 bg-gradient-to-b from-white to-seo-gray-light">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="lg:w-2/3">
               <AnimatedSection animation="fade-in">
                 <div className="prose max-w-none">
-                  <h2>{serviceData.title} for {locationData.name} Businesses</h2>
-                  <p>
-                    We specialize in providing tailored {serviceData.title.toLowerCase()} solutions for businesses in {locationData.name}, {locationData.state}. Our team understands the unique challenges and opportunities in the local market, allowing us to develop strategies that drive real results.
-                  </p>
+                  <h2 className="text-3xl md:text-4xl font-display font-bold mb-8 text-seo-dark relative">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-seo-blue to-purple-600">
+                      {serviceData.title} for {locationData.name} Businesses
+                    </span>
+                    <span className="absolute bottom-0 left-0 h-1 w-24 bg-gradient-to-r from-seo-blue to-purple-600"></span>
+                  </h2>
                   
-                  <h3>Why {serviceData.title} Matters for {locationData.name} Businesses</h3>
-                  <p>
-                    In today's competitive digital landscape, having a strong online presence is essential for businesses in {locationData.name}. Our customized {serviceData.title.toLowerCase()} strategies help you:
-                  </p>
+                  <div className="bg-white p-8 rounded-xl shadow-md mb-10 border-l-4 border-seo-blue">
+                    <p className="text-lg leading-relaxed">
+                      We specialize in providing tailored {serviceData.title.toLowerCase()} solutions for businesses in {locationData.name}, {locationData.state}. Our team understands the unique challenges and opportunities in the local market, allowing us to develop strategies that drive real results.
+                    </p>
+                  </div>
                   
-                  <ul>
-                    <li>Increase visibility in local search results</li>
-                    <li>Attract more qualified leads from your target audience</li>
-                    <li>Outrank competitors in {locationData.name} and surrounding areas</li>
-                    <li>Build trust and credibility with potential customers</li>
-                    <li>Drive more conversions and revenue for your business</li>
-                  </ul>
+                  <div className="grid md:grid-cols-2 gap-6 mb-12">
+                    <AnimatedSection className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow" animation="fade-in" delay={100}>
+                      <div className="flex items-center mb-4">
+                        <div className="p-3 rounded-full bg-blue-100 text-seo-blue mr-4">
+                          <Target className="h-6 w-6" />
+                        </div>
+                        <h3 className="font-bold text-xl">Local Market Focus</h3>
+                      </div>
+                      <p className="text-seo-gray-dark">
+                        Strategies specifically designed for the {locationData.name} market and customer behavior.
+                      </p>
+                    </AnimatedSection>
+                    
+                    <AnimatedSection className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow" animation="fade-in" delay={200}>
+                      <div className="flex items-center mb-4">
+                        <div className="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                          <Users className="h-6 w-6" />
+                        </div>
+                        <h3 className="font-bold text-xl">Target Audience</h3>
+                      </div>
+                      <p className="text-seo-gray-dark">
+                        Connect with qualified local leads who are actively searching for your products or services.
+                      </p>
+                    </AnimatedSection>
+                    
+                    <AnimatedSection className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow" animation="fade-in" delay={300}>
+                      <div className="flex items-center mb-4">
+                        <div className="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+                          <BarChart2 className="h-6 w-6" />
+                        </div>
+                        <h3 className="font-bold text-xl">Competitive Edge</h3>
+                      </div>
+                      <p className="text-seo-gray-dark">
+                        Outrank competitors in {locationData.name} and surrounding areas with proven strategies.
+                      </p>
+                    </AnimatedSection>
+                    
+                    <AnimatedSection className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow" animation="fade-in" delay={400}>
+                      <div className="flex items-center mb-4">
+                        <div className="p-3 rounded-full bg-yellow-100 text-yellow-600 mr-4">
+                          <ChartBar className="h-6 w-6" />
+                        </div>
+                        <h3 className="font-bold text-xl">Measurable Results</h3>
+                      </div>
+                      <p className="text-seo-gray-dark">
+                        Track performance with detailed reporting and see tangible business growth.
+                      </p>
+                    </AnimatedSection>
+                  </div>
                   
-                  <h3>Our {serviceData.title} Process for {locationData.name}</h3>
-                  <p>
-                    We follow a proven methodology to deliver exceptional results for our {locationData.name} clients:
-                  </p>
-                  
-                  <ol>
-                    <li><strong>Research & Analysis:</strong> We analyze your website, competitors, and the {locationData.name} market to identify opportunities.</li>
-                    <li><strong>Strategy Development:</strong> We create a customized {serviceData.title.toLowerCase()} plan based on your specific business goals.</li>
-                    <li><strong>Implementation:</strong> Our team executes the strategy with precision and attention to detail.</li>
-                    <li><strong>Monitoring & Optimization:</strong> We continuously track performance and make adjustments to maximize results.</li>
-                    <li><strong>Reporting & Communication:</strong> You receive regular updates on your campaign's progress and achievements.</li>
-                  </ol>
+                  <AnimatedSection animation="fade-in" delay={500}>
+                    <h3 className="text-2xl font-bold mb-6 text-seo-dark">Our {serviceData.title} Process for {locationData.name}</h3>
+                    
+                    <div className="relative pl-8 before:content-[''] before:absolute before:left-3 before:top-2 before:w-0.5 before:h-[calc(100%-40px)] before:bg-gradient-to-b before:from-seo-blue before:to-purple-600">
+                      <div className="mb-8 relative">
+                        <div className="absolute -left-8 top-0 w-6 h-6 bg-gradient-to-r from-seo-blue to-blue-400 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">1</span>
+                        </div>
+                        <h4 className="text-xl font-bold mb-2 text-seo-dark">Research & Analysis</h4>
+                        <p className="text-seo-gray-dark">
+                          We analyze your website, competitors, and the {locationData.name} market to identify opportunities for growth and improvement.
+                        </p>
+                      </div>
+                      
+                      <div className="mb-8 relative">
+                        <div className="absolute -left-8 top-0 w-6 h-6 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">2</span>
+                        </div>
+                        <h4 className="text-xl font-bold mb-2 text-seo-dark">Strategy Development</h4>
+                        <p className="text-seo-gray-dark">
+                          We create a customized {serviceData.title.toLowerCase()} plan based on your specific business goals and {locationData.name} market insights.
+                        </p>
+                      </div>
+                      
+                      <div className="mb-8 relative">
+                        <div className="absolute -left-8 top-0 w-6 h-6 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">3</span>
+                        </div>
+                        <h4 className="text-xl font-bold mb-2 text-seo-dark">Implementation</h4>
+                        <p className="text-seo-gray-dark">
+                          Our team executes the strategy with precision and attention to detail, ensuring every element is optimized for success.
+                        </p>
+                      </div>
+                      
+                      <div className="mb-8 relative">
+                        <div className="absolute -left-8 top-0 w-6 h-6 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">4</span>
+                        </div>
+                        <h4 className="text-xl font-bold mb-2 text-seo-dark">Monitoring & Optimization</h4>
+                        <p className="text-seo-gray-dark">
+                          We continuously track performance and make data-driven adjustments to maximize your results and ROI.
+                        </p>
+                      </div>
+                      
+                      <div className="relative">
+                        <div className="absolute -left-8 top-0 w-6 h-6 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">5</span>
+                        </div>
+                        <h4 className="text-xl font-bold mb-2 text-seo-dark">Reporting & Communication</h4>
+                        <p className="text-seo-gray-dark">
+                          You receive regular updates on your campaign's progress, achievements, and next steps to keep you informed.
+                        </p>
+                      </div>
+                    </div>
+                  </AnimatedSection>
                 </div>
               </AnimatedSection>
             </div>
             
             <div className="lg:w-1/3">
               <AnimatedSection animation="fade-in" delay={200}>
-                <div className="bg-seo-gray-light p-6 rounded-xl">
-                  <h3 className="text-xl font-bold mb-4">Why Choose Us for {serviceData.title} in {locationData.name}</h3>
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 mb-6">
+                  <h3 className="text-xl font-bold mb-6 flex items-center">
+                    <Award className="h-6 w-6 text-seo-blue mr-2" />
+                    <span>Why Choose Us for {locationData.name}</span>
+                  </h3>
                   
                   <div className="space-y-4">
-                    <div className="flex items-start">
+                    <div className="flex items-start p-3 rounded-lg hover:bg-seo-gray-light transition-colors">
                       <div className="flex-shrink-0 mt-1">
                         <CheckCircle className="h-5 w-5 text-green-500" />
                       </div>
@@ -205,7 +313,7 @@ const LocationServicePage = () => {
                       </div>
                     </div>
                     
-                    <div className="flex items-start">
+                    <div className="flex items-start p-3 rounded-lg hover:bg-seo-gray-light transition-colors">
                       <div className="flex-shrink-0 mt-1">
                         <CheckCircle className="h-5 w-5 text-green-500" />
                       </div>
@@ -215,7 +323,7 @@ const LocationServicePage = () => {
                       </div>
                     </div>
                     
-                    <div className="flex items-start">
+                    <div className="flex items-start p-3 rounded-lg hover:bg-seo-gray-light transition-colors">
                       <div className="flex-shrink-0 mt-1">
                         <CheckCircle className="h-5 w-5 text-green-500" />
                       </div>
@@ -225,7 +333,7 @@ const LocationServicePage = () => {
                       </div>
                     </div>
                     
-                    <div className="flex items-start">
+                    <div className="flex items-start p-3 rounded-lg hover:bg-seo-gray-light transition-colors">
                       <div className="flex-shrink-0 mt-1">
                         <CheckCircle className="h-5 w-5 text-green-500" />
                       </div>
@@ -235,7 +343,7 @@ const LocationServicePage = () => {
                       </div>
                     </div>
                     
-                    <div className="flex items-start">
+                    <div className="flex items-start p-3 rounded-lg hover:bg-seo-gray-light transition-colors">
                       <div className="flex-shrink-0 mt-1">
                         <CheckCircle className="h-5 w-5 text-green-500" />
                       </div>
@@ -247,11 +355,18 @@ const LocationServicePage = () => {
                   </div>
                 </div>
                 
-                <div className="mt-6 bg-seo-blue p-6 rounded-xl text-white">
-                  <h3 className="text-xl font-bold mb-4">Get Started Today</h3>
-                  <p className="mb-4">Ready to improve your {serviceData.title.toLowerCase()} results in {locationData.name}? Contact us for a free consultation and audit.</p>
-                  <Button className="w-full bg-white text-seo-blue hover:bg-gray-100">
+                <div className="bg-gradient-to-r from-seo-blue to-purple-600 p-6 rounded-xl text-white shadow-lg">
+                  <h3 className="text-xl font-bold mb-4 flex items-center">
+                    <FileText className="h-5 w-5 mr-2" />
+                    <span>Get Started Today</span>
+                  </h3>
+                  <p className="mb-6">Ready to improve your {serviceData.title.toLowerCase()} results in {locationData.name}? Contact us for a free consultation and audit.</p>
+                  <Button 
+                    onClick={() => window.location.href = '/free-consultation'} 
+                    className="w-full bg-white text-seo-blue hover:bg-gray-100 transition-colors button-hover-effect"
+                  >
                     Request Free Consultation
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </div>
               </AnimatedSection>
@@ -259,6 +374,13 @@ const LocationServicePage = () => {
           </div>
         </div>
       </section>
+      
+      {/* FAQ Section - NEW SECTION */}
+      <FAQ 
+        title={`Frequently Asked Questions About ${serviceData.title} in ${locationData.name}`}
+        subtitle="Find answers to common questions about our services and how they can help your business"
+        faqs={faqs}
+      />
       
       {/* Other Locations Section */}
       <section className="py-16 bg-seo-gray-light">
