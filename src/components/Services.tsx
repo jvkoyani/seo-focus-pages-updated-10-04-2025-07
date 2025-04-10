@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronUp, Bookmark } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { cn } from '@/lib/utils';
 import { Service, getAllServices } from '@/lib/servicesData';
@@ -54,9 +55,8 @@ const Services: React.FC<ServicesProps> = ({
 
   // Get the correct icon component dynamically from Lucide
   const renderIcon = (iconName: string) => {
-    // Type assertion to handle the TypeScript error
-    const LucideIcons = require('lucide-react') as Record<string, React.FC<any>>;
-    const IconComponent = LucideIcons[iconName] || LucideIcons.Bookmark;
+    // Fixed: use the imported LucideIcons object instead of require
+    const IconComponent = (LucideIcons as Record<string, React.FC<any>>)[iconName] || LucideIcons.Bookmark;
     return <IconComponent className="h-5 w-5" />;
   };
 
