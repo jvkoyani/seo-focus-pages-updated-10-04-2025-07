@@ -55,13 +55,23 @@ const Services: React.FC<ServicesProps> = ({
 
   // Get the correct icon component dynamically from Lucide
   const renderIcon = (iconName: string) => {
-    // Fixed: use the imported LucideIcons object instead of require
-    const IconComponent = (LucideIcons as Record<string, React.FC<any>>)[iconName] || LucideIcons.Bookmark;
+    // Fixed: properly cast the icons object
+    const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Bookmark;
     return <IconComponent className="h-5 w-5" />;
   };
 
   const togglePanel = (panel: string) => {
     setExpandedPanel(expandedPanel === panel ? "" : panel);
+  };
+
+  // Service images for each service type
+  const serviceImages = {
+    "search-engine-optimization": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1000&auto=format&fit=crop",
+    "local-seo": "https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1000&auto=format&fit=crop",
+    "technical-seo": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1000&auto=format&fit=crop",
+    "content-marketing": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1000&auto=format&fit=crop",
+    "link-building": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop",
+    "ecommerce-seo": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1000&auto=format&fit=crop"
   };
 
   return (
@@ -196,7 +206,7 @@ const Services: React.FC<ServicesProps> = ({
                 
                 <div className="md:w-1/2 relative rounded-xl overflow-hidden shadow-md h-72 md:h-auto">
                   <img 
-                    src={selectedService.image || `/service-images/${selectedService.slug}.jpg`} 
+                    src={serviceImages[selectedService.slug as keyof typeof serviceImages] || `/service-images/${selectedService.slug}.jpg`} 
                     alt={selectedService.title}
                     className="w-full h-full object-cover transition-all duration-700 hover:scale-105" 
                   />
