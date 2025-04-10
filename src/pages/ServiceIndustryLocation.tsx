@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp } from 'lucide-react';
+import { ArrowRight, MapPin, ChevronRight, CheckCircle, TrendingUp, Star, Users, Target, BarChart2, Award, Shield, Zap, FileText, Settings } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -30,13 +30,11 @@ const ServiceIndustryLocation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Extract slugs from the fullPath if available
   const [extractedService, setExtractedService] = useState<string | null>(null);
   const [extractedIndustry, setExtractedIndustry] = useState<string | null>(null);
   const [extractedLocation, setExtractedLocation] = useState<string | null>(null);
   
   useEffect(() => {
-    // Log initial parameters for debugging
     console.log("Initial URL parameters:", { 
       serviceSlug, 
       industrySlug, 
@@ -45,10 +43,8 @@ const ServiceIndustryLocation = () => {
       pathname: location.pathname
     });
     
-    // Check for direct pattern match in URL path
     const pathWithoutSlash = location.pathname.substring(1);
     
-    // Method 1: Try to extract from fullPath parameter
     if (fullPath) {
       console.log("Trying to parse fullPath:", fullPath);
       
@@ -73,7 +69,6 @@ const ServiceIndustryLocation = () => {
         }
       }
     }
-    // Method 2: Try to extract from pathname directly
     else if (pathWithoutSlash.includes("-for-") && pathWithoutSlash.includes("-in-")) {
       console.log("Trying to parse from pathname:", pathWithoutSlash);
       
@@ -98,12 +93,10 @@ const ServiceIndustryLocation = () => {
     }
   }, [fullPath, location.pathname, serviceSlug, industrySlug, locationSlug]);
   
-  // Determine which slugs to use
   const finalServiceSlug = serviceSlug || extractedService || '';
   const finalIndustrySlug = industrySlug || extractedIndustry || '';
   const finalLocationSlug = locationSlug || extractedLocation || '';
   
-  // Get service, industry, and location data
   const serviceData = findServiceBySlug(finalServiceSlug);
   const industryData = findIndustryBySlug(finalIndustrySlug);
   const locationData = findLocationBySlug(finalLocationSlug);
@@ -120,11 +113,9 @@ const ServiceIndustryLocation = () => {
     location: locationData ? locationData.name : 'Not found'
   });
   
-  // Get related services and industries (for navigation)
   const allServices = getAllServices().slice(0, 5);
   const allIndustries = getAllIndustries().slice(0, 5);
   
-  // Redirect if any of the data is not found
   useEffect(() => {
     if (!serviceData || !industryData || !locationData) {
       console.error("Missing data, redirecting to 404", {
@@ -138,15 +129,13 @@ const ServiceIndustryLocation = () => {
   }, [serviceData, industryData, locationData, navigate, location.pathname]);
   
   if (!serviceData || !industryData || !locationData) {
-    return null; // Will redirect to 404
+    return null;
   }
   
-  // Generate the SEO-friendly URL for this combination
   const getSeoFriendlyUrl = (service: any, industry: any, location: any) => {
     return `/${service.slug}-for-${industry.slug}-in-${location.slug}`;
   };
 
-  // Authority badges specific to this service-industry-location combination
   const authorityBadges: ServiceBadgeProps[] = [
     {
       text: `#1 ${serviceData.title} Provider for ${industryData.title}`,
@@ -168,7 +157,6 @@ const ServiceIndustryLocation = () => {
     }
   ];
 
-  // Generate dynamic FAQs based on the current combination
   const dynamicFAQs: FAQItem[] = [
     {
       question: `How can ${serviceData.title} help my ${industryData.title} business in ${locationData.name}?`,
@@ -200,7 +188,6 @@ const ServiceIndustryLocation = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="pt-32 pb-16 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-seo-blue rounded-full"></div>
@@ -331,15 +318,17 @@ const ServiceIndustryLocation = () => {
         </div>
       </section>
       
-      {/* Service Details */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-seo-blue to-purple-600 text-white font-medium mb-4">
               Our Approach
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              {serviceData.title} Strategy for {industryData.title} in {locationData.name}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6 relative">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-seo-blue to-purple-600">
+                {serviceData.title} Strategy for {industryData.title} in {locationData.name}
+              </span>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 w-24 bg-gradient-to-r from-seo-blue to-purple-600 rounded-full"></div>
             </h2>
             <p className="text-lg text-seo-gray-dark">
               Our comprehensive approach to helping {industryData.title.toLowerCase()} businesses in {locationData.name} succeed online
@@ -348,64 +337,461 @@ const ServiceIndustryLocation = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <AnimatedSection
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
+              className="bg-gradient-to-br from-white to-seo-blue/5 p-8 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all relative overflow-hidden"
               animation="fade-in"
             >
-              <h3 className="text-xl font-bold text-seo-dark mb-4">Industry-Specific Keyword Strategy</h3>
-              <p className="text-seo-gray-dark mb-4">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-seo-blue/10 to-transparent rounded-bl-full"></div>
+              <div className="flex items-center mb-6">
+                <div className="p-4 rounded-full bg-gradient-to-r from-seo-blue to-blue-400 text-white mr-4">
+                  <Target className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold text-seo-dark">Industry-Specific Keyword Strategy</h3>
+              </div>
+              <p className="text-seo-gray-dark mb-4 leading-relaxed">
                 We conduct in-depth research to identify the keywords and phrases that potential customers in {locationData.name} use when searching for {industryData.title.toLowerCase()} services.
               </p>
-              <p className="text-seo-gray-dark">
-                Our keyword strategy focuses on terms with high commercial intent that will drive qualified leads to your {industryData.title.toLowerCase()} business in {locationData.name}.
-              </p>
+              <div className="bg-white p-4 rounded-lg border border-gray-100 mt-4">
+                <h4 className="font-medium text-seo-dark mb-2 flex items-center">
+                  <Star className="h-4 w-4 text-yellow-500 mr-2" /> Key Benefits:
+                </h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Targeted traffic from qualified {locationData.name} customers</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Higher conversion rates from search to inquiry</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Outrank {industryData.title.toLowerCase()} competitors</span>
+                  </li>
+                </ul>
+              </div>
             </AnimatedSection>
             
             <AnimatedSection
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
+              className="bg-gradient-to-br from-white to-purple-100/30 p-8 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all relative overflow-hidden"
               animation="fade-in"
               delay={100}
             >
-              <h3 className="text-xl font-bold text-seo-dark mb-4">Local {locationData.name} Optimization</h3>
-              <p className="text-seo-gray-dark mb-4">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-400/10 to-transparent rounded-bl-full"></div>
+              <div className="flex items-center mb-6">
+                <div className="p-4 rounded-full bg-gradient-to-r from-purple-500 to-purple-400 text-white mr-4">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold text-seo-dark">Local {locationData.name} Optimization</h3>
+              </div>
+              <p className="text-seo-gray-dark mb-4 leading-relaxed">
                 We optimize your online presence for {locationData.name}-specific searches, ensuring your {industryData.title.toLowerCase()} business appears in local search results and Google Maps.
               </p>
-              <p className="text-seo-gray-dark">
-                This includes optimizing your Google Business Profile, local citations, and building location-specific backlinks to boost your visibility in {locationData.name}.
-              </p>
+              <div className="bg-white p-4 rounded-lg border border-gray-100 mt-4">
+                <h4 className="font-medium text-seo-dark mb-2 flex items-center">
+                  <Star className="h-4 w-4 text-yellow-500 mr-2" /> Key Benefits:
+                </h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Improved visibility in Google Maps and local pack</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>More foot traffic and local phone calls</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Build trust with local {locationData.name} customers</span>
+                  </li>
+                </ul>
+              </div>
             </AnimatedSection>
             
             <AnimatedSection
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
+              className="bg-gradient-to-br from-white to-green-100/30 p-8 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all relative overflow-hidden"
               animation="fade-in"
               delay={200}
             >
-              <h3 className="text-xl font-bold text-seo-dark mb-4">{industryData.title}-Specific Content Strategy</h3>
-              <p className="text-seo-gray-dark mb-4">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-green-400/10 to-transparent rounded-bl-full"></div>
+              <div className="flex items-center mb-6">
+                <div className="p-4 rounded-full bg-gradient-to-r from-green-500 to-green-400 text-white mr-4">
+                  <FileText className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold text-seo-dark">{industryData.title}-Specific Content Strategy</h3>
+              </div>
+              <p className="text-seo-gray-dark mb-4 leading-relaxed">
                 We create high-quality, informative content that addresses the specific needs and questions of {industryData.title.toLowerCase()} customers in {locationData.name}.
               </p>
-              <p className="text-seo-gray-dark">
-                This content establishes your expertise in the {industryData.title.toLowerCase()} industry and helps attract and convert potential customers in {locationData.name}.
-              </p>
+              <div className="bg-white p-4 rounded-lg border border-gray-100 mt-4">
+                <h4 className="font-medium text-seo-dark mb-2 flex items-center">
+                  <Star className="h-4 w-4 text-yellow-500 mr-2" /> Key Benefits:
+                </h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Establish your expertise in {industryData.title.toLowerCase()}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Answer customer questions before they ask</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Improve conversion rates with educational content</span>
+                  </li>
+                </ul>
+              </div>
             </AnimatedSection>
             
             <AnimatedSection
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100"
+              className="bg-gradient-to-br from-white to-orange-100/30 p-8 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all relative overflow-hidden"
               animation="fade-in"
               delay={300}
             >
-              <h3 className="text-xl font-bold text-seo-dark mb-4">Competitive Analysis</h3>
-              <p className="text-seo-gray-dark mb-4">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-400/10 to-transparent rounded-bl-full"></div>
+              <div className="flex items-center mb-6">
+                <div className="p-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 text-white mr-4">
+                  <BarChart2 className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold text-seo-dark">Competitive Analysis</h3>
+              </div>
+              <p className="text-seo-gray-dark mb-4 leading-relaxed">
                 We analyze your competitors in the {industryData.title.toLowerCase()} industry in {locationData.name} to identify opportunities for your business to stand out.
               </p>
-              <p className="text-seo-gray-dark">
-                This analysis informs our strategy and helps us identify the most effective ways to improve your online visibility and attract more customers.
-              </p>
+              <div className="bg-white p-4 rounded-lg border border-gray-100 mt-4">
+                <h4 className="font-medium text-seo-dark mb-2 flex items-center">
+                  <Star className="h-4 w-4 text-yellow-500 mr-2" /> Key Benefits:
+                </h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Identify gaps in competitor strategies</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Discover unique selling propositions</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 mr-2" />
+                    <span>Stay ahead of industry trends in {locationData.name}</span>
+                  </li>
+                </ul>
+              </div>
             </AnimatedSection>
           </div>
         </div>
       </section>
       
-      {/* Contextual Blog Section */}
+      <section className="py-16 bg-gradient-to-b from-white to-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white font-medium mb-4">
+              Proven Results
+            </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6 relative">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-500">
+                Real Results for {industryData.title} Businesses
+              </span>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 w-24 bg-gradient-to-r from-green-500 to-teal-500 rounded-full"></div>
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              See how we've helped other {industryData.title.toLowerCase()} businesses in {locationData.name} achieve impressive growth
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <AnimatedSection
+              className="bg-white rounded-xl overflow-hidden shadow-md group hover:shadow-lg transition-all"
+              animation="fade-in"
+              delay={100}
+            >
+              <div className="bg-gradient-to-r from-green-500 to-green-600 h-3"></div>
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="bg-green-100 p-3 rounded-full">
+                    <TrendingUp className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-bold text-lg text-seo-dark">247% Increase</h3>
+                    <p className="text-seo-gray-dark">In organic traffic</p>
+                  </div>
+                </div>
+                <p className="text-seo-gray-dark mb-4">
+                  "Our {industryData.title.toLowerCase()} business saw a significant increase in qualified leads from {locationData.name} after implementing the recommended SEO strategy."
+                </p>
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-r from-green-500 to-teal-500 flex items-center justify-center text-white font-bold">
+                      JD
+                    </div>
+                  </div>
+                  <div className="ml-3">
+                    <p className="font-medium text-seo-dark">John Doe</p>
+                    <p className="text-sm text-seo-gray-dark">CEO, {industryData.title} Solutions</p>
+                  </div>
+                  <div className="ml-auto flex">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection
+              className="bg-white rounded-xl overflow-hidden shadow-md group hover:shadow-lg transition-all"
+              animation="fade-in"
+              delay={200}
+            >
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-3"></div>
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <Users className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-bold text-lg text-seo-dark">189% Growth</h3>
+                    <p className="text-seo-gray-dark">In new customers</p>
+                  </div>
+                </div>
+                <p className="text-seo-gray-dark mb-4">
+                  "The local SEO strategy helped us attract more {locationData.name} customers specifically looking for our {industryData.title.toLowerCase()} services."
+                </p>
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold">
+                      JS
+                    </div>
+                  </div>
+                  <div className="ml-3">
+                    <p className="font-medium text-seo-dark">Jane Smith</p>
+                    <p className="text-sm text-seo-gray-dark">Owner, {industryData.title} Experts</p>
+                  </div>
+                  <div className="ml-auto flex">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection
+              className="bg-white rounded-xl overflow-hidden shadow-md group hover:shadow-lg transition-all"
+              animation="fade-in"
+              delay={300}
+            >
+              <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-3"></div>
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="bg-purple-100 p-3 rounded-full">
+                    <Award className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="font-bold text-lg text-seo-dark">#1 Ranking</h3>
+                    <p className="text-seo-gray-dark">For key {industryData.title.toLowerCase()} terms</p>
+                  </div>
+                </div>
+                <p className="text-seo-gray-dark mb-4">
+                  "We now rank at the top of search results for our most valuable keywords in {locationData.name}, leading to a substantial increase in business."
+                </p>
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
+                      RM
+                    </div>
+                  </div>
+                  <div className="ml-3">
+                    <p className="font-medium text-seo-dark">Robert Miller</p>
+                    <p className="text-sm text-seo-gray-dark">Marketing Director, {industryData.title} Co.</p>
+                  </div>
+                  <div className="ml-auto flex">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+          
+          <AnimatedSection className="mt-10 text-center" animation="fade-in" delay={400}>
+            <Link to="/case-studies">
+              <Button variant="outline" size="lg" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
+                View All Case Studies
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+      
+      <section className="py-16 bg-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-seo-blue to-blue-500 text-white font-medium mb-4">
+              Our Process
+            </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6 relative">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-seo-blue to-blue-600">
+                How We Drive Results for Your {industryData.title} Business
+              </span>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 w-24 bg-gradient-to-r from-seo-blue to-blue-500 rounded-full"></div>
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Our proven 5-step process tailored for {industryData.title.toLowerCase()} businesses in {locationData.name}
+            </p>
+          </AnimatedSection>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-8">
+              <AnimatedSection
+                className="relative pl-16 md:pl-0 md:grid md:grid-cols-9 md:gap-x-8"
+                animation="fade-in"
+                delay={100}
+              >
+                <div className="md:col-span-2 flex justify-end">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-seo-blue to-blue-400 text-white font-bold text-xl shadow-lg">
+                    1
+                  </div>
+                </div>
+                <div className="md:col-span-7 bg-white p-6 rounded-xl shadow-md relative before:content-[''] before:absolute before:w-1 before:h-full before:bg-gradient-to-b before:from-seo-blue before:to-blue-400 before:-left-8 before:top-0 md:before:hidden">
+                  <div className="absolute -left-8 top-6 w-6 h-6 bg-seo-blue rounded-full md:hidden"></div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-3 flex items-center">
+                    <Shield className="h-5 w-5 text-seo-blue mr-2" />
+                    Discovery & Analysis
+                  </h3>
+                  <p className="text-seo-gray-dark mb-4">
+                    We begin by understanding your {industryData.title.toLowerCase()} business goals, analyzing your current online presence, and researching competitors in {locationData.name}.
+                  </p>
+                  <div className="bg-seo-blue/5 p-3 rounded-lg border-l-4 border-seo-blue">
+                    <p className="text-sm font-medium text-seo-dark">
+                      Timeframe: 1-2 weeks | Deliverable: Comprehensive audit report & strategy blueprint
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+              
+              <AnimatedSection
+                className="relative pl-16 md:pl-0 md:grid md:grid-cols-9 md:gap-x-8"
+                animation="fade-in"
+                delay={200}
+              >
+                <div className="md:col-span-2 flex justify-end">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-xl shadow-lg">
+                    2
+                  </div>
+                </div>
+                <div className="md:col-span-7 bg-white p-6 rounded-xl shadow-md relative before:content-[''] before:absolute before:w-1 before:h-full before:bg-gradient-to-b before:from-blue-400 before:to-purple-500 before:-left-8 before:top-0 md:before:hidden">
+                  <div className="absolute -left-8 top-6 w-6 h-6 bg-blue-500 rounded-full md:hidden"></div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-3 flex items-center">
+                    <Zap className="h-5 w-5 text-blue-500 mr-2" />
+                    Strategy Development
+                  </h3>
+                  <p className="text-seo-gray-dark mb-4">
+                    We create a customized {serviceData.title.toLowerCase()} strategy specifically for your {industryData.title.toLowerCase()} business, focused on {locationData.name} audience and search behaviors.
+                  </p>
+                  <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500">
+                    <p className="text-sm font-medium text-seo-dark">
+                      Timeframe: 1-2 weeks | Deliverable: Custom strategy document & implementation roadmap
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+              
+              <AnimatedSection
+                className="relative pl-16 md:pl-0 md:grid md:grid-cols-9 md:gap-x-8"
+                animation="fade-in"
+                delay={300}
+              >
+                <div className="md:col-span-2 flex justify-end">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-xl shadow-lg">
+                    3
+                  </div>
+                </div>
+                <div className="md:col-span-7 bg-white p-6 rounded-xl shadow-md relative before:content-[''] before:absolute before:w-1 before:h-full before:bg-gradient-to-b before:from-purple-500 before:to-pink-500 before:-left-8 before:top-0 md:before:hidden">
+                  <div className="absolute -left-8 top-6 w-6 h-6 bg-purple-500 rounded-full md:hidden"></div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-3 flex items-center">
+                    <Settings className="h-5 w-5 text-purple-500 mr-2" />
+                    Implementation
+                  </h3>
+                  <p className="text-seo-gray-dark mb-4">
+                    Our team executes the strategy with on-page optimization, content creation, technical fixes, and local citation building for your {industryData.title.toLowerCase()} business.
+                  </p>
+                  <div className="bg-purple-50 p-3 rounded-lg border-l-4 border-purple-500">
+                    <p className="text-sm font-medium text-seo-dark">
+                      Timeframe: 2-4 weeks | Deliverable: Optimized website & local presence
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+              
+              <AnimatedSection
+                className="relative pl-16 md:pl-0 md:grid md:grid-cols-9 md:gap-x-8"
+                animation="fade-in"
+                delay={400}
+              >
+                <div className="md:col-span-2 flex justify-end">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-red-500 text-white font-bold text-xl shadow-lg">
+                    4
+                  </div>
+                </div>
+                <div className="md:col-span-7 bg-white p-6 rounded-xl shadow-md relative before:content-[''] before:absolute before:w-1 before:h-full before:bg-gradient-to-b before:from-pink-500 before:to-red-500 before:-left-8 before:top-0 md:before:hidden">
+                  <div className="absolute -left-8 top-6 w-6 h-6 bg-pink-500 rounded-full md:hidden"></div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-3 flex items-center">
+                    <BarChart2 className="h-5 w-5 text-pink-500 mr-2" />
+                    Monitoring & Optimization
+                  </h3>
+                  <p className="text-seo-gray-dark mb-4">
+                    We continuously track performance and make data-driven adjustments to improve rankings and visibility for your {industryData.title.toLowerCase()} business in {locationData.name}.
+                  </p>
+                  <div className="bg-pink-50 p-3 rounded-lg border-l-4 border-pink-500">
+                    <p className="text-sm font-medium text-seo-dark">
+                      Timeframe: Ongoing | Deliverable: Regular performance reports & optimization updates
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+              
+              <AnimatedSection
+                className="relative pl-16 md:pl-0 md:grid md:grid-cols-9 md:gap-x-8"
+                animation="fade-in"
+                delay={500}
+              >
+                <div className="md:col-span-2 flex justify-end">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-xl shadow-lg">
+                    5
+                  </div>
+                </div>
+                <div className="md:col-span-7 bg-white p-6 rounded-xl shadow-md relative">
+                  <h3 className="text-xl font-bold text-seo-dark mb-3 flex items-center">
+                    <TrendingUp className="h-5 w-5 text-red-500 mr-2" />
+                    Growth & Expansion
+                  </h3>
+                  <p className="text-seo-gray-dark mb-4">
+                    Once we've established strong rankings, we identify opportunities to expand your {industryData.title.toLowerCase()} business's reach in {locationData.name} and surrounding areas.
+                  </p>
+                  <div className="bg-red-50 p-3 rounded-lg border-l-4 border-red-500">
+                    <p className="text-sm font-medium text-seo-dark">
+                      Timeframe: 6+ months | Deliverable: Growth strategy & expansion recommendations
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+            </div>
+            
+            <AnimatedSection className="mt-12 text-center" animation="fade-in" delay={600}>
+              <Link to="/free-consultation">
+                <Button className="bg-gradient-to-r from-seo-blue to-blue-600 hover:from-seo-blue-light hover:to-blue-500 text-white px-8 py-3">
+                  Start Your {industryData.title} SEO Journey Today
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+      
       <ContextualBlog 
         title={`${serviceData.title} Resources for ${industryData.title} Businesses`}
         subtitle={`Expert insights specifically for ${industryData.title} businesses in ${locationData.name}`}
@@ -415,14 +801,12 @@ const ServiceIndustryLocation = () => {
         className="bg-seo-gray-light"
       />
       
-      {/* FAQ Section */}
       <FAQ 
         title={`${serviceData.title} FAQs for ${industryData.title} Businesses`}
         subtitle={`Common questions about ${serviceData.title} for ${industryData.title} businesses in ${locationData.name}`}
         faqs={dynamicFAQs}
       />
       
-      {/* Navigation Options Section */}
       <section className="py-16 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -438,7 +822,6 @@ const ServiceIndustryLocation = () => {
           </AnimatedSection>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Other Services for This Industry */}
             <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-seo-dark mb-4">Other Services for {industryData.title}</h3>
               <div className="space-y-3">
@@ -467,7 +850,6 @@ const ServiceIndustryLocation = () => {
               </div>
             </div>
             
-            {/* This Service for Other Industries */}
             <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
               <h3 className="text-xl font-bold text-seo-dark mb-4">{serviceData.title} for Other Industries</h3>
               <div className="space-y-3">
@@ -499,7 +881,6 @@ const ServiceIndustryLocation = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
