@@ -6,7 +6,6 @@ import AnimatedSection from './AnimatedSection';
 import { cn } from '@/lib/utils';
 import { Service, getAllServices } from '@/lib/servicesData';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import * as LucideIcons from 'lucide-react';
 
 interface ServicesProps {
   title?: string;
@@ -50,12 +49,6 @@ const Services: React.FC<ServicesProps> = ({
     return service.title;
   };
 
-  // Get the correct icon component from Lucide icons
-  const getIconComponent = (iconName: string) => {
-    const Icon = LucideIcons[iconName as keyof typeof LucideIcons] || LucideIcons.Bookmark;
-    return Icon;
-  };
-
   return (
     <section className={cn("py-16 bg-white", className)}>
       <div className="container mx-auto px-4">
@@ -81,23 +74,20 @@ const Services: React.FC<ServicesProps> = ({
               className="w-full"
             >
               <TabsList className="flex flex-col h-auto space-y-1 bg-seo-gray-light p-2 rounded-lg">
-                {services.map((service) => {
-                  const Icon = getIconComponent(service.icon);
-                  return (
-                    <TabsTrigger 
-                      key={service.slug} 
-                      value={service.slug}
-                      className="justify-start gap-3 p-3 text-left"
-                    >
-                      <div className="flex items-center">
-                        <div className="bg-white rounded-full p-2 mr-3">
-                          <Icon className="h-5 w-5 text-seo-blue" />
-                        </div>
-                        <span className="font-medium">{service.title}</span>
+                {services.map((service) => (
+                  <TabsTrigger 
+                    key={service.slug} 
+                    value={service.slug}
+                    className="justify-start gap-3 p-3 text-left"
+                  >
+                    <div className="flex items-center">
+                      <div className="bg-white rounded-full p-2 mr-3">
+                        <service.icon className="h-5 w-5 text-seo-blue" />
                       </div>
-                    </TabsTrigger>
-                  );
-                })}
+                      <span className="font-medium">{service.title}</span>
+                    </div>
+                  </TabsTrigger>
+                ))}
               </TabsList>
             </Tabs>
           </div>
@@ -112,7 +102,7 @@ const Services: React.FC<ServicesProps> = ({
               <div className="md:flex">
                 <div className="md:w-1/2 p-6">
                   <div className="bg-seo-blue/10 rounded-full w-14 h-14 flex items-center justify-center mb-4">
-                    {React.createElement(getIconComponent(activeService.icon), { className: "h-7 w-7 text-seo-blue" })}
+                    <activeService.icon className="h-7 w-7 text-seo-blue" />
                   </div>
                   
                   <h3 className="text-2xl font-bold text-seo-dark mb-3">
@@ -126,22 +116,12 @@ const Services: React.FC<ServicesProps> = ({
                   <div className="mb-4 p-3 rounded-lg bg-seo-gray-light border-l-2 border-seo-blue">
                     <h4 className="font-medium text-seo-dark mb-2">Key benefits:</h4>
                     <ul className="space-y-2">
-                      {activeService.shortDescription && (
-                        <li className="flex items-start">
+                      {activeService.benefits.map((benefit, idx) => (
+                        <li key={idx} className="flex items-start">
                           <span className="text-seo-blue mr-2 font-bold">•</span>
-                          <span className="text-seo-gray-dark">{activeService.shortDescription}</span>
+                          <span className="text-seo-gray-dark">{benefit}</span>
                         </li>
-                      )}
-                      {activeService.forIndustries && (
-                        <li className="flex items-start">
-                          <span className="text-seo-blue mr-2 font-bold">•</span>
-                          <span className="text-seo-gray-dark">Specialized solutions for various industries</span>
-                        </li>
-                      )}
-                      <li className="flex items-start">
-                        <span className="text-seo-blue mr-2 font-bold">•</span>
-                        <span className="text-seo-gray-dark">Expert implementation and ongoing support</span>
-                      </li>
+                      ))}
                     </ul>
                   </div>
                   
