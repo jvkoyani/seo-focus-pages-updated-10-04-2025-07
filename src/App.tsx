@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -41,6 +40,9 @@ import ResearchAnalysis from "./pages/methodology/ResearchAnalysis";
 import StrategicPlanning from "./pages/methodology/StrategicPlanning";
 import Implementation from "./pages/methodology/Implementation";
 import MonitoringOptimization from "./pages/methodology/MonitoringOptimization";
+
+// New page
+import ServiceIndustryLocationPage from "./pages/ServiceIndustryLocationPage";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -93,7 +95,7 @@ const App = () => {
             <Route path="/service/:serviceSlug/industry/:industrySlug/location/:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
             
             {/* SEO-friendly URL patterns for service-industry-location combinations */}
-            <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
+            <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocationPage} />} />
             
             {/* IMPROVED: Catch-all pattern for service-industry-location SEO URLs */}
             <Route path="/:fullPath" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
