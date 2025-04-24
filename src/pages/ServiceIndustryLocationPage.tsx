@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { findServiceBySlug } from '@/lib/servicesData';
 import { findIndustryBySlug } from '@/lib/industriesData';
-import { findLocationBySlug } from '@/lib/locationData';
+import { findLocationBySlug } from '@/lib/additionalLocationData';
 import NotFound from './NotFound';
 
 const ServiceIndustryLocationPage = () => {
