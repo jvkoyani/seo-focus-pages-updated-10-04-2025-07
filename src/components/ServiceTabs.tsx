@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cn } from "@/lib/utils";
 import {
   Tabs,
@@ -100,11 +100,44 @@ const services: ServiceTab[] = [
 ];
 
 export default function ServiceTabs() {
+  const [activeTab, setActiveTab] = React.useState("seo");
+  const contentRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px',
+      threshold: 0
+    };
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const tabId = entry.target.getAttribute('data-tab-id');
+          if (tabId) {
+            setActiveTab(tabId);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all content sections
+    Object.values(contentRefs.current).forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div className="w-full max-w-6xl mx-auto px-4">
       {/* Desktop View */}
       <div className="hidden md:block">
-        <Tabs defaultValue="seo" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="grid grid-cols-12 gap-8">
             <TabsList className="flex flex-col h-auto space-y-2 col-span-4">
               {services.map((service) => (
@@ -130,7 +163,11 @@ export default function ServiceTabs() {
                   value={service.id}
                   className="mt-0 focus-visible:outline-none focus-visible:ring-0"
                 >
-                  <div className="space-y-6">
+                  <div 
+                    ref={el => contentRefs.current[service.id] = el}
+                    data-tab-id={service.id}
+                    className="space-y-6"
+                  >
                     <h3 className="text-2xl font-bold text-seo-dark">{service.content.heading}</h3>
                     {service.content.paragraphs.map((paragraph, index) => (
                       <p key={index} className="text-seo-gray-dark leading-relaxed">
