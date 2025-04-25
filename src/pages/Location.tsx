@@ -22,6 +22,7 @@ import ServiceBadge from '@/components/ServiceBadge';
 import { ServiceBadgeProps } from '@/components/ServiceBadge';
 import FAQ, { FAQItem } from '@/components/FAQ';
 import ContextualBlog from '@/components/ContextualBlog';
+import ServiceTabs from '@/components/ServiceTabs';
 
 const Location = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -242,57 +243,17 @@ const Location = () => {
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
             <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Business Growth
+              Our Services
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              Why {locationData.name} Businesses Need Professional SEO
+              Comprehensive SEO Solutions for {locationData.name}
             </h2>
             <p className="text-lg text-seo-gray-dark">
-              The {locationData.name} market presents unique challenges and opportunities for businesses looking to improve their online visibility
+              Explore our range of specialized SEO services designed to help your {locationData.name} business succeed online
             </p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <InfoCard
-              title="Local Competition"
-              description={`The ${locationData.name} market is highly competitive, with many businesses vying for visibility in local search results.`}
-              icon={<Building className="w-full h-full" />}
-              animation="fade-in"
-              delay={100}
-              iconBackground="bg-purple-100"
-              iconColor="text-purple-600"
-            />
-            
-            <InfoCard
-              title="Consumer Behavior"
-              description={`${locationData.name} consumers have specific search patterns and preferences that require targeted optimization strategies.`}
-              icon={<Users className="w-full h-full" />}
-              animation="fade-in"
-              delay={200}
-              iconBackground="bg-blue-100"
-              iconColor="text-blue-600"
-            />
-            
-            <InfoCard
-              title="Geographic Considerations"
-              description={`Effective SEO in ${locationData.name} requires optimization for specific neighborhoods, suburbs, and landmarks.`}
-              icon={<Globe className="w-full h-full" />}
-              animation="fade-in"
-              delay={300}
-              iconBackground="bg-green-100"
-              iconColor="text-green-600"
-            />
-            
-            <InfoCard
-              title="Local Business Ecosystem"
-              description={`Building relationships with other ${locationData.name} businesses and organizations can significantly impact your search visibility.`}
-              icon={<Compass className="w-full h-full" />}
-              animation="fade-in"
-              delay={400}
-              iconBackground="bg-orange-100"
-              iconColor="text-orange-600"
-            />
-          </div>
+          <ServiceTabs />
         </div>
       </section>
       

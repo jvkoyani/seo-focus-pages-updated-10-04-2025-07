@@ -12,13 +12,13 @@ import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { findServiceBySlug } from '@/lib/servicesData';
 import FAQ from '@/components/FAQ';
+import ServiceTabs from '@/components/ServiceTabs';
 
 const LocationServicePage = () => {
   const { locationSlug, serviceSlug } = useParams<{ locationSlug: string; serviceSlug: string }>();
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Find the location and service data
   const locationData = locationSlug ? findLocationBySlug(locationSlug) : undefined;
   const serviceData = serviceSlug ? findServiceBySlug(serviceSlug) : undefined;
   
@@ -29,7 +29,6 @@ const LocationServicePage = () => {
     });
   }, [location.pathname]);
   
-  // Redirect to not found if either location or service is missing
   useEffect(() => {
     if (!locationData || !serviceData) {
       navigate('/not-found');
@@ -40,7 +39,6 @@ const LocationServicePage = () => {
     return null; // Will be redirected
   }
   
-  // Sample FAQs related to the service and location
   const faqs = [
     {
       question: `How does ${serviceData.title} help businesses in ${locationData.name}?`,
@@ -162,6 +160,25 @@ const LocationServicePage = () => {
               </Card>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+      
+      {/* New Service Tabs Section */}
+      <section className="py-16 bg-gradient-to-b from-white to-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Our Services
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              Full Range of SEO Solutions in {locationData.name}
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Discover how our comprehensive SEO services can help your business thrive in {locationData.name}
+            </p>
+          </AnimatedSection>
+          
+          <ServiceTabs />
         </div>
       </section>
       
