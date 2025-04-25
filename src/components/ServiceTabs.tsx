@@ -101,18 +101,22 @@ const services: ServiceTab[] = [
 
 export default function ServiceTabs() {
   const [activeTab, setActiveTab] = React.useState("seo");
+  const [isScrolling, setIsScrolling] = React.useState(false);
   const contentRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-50% 0px',
-      threshold: 0
+      rootMargin: '-45% 0px -45% 0px',
+      threshold: [0, 0.5, 1]
     };
 
     const observerCallback: IntersectionObserverCallback = (entries) => {
+      if (isScrolling) return;
+
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
           const tabId = entry.target.getAttribute('data-tab-id');
           if (tabId) {
             setActiveTab(tabId);
@@ -123,23 +127,45 @@ export default function ServiceTabs() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Observe all content sections
     Object.values(contentRefs.current).forEach(ref => {
       if (ref) observer.observe(ref);
     });
 
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+    return () => observer.disconnect();
+  }, [isScrolling]);
+
+  const handleTabChange = (tabId: string) => {
+    setIsScrolling(true);
+    setActiveTab(tabId);
+    
+    const targetRef = contentRefs.current[tabId];
+    if (targetRef) {
+      targetRef.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+
+      // Reset scrolling flag after animation
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 1000);
+    }
+  };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4">
+    <div 
+      ref={containerRef}
+      className="w-full max-w-6xl mx-auto px-4 scroll-view-tabs"
+    >
       {/* Desktop View */}
       <div className="hidden md:block">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs 
+          value={activeTab} 
+          onValueChange={handleTabChange} 
+          className="w-full"
+        >
           <div className="grid grid-cols-12 gap-8">
-            <TabsList className="flex flex-col h-auto space-y-2 col-span-4">
+            <TabsList className="flex flex-col h-auto space-y-2 col-span-4 sticky top-24">
               {services.map((service) => (
                 <TabsTrigger
                   key={service.id}
@@ -147,10 +173,11 @@ export default function ServiceTabs() {
                   className={cn(
                     "flex items-start justify-start p-4 text-left w-full space-x-4 hover:bg-seo-blue/5 data-[state=active]:bg-seo-blue/10",
                     "border-l-2 border-transparent data-[state=active]:border-seo-blue",
-                    "transition-all duration-200"
+                    "transition-all duration-200 replacecontent",
+                    "group"
                   )}
                 >
-                  <span className="text-sm font-mono text-seo-blue/70">{service.number}</span>
+                  <span className="text-sm font-mono text-seo-blue/70 group-hover:text-seo-blue">{service.number}</span>
                   <span className="font-medium">{service.title}</span>
                 </TabsTrigger>
               ))}
@@ -161,12 +188,18 @@ export default function ServiceTabs() {
                 <TabsContent
                   key={service.id}
                   value={service.id}
-                  className="mt-0 focus-visible:outline-none focus-visible:ring-0"
+                  className={cn(
+                    "mt-0 focus-visible:outline-none focus-visible:ring-0",
+                    "scroll-mt-24 snap-center"
+                  )}
                 >
                   <div 
                     ref={el => contentRefs.current[service.id] = el}
                     data-tab-id={service.id}
-                    className="space-y-6"
+                    className={cn(
+                      "space-y-6",
+                      "activeservice:opacity-100 opacity-70 transition-opacity duration-300"
+                    )}
                   >
                     <h3 className="text-2xl font-bold text-seo-dark">{service.content.heading}</h3>
                     {service.content.paragraphs.map((paragraph, index) => (
@@ -210,3 +243,4 @@ export default function ServiceTabs() {
     </div>
   );
 }
+
