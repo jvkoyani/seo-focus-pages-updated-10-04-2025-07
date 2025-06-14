@@ -166,7 +166,7 @@ const LocationIndustryPage = () => {
                   <h3 className="text-xl font-bold text-seo-dark mb-3">{service.title}</h3>
                   <p className="text-seo-gray-dark mb-5">{service.description}</p>
                   
-                  <div className="flex flex-col space-y-2">
+                  <div className="flex flex-col space-y-3">
                     <Link
                       to={`/location/${locationData.slug}/${service.slug}`}
                       className="inline-flex items-center text-seo-blue font-medium group"
@@ -179,10 +179,20 @@ const LocationIndustryPage = () => {
                     
                     <Link
                       to={`/${service.slug}-for-${industryData.slug}-in-${locationData.slug}`}
-                      className="inline-flex items-center text-green-600 font-medium group mt-2"
+                      className="inline-flex items-center text-green-600 font-medium group"
                     >
                       <span className="border-b border-green-600/30 group-hover:border-green-600 transition-colors">
-                        {service.title} for {industryData.title} in {locationData.name}
+                        {service.title} for {industryData.title}
+                      </span>
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                    
+                    <Link
+                      to={`/service/${service.slug}/industry/${industryData.slug}/location/${locationData.slug}`}
+                      className="inline-flex items-center text-purple-600 font-medium group"
+                    >
+                      <span className="border-b border-purple-600/30 group-hover:border-purple-600 transition-colors">
+                        Complete Solution
                       </span>
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
