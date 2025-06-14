@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
@@ -182,17 +181,7 @@ const LocationIndustryPage = () => {
                       className="inline-flex items-center text-green-600 font-medium group"
                     >
                       <span className="border-b border-green-600/30 group-hover:border-green-600 transition-colors">
-                        {service.title} for {industryData.title}
-                      </span>
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                    
-                    <Link
-                      to={`/service/${service.slug}/industry/${industryData.slug}/location/${locationData.slug}`}
-                      className="inline-flex items-center text-purple-600 font-medium group"
-                    >
-                      <span className="border-b border-purple-600/30 group-hover:border-purple-600 transition-colors">
-                        Complete Solution
+                        {service.title} for {industryData.title} in {locationData.name}
                       </span>
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
