@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -74,46 +75,18 @@ const App = () => {
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
+            {/* Static pages - highest priority */}
             <Route path="/" element={<RouteWrapper Component={Index} />} />
             <Route path="/services" element={<RouteWrapper Component={Services} />} />
-            <Route path="/service/:slug" element={<RouteWrapper Component={ServicePage} />} />
             <Route path="/industries" element={<RouteWrapper Component={Industries} />} />
-            <Route path="/industry/:slug" element={<RouteWrapper Component={IndustryPage} />} />
             <Route path="/about" element={<RouteWrapper Component={About} />} />
             <Route path="/contact" element={<RouteWrapper Component={Contact} />} />
-            <Route path="/location/:slug" element={<RouteWrapper Component={Location} />} />
-            <Route path="/location/:locationSlug/:serviceSlug" element={<RouteWrapper Component={LocationServicePage} />} />
-            
-            {/* Industry location routes */}
-            <Route path="/location/:locationSlug/industries" element={<RouteWrapper Component={LocationIndustries} />} />
-            <Route path="/location/:locationSlug/industry/:industrySlug" element={<RouteWrapper Component={LocationIndustryPage} />} />
-            
-            {/* New all services and industries for location page */}
-            <Route path="/location/:locationSlug/all" element={<RouteWrapper Component={LocationServicesIndustries} />} />
-            
-            {/* Service-Industry-Location combinations */}
-            <Route path="/service/:serviceSlug/industry/:industrySlug/location/:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
-            
-            {/* SEO-friendly URL patterns for service-industry-location combinations */}
-            <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocationPage} />} />
-            
-            {/* IMPROVED: Catch-all pattern for service-industry-location SEO URLs */}
-            <Route path="/:fullPath" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
-            
             <Route path="/blogs" element={<RouteWrapper Component={Blogs} />} />
-            <Route path="/blog/:slug" element={<RouteWrapper Component={BlogPost} />} />
             <Route path="/case-studies" element={<RouteWrapper Component={CaseStudies} />} />
-            <Route path="/case-study/:slug" element={<RouteWrapper Component={CaseStudy} />} />
             <Route path="/seo-audit" element={<RouteWrapper Component={SeoAudit} />} />
             <Route path="/free-consultation" element={<RouteWrapper Component={FreeConsultation} />} />
-            
-            {/* Sitemap Routes */}
             <Route path="/sitemap" element={<RouteWrapper Component={Sitemap} />} />
             <Route path="/sitemap.xml" element={<RouteWrapper Component={XmlSitemap} />} />
-            
-            {/* Service Blog pages */}
-            <Route path="/service-blog/:slug" element={<RouteWrapper Component={ServiceBlog} />} />
-            <Route path="/service-blog/:slug/:locationSlug" element={<RouteWrapper Component={ServiceBlog} />} />
             
             {/* Methodology pages */}
             <Route path="/methodology/research-analysis" element={<RouteWrapper Component={ResearchAnalysis} />} />
@@ -121,17 +94,45 @@ const App = () => {
             <Route path="/methodology/implementation" element={<RouteWrapper Component={Implementation} />} />
             <Route path="/methodology/monitoring-optimization" element={<RouteWrapper Component={MonitoringOptimization} />} />
             
-            {/* Hierarchy pages */}
-            <Route path="/:country" element={<RouteWrapper Component={Country} />} />
-            <Route path="/:country/:state" element={<RouteWrapper Component={State} />} />
-            <Route path="/:country/:state/:county" element={<RouteWrapper Component={County} />} />
+            {/* Blog and Case Study detail pages */}
+            <Route path="/blog/:slug" element={<RouteWrapper Component={BlogPost} />} />
+            <Route path="/case-study/:slug" element={<RouteWrapper Component={CaseStudy} />} />
             
-            {/* SEO-friendly URL patterns for service-location combinations */}
+            {/* Service pages */}
+            <Route path="/service/:slug" element={<RouteWrapper Component={ServicePage} />} />
+            
+            {/* Industry pages */}
+            <Route path="/industry/:slug" element={<RouteWrapper Component={IndustryPage} />} />
+            
+            {/* Location pages - ordered from most specific to least specific */}
+            <Route path="/location/:locationSlug/all" element={<RouteWrapper Component={LocationServicesIndustries} />} />
+            <Route path="/location/:locationSlug/industries" element={<RouteWrapper Component={LocationIndustries} />} />
+            <Route path="/location/:locationSlug/industry/:industrySlug" element={<RouteWrapper Component={LocationIndustryPage} />} />
+            <Route path="/location/:locationSlug/:serviceSlug" element={<RouteWrapper Component={LocationServicePage} />} />
+            <Route path="/location/:slug" element={<RouteWrapper Component={Location} />} />
+            
+            {/* Service-Industry-Location combinations - specific patterns first */}
+            <Route path="/service/:serviceSlug/industry/:industrySlug/location/:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocation} />} />
+            
+            {/* SEO-friendly URL patterns - most specific first */}
+            <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocationPage} />} />
+            
+            {/* Service Blog pages */}
+            <Route path="/service-blog/:slug" element={<RouteWrapper Component={ServiceBlog} />} />
+            <Route path="/service-blog/:slug/:locationSlug" element={<RouteWrapper Component={ServiceBlog} />} />
+            
+            {/* Hierarchy pages - ordered by specificity */}
+            <Route path="/:country/:state/:county" element={<RouteWrapper Component={County} />} />
+            <Route path="/:country/:state" element={<RouteWrapper Component={State} />} />
+            <Route path="/:country" element={<RouteWrapper Component={Country} />} />
+            
+            {/* Service-location combinations - these should come after more specific routes */}
             <Route path="/:serviceSlug-:locationSlug" element={<RouteWrapper Component={LocationService} />} />
             
-            {/* Generic pattern for any service-location combination */}
+            {/* Generic catch-all for service-location combinations */}
             <Route path="/:serviceLocationSlug" element={<RouteWrapper Component={LocationService} />} />
             
+            {/* 404 fallback - must be last */}
             <Route path="*" element={<RouteWrapper Component={NotFound} />} />
           </Routes>
         </BrowserRouter>
