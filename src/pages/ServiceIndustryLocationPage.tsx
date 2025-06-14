@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
@@ -6,13 +5,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { findServiceBySlug } from '@/lib/servicesData';
 import { findIndustryBySlug } from '@/lib/industriesData';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import NotFound from './NotFound';
 
-const ServiceIndustryLocationPage = () => {
+const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
   const { serviceSlug, industrySlug, locationSlug } = useParams();
 
   // Early return if any slug is missing
@@ -30,8 +30,21 @@ const ServiceIndustryLocationPage = () => {
     return <NotFound />;
   }
 
+  // SEO meta data
+  const pageTitle = `${service.title} for ${industry.title} in ${location.name} | Professional SEO Services`;
+  const pageDescription = `Expert ${service.title.toLowerCase()} services for ${industry.title.toLowerCase()} businesses in ${location.name}. Increase your online visibility, attract more customers, and grow your practice with our proven digital marketing strategies.`;
+  const pageKeywords = `${service.title} ${industry.title} ${location.name}, ${industry.title.toLowerCase()} ${service.title.toLowerCase()}, ${location.name} ${industry.title.toLowerCase()} marketing, local SEO ${industry.title.toLowerCase()}`;
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={pageTitle}
+        description={pageDescription}
+        keywords={pageKeywords}
+        canonicalUrl={`/${serviceSlug}-for-${industrySlug}-in-${locationSlug}`}
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

@@ -5,13 +5,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { findIndustryBySlug } from '@/lib/industriesData';
 import { getServicesForIndustry } from '@/lib/servicesData';
 import { icons } from 'lucide-react';
 
-const LocationIndustryPage = () => {
+const LocationIndustryPage = ({ routeKey }: { routeKey?: string }) => {
   const { locationSlug, industrySlug } = useParams<{ locationSlug: string; industrySlug: string }>();
   const navigate = useNavigate();
   
@@ -33,6 +34,11 @@ const LocationIndustryPage = () => {
     return null; // Will redirect to 404
   }
   
+  // SEO meta data
+  const pageTitle = `${industryData.title} SEO Services in ${locationData.name} | Expert Digital Marketing`;
+  const pageDescription = `Professional SEO services for ${industryData.title.toLowerCase()} businesses in ${locationData.name}. Increase online visibility, attract more customers, and grow your practice with our proven strategies.`;
+  const pageKeywords = `${industryData.title} SEO ${locationData.name}, ${industryData.title.toLowerCase()} digital marketing, local SEO ${locationData.name}, ${industryData.title.toLowerCase()} online marketing, search engine optimization`;
+  
   // Dynamically get the icon component based on icon name
   const getIconComponent = (iconName: string) => {
     const IconComponent = icons[iconName as keyof typeof icons];
@@ -41,6 +47,14 @@ const LocationIndustryPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={pageTitle}
+        description={pageDescription}
+        keywords={pageKeywords}
+        canonicalUrl={`/location/${locationData.slug}/industry/${industryData.slug}`}
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}
