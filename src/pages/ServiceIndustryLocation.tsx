@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { findLocationBySlug, getAllLocations } from '@/lib/additionalLocationData';
 import { findIndustryBySlug, getAllIndustries } from '@/lib/industriesData';
@@ -14,7 +15,7 @@ import { ServiceBadgeProps } from '@/components/ServiceBadge';
 import FAQ, { FAQItem } from '@/components/FAQ';
 import ContextualBlog from '@/components/ContextualBlog';
 
-const ServiceIndustryLocation = () => {
+const ServiceIndustryLocation = ({ routeKey }: { routeKey?: string }) => {
   const { 
     serviceSlug, 
     industrySlug, 
@@ -132,6 +133,11 @@ const ServiceIndustryLocation = () => {
     return null;
   }
   
+  // Enhanced SEO meta data optimized for AI Overviews and LLMs
+  const pageTitle = `${serviceData.title} for ${industryData.title} in ${locationData.name} | Expert Digital Marketing Solutions`;
+  const pageDescription = `Transform your ${industryData.title.toLowerCase()} practice in ${locationData.name} with proven ${serviceData.title.toLowerCase()} strategies. Get more patients, increase revenue, and dominate local search results. Free consultation available - see real results in 90 days.`;
+  const pageKeywords = `${serviceData.title} ${industryData.title} ${locationData.name}, ${industryData.title.toLowerCase()} digital marketing ${locationData.name}, ${serviceData.title.toLowerCase()} for ${industryData.title.toLowerCase()}, ${locationData.name} ${industryData.title.toLowerCase()} SEO, ${industryData.title.toLowerCase()} marketing agency ${locationData.name}, local ${industryData.title.toLowerCase()} advertising, ${serviceData.title.toLowerCase()} services ${locationData.name}`;
+
   const getSeoFriendlyUrl = (service: any, industry: any, location: any) => {
     return `/${service.slug}-for-${industry.slug}-in-${location.slug}`;
   };
@@ -186,6 +192,14 @@ const ServiceIndustryLocation = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={pageTitle}
+        description={pageDescription}
+        keywords={pageKeywords}
+        canonicalUrl={`/${finalServiceSlug}-for-${finalIndustrySlug}-in-${finalLocationSlug}`}
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       <section className="pt-32 pb-16 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
