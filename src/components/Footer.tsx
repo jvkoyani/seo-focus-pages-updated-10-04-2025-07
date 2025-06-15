@@ -1,16 +1,13 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, Clock, ChevronRight, FileText, FileJson } from 'lucide-react';
-
 const Footer = () => {
-  return (
-    <footer className="bg-gradient-to-b from-seo-dark to-black text-white">
+  return <footer className="bg-gradient-to-b from-seo-dark to-black text-white">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Information */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Your SEO Partner</h3>
+            <h3 className="text-xl font-bold mb-4">SEO Focus - Your SEO Partner</h3>
             <p className="mb-4 text-gray-300">
               We help businesses grow through strategic SEO solutions tailored to their unique needs.
             </p>
@@ -188,8 +185,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
