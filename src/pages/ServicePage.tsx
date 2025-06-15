@@ -1,5 +1,5 @@
-
-import { useParams, Link, useNavigate, useEffect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, Check, Zap, Award, Target, BarChart, 
   Users, Globe, MapPin, TrendingUp, CheckCircle, 
