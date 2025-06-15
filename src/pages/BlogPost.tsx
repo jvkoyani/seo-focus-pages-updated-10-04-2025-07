@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, Calendar, User, Tag, ChevronLeft } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -17,10 +16,127 @@ const BlogPost = ({ routeKey }: { routeKey?: string }) => {
   // First try to find in static blog posts
   let post = blogPosts.find(p => p.slug === slug);
   
-  // If not found in static posts, check if it's a dynamically generated contextual blog post
+  // If not found in static posts, check if it's a dynamically generated blog post
   if (!post && slug) {
-    // Generate contextual blog post based on slug pattern
-    if (slug.startsWith('why-seo-focus-best-')) {
+    // Handle general blog posts that are referenced in ContextualBlog
+    if (slug === 'seo-trends-2025') {
+      post = {
+        id: "seo-trends-2025",
+        title: "Top SEO Trends to Watch in 2025",
+        excerpt: "Stay ahead of the curve with the latest SEO trends and algorithm updates that will shape digital marketing in 2025.",
+        content: `
+          <h2>The Future of SEO: What to Expect in 2025</h2>
+          <p>As we move through 2025, the SEO landscape continues to evolve at a rapid pace. Search engines are becoming more sophisticated, user expectations are higher, and new technologies are reshaping how we approach search optimization.</p>
+          
+          <h3>1. AI-Powered Search Features</h3>
+          <p>Artificial Intelligence is transforming search results with more contextual and conversational responses. Businesses need to optimize for AI-generated snippets and featured results that provide direct answers to user queries.</p>
+          
+          <h3>2. Core Web Vitals Evolution</h3>
+          <p>Google continues to refine its Core Web Vitals metrics, with new performance indicators focusing on user experience. Page speed, visual stability, and interactivity remain crucial ranking factors.</p>
+          
+          <h3>3. Voice Search Optimization</h3>
+          <p>With the growing adoption of smart speakers and voice assistants, optimizing for voice search queries becomes essential. Focus on natural language patterns and question-based content.</p>
+          
+          <h3>4. E-A-T Signal Strengthening</h3>
+          <p>Expertise, Authoritativeness, and Trustworthiness (E-A-T) signals are becoming more important, especially for YMYL (Your Money or Your Life) content. Building author authority and credible backlinks is crucial.</p>
+          
+          <h3>5. Video and Visual Search</h3>
+          <p>Visual content optimization is gaining prominence. Optimize images, videos, and visual elements for better search visibility and engagement.</p>
+          
+          <h3>Stay Ahead with SEO Focus</h3>
+          <p>At SEO Focus, we stay ahead of these trends to ensure our clients' websites remain competitive. Contact us to learn how we can help you adapt to the evolving SEO landscape.</p>
+        `,
+        date: "May 28, 2025",
+        author: "SEO Research Team",
+        category: "SEO Trends",
+        tags: ["SEO Trends", "2025", "Algorithm Updates"],
+        slug: "seo-trends-2025",
+        image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      };
+    } else if (slug === 'complete-local-seo-guide') {
+      post = {
+        id: "local-seo-complete-guide",
+        title: "The Complete Guide to Local SEO Success",
+        excerpt: "Master local SEO with our comprehensive guide covering everything from Google Business Profile optimization to local link building.",
+        content: `
+          <h2>Mastering Local SEO: Your Complete Guide</h2>
+          <p>Local SEO is essential for businesses that serve customers in specific geographic areas. Whether you're a restaurant, law firm, or service provider, optimizing for local search can significantly increase your visibility and customer base.</p>
+          
+          <h3>1. Google Business Profile Optimization</h3>
+          <p>Your Google Business Profile is the foundation of local SEO. Ensure your profile is complete with accurate business information, hours, photos, and regular updates. Encourage and respond to customer reviews.</p>
+          
+          <h3>2. Local Keyword Research</h3>
+          <p>Target keywords that include location modifiers like "near me," your city name, and neighborhood references. Focus on how customers search for your services locally.</p>
+          
+          <h3>3. NAP Consistency</h3>
+          <p>Maintain consistent Name, Address, and Phone number (NAP) information across all online directories, social media profiles, and your website. Inconsistencies can hurt local rankings.</p>
+          
+          <h3>4. Local Content Creation</h3>
+          <p>Create content that's relevant to your local community. Write about local events, news, and topics that matter to your target audience in your area.</p>
+          
+          <h3>5. Local Link Building</h3>
+          <p>Build relationships with other local businesses, participate in community events, and get listed in local directories and chamber of commerce websites.</p>
+          
+          <h3>6. Online Reviews Management</h3>
+          <p>Actively encourage satisfied customers to leave reviews on Google, Yelp, and industry-specific platforms. Respond professionally to all reviews, both positive and negative.</p>
+          
+          <h3>Get Professional Local SEO Help</h3>
+          <p>Local SEO requires ongoing attention and expertise. SEO Focus specializes in helping businesses dominate local search results. Contact us for a free local SEO audit.</p>
+        `,
+        date: "May 25, 2025",
+        author: "Local SEO Experts",
+        category: "Local SEO",
+        tags: ["Local SEO", "Google Business Profile", "Local Rankings"],
+        slug: "complete-local-seo-guide",
+        image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      };
+    } else if (slug === 'technical-seo-audit-guide') {
+      post = {
+        id: "technical-seo-audit",
+        title: "How to Conduct a Technical SEO Audit",
+        excerpt: "Learn the essential steps for conducting a comprehensive technical SEO audit to identify and fix issues affecting your website's performance.",
+        content: `
+          <h2>The Complete Technical SEO Audit Checklist</h2>
+          <p>A technical SEO audit is essential for identifying and fixing issues that may be preventing your website from ranking well in search engines. This comprehensive guide will walk you through the key areas to examine.</p>
+          
+          <h3>1. Crawlability and Indexability</h3>
+          <p>Use tools like Google Search Console to check if search engines can crawl and index your pages. Review your robots.txt file and XML sitemap for any blocking issues.</p>
+          
+          <h3>2. Site Speed and Core Web Vitals</h3>
+          <p>Analyze your website's loading speed using Google PageSpeed Insights. Focus on improving Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS).</p>
+          
+          <h3>3. Mobile-Friendliness</h3>
+          <p>Ensure your website is fully responsive and provides an excellent user experience on mobile devices. Use Google's Mobile-Friendly Test tool to identify issues.</p>
+          
+          <h3>4. URL Structure and Internal Linking</h3>
+          <p>Review your URL structure for clarity and SEO-friendliness. Analyze your internal linking strategy to ensure proper link equity distribution throughout your site.</p>
+          
+          <h3>5. HTTPS and Security</h3>
+          <p>Verify that your website uses HTTPS encryption. Check for mixed content issues and ensure all resources load securely.</p>
+          
+          <h3>6. Duplicate Content and Canonicalization</h3>
+          <p>Identify and fix duplicate content issues. Implement proper canonical tags to consolidate link equity and avoid content duplication penalties.</p>
+          
+          <h3>7. Structured Data Markup</h3>
+          <p>Implement schema markup to help search engines better understand your content. Use Google's Structured Data Testing Tool to validate your markup.</p>
+          
+          <h3>8. Server Response Codes</h3>
+          <p>Monitor for 404 errors, redirect chains, and other server response issues that could impact user experience and search engine crawling.</p>
+          
+          <h3>Professional Technical SEO Services</h3>
+          <p>Technical SEO can be complex and time-consuming. SEO Focus offers comprehensive technical SEO audits and implementation services. Contact us to ensure your website's technical foundation is solid.</p>
+        `,
+        date: "May 20, 2025",
+        author: "Technical SEO Team",
+        category: "Technical SEO",
+        tags: ["Technical SEO", "SEO Audit", "Website Performance"],
+        slug: "technical-seo-audit-guide",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      };
+    }
+    
+    // Check if it's a contextual blog post based on slug pattern
+    else if (slug.startsWith('why-seo-focus-best-')) {
       const slugParts = slug.replace('why-seo-focus-best-', '').split('-');
       
       // Determine what type of contextual blog this is
