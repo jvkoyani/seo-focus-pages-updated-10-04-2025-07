@@ -23,21 +23,29 @@ const SEO: React.FC<SEOProps> = ({
   routeKey
 }) => {
   const siteName = 'SEO Focus';
-  const fullTitle = `${title} | ${siteName}`;
+  const fullTitle = title.includes('|') ? title : `${title} | ${siteName}`;
   const siteUrl = 'https://seofocus.com';
   const fullCanonicalUrl = canonicalUrl ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${siteUrl}${canonicalUrl}`) : undefined;
   const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
   
   console.log(`SEO Component rendering for: ${title} with routeKey: ${routeKey}`);
   
-  // Force update document title immediately
+  // Force update document title immediately and ensure meta tags are replaced
   useEffect(() => {
     document.title = fullTitle;
+    
+    // Force update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', description);
+    }
+    
     console.log(`Document title updated to: ${fullTitle}`);
-  }, [fullTitle, routeKey]);
+    console.log(`Meta description updated to: ${description}`);
+  }, [fullTitle, description, routeKey]);
   
   return (
-    <Helmet key={routeKey}>
+    <Helmet key={routeKey} prioritizeSeoTags>
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
@@ -59,6 +67,12 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="twitter:title" content={fullTitle} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={fullOgImage} />
+      
+      {/* Additional SEO Meta Tags */}
+      <meta name="robots" content="index, follow" />
+      <meta name="googlebot" content="index, follow" />
+      <meta name="google" content="notranslate" />
+      <meta name="format-detection" content="telephone=no" />
     </Helmet>
   );
 };
