@@ -1,4 +1,3 @@
-
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react'; 
 import { ArrowRight, Check, CheckCircle, Star, Building, Award, ShoppingBag } from 'lucide-react';
@@ -379,12 +378,16 @@ const IndustryPage = () => {
               Contact us today for a free consultation and discover how our {industry.title.toLowerCase()} service can help your business attract more clients.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-white text-seo-blue hover:bg-gray-100">
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button size="lg" className="bg-white text-seo-blue hover:bg-gray-100" asChild>
+                <Link to="/free-consultation">
+                  Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-seo-blue hover:bg-white/10">
-                View Case Studies
+              <Button size="lg" variant="outline" className="border-white text-seo-blue hover:bg-white/10" asChild>
+                <Link to="/case-studies">
+                  View Case Studies
+                </Link>
               </Button>
             </div>
           </AnimatedSection>
