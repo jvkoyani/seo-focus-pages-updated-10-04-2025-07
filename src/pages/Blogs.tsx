@@ -27,7 +27,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "Content Marketing",
       tags: ["Content Marketing", "SEO Strategy", "2025 Trends"],
       slug: "content-marketing-strategy-2025",
-      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>Content marketing continues to be a cornerstone of successful SEO strategies in 2025. As search engines become more sophisticated, the quality and relevance of your content matter more than ever.</p>
+      <p>Key strategies for content marketing success in 2025 include:</p>
+      <ul>
+        <li>Creating topic clusters around core business themes</li>
+        <li>Optimizing for user intent and search experience</li>
+        <li>Leveraging AI tools while maintaining human creativity</li>
+        <li>Building comprehensive resource libraries</li>
+        <li>Focusing on expertise, authority, and trustworthiness (E-A-T)</li>
+      </ul>`
     },
     {
       id: "mobile-first-indexing-guide",
@@ -38,7 +47,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "Technical SEO",
       tags: ["Mobile SEO", "Technical SEO", "Google Indexing"],
       slug: "mobile-first-indexing-guide",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>Mobile-first indexing means Google predominantly uses the mobile version of your content for indexing and ranking. This shift reflects the mobile-centric browsing habits of users worldwide.</p>
+      <p>Essential optimization strategies include:</p>
+      <ul>
+        <li>Ensuring mobile page speed optimization</li>
+        <li>Implementing responsive design principles</li>
+        <li>Optimizing mobile user experience</li>
+        <li>Testing mobile-specific functionality</li>
+        <li>Monitoring mobile search performance</li>
+      </ul>`
     },
     {
       id: "voice-search-optimization",
@@ -49,7 +67,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "SEO Strategy",
       tags: ["Voice Search", "Future SEO", "Optimization"],
       slug: "voice-search-optimization",
-      image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>Voice search is transforming how users interact with search engines. Optimizing for voice search requires understanding natural language patterns and user behavior.</p>
+      <p>Key voice search optimization tactics:</p>
+      <ul>
+        <li>Targeting conversational long-tail keywords</li>
+        <li>Creating FAQ-style content</li>
+        <li>Optimizing for local voice searches</li>
+        <li>Improving page loading speed</li>
+        <li>Structuring content for featured snippets</li>
+      </ul>`
     },
     {
       id: "ecommerce-seo-guide",
@@ -60,7 +87,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "E-commerce",
       tags: ["E-commerce SEO", "Online Sales", "Product Optimization"],
       slug: "ecommerce-seo-guide",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>E-commerce SEO requires a unique approach that balances product visibility with user experience. Success depends on optimizing both individual product pages and category structures.</p>
+      <p>Essential e-commerce SEO strategies:</p>
+      <ul>
+        <li>Optimizing product descriptions and titles</li>
+        <li>Implementing structured data for products</li>
+        <li>Creating SEO-friendly category pages</li>
+        <li>Managing duplicate content issues</li>
+        <li>Building topical authority through content marketing</li>
+      </ul>`
     },
     {
       id: "link-building-strategies-2025",
@@ -71,7 +107,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "Link Building",
       tags: ["Link Building", "Off-Page SEO", "Authority Building"],
       slug: "link-building-strategies-2025",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>Link building in 2025 requires a strategic approach that focuses on quality over quantity. Modern link building emphasizes relationship building and value creation.</p>
+      <p>Effective link building strategies include:</p>
+      <ul>
+        <li>Creating linkable assets and resources</li>
+        <li>Building relationships with industry influencers</li>
+        <li>Leveraging digital PR opportunities</li>
+        <li>Guest posting on authoritative sites</li>
+        <li>Participating in industry communities</li>
+      </ul>`
     },
     {
       id: "schema-markup-guide",
@@ -82,7 +127,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "Technical SEO",
       tags: ["Schema Markup", "Structured Data", "Rich Snippets"],
       slug: "schema-markup-guide",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>Schema markup helps search engines understand your content better and can lead to enhanced search results with rich snippets, improving click-through rates.</p>
+      <p>Key schema implementation areas:</p>
+      <ul>
+        <li>Organization and business information</li>
+        <li>Product and service schemas</li>
+        <li>Review and rating markup</li>
+        <li>Event and location data</li>
+        <li>Article and blog post schemas</li>
+      </ul>`
     },
     {
       id: "page-speed-optimization",
@@ -93,7 +147,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "Technical SEO",
       tags: ["Page Speed", "Core Web Vitals", "Performance"],
       slug: "page-speed-optimization",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>Page speed is a critical ranking factor and significantly impacts user experience. Optimizing page speed requires both technical improvements and content optimization.</p>
+      <p>Key optimization techniques:</p>
+      <ul>
+        <li>Image compression and optimization</li>
+        <li>Minifying CSS, JavaScript, and HTML</li>
+        <li>Leveraging browser caching</li>
+        <li>Using content delivery networks (CDNs)</li>
+        <li>Optimizing server response times</li>
+      </ul>`
     },
     {
       id: "keyword-research-mastery",
@@ -104,7 +167,16 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
       category: "SEO Strategy",
       tags: ["Keyword Research", "SEO Tools", "Search Intent"],
       slug: "keyword-research-mastery",
-      image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      content: `<p>Effective keyword research forms the foundation of successful SEO campaigns. Understanding search intent and competition levels helps prioritize optimization efforts.</p>
+      <p>Advanced keyword research techniques:</p>
+      <ul>
+        <li>Analyzing competitor keyword strategies</li>
+        <li>Understanding search intent patterns</li>
+        <li>Identifying long-tail opportunities</li>
+        <li>Using keyword clustering techniques</li>
+        <li>Monitoring keyword performance trends</li>
+      </ul>`
     }
   ];
   
