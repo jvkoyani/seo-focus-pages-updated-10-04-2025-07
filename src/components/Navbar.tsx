@@ -1,19 +1,32 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, FileText, Briefcase } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { locations, services, industries } from '@/lib/data';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLocationsOpen, setIsLocationsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isIndustriesOpen, setIsIndustriesOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleLocations = () => setIsLocationsOpen(!isLocationsOpen);
   const toggleServices = () => setIsServicesOpen(!isServicesOpen);
   const toggleIndustries = () => setIsIndustriesOpen(!isIndustriesOpen);
@@ -24,6 +37,7 @@ const Navbar = () => {
       top: 0,
       behavior: 'smooth'
     });
+    setIsMobileMenuOpen(false);
   };
 
   useEffect(() => {
@@ -36,11 +50,11 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    setIsMenuOpen(false);
     setIsLocationsOpen(false);
     setIsServicesOpen(false);
     setIsIndustriesOpen(false);
     setIsResourcesOpen(false);
+    setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
   return (
@@ -58,6 +72,7 @@ const Navbar = () => {
             </span>
           </Link>
 
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link 
               to="/" 
@@ -66,6 +81,8 @@ const Navbar = () => {
             >
               Home
             </Link>
+            
+            {/* Services Dropdown */}
             <div className="relative">
               <button
                 onClick={toggleServices}
@@ -103,6 +120,8 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
+
+            {/* Industries Dropdown */}
             <div className="relative">
               <button
                 onClick={toggleIndustries}
@@ -140,6 +159,8 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
+
+            {/* Locations Dropdown */}
             <div className="relative">
               <button
                 onClick={toggleLocations}
@@ -169,6 +190,8 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
+
+            {/* Resources Dropdown */}
             <div className="relative">
               <button
                 onClick={toggleResources}
@@ -204,6 +227,7 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
+            
             <Link 
               to="/about" 
               className="text-seo-dark hover:text-seo-blue font-medium transition-colors"
@@ -227,160 +251,152 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <button
-            className="md:hidden text-seo-dark focus:outline-none"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        <div
-          className={`fixed inset-0 bg-white z-50 transition-all duration-300 transform ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          } md:hidden`}
-          style={{ top: '64px' }}
-        >
-          <div className="flex flex-col p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-64px)]">
-            <Link
-              to="/"
-              className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors"
-              onClick={handleLinkClick}
-            >
-              Home
-            </Link>
-            
-            <div>
+          {/* Mobile Menu Trigger */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
               <button
-                onClick={toggleServices}
-                className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors focus:outline-none flex items-center"
+                className="md:hidden text-seo-dark focus:outline-none"
+                aria-label="Toggle menu"
               >
-                Services
-                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
+                <Menu size={24} />
               </button>
-              <div className={`mt-2 ml-4 transition-all duration-200 space-y-2 ${isServicesOpen ? 'block' : 'hidden'}`}>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-full sm:w-96">
+              <SheetHeader>
+                <SheetTitle className="text-left">
+                  <span className="text-2xl font-display font-bold text-seo-dark">
+                    SEO<span className="text-seo-blue">focus</span>
+                  </span>
+                </SheetTitle>
+              </SheetHeader>
+              
+              <div className="mt-6 space-y-4">
                 <Link
-                  to="/services"
-                  className="block py-2 font-medium text-seo-gray-dark hover:text-seo-blue transition-colors"
+                  to="/"
+                  className="block text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors py-2"
                   onClick={handleLinkClick}
                 >
-                  All Services
+                  Home
                 </Link>
-                {services.map((service) => (
-                  <Link
-                    key={service.id}
-                    to={`/service/${service.slug}`}
-                    className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
-                    onClick={handleLinkClick}
-                  >
-                    {service.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <button
-                onClick={toggleIndustries}
-                className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors focus:outline-none flex items-center"
-              >
-                Industries
-                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isIndustriesOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <div className={`mt-2 ml-4 transition-all duration-200 space-y-2 ${isIndustriesOpen ? 'block' : 'hidden'}`}>
+                
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="services" className="border-none">
+                    <AccordionTrigger className="text-lg font-medium text-seo-dark hover:text-seo-blue py-2 hover:no-underline">
+                      Services
+                    </AccordionTrigger>
+                    <AccordionContent className="pl-4 space-y-2">
+                      <Link
+                        to="/services"
+                        className="block py-2 font-medium text-seo-gray-dark hover:text-seo-blue transition-colors"
+                        onClick={handleLinkClick}
+                      >
+                        All Services
+                      </Link>
+                      {services.map((service) => (
+                        <Link
+                          key={service.id}
+                          to={`/service/${service.slug}`}
+                          className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                          onClick={handleLinkClick}
+                        >
+                          {service.title}
+                        </Link>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="industries" className="border-none">
+                    <AccordionTrigger className="text-lg font-medium text-seo-dark hover:text-seo-blue py-2 hover:no-underline">
+                      Industries
+                    </AccordionTrigger>
+                    <AccordionContent className="pl-4 space-y-2">
+                      <Link
+                        to="/industries"
+                        className="block py-2 font-medium text-seo-gray-dark hover:text-seo-blue transition-colors"
+                        onClick={handleLinkClick}
+                      >
+                        All Industries
+                      </Link>
+                      {industries.map((industry) => (
+                        <Link
+                          key={industry.id}
+                          to={`/industry/${industry.slug}`}
+                          className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                          onClick={handleLinkClick}
+                        >
+                          {industry.title}
+                        </Link>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="locations" className="border-none">
+                    <AccordionTrigger className="text-lg font-medium text-seo-dark hover:text-seo-blue py-2 hover:no-underline">
+                      Locations
+                    </AccordionTrigger>
+                    <AccordionContent className="pl-4 space-y-2">
+                      {locations.map((loc) => (
+                        <Link
+                          key={loc.id}
+                          to={`/location/${loc.slug}`}
+                          className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                          onClick={handleLinkClick}
+                        >
+                          {loc.name}
+                        </Link>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="resources" className="border-none">
+                    <AccordionTrigger className="text-lg font-medium text-seo-dark hover:text-seo-blue py-2 hover:no-underline">
+                      Resources
+                    </AccordionTrigger>
+                    <AccordionContent className="pl-4 space-y-2">
+                      <Link
+                        to="/blogs"
+                        className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                        onClick={handleLinkClick}
+                      >
+                        <FileText className="h-4 w-4 mr-2" />
+                        Blog Articles
+                      </Link>
+                      <Link
+                        to="/case-studies"
+                        className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                        onClick={handleLinkClick}
+                      >
+                        <Briefcase className="h-4 w-4 mr-2" />
+                        Case Studies
+                      </Link>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                
                 <Link
-                  to="/industries"
-                  className="block py-2 font-medium text-seo-gray-dark hover:text-seo-blue transition-colors"
+                  to="/about"
+                  className="block text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors py-2"
                   onClick={handleLinkClick}
                 >
-                  All Industries
-                </Link>
-                {industries.map((industry) => (
-                  <Link
-                    key={industry.id}
-                    to={`/industry/${industry.slug}`}
-                    className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
-                    onClick={handleLinkClick}
-                  >
-                    {industry.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <button
-                onClick={toggleLocations}
-                className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors focus:outline-none flex items-center"
-              >
-                Locations
-                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isLocationsOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <div className={`mt-2 ml-4 transition-all duration-200 space-y-2 ${isLocationsOpen ? 'block' : 'hidden'}`}>
-                {locations.map((loc) => (
-                  <Link
-                    key={loc.id}
-                    to={`/location/${loc.slug}`}
-                    className="block py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
-                    onClick={handleLinkClick}
-                  >
-                    {loc.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <button
-                onClick={toggleResources}
-                className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors focus:outline-none flex items-center"
-              >
-                Resources
-                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isResourcesOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <div className={`mt-2 ml-4 transition-all duration-200 space-y-2 ${isResourcesOpen ? 'block' : 'hidden'}`}>
-                <Link
-                  to="/blogs"
-                  className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
-                  onClick={handleLinkClick}
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Blog Articles
+                  About
                 </Link>
                 <Link
-                  to="/case-studies"
-                  className="flex items-center py-2 text-seo-gray-dark hover:text-seo-blue transition-colors"
+                  to="/contact"
+                  className="block text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors py-2"
                   onClick={handleLinkClick}
                 >
-                  <Briefcase className="h-4 w-4 mr-2" />
-                  Case Studies
+                  Contact
+                </Link>
+                <Link
+                  to="/contact"
+                  className="block bg-seo-blue text-white text-center py-3 px-5 rounded-md transition-colors button-hover-effect mt-4"
+                  onClick={handleLinkClick}
+                >
+                  Get Started
                 </Link>
               </div>
-            </div>
-            
-            <Link
-              to="/about"
-              className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors"
-              onClick={handleLinkClick}
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className="text-lg font-medium text-seo-dark hover:text-seo-blue transition-colors"
-              onClick={handleLinkClick}
-            >
-              Contact
-            </Link>
-            <Link
-              to="/contact"
-              className="bg-seo-blue text-white text-center py-3 px-5 rounded-md transition-colors button-hover-effect"
-              onClick={handleLinkClick}
-            >
-              Get Started
-            </Link>
-          </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </AnimatedSection>
