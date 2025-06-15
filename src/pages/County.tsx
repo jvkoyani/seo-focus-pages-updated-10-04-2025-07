@@ -110,13 +110,13 @@ const County = ({ routeKey }: { routeKey?: string }) => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
-                <Link to="/free-consultation">
+              <Button size="lg" asChild className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
+                <Link to="/free-consultation" className="flex items-center">
                   Get a Free Consultation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
+              <Button size="lg" variant="outline" asChild className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
                 <Link to="/case-studies">
                   View Case Studies
                 </Link>
