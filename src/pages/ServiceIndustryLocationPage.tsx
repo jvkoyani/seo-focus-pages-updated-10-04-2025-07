@@ -100,14 +100,14 @@ const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
               </Link>
               <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
               <Link 
-                to={`/service/${service.slug}`} 
+                to="/services" 
                 className="text-seo-gray-dark hover:text-seo-blue transition-colors"
               >
                 {service.title}
               </Link>
               <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
               <Link 
-                to={`/industry/${industry.slug}`} 
+                to="/industries" 
                 className="text-seo-gray-dark hover:text-seo-blue transition-colors"
               >
                 {industry.title}
@@ -211,12 +211,12 @@ const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
               className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all"
               animation="fade-in"
             >
-              <h3 className="text-xl font-bold text-seo-dark mb-3">All {service.title} Services</h3>
+              <h3 className="text-xl font-bold text-seo-dark mb-3">All SEO Services</h3>
               <p className="text-seo-gray-dark mb-4">
-                Explore our complete range of {service.title.toLowerCase()} solutions across different locations.
+                Explore our complete range of SEO solutions across different locations and industries.
               </p>
               <Link
-                to={`/service/${service.slug}`}
+                to="/services"
                 className="inline-flex items-center text-seo-blue font-medium group"
               >
                 <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
@@ -233,10 +233,10 @@ const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
             >
               <h3 className="text-xl font-bold text-seo-dark mb-3">{industry.title} Solutions</h3>
               <p className="text-seo-gray-dark mb-4">
-                Discover all our specialized services for {industry.title.toLowerCase()} businesses.
+                Discover all our specialized services for {industry.title.toLowerCase()} businesses across different locations.
               </p>
               <Link
-                to={`/industry/${industry.slug}`}
+                to="/industries"
                 className="inline-flex items-center text-seo-blue font-medium group"
               >
                 <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
@@ -253,7 +253,7 @@ const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
             >
               <h3 className="text-xl font-bold text-seo-dark mb-3">{location.name} Services</h3>
               <p className="text-seo-gray-dark mb-4">
-                See all our digital marketing services available in {location.name}.
+                See all our digital marketing services available in {location.name} for various industries.
               </p>
               <Link
                 to={`/location/${location.slug}`}
