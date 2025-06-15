@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
@@ -13,12 +14,23 @@ import { findLocationBySlug } from '@/lib/additionalLocationData';
 import NotFound from './NotFound';
 
 const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
-  const { serviceSlug, industrySlug, locationSlug } = useParams();
+  const params = useParams();
+  const slug = Object.values(params)[0];
 
-  // Early return if any slug is missing
-  if (!serviceSlug || !industrySlug || !locationSlug) {
+  // Early return if slug is missing
+  if (!slug) {
     return <NotFound />;
   }
+
+  // Use regex to extract slugs. Example: "local-seo-for-healthcare-in-melbourne"
+  const match = slug.match(/(.+)-for-(.+)-in-(.+)/);
+
+  if (!match) {
+    // This slug format is not for this page.
+    return <NotFound />;
+  }
+  
+  const [, serviceSlug, industrySlug, locationSlug] = match;
 
   // Find the matching data
   const service = findServiceBySlug(serviceSlug);
