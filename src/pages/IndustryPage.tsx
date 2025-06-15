@@ -1,94 +1,77 @@
-import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
+import { useEffect } from 'react'; 
+import { ArrowRight, Check, CheckCircle, Star, Building, Award, ShoppingBag } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
-import SEO from '@/components/SEO';
-import SideButton from '@/components/SideButton';
-import FAQ from '@/components/FAQ';
+import ContextualBlog from '@/components/ContextualBlog';
+import { industries, testimonials } from '@/lib/data';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { findIndustryBySlug } from '@/lib/industriesData';
-import { getServicesForIndustry } from '@/lib/servicesData';
-import { getAllServices } from '@/lib/servicesData';
-import { locations } from '@/lib/data';
-import { icons } from 'lucide-react';
+import IndustrySeoServices from '@/components/IndustrySeoServices';
+import SEO from '@/components/SEO';
 
-const IndustryPage = ({ routeKey }: { routeKey?: string }) => {
-  const { industrySlug } = useParams<{ industrySlug: string }>();
+const IndustryPage = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const industry = industries.find(i => i.slug === slug);
   const navigate = useNavigate();
 
-  // Get industry data
-  const industryData = findIndustryBySlug(industrySlug || '');
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
 
-  // Get services for this industry
-  const industryServices = industryData ? getServicesForIndustry(industryData.id) : [];
-
-  // Redirect if industry not found
-  React.useEffect(() => {
-    if (!industryData) {
-      navigate('/not-found');
-    }
-  }, [industryData, navigate]);
-
-  if (!industryData) {
-    return null; // Will redirect to 404
-  }
-
-  // SEO meta data
-  const pageTitle = `${industryData.title} SEO Services | Expert Digital Marketing`;
-  const pageDescription = `Professional SEO services for ${industryData.title.toLowerCase()} businesses. Increase online visibility, attract more customers, and grow your practice with our proven strategies.`;
-  const pageKeywords = `${industryData.title} SEO, ${industryData.title.toLowerCase()} digital marketing, industry SEO, online marketing, search engine optimization`;
-
-  // Get a few locations for the industry
-  const industryLocations = locations.slice(0, 3);
-
-  // Dynamically get the icon component based on icon name
-  const getIconComponent = (iconName: string) => {
-    const IconComponent = icons[iconName as keyof typeof icons];
-    return IconComponent ? <IconComponent className="h-8 w-8 text-seo-blue" /> : null;
+  const handleIndustryLinkClick = (industrySlug: string) => {
+    navigate(`/industry/${industrySlug}`);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
-  // Industry specific FAQs
-  const faqs = [
-    {
-      question: `Why is SEO important for ${industryData.title.toLowerCase()} businesses?`,
-      answer: `SEO is crucial for ${industryData.title.toLowerCase()} businesses because it helps you reach potential customers when they're actively searching for your services. With proper SEO, your business appears at the top of search results, increasing visibility, building trust, and driving more qualified leads to your practice.`
-    },
-    {
-      question: `How long does it take to see SEO results for ${industryData.title.toLowerCase()} businesses?`,
-      answer: `You can typically expect to see initial improvements in 3-6 months, with significant results within 6-12 months. The timeline depends on your current online presence, competition level, and the specific strategies implemented.`
-    },
-    {
-      question: `What makes SEO different for ${industryData.title.toLowerCase()} businesses compared to other industries?`,
-      answer: `${industryData.title} SEO requires specialized knowledge of industry regulations, patient privacy concerns, medical terminology, and local search patterns. We understand the unique challenges and opportunities in the ${industryData.title.toLowerCase()} sector and tailor our strategies accordingly.`
-    },
-    {
-      question: `What SEO services do you offer specifically for ${industryData.title.toLowerCase()} businesses?`,
-      answer: `We offer comprehensive SEO services tailored for ${industryData.title.toLowerCase()} businesses including local SEO, content marketing, website optimization, online reputation management, and compliance-focused strategies that meet industry standards and regulations.`
-    },
-    {
-      question: `How do you measure SEO success for ${industryData.title.toLowerCase()} practices?`,
-      answer: `We track key metrics relevant to ${industryData.title.toLowerCase()} businesses including local search rankings, website traffic, appointment bookings, phone calls, and overall online visibility. We provide regular reports showing how SEO improvements translate to business growth.`
-    }
-  ];
+  if (!industry) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <SEO 
+          title="Industry Not Found"
+          description="The industry page you're looking for could not be found. Explore our other industry-specific SEO services."
+          canonicalUrl="https://seofocus.com/industries"
+        />
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-4">Industry Not Found</h1>
+            <p className="mb-6">Sorry, the industry you're looking for doesn't exist.</p>
+            <Link 
+              to="/industries" 
+              className="inline-flex items-center text-seo-blue font-medium"
+            >
+              <span>View all industries</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Extract relevant industry name without "SEO" suffix for meta description
+  const industryName = industry.title.replace(' SEO', '');
 
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title={pageTitle}
-        description={pageDescription}
-        keywords={pageKeywords}
-        canonicalUrl={`/industry/${industryData.slug}`}
-        routeKey={routeKey}
+        title={`${industry.title} - Industry-Specific SEO Solutions`}
+        description={`Specialized SEO strategies for ${industryName} businesses. Increase your online visibility, attract more customers, and grow your ${industryName.toLowerCase()} business with our tailored SEO services.`}
+        keywords={`${industryName} SEO, ${industryName.toLowerCase()} digital marketing, ${industryName.toLowerCase()} search engine optimization, ${industryName.toLowerCase()} online presence, ${industryName.toLowerCase()} website ranking`}
+        canonicalUrl={`https://seofocus.com/industry/${slug}`}
       />
       
       <Navbar />
-      <SideButton />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-b from-seo-blue-light/20 to-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-seo-blue rounded-full"></div>
           <div className="absolute right-1/4 top-1/3 w-64 h-64 bg-green-400 rounded-full"></div>
@@ -96,216 +79,314 @@ const IndustryPage = ({ routeKey }: { routeKey?: string }) => {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <AnimatedSection className="mb-4" animation="fade-in">
-            <div className="inline-flex items-center space-x-2">
-              <Link 
-                to="/" 
-                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
-              >
-                Home
-              </Link>
-              <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
-              <span className="text-seo-blue font-medium">{industryData.title}</span>
-            </div>
-          </AnimatedSection>
-          
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-            <AnimatedSection className="md:w-1/2" animation="fade-in">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+            <AnimatedSection className="max-w-2xl" animation="fade-in">
               <div className="flex items-center mb-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mr-2">
+                  <Building className="h-4 w-4 mr-1" />
+                  Industry Solutions
+                </span>
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
-                  Industry Expertise
+                  <Star className="h-4 w-4 mr-1" />
+                  Specialized Approach
                 </span>
               </div>
               
               <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
-                {industryData.title} SEO Services
+                {industry.title}
               </h1>
               
               <p className="text-xl text-seo-gray-dark mb-8">
-                {industryData.description}
+                {industry.description}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" asChild className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
-                  <Link to="/free-consultation" className="flex items-center">
-                    Get a Free Consultation
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                <Button size="lg" className="bg-seo-blue hover:bg-seo-blue-light text-white">
+                  Get a Free Consultation
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button size="lg" variant="outline" asChild className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
-                  <Link to="/case-studies">
-                    View Case Studies
-                  </Link>
+                <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
+                  View Case Studies
                 </Button>
               </div>
             </AnimatedSection>
             
-            <AnimatedSection animation="fade-in-left" delay={200} className="md:w-1/2">
-              <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-                <div className="flex items-center mb-6">
-                  <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mr-4">
-                    {getIconComponent(industryData.icon)}
+            <AnimatedSection animation="fade-in-left" delay={300} className="md:w-1/3">
+              <Card className="bg-white shadow-xl rounded-xl overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="relative h-48 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-seo-blue to-purple-600 opacity-90"></div>
+                    <div className="p-6 relative z-10">
+                      <h3 className="text-xl font-bold text-white mb-2">
+                        {industry.title} Audit
+                      </h3>
+                      <p className="text-white/90 mb-4">
+                        Get specialized insights for your {industry.title.replace(' SEO', '')} business
+                      </p>
+                      <div className="flex items-center">
+                        <Award className="h-8 w-8 text-yellow-300 mr-2" />
+                        <span className="text-white font-medium">Free for limited time</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-seo-dark">Key Benefits</h3>
-                    <p className="text-seo-gray-dark">Why {industryData.title} businesses choose us</p>
+                  <div className="p-6 space-y-3">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                      <span>Industry-specific analysis</span>
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                      <span>Competitor benchmarking</span>
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                      <span>Tailored recommendations</span>
+                    </div>
+                    <div className="mt-6">
+                      <Button className="w-full bg-seo-blue hover:bg-seo-blue-light">
+                        Request Free Audit
+                      </Button>
+                    </div>
                   </div>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+      
+      {/* Key Features Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <AnimatedSection className="text-center mb-12" animation="fade-in">
+              <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+                Our Approach
+              </span>
+              <h2 className="text-3xl font-display font-bold text-seo-dark mb-4">
+                Why Choose Our {industry.title} Service?
+              </h2>
+              <p className="text-lg text-seo-gray-dark">
+                In the competitive {industry.title.toLowerCase().replace(' seo', '')} industry, having a strong online presence is essential for attracting new clients.
+              </p>
+            </AnimatedSection>
+            
+            <div className="grid md:grid-cols-2 gap-6 mt-10">
+              {industry.features.map((feature, index) => (
+                <AnimatedSection 
+                  key={index} 
+                  className="bg-gradient-to-br from-white to-seo-blue/5 border border-seo-blue/10 p-6 rounded-lg shadow-sm"
+                  animation="fade-in"
+                  delay={index * 100}
+                >
+                  <div className="flex items-start">
+                    <div className="bg-seo-blue/10 rounded-full p-2 mr-4 flex-shrink-0">
+                      <Check className="h-5 w-5 text-seo-blue" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-seo-dark mb-2">{feature}</h3>
+                      <p className="text-seo-gray-dark">
+                        We implement effective strategies tailored specifically for {industry.title.toLowerCase().replace(' seo', '')} professionals.
+                      </p>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Results Section */}
+      <section className="py-20 bg-gradient-to-br from-seo-blue/5 to-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-green-100 text-green-700 mb-4">
+              Proven Results
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
+              What Our {industry.title.replace(' SEO', '')} Clients Achieve
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Our specialized approach delivers measurable results for {industry.title.toLowerCase().replace(' seo', '')} businesses
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              { stat: '156%', label: 'Average Increase in Organic Traffic', icon: 'trending-up' },
+              { stat: '187%', label: 'More Qualified Leads', icon: 'users' },
+              { stat: '93%', label: 'Client Retention Rate', icon: 'award' }
+            ].map((item, index) => (
+              <AnimatedSection
+                key={index}
+                className="bg-white rounded-lg p-8 text-center shadow-md border border-gray-100"
+                animation="fade-in"
+                delay={index * 100}
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-seo-blue to-purple-600 text-white mb-6">
+                  <ShoppingBag className="h-8 w-8" />
                 </div>
+                <h3 className="text-4xl font-bold text-seo-dark mb-2">{item.stat}</h3>
+                <p className="text-seo-gray-dark">{item.label}</p>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          <AnimatedSection className="max-w-4xl mx-auto mt-16" animation="fade-in">
+            <div className="bg-gradient-to-r from-seo-blue to-purple-600 p-1 rounded-lg shadow-lg">
+              <div className="bg-white p-8 rounded-lg">
+                <h3 className="text-2xl font-bold text-seo-dark mb-6">
+                  Benefits of {industry.title}
+                </h3>
                 
                 <div className="space-y-4">
-                  {industryData.benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-start">
-                      <div className="flex-shrink-0 mt-1">
-                        <CheckCircle className="h-5 w-5 text-green-500" />
+                  {industry.benefits.map((benefit, index) => (
+                    <AnimatedSection 
+                      key={index} 
+                      className="flex items-center"
+                      animation="fade-in-left"
+                      delay={index * 100}
+                    >
+                      <div className="bg-seo-blue text-white rounded-full p-1 mr-4 flex-shrink-0">
+                        <Check className="h-4 w-4" />
                       </div>
-                      <p className="ml-3 text-seo-gray-dark">{benefit}</p>
-                    </div>
+                      <p className="text-seo-gray-dark">{benefit}</p>
+                    </AnimatedSection>
                   ))}
                 </div>
               </div>
-            </AnimatedSection>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
       
-      {/* Services for this industry */}
-      <section className="py-16 bg-white">
+      {/* Testimonial Section */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Our Solutions
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-700 mb-4">
+              Client Success
             </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              {industryData.title} SEO Services
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
+              What Our {industry.title.replace(' SEO', '')} Clients Say
             </h2>
             <p className="text-lg text-seo-gray-dark">
-              Tailored services to help your {industryData.title.toLowerCase()} business succeed online
+              Hear directly from other {industry.title.replace(' SEO', '')} businesses about their experience
             </p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industryServices.map((service, index) => (
-              <AnimatedSection
-                key={service.id}
-                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden"
-                animation="fade-in"
-                delay={index * 100}
-              >
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-seo-dark mb-3">{service.title}</h3>
-                  <p className="text-seo-gray-dark mb-5">{service.description}</p>
-                  
-                  <div className="flex flex-col space-y-3">
-                    <Link
-                      to={`/service/${service.slug}`}
-                      className="inline-flex items-center text-seo-blue font-medium group"
-                    >
-                      <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
-                        {service.title} Details
-                      </span>
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* Locations Section */}
-      <section className="py-16 bg-seo-gray-light">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Local SEO
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              Serving Businesses Nationwide
-            </h2>
-            <p className="text-lg text-seo-gray-dark">
-              Find local SEO services for {industryData.title.toLowerCase()} businesses in these locations
-            </p>
-          </AnimatedSection>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {industryLocations.map((location, index) => (
-              <AnimatedSection
-                key={location.id}
-                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-all"
-                animation="fade-in"
-                delay={index * 100}
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={location.image} 
-                    alt={location.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 w-full p-4">
-                    <h3 className="text-xl font-bold text-white">
-                      {location.name}
-                    </h3>
-                  </div>
-                </div>
-                
-                <div className="p-5">
-                  <p className="text-seo-gray-dark mb-5">
-                    Specialized SEO solutions for businesses in {location.name}, helping you improve online visibility and attract more local customers.
-                  </p>
-                  
-                  <Link
-                    to={`/location/${location.slug}/industry/${industryData.slug}`}
-                    className="inline-flex items-center justify-center bg-seo-blue text-white px-5 py-3 rounded-md hover:bg-seo-blue-light transition-colors w-full group"
-                  >
-                    <span>{industryData.title} SEO in {location.name}</span>
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* FAQ Section */}
-      <FAQ 
-        title={`${industryData.title} SEO FAQs`}
-        subtitle={`Common questions about SEO services for ${industryData.title.toLowerCase()} businesses`}
-        faqs={faqs}
-      />
-      
-      {/* CTA Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <AnimatedSection 
-              className="bg-gradient-to-r from-seo-blue to-purple-600 rounded-xl shadow-xl overflow-hidden" 
-              animation="fade-in"
-            >
-              <div className="p-8 md:p-12">
-                <div className="flex flex-col md:flex-row md:items-center justify-between">
-                  <div className="mb-8 md:mb-0 md:mr-8">
-                    <h2 className="text-3xl font-bold text-white mb-4">
-                      Ready to grow your {industryData.title.toLowerCase()} business?
-                    </h2>
-                    <p className="text-white/90 text-lg mb-0">
-                      Get started with a free consultation and discover how our SEO services can help your business thrive.
-                    </p>
+            <AnimatedSection className="bg-gradient-to-br from-white to-seo-gray-light p-8 rounded-xl border border-gray-100 shadow-md" animation="fade-in">
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="md:w-1/3">
+                  <div className="relative w-48 h-48 mx-auto">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-seo-blue to-purple-600 blur-lg opacity-30"></div>
+                    <img 
+                      src={testimonials[0].image} 
+                      alt={testimonials[0].name} 
+                      className="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-lg"
+                    />
                   </div>
-                  <div className="flex-shrink-0">
-                    <Link to="/free-consultation">
-                      <Button size="lg" className="bg-white text-seo-blue hover:bg-gray-100 w-full md:w-auto">
-                        Get Started Today
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
+                </div>
+                <div className="md:w-2/3">
+                  <blockquote className="text-xl italic text-seo-gray-dark mb-6">
+                    "Since implementing their {industry.title} strategy, our practice has seen a significant increase in new client inquiries and conversion rates. The team truly understands the unique challenges in our industry."
+                  </blockquote>
+                  <div className="flex items-center">
+                    <div>
+                      <p className="font-bold text-seo-dark">{testimonials[0].name}</p>
+                      <p className="text-seo-gray-medium">{testimonials[0].company}</p>
+                    </div>
+                    <div className="ml-auto flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 text-yellow-400" fill="#FBBF24" />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+      
+      {/* Contextual Blog Section */}
+      <ContextualBlog
+        industrySlug={industry.slug}
+        title={`Why SEO Focus is Best for ${industry.title}`}
+        subtitle={`Discover what makes us the leading choice for ${industry.title.toLowerCase()} businesses. Our specialized approach delivers exceptional results.`}
+      />
+      
+      {/* Related Industries Section */}
+      <section className="py-20 bg-gradient-to-br from-seo-blue/5 to-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Industry Solutions
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
+              Explore Other Industry Solutions
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Discover our specialized SEO services for other industries
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {industries
+              .filter(i => i.id !== industry.id)
+              .slice(0, 3)
+              .map((item, index) => (
+                <AnimatedSection
+                  key={index}
+                  className="bg-white rounded-lg overflow-hidden shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+                  animation="fade-in"
+                  delay={index * 100}
+                  onClick={() => handleIndustryLinkClick(item.slug)}
+                >
+                  <div className="p-6">
+                    <h3 className="font-bold text-xl mb-2 text-seo-dark">{item.title}</h3>
+                    <p className="text-seo-gray-dark mb-4 line-clamp-2">{item.description}</p>
+                    <div className="flex items-center text-seo-blue font-medium">
+                      <span>Learn more</span>
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </div>
+                  </div>
+                </AnimatedSection>
+              ))}
+          </div>
+          
+          <div className="text-center mt-10">
+            <Button variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5" asChild>
+              <Link to="/industries">
+                View All Industries
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-seo-blue to-purple-600 text-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto" animation="fade-in">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+              Ready to Grow Your {industry.title.replace(' SEO', '')} Business?
+            </h2>
+            <p className="text-xl text-white/90 mb-8">
+              Contact us today for a free consultation and discover how our {industry.title.toLowerCase()} service can help your business attract more clients.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button size="lg" className="bg-white text-seo-blue hover:bg-gray-100">
+                Get Started
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                View Case Studies
+              </Button>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
       
