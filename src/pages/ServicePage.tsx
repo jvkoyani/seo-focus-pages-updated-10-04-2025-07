@@ -501,6 +501,131 @@ const ServicePage = ({ routeKey }: { routeKey?: string }) => {
       {/* Service Details */}
       <ServiceTabs />
 
+      {/* Why Choose SEO Focus Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Why Choose Us
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              Why Choose SEO Focus for {service.title}?
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              Discover what makes SEO Focus the best choice for {service.title.toLowerCase()} and how our expertise can transform your business
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <AnimatedSection
+              className="text-center p-6 bg-seo-gray-light rounded-xl hover:shadow-md transition-shadow"
+              animation="fade-in"
+              delay={100}
+            >
+              <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-seo-blue">
+                <Award className="h-8 w-8" />
+              </div>
+              <h3 className="text-lg font-bold text-seo-dark mb-3">Proven Track Record</h3>
+              <p className="text-seo-gray-dark text-sm">
+                Years of experience delivering exceptional {service.title.toLowerCase()} results for businesses across various industries.
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection
+              className="text-center p-6 bg-seo-gray-light rounded-xl hover:shadow-md transition-shadow"
+              animation="fade-in"
+              delay={200}
+            >
+              <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-seo-blue">
+                <Users className="h-8 w-8" />
+              </div>
+              <h3 className="text-lg font-bold text-seo-dark mb-3">Expert Team</h3>
+              <p className="text-seo-gray-dark text-sm">
+                Our certified {service.title} specialists stay current with the latest industry trends and best practices.
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection
+              className="text-center p-6 bg-seo-gray-light rounded-xl hover:shadow-md transition-shadow"
+              animation="fade-in"
+              delay={300}
+            >
+              <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-seo-blue">
+                <BarChart className="h-8 w-8" />
+              </div>
+              <h3 className="text-lg font-bold text-seo-dark mb-3">Data-Driven Approach</h3>
+              <p className="text-seo-gray-dark text-sm">
+                Every {service.title.toLowerCase()} strategy is backed by comprehensive data analysis and performance metrics.
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection
+              className="text-center p-6 bg-seo-gray-light rounded-xl hover:shadow-md transition-shadow"
+              animation="fade-in"
+              delay={400}
+            >
+              <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-seo-blue">
+                <Target className="h-8 w-8" />
+              </div>
+              <h3 className="text-lg font-bold text-seo-dark mb-3">Customized Solutions</h3>
+              <p className="text-seo-gray-dark text-sm">
+                Tailored {service.title.toLowerCase()} strategies designed specifically for your business goals and industry.
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection
+              className="text-center p-6 bg-seo-gray-light rounded-xl hover:shadow-md transition-shadow"
+              animation="fade-in"
+              delay={500}
+            >
+              <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-seo-blue">
+                <CheckCircle className="h-8 w-8" />
+              </div>
+              <h3 className="text-lg font-bold text-seo-dark mb-3">Transparent Reporting</h3>
+              <p className="text-seo-gray-dark text-sm">
+                Regular detailed reports keep you informed about your {service.title.toLowerCase()} progress and ROI.
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection
+              className="text-center p-6 bg-seo-gray-light rounded-xl hover:shadow-md transition-shadow"
+              animation="fade-in"
+              delay={600}
+            >
+              <div className="bg-seo-blue/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-seo-blue">
+                <Lightbulb className="h-8 w-8" />
+              </div>
+              <h3 className="text-lg font-bold text-seo-dark mb-3">Ongoing Support</h3>
+              <p className="text-seo-gray-dark text-sm">
+                Dedicated account management and continuous optimization to ensure long-term {service.title.toLowerCase()} success.
+              </p>
+            </AnimatedSection>
+          </div>
+
+          <AnimatedSection className="text-center mt-12" animation="fade-in" delay={700}>
+            <div className="bg-gradient-to-r from-seo-blue to-purple-600 rounded-xl p-8 text-white">
+              <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
+              <p className="text-lg mb-6 opacity-90">
+                Join hundreds of satisfied clients who have transformed their business with our {service.title.toLowerCase()} services.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" asChild className="bg-white text-seo-blue hover:bg-gray-100">
+                  <Link to="/contact" className="flex items-center">
+                    Start Your {service.title} Journey
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild className="border-white text-white hover:bg-white/10">
+                  <Link to="/case-studies">
+                    View Success Stories
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <FAQ 
         title={`${service.title} FAQs`}
