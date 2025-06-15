@@ -12,8 +12,6 @@ import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import ServiceTabs from '@/components/ServiceTabs';
-import ResourcesSection from '@/components/ResourcesSection';
-import ContextualBlog from '@/components/ContextualBlog';
 import FAQ from '@/components/FAQ';
 import { Button } from '@/components/ui/button';
 import { services } from '@/lib/data';
@@ -125,11 +123,11 @@ const ServicePage = ({ routeKey }: { routeKey?: string }) => {
           faqs: [
             {
               question: "What is Local SEO and why do I need it?",
-              answer: "Local SEO is the practice of optimizing your online presence to attract more business from relevant local searches. If you have a physical location or serve customers in specific geographic areas, local SEO helps you appear when people search for businesses like yours in your area. It's essential for driving foot traffic, phone calls, and local customers to your business."
+              answer: "Local SEO is the practice of optimizing your online presence to attract more business from relevant local searches. If you have a physical location or serve customers in specific geographic areas, local SEO helps you connect with nearby customers actively searching for your products or services. It's essential for driving foot traffic, phone calls, and local customers to your business."
             },
             {
               question: "How long does it take to see Local SEO results?",
-              answer: "Local SEO results typically start showing within 1-3 months, faster than traditional SEO. You may see improvements in Google Business Profile visibility and local rankings within the first month. However, significant ranking improvements and increased traffic usually develop over 3-6 months as your local authority builds."
+              answer: "Most businesses begin seeing initial improvements within 1-3 months of implementing our Local SEO strategies. You may see improvements in Google Business Profile visibility and local rankings within the first month. However, significant ranking improvements and increased traffic usually develop over 3-6 months as your local authority builds."
             },
             {
               question: "What's the difference between Local SEO and regular SEO?",
@@ -509,17 +507,6 @@ const ServicePage = ({ routeKey }: { routeKey?: string }) => {
         subtitle={`Common questions about our ${service.title.toLowerCase()} services`}
         faqs={serviceContent.faqs}
         className="bg-white"
-      />
-      
-      {/* Resources Section with contextual blog */}
-      <ResourcesSection serviceSlug={service.slug} />
-      
-      {/* Additional contextual blog specifically for this service */}
-      <ContextualBlog
-        serviceSlug={service.slug}
-        title="Why Choose SEO Focus for This Service"
-        subtitle={`Discover what makes SEO Focus the best choice for ${service.title.toLowerCase()} and how our expertise can transform your business.`}
-        limit={3}
       />
       
       <ContactForm />
