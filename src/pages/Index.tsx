@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -26,16 +25,6 @@ const Index = ({ routeKey }: { routeKey?: string }) => {
   // Get featured blog posts and case studies
   const featuredBlogs = blogPosts.slice(0, 3);
   const featuredCaseStudies = caseStudies.slice(0, 2);
-
-  // Location images mapping
-  const locationImages = {
-    'sydney': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'melbourne': 'https://images.unsplash.com/photo-1545044846-351726a4e3c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'brisbane': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'perth': 'https://images.unsplash.com/photo-1544966503-7cc4ac882d5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'adelaide': 'https://images.unsplash.com/photo-1544966503-7cc4ac882d5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'canberra': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -238,8 +227,8 @@ const Index = ({ routeKey }: { routeKey?: string }) => {
               >
                 <div className="h-48 relative overflow-hidden">
                   <img 
-                    src={locationImages[location.slug as keyof typeof locationImages] || location.image} 
-                    alt={`${location.name} cityscape`} 
+                    src={location.image} 
+                    alt={location.name} 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
