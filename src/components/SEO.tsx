@@ -37,7 +37,7 @@ const SEO: React.FC<SEOProps> = ({
   }, [fullTitle, routeKey]);
   
   return (
-    <Helmet key={routeKey}>
+    <Helmet key={routeKey} prioritizeSeoTags>
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />

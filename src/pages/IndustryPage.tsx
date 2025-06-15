@@ -1,3 +1,4 @@
+
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react'; 
 import { ArrowRight, Check, CheckCircle, Star, Building, Award, ShoppingBag } from 'lucide-react';
@@ -33,9 +34,11 @@ const IndustryPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <SEO 
-          title="Industry Not Found"
-          description="The industry page you're looking for could not be found. Explore our other industry-specific SEO services."
-          canonicalUrl="https://seofocus.com/industries"
+          title="Industry Not Found - SEO Services"
+          description="The industry page you're looking for could not be found. Explore our comprehensive range of industry-specific SEO services to grow your business online."
+          keywords="industry SEO services, specialized SEO solutions, business SEO, search engine optimization"
+          canonicalUrl="/industries"
+          routeKey={`industry-not-found-${Date.now()}`}
         />
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
@@ -58,14 +61,20 @@ const IndustryPage = () => {
 
   // Extract relevant industry name without "SEO" suffix for meta description
   const industryName = industry.title.replace(' SEO', '');
+  
+  // Create unique, SEO-optimized meta title and description
+  const metaTitle = `${industry.title} Services - Expert SEO Solutions for ${industryName} Businesses`;
+  const metaDescription = `Specialized SEO strategies for ${industryName} businesses. Increase online visibility, attract qualified leads, and grow your ${industryName.toLowerCase()} business with our proven SEO services. Get a free consultation today.`;
+  const metaKeywords = `${industryName} SEO, ${industryName.toLowerCase()} digital marketing, ${industryName.toLowerCase()} search engine optimization, ${industryName.toLowerCase()} online marketing, ${industryName.toLowerCase()} lead generation, ${industryName.toLowerCase()} website optimization`;
 
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title={`${industry.title} - Industry-Specific SEO Solutions`}
-        description={`Specialized SEO strategies for ${industryName} businesses. Increase your online visibility, attract more customers, and grow your ${industryName.toLowerCase()} business with our tailored SEO services.`}
-        keywords={`${industryName} SEO, ${industryName.toLowerCase()} digital marketing, ${industryName.toLowerCase()} search engine optimization, ${industryName.toLowerCase()} online presence, ${industryName.toLowerCase()} website ranking`}
-        canonicalUrl={`https://seofocus.com/industry/${slug}`}
+        title={metaTitle}
+        description={metaDescription}
+        keywords={metaKeywords}
+        canonicalUrl={`/industry/${slug}`}
+        routeKey={`industry-${slug}-${Date.now()}`}
       />
       
       <Navbar />
@@ -197,7 +206,6 @@ const IndustryPage = () => {
         </div>
       </section>
 
-      {/* Results Section */}
       <section className="py-20 bg-gradient-to-br from-seo-blue/5 to-seo-gray-light">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
@@ -261,7 +269,6 @@ const IndustryPage = () => {
         </div>
       </section>
       
-      {/* Testimonial Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
@@ -311,14 +318,12 @@ const IndustryPage = () => {
         </div>
       </section>
       
-      {/* Contextual Blog Section */}
       <ContextualBlog
         industrySlug={industry.slug}
         title={`Why SEO Focus is Best for ${industry.title}`}
         subtitle={`Discover what makes us the leading choice for ${industry.title.toLowerCase()} businesses. Our specialized approach delivers exceptional results.`}
       />
       
-      {/* Related Industries Section */}
       <section className="py-20 bg-gradient-to-br from-seo-blue/5 to-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12" animation="fade-in">
@@ -367,7 +372,6 @@ const IndustryPage = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-seo-blue to-purple-600 text-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto" animation="fade-in">
