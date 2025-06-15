@@ -43,6 +43,23 @@ const ContextualBlog: React.FC<ContextualBlogProps> = ({
   const generateContextualBlogPosts = (): BlogPost[] => {
     const allBlogPosts: BlogPost[] = [];
     
+    // Location specific blog - THIS IS THE KEY FIX
+    if (locationSlug && !serviceSlug && !industrySlug) {
+      const locationName = locationSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      
+      allBlogPosts.push({
+        id: `why-seo-focus-best-${locationSlug}`,
+        title: `Why SEO Focus is Best for Your Business Marketing Partner in ${locationName}`,
+        excerpt: `Discover why SEO Focus stands out as the premier choice for businesses in ${locationName}. Our local expertise, personalized approach, and proven track record make us the ideal marketing partner for your business growth in ${locationName}.`,
+        date: "June 12, 2025",
+        author: "SEO Focus Team",
+        tags: [locationName, "Marketing Partner", "Local SEO", "Business Growth"],
+        slug: `why-seo-focus-best-marketing-partner-${locationSlug}`,
+        locationSlug,
+        imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      });
+    }
+    
     // Service + Industry + Location specific blog
     if (serviceSlug && industrySlug && locationSlug) {
       const serviceName = serviceSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
@@ -79,7 +96,7 @@ const ContextualBlog: React.FC<ContextualBlogProps> = ({
         slug: `why-seo-focus-best-${serviceSlug}-${industrySlug}`,
         serviceSlug,
         industrySlug,
-        imageUrl: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        imageUrl: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMJA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
       });
     }
     
