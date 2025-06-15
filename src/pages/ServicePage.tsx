@@ -1,4 +1,3 @@
-
 import { useParams, Link } from 'react-router-dom';
 import { 
   ArrowRight, Check, Zap, Award, Target, BarChart, 
@@ -110,12 +109,16 @@ const ServicePage = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
-                  Get a Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button size="lg" asChild className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
+                  <Link to="/contact" className="flex items-center">
+                    Get a Free Consultation
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
-                  View Case Studies
+                <Button size="lg" variant="outline" asChild className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
+                  <Link to="/case-studies">
+                    View Case Studies
+                  </Link>
                 </Button>
               </div>
             </AnimatedSection>
@@ -152,8 +155,10 @@ const ServicePage = () => {
                       <span>Actionable recommendations</span>
                     </div>
                     <div className="mt-6">
-                      <Button className="w-full bg-seo-blue hover:bg-seo-blue-light">
-                        Request Free Audit
+                      <Button asChild className="w-full bg-seo-blue hover:bg-seo-blue-light">
+                        <Link to="/seo-audit">
+                          Request Free Audit
+                        </Link>
                       </Button>
                     </div>
                   </div>
@@ -212,7 +217,7 @@ const ServicePage = () => {
             
             <InfoCard
               title="Technical Requirements"
-              description={`Effective ${service.title.toLowerCase()} requires technical expertise that many businesses don't have in-house.`}
+              description={`Effective {service.title.toLowerCase()} requires technical expertise that many businesses don't have in-house.`}
               icon={<Compass className="w-full h-full" />}
               animation="fade-in"
               delay={400}
@@ -393,12 +398,16 @@ const ServicePage = () => {
                   </div>
                   
                   <div className="space-y-4">
-                    <Button className="w-full bg-seo-blue hover:bg-seo-blue-light text-white py-6 text-lg">
-                      Get Your Free SEO Audit
+                    <Button asChild className="w-full bg-seo-blue hover:bg-seo-blue-light text-white py-6 text-lg">
+                      <Link to="/seo-audit">
+                        Get Your Free SEO Audit
+                      </Link>
                     </Button>
-                    <Button variant="outline" className="w-full border-seo-blue text-seo-blue hover:bg-seo-blue/5 py-6 text-lg">
-                      <Phone className="mr-2 h-5 w-5" />
-                      Schedule a Call
+                    <Button variant="outline" asChild className="w-full border-seo-blue text-seo-blue hover:bg-seo-blue/5 py-6 text-lg">
+                      <Link to="/contact" className="flex items-center justify-center">
+                        <Phone className="mr-2 h-5 w-5" />
+                        Schedule a Call
+                      </Link>
                     </Button>
                   </div>
                   
