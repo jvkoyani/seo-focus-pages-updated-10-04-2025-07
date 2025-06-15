@@ -4,7 +4,7 @@ import {
   ArrowRight, MapPin, TrendingUp, BarChart, 
   CheckCircle, Award, Users, Target, Star, 
   Zap, Globe, Compass, Building, ShoppingBag, 
-  Phone, Lightbulb, ChevronRight
+  Phone, Lightbulb, ChevronRight, Heart
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -126,7 +126,9 @@ const Location = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
+      {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">
+        {/* ... keep existing code (hero background and content) the same ... */}
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
           <div className="absolute -right-24 -top-24 w-96 h-96 bg-seo-blue rounded-full"></div>
           <div className="absolute right-1/4 top-1/3 w-64 h-64 bg-green-400 rounded-full"></div>
@@ -239,6 +241,7 @@ const Location = () => {
         </div>
       </section>
       
+      {/* Services Tabs Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
@@ -258,6 +261,139 @@ const Location = () => {
       </section>
       
       <Services location={locationData.name} locationSlug={locationData.slug} />
+      
+      {/* Why SEO Focus Section */}
+      <section className="py-20 bg-seo-gray-light">
+        <div className="container mx-auto px-4">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
+              Your Marketing Partner
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
+              Why SEO Focus is Best for Your Business Marketing Partner in {locationData.name}
+            </h2>
+            <p className="text-lg text-seo-gray-dark">
+              When you choose SEO Focus as your marketing partner in {locationData.name}, you're not just getting an SEO agency - you're getting a dedicated team committed to your business growth
+            </p>
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection animation="fade-in-right" className="space-y-8">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-seo-blue/10 flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-seo-blue" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-2">Deep Local Knowledge</h3>
+                  <p className="text-seo-gray-dark">
+                    We understand the unique business landscape and customer behavior patterns in {locationData.name}. Our local expertise gives your business a competitive edge in the {locationData.name} market.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <Heart className="w-6 h-6 text-green-600" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-2">Personalized Partnership</h3>
+                  <p className="text-seo-gray-dark">
+                    We don't believe in one-size-fits-all solutions. Every {locationData.name} business gets a customized strategy that aligns with their specific goals, target audience, and market conditions.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-2">Proven Track Record in {locationData.name}</h3>
+                  <p className="text-seo-gray-dark">
+                    Our portfolio includes numerous successful {locationData.name} businesses that have achieved significant growth through our strategic SEO approach and comprehensive digital marketing solutions.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                    <Globe className="w-6 h-6 text-yellow-600" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-seo-dark mb-2">Full-Service Marketing Excellence</h3>
+                  <p className="text-seo-gray-dark">
+                    Beyond SEO, we offer comprehensive digital marketing services including content marketing, social media management, PPC advertising, and conversion optimization - all tailored for the {locationData.name} market.
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection animation="fade-in-left" className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-seo-blue/20 to-purple-500/20 rounded-2xl"></div>
+              <Card className="relative bg-white shadow-xl border-0">
+                <CardContent className="p-8">
+                  <div className="text-center mb-8">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-seo-blue to-purple-600 rounded-full flex items-center justify-center">
+                      <Award className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-seo-dark mb-2">
+                      Your Success is Our Success
+                    </h3>
+                    <p className="text-seo-gray-dark">
+                      As your marketing partner in {locationData.name}, we're invested in your long-term growth and success.
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                      <span className="text-seo-gray-dark">Dedicated account manager</span>
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                      <span className="text-seo-gray-dark">Monthly strategy reviews</span>
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                      <span className="text-seo-gray-dark">Transparent reporting & analytics</span>
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                      <span className="text-seo-gray-dark">24/7 support & communication</span>
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                      <span className="text-seo-gray-dark">Continuous optimization & growth</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-8 pt-6 border-t border-gray-100">
+                    <div className="text-center">
+                      <p className="text-sm text-seo-gray-dark mb-4">
+                        Ready to partner with {locationData.name}'s leading SEO agency?
+                      </p>
+                      <Button className="w-full bg-gradient-to-r from-seo-blue to-purple-600 hover:from-seo-blue-light hover:to-purple-500 text-white">
+                        <Link to="/free-consultation" className="w-full flex items-center justify-center">
+                          Start Your Partnership Today
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
       
       <LocationIndustries 
         locationName={locationData.name}
@@ -302,6 +438,7 @@ const Location = () => {
         </div>
       </section>
       
+      {/* Why Choose Us section */}
       <section className="py-20 bg-seo-gray-light">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
