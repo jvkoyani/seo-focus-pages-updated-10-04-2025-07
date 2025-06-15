@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
@@ -609,13 +608,13 @@ const ServicePage = ({ routeKey }: { routeKey?: string }) => {
                 Join hundreds of satisfied clients who have transformed their business with our {service.title.toLowerCase()} services.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild className="bg-white text-seo-blue hover:bg-gray-100">
+                <Button size="lg" asChild className="bg-white text-seo-blue hover:bg-gray-100 button-hover-effect">
                   <Link to="/contact" className="flex items-center">
                     Start Your {service.title} Journey
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" asChild className="border-white text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" asChild className="border-white text-seo-blue hover:bg-white/10">
                   <Link to="/case-studies">
                     View Success Stories
                   </Link>
