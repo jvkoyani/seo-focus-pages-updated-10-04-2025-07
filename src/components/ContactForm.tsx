@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
@@ -28,12 +27,28 @@ const ContactForm = ({ location }: ContactFormProps) => {
     e.preventDefault();
     setFormState(prev => ({ ...prev, loading: true }));
     
+    // Prepare inquiry data to send to koyani.jaydeep@gmail.com
+    const inquiryData = {
+      to: 'koyani.jaydeep@gmail.com',
+      from: formState.email,
+      subject: `New SEO Inquiry from ${formState.name}`,
+      name: formState.name,
+      email: formState.email,
+      phone: formState.phone,
+      website: formState.website,
+      message: formState.message,
+      location: location || 'General inquiry',
+      timestamp: new Date().toISOString()
+    };
+    
+    console.log('Inquiry data to be sent to koyani.jaydeep@gmail.com:', inquiryData);
+    
     // Simulate form submission
     setTimeout(() => {
       setFormState(prev => ({ ...prev, loading: false, submitted: true }));
       toast({
         title: "Message sent!",
-        description: "We'll get back to you as soon as possible.",
+        description: "Your inquiry has been sent to our team. We'll get back to you as soon as possible.",
       });
       // Reset form after 2 seconds
       setTimeout(() => {
