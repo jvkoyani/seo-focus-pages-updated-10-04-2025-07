@@ -2,6 +2,7 @@
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import AnimatedSection from '@/components/AnimatedSection';
+import Schema from '@/components/Schema';
 
 export interface FAQItem {
   question: string;
@@ -13,16 +14,22 @@ interface FAQProps {
   subtitle?: string;
   faqs: FAQItem[];
   className?: string;
+  addSchema?: boolean;
 }
 
 const FAQ: React.FC<FAQProps> = ({ 
   title = "Frequently Asked Questions", 
   subtitle = "Find answers to common questions about our services",
   faqs,
-  className
+  className,
+  addSchema = true
 }) => {
   return (
     <section className={`py-16 bg-white ${className}`}>
+      {addSchema && (
+        <Schema type="faq" data={{ questions: faqs }} />
+      )}
+      
       <div className="container mx-auto px-4">
         <AnimatedSection 
           className="text-center max-w-3xl mx-auto mb-12"

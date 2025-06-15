@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -8,9 +7,39 @@ import ContactForm from '@/components/ContactForm';
 import { caseStudies } from '@/lib/data';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
 import SEO from '@/components/SEO';
+import Schema from '@/components/Schema';
 
 const CaseStudies = ({ routeKey }: { routeKey?: string }) => {
   console.log(`CaseStudies page rendering with routeKey: ${routeKey}`);
+  
+  // FAQ schema data for case studies page
+  const faqSchema = {
+    type: 'faq' as const,
+    data: {
+      questions: [
+        {
+          question: "How do you measure SEO success in your case studies?",
+          answer: "We measure success through key metrics including organic traffic growth, keyword ranking improvements, conversion rate increases, and ROI. All our case studies include detailed before/after data and timelines."
+        },
+        {
+          question: "Can you guarantee similar results for my business?",
+          answer: "While every business is unique, our proven methodologies and strategies have consistently delivered results across various industries. We'll provide realistic expectations based on your specific situation during consultation."
+        },
+        {
+          question: "How long does it typically take to see SEO results?",
+          answer: "Based on our case studies, most clients see initial improvements within 3-6 months, with significant results typically achieved within 6-12 months. Timeline varies based on competition, current website status, and scope of work."
+        },
+        {
+          question: "Do you work with businesses in my industry?",
+          answer: "Our case studies showcase success across multiple industries including healthcare, legal, real estate, e-commerce, and professional services. We have experience adapting our strategies to various business types."
+        },
+        {
+          question: "What makes your SEO approach different from competitors?",
+          answer: "Our case studies demonstrate our data-driven approach, comprehensive strategies, and focus on long-term sustainable growth. We combine technical expertise with industry-specific knowledge for maximum results."
+        }
+      ]
+    }
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -21,6 +50,9 @@ const CaseStudies = ({ routeKey }: { routeKey?: string }) => {
         canonicalUrl="/case-studies"
         routeKey={routeKey}
       />
+      
+      {/* Add FAQ schema */}
+      <Schema type="faq" data={faqSchema.data} />
       
       <Navbar />
       

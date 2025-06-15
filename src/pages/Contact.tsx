@@ -1,12 +1,41 @@
-
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import SEO from '@/components/SEO';
+import Schema from '@/components/Schema';
 
 const Contact = ({ routeKey }: { routeKey?: string }) => {
   console.log(`Contact page rendering with routeKey: ${routeKey}`);
+  
+  // FAQ schema data for contact page
+  const faqSchema = {
+    type: 'faq' as const,
+    data: {
+      questions: [
+        {
+          question: "How can I get started with your SEO services?",
+          answer: "Getting started is easy! Contact us through our form, phone, or email for a free consultation. We'll analyze your current SEO status and create a customized strategy for your business."
+        },
+        {
+          question: "What information should I provide in my SEO consultation request?",
+          answer: "Please provide your website URL, target location, main business goals, current challenges, and any specific SEO concerns. The more details you share, the better we can tailor our recommendations."
+        },
+        {
+          question: "How quickly will I receive a response to my inquiry?",
+          answer: "We typically respond to all inquiries within 24 hours during business days. For urgent matters, you can call us directly for immediate assistance."
+        },
+        {
+          question: "Do you offer free SEO audits?",
+          answer: "Yes, we provide comprehensive free SEO audits as part of our initial consultation. This includes technical analysis, keyword research, and competitive assessment."
+        },
+        {
+          question: "What are your business hours for consultations?",
+          answer: "Our team is available Monday through Friday, 9 AM to 6 PM AEST. We also offer flexible scheduling for consultations outside regular hours when needed."
+        }
+      ]
+    }
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -17,6 +46,9 @@ const Contact = ({ routeKey }: { routeKey?: string }) => {
         canonicalUrl="/contact"
         routeKey={routeKey}
       />
+      
+      {/* Add FAQ schema */}
+      <Schema type="faq" data={faqSchema.data} />
       
       <Navbar />
       
