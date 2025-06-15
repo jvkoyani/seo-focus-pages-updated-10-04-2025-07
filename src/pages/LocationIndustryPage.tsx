@@ -7,6 +7,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import SEO from '@/components/SEO';
 import ContextualBlog from '@/components/ContextualBlog';
+import FAQ from '@/components/FAQ';
 import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { findIndustryBySlug } from '@/lib/industriesData';
@@ -45,6 +46,34 @@ const LocationIndustryPage = ({ routeKey }: { routeKey?: string }) => {
     const IconComponent = icons[iconName as keyof typeof icons];
     return IconComponent ? <IconComponent className="h-8 w-8 text-seo-blue" /> : null;
   };
+
+  // Industry and location specific FAQs
+  const faqs = [
+    {
+      question: `Why is SEO important for ${industryData.title.toLowerCase()} businesses in ${locationData.name}?`,
+      answer: `SEO is crucial for ${industryData.title.toLowerCase()} businesses in ${locationData.name} because it helps you reach potential customers when they're actively searching for your services. With proper SEO, your business appears at the top of search results, increasing visibility, building trust, and driving more qualified leads to your practice.`
+    },
+    {
+      question: `How long does it take to see SEO results for ${industryData.title.toLowerCase()} businesses?`,
+      answer: `For ${industryData.title.toLowerCase()} businesses in ${locationData.name}, you can typically expect to see initial improvements in 3-6 months, with significant results within 6-12 months. The timeline depends on your current online presence, competition level, and the specific strategies implemented.`
+    },
+    {
+      question: `What makes SEO different for ${industryData.title.toLowerCase()} businesses compared to other industries?`,
+      answer: `${industryData.title} SEO requires specialized knowledge of industry regulations, patient privacy concerns, medical terminology, and local search patterns. We understand the unique challenges and opportunities in the ${industryData.title.toLowerCase()} sector and tailor our strategies accordingly.`
+    },
+    {
+      question: `Do you understand the local ${locationData.name} market for ${industryData.title.toLowerCase()} businesses?`,
+      answer: `Yes, we have extensive experience working with ${industryData.title.toLowerCase()} businesses in ${locationData.name} and understand the local market dynamics, competitor landscape, and consumer behavior patterns specific to your area.`
+    },
+    {
+      question: `What SEO services do you offer specifically for ${industryData.title.toLowerCase()} businesses?`,
+      answer: `We offer comprehensive SEO services tailored for ${industryData.title.toLowerCase()} businesses including local SEO, content marketing, website optimization, online reputation management, and compliance-focused strategies that meet industry standards and regulations.`
+    },
+    {
+      question: `How do you measure SEO success for ${industryData.title.toLowerCase()} practices?`,
+      answer: `We track key metrics relevant to ${industryData.title.toLowerCase()} businesses including local search rankings, website traffic, appointment bookings, phone calls, and overall online visibility. We provide regular reports showing how SEO improvements translate to business growth.`
+    }
+  ];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -285,6 +314,13 @@ const LocationIndustryPage = ({ routeKey }: { routeKey?: string }) => {
           </div>
         </div>
       </section>
+      
+      {/* FAQ Section */}
+      <FAQ 
+        title={`${industryData.title} SEO FAQs for ${locationData.name}`}
+        subtitle={`Common questions about SEO services for ${industryData.title.toLowerCase()} businesses in ${locationData.name}`}
+        faqs={faqs}
+      />
       
       {/* Contextual Blog Section */}
       <ContextualBlog
