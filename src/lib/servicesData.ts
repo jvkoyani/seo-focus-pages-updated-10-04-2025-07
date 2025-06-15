@@ -80,7 +80,17 @@ export const services: Service[] = [
     featured: true,
     forIndustries: ["ecommerce"]
   },
-  // Add more services as needed
+  {
+    id: "seo-audits",
+    title: "SEO Audits",
+    slug: "seo-audits",
+    description: "Comprehensive analysis of your website's SEO performance with actionable recommendations to improve your search rankings.",
+    shortDescription: "Analyze and optimize your SEO",
+    icon: "search",
+    image: "/service-images/seo-audits.jpg",
+    featured: false,
+    forIndustries: ["healthcare", "ecommerce", "legal", "real-estate", "hospitality", "education", "dental", "chiropractor", "accountant"]
+  }
 ];
 
 // Get all services

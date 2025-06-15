@@ -1,8 +1,8 @@
 
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, Clock, ChevronRight, FileText, FileJson } from 'lucide-react';
+
 const Footer = () => {
   return <footer className="bg-gradient-to-b from-seo-dark to-black text-white">
       <div className="container mx-auto px-4 py-16">
@@ -71,9 +71,6 @@ const Footer = () => {
                   <span>Contact</span>
                 </Link>
               </li>
-              <li>
-                
-              </li>
             </ul>
           </div>
 
@@ -112,7 +109,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/service/seo-audits" className="text-gray-300 hover:text-white flex items-center">
+                <Link to="/services" className="text-gray-300 hover:text-white flex items-center">
                   <ChevronRight className="h-4 w-4 mr-1" />
                   <span>SEO Audits</span>
                 </Link>
@@ -177,5 +174,5 @@ const Footer = () => {
       </div>
     </footer>;
 };
-export default Footer;
 
+export default Footer;
