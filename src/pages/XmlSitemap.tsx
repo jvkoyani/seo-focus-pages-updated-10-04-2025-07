@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { services } from '@/lib/data';
 import { allAustralianCities } from '@/lib/locationData';
 import { industries } from '@/lib/industriesData';
@@ -10,6 +10,7 @@ const XmlSitemap = () => {
   const [xmlContent, setXmlContent] = useState<string>('');
   const baseUrl = 'https://seofocus.com'; // Your actual domain
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Generate sitemap XML
@@ -225,40 +226,41 @@ const XmlSitemap = () => {
       return xml;
     };
 
-    setXmlContent(generateSitemap());
-    
-    // If we're accessing directly via /sitemap.xml, download or serve as XML
-    if (window.location.pathname === '/sitemap.xml') {
-      // Create XML document
-      const xmlDoc = new DOMParser().parseFromString(generateSitemap(), 'application/xml');
-      const serializer = new XMLSerializer();
-      const xmlString = serializer.serializeToString(xmlDoc);
-      
-      // Create a Blob with the XML content
-      const blob = new Blob([xmlString], { type: 'application/xml' });
-      
-      // Create a link element and download the file
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'sitemap.xml';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Redirect to the sitemap page after download
-      setTimeout(() => {
-        navigate('/sitemap');
-      }, 1000);
-    }
-  }, [navigate]);
+    const generatedXml = generateSitemap();
+    setXmlContent(generatedXml);
+  }, []);
 
-  // Set proper content type for XML
+  // Check if we're on the XML route and serve content accordingly
+  const isXmlRoute = location.pathname === '/sitemap.xml';
+
+  if (isXmlRoute) {
+    // For XML route, return raw XML with proper content type
+    return (
+      <div>
+        <Helmet>
+          <title>XML Sitemap | SEO Focus</title>
+          <meta httpEquiv="Content-Type" content="application/xml; charset=utf-8" />
+        </Helmet>
+        <pre style={{ 
+          whiteSpace: 'pre-wrap', 
+          fontFamily: 'monospace', 
+          fontSize: '12px',
+          padding: '0',
+          margin: '0',
+          backgroundColor: 'white'
+        }}>
+          {xmlContent}
+        </pre>
+      </div>
+    );
+  }
+
+  // For regular sitemap page, return formatted view
   return (
     <div>
       <Helmet>
         <title>XML Sitemap | SEO Focus</title>
-        <meta httpEquiv="Content-Type" content="text/xml; charset=utf-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       </Helmet>
       <pre style={{ 
         whiteSpace: 'pre-wrap', 
