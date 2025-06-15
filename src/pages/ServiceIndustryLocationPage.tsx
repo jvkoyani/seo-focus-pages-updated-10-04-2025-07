@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
 import SEO from '@/components/SEO';
+import ContextualBlog from '@/components/ContextualBlog';
 import { Button } from '@/components/ui/button';
 import { findServiceBySlug } from '@/lib/servicesData';
 import { findIndustryBySlug } from '@/lib/industriesData';
@@ -268,6 +269,15 @@ const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
           </div>
         </div>
       </section>
+      
+      {/* Contextual Blog Section */}
+      <ContextualBlog
+        serviceSlug={serviceSlug}
+        industrySlug={industrySlug}
+        locationSlug={locationSlug}
+        title={`Why SEO Focus is Best for ${service.title} in the ${industry.title} Industry`}
+        subtitle={`Discover specialized insights and strategies that make us the leading choice for ${service.title.toLowerCase()} services for ${industry.title.toLowerCase()} businesses in ${location.name}.`}
+      />
       
       {/* CTA Section */}
       <section className="py-16 bg-seo-gray-light">

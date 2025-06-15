@@ -1,4 +1,3 @@
-
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react'; 
 import { ArrowRight, Check, CheckCircle, Star, Building, Award, ShoppingBag } from 'lucide-react';
@@ -6,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import ContextualBlog from '@/components/ContextualBlog';
 import { industries, testimonials } from '@/lib/data';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -310,6 +310,13 @@ const IndustryPage = () => {
           </div>
         </div>
       </section>
+      
+      {/* Contextual Blog Section */}
+      <ContextualBlog
+        industrySlug={industry.slug}
+        title={`Why SEO Focus is Best for ${industry.title}`}
+        subtitle={`Discover what makes us the leading choice for ${industry.title.toLowerCase()} businesses. Our specialized approach delivers exceptional results.`}
+      />
       
       {/* Related Industries Section */}
       <section className="py-20 bg-gradient-to-br from-seo-blue/5 to-white">

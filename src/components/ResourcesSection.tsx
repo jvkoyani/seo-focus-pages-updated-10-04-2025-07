@@ -6,13 +6,35 @@ import AnimatedSection from './AnimatedSection';
 import BlogPreview from './BlogPreview';
 import CaseStudyPreview from './CaseStudyPreview';
 import { blogPosts, caseStudies } from '@/lib/data';
+import ContextualBlog from './ContextualBlog';
 
 interface ResourcesSectionProps {
   filterTag?: string;
+  serviceSlug?: string;
+  industrySlug?: string;
+  locationSlug?: string;
   className?: string;
 }
 
-const ResourcesSection = ({ filterTag, className = '' }: ResourcesSectionProps) => {
+const ResourcesSection = ({ 
+  filterTag, 
+  serviceSlug, 
+  industrySlug, 
+  locationSlug, 
+  className = '' 
+}: ResourcesSectionProps) => {
+  // If we have service/industry/location context, use the contextual blog component
+  if (serviceSlug || industrySlug || locationSlug) {
+    return (
+      <ContextualBlog
+        serviceSlug={serviceSlug}
+        industrySlug={industrySlug}
+        locationSlug={locationSlug}
+        className={className}
+      />
+    );
+  }
+
   // Filter blog posts if a tag is provided
   const filteredBlogs = filterTag 
     ? blogPosts.filter(post => 

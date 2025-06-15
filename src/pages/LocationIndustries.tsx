@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import ContextualBlog from '@/components/ContextualBlog';
 import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { getAllIndustries } from '@/lib/industriesData';
@@ -153,6 +154,13 @@ const LocationIndustries = ({ routeKey }: { routeKey?: string }) => {
           </div>
         </div>
       </section>
+      
+      {/* Contextual Blog Section */}
+      <ContextualBlog
+        locationSlug={locationData.slug}
+        title={`SEO Insights for ${locationData.name} Businesses`}
+        subtitle={`Stay ahead of the competition with localized SEO strategies and industry insights specifically for businesses in ${locationData.name}.`}
+      />
       
       {/* CTA Section */}
       <section className="py-16 bg-seo-gray-light">
