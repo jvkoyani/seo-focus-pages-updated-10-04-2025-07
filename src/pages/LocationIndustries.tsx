@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight } from 'lucide-react';
@@ -10,8 +9,9 @@ import { Button } from '@/components/ui/button';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { getAllIndustries } from '@/lib/industriesData';
 import { icons } from 'lucide-react';
+import SEO from '@/components/SEO';
 
-const LocationIndustries = () => {
+const LocationIndustries = ({ routeKey }: { routeKey?: string }) => {
   const { locationSlug } = useParams<{ locationSlug: string }>();
   const navigate = useNavigate();
   
@@ -32,6 +32,10 @@ const LocationIndustries = () => {
     return null; // Will redirect to 404
   }
   
+  // Custom meta for location industries
+  const locationTitle = `Industry SEO Services ${locationData.name} | Specialized Optimization`;
+  const locationDescription = `Expert SEO services for all industries in ${locationData.name}. Healthcare, retail, professional services & more. Tailored strategies for your sector.`;
+  
   // Dynamically get the icon component based on icon name
   const getIconComponent = (iconName: string) => {
     const IconComponent = icons[iconName as keyof typeof icons];
@@ -40,6 +44,14 @@ const LocationIndustries = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={locationTitle}
+        description={locationDescription}
+        keywords={`${locationData.name} industry SEO, sector-specific SEO ${locationData.name}, business type SEO services, specialized optimization ${locationData.name}`}
+        canonicalUrl={`/location/${locationData.slug}/industries`}
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}

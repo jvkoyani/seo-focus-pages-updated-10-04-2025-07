@@ -24,16 +24,16 @@ const Country = ({ routeKey }: { routeKey?: string }) => {
   
   // Format country name for display and SEO
   const formattedCountry = country === 'australia' ? 'Australia' : country || '';
-  const countryTitle = `SEO Services in ${formattedCountry} | Local Search Optimization`;
-  const countryDescription = `Comprehensive SEO services tailored for businesses across ${formattedCountry}. Boost your local search visibility and attract more qualified customers.`;
+  const countryTitle = `Local SEO Services Australia | 317 Cities Nationwide Coverage`;
+  const countryDescription = `Comprehensive local SEO services across all Australian cities and towns. Boost your local search visibility, attract nearby customers, and dominate local SERPs.`;
   
   // Only showing Australia for now
   if (country?.toLowerCase() !== 'australia') {
     return (
       <div className="min-h-screen flex flex-col">
         <SEO 
-          title="Location Not Available"
-          description="We currently only offer SEO services in Australia. Explore our Australian SEO solutions to improve your local search rankings."
+          title="Location Not Available | Australia SEO Services Only"
+          description="We specialize in Australian SEO services with local expertise. Explore our comprehensive SEO solutions for businesses across all Australian cities."
           canonicalUrl="/australia"
           routeKey={routeKey}
         />
@@ -70,7 +70,7 @@ const Country = ({ routeKey }: { routeKey?: string }) => {
       <SEO 
         title={countryTitle}
         description={countryDescription}
-        keywords={`${formattedCountry} SEO, local SEO, search engine optimization, ${formattedCountry} digital marketing, local business SEO`}
+        keywords="local SEO Australia, Australian SEO services, local search optimization, city SEO services, regional digital marketing, nationwide SEO coverage"
         canonicalUrl={`/${country?.toLowerCase()}`}
         routeKey={routeKey}
       />

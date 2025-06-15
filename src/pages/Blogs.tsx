@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -32,9 +33,9 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="Expert SEO Insights & Strategies Blog"
-        description="Discover actionable SEO tips, industry trends, and expert strategies to improve your search rankings and drive more qualified traffic to your website."
-        keywords="SEO blog, SEO strategies, search engine optimization tips, SEO best practices, digital marketing blog, SEO experts"
+        title="SEO Blog | Expert Tips, Strategies & Industry Insights"
+        description="Stay ahead with actionable SEO tips, algorithm updates, and proven strategies from industry experts. Free guides to improve your search rankings today."
+        keywords="SEO blog, SEO tips, search optimization strategies, SEO best practices, digital marketing insights, Google algorithm updates"
         canonicalUrl="/blogs"
         routeKey={routeKey}
       />

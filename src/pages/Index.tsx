@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -29,9 +30,9 @@ const Index = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="Results-Driven SEO Services | Improve Rankings"
-        description="Get expert SEO services that deliver measurable results. Increase your search visibility, drive targeted traffic, and grow your business online."
-        keywords="SEO services, search engine optimization, digital marketing, website ranking, SEO experts, improve search rankings"
+        title="Australia's Premier SEO Agency | Proven Results & Growth"
+        description="Leading SEO agency delivering measurable results for Australian businesses. Expert strategies, proven ROI, and dedicated support. Get your free SEO audit today!"
+        keywords="SEO agency Australia, search engine optimization, digital marketing agency, SEO experts, website ranking improvement, organic traffic growth"
         canonicalUrl="/"
         routeKey={routeKey}
       />

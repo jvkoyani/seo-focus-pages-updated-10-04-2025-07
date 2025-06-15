@@ -9,9 +9,9 @@ const About = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="About Our Expert SEO Team & Approach"
-        description="Meet the experienced SEO specialists behind our success. Learn about our data-driven approach, values, and commitment to delivering measurable SEO results."
-        keywords="SEO agency, SEO experts, SEO specialists, search engine optimization company, SEO professionals, digital marketing team"
+        title="About Our SEO Team | Award-Winning Digital Marketing Experts"
+        description="Meet Australia's leading SEO specialists with 10+ years experience. Transparent approach, proven methodology, and 98% client retention rate. Discover our story."
+        keywords="SEO agency team, SEO experts Australia, digital marketing professionals, search optimization specialists, SEO company background"
         canonicalUrl="/about"
         routeKey={routeKey}
       />

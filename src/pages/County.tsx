@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, MapPin, ArrowRight } from 'lucide-react';
@@ -27,8 +26,8 @@ const County = ({ routeKey }: { routeKey?: string }) => {
   );
   
   // Custom meta title and description for this county
-  const countyTitle = `Local SEO in ${countyFormatted}, ${stateFormatted} | Area-Specific Optimization`;
-  const countyDescription = `Specialized SEO services for businesses in ${countyFormatted}. Improve your local visibility and attract more customers in your area.`;
+  const countyTitle = `SEO Services ${countyFormatted} ${stateFormatted} | Local Search Experts`;
+  const countyDescription = `Professional SEO services in ${countyFormatted}, ${stateFormatted}. Dominate local search results, increase visibility, and attract more customers in your area.`;
   
   const popularIndustries = getAllIndustries().slice(0, 3);
   
@@ -51,7 +50,7 @@ const County = ({ routeKey }: { routeKey?: string }) => {
       <SEO 
         title={countyTitle}
         description={countyDescription}
-        keywords={`${countyFormatted} SEO, local SEO services, ${stateFormatted} SEO, search optimization, local business marketing`}
+        keywords={`${countyFormatted} SEO services, local SEO ${stateFormatted}, search optimization ${countyFormatted}, digital marketing ${countyFormatted}`}
         canonicalUrl={`/${country}/${state}/${county}`}
         routeKey={routeKey}
       />

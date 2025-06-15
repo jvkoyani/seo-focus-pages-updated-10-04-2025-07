@@ -15,9 +15,9 @@ const CaseStudies = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="Proven SEO Results & Success Stories"
-        description="Explore real-world SEO success stories with measurable results. See how we've helped businesses across industries improve rankings and drive qualified traffic."
-        keywords="SEO case studies, SEO results, SEO success stories, SEO ROI, search engine optimization examples, SEO client results"
+        title="SEO Case Studies | Real Results & Client Success Stories"
+        description="Explore proven SEO success stories with measurable ROI. See how we've helped 250+ businesses achieve 175% traffic growth and dominate search results."
+        keywords="SEO case studies, SEO results, client success stories, SEO ROI examples, search optimization proof, digital marketing results"
         canonicalUrl="/case-studies"
         routeKey={routeKey}
       />

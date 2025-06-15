@@ -11,9 +11,9 @@ const Contact = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="Contact Our SEO Experts | Free Consultation"
-        description="Ready to improve your search rankings? Contact our SEO specialists for a personalized strategy session and discover how we can help your business grow online."
-        keywords="SEO contact, SEO consultation, SEO services, SEO experts, search engine optimization help"
+        title="Get Your Free SEO Consultation | Contact SEO Experts"
+        description="Ready to boost your rankings? Contact our certified SEO specialists for a free consultation. Personalized strategies, transparent pricing, guaranteed results."
+        keywords="SEO consultation, contact SEO experts, free SEO audit, SEO quote, search optimization help, digital marketing consultation"
         canonicalUrl="/contact"
         routeKey={routeKey}
       />
