@@ -19,14 +19,14 @@ export function DesktopServiceTabs({
   contentRefs 
 }: DesktopServiceTabsProps) {
   
-  // Service images mapping with more relevant images
+  // Service images mapping with more relevant Australian city images
   const serviceImages = {
-    "local-seo": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop",
-    "technical-seo": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop",
-    "content-marketing": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop",
-    "link-building": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=600&fit=crop",
-    "ecommerce-seo": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
-    "seo-audits": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
+    "local-seo": "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&h=600&fit=crop",
+    "technical-seo": "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&h=600&fit=crop",
+    "content-marketing": "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=600&fit=crop",
+    "link-building": "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?w=800&h=600&fit=crop",
+    "ecommerce-seo": "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&h=600&fit=crop",
+    "seo-audits": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=600&fit=crop"
   };
 
   // Key benefits for each service
