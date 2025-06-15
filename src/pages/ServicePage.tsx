@@ -1,4 +1,5 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+
+import { useParams, Link, useNavigate, useEffect } from 'react-router-dom';
 import { 
   ArrowRight, Check, Zap, Award, Target, BarChart, 
   Users, Globe, MapPin, TrendingUp, CheckCircle, 
@@ -41,12 +42,17 @@ const ServicePage = ({ routeKey }: { routeKey?: string }) => {
     return IconComponent ? <IconComponent className="h-12 w-12 text-seo-blue" /> : null;
   };
 
+  // Generate SEO meta data based on service
+  const metaTitle = `${service.title} Services | SEO Focus - Expert SEO Solutions`;
+  const metaDescription = `${service.description} Get expert ${service.title.toLowerCase()} services from SEO Focus to boost your online visibility and drive results.`;
+  const keywords = `${service.title}, SEO services, ${service.slug}, digital marketing, search engine optimization`;
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title={service.metaTitle}
-        description={service.metaDescription}
-        keywords={service.keywords}
+        title={metaTitle}
+        description={metaDescription}
+        keywords={keywords}
         canonicalUrl={`/service/${service.slug}`}
         routeKey={routeKey}
       />
@@ -167,7 +173,7 @@ const ServicePage = ({ routeKey }: { routeKey?: string }) => {
       </section>
       
       {/* Service Details */}
-      <ServiceTabs service={service} />
+      <ServiceTabs />
       
       {/* Resources Section with contextual blog */}
       <ResourcesSection serviceSlug={service.slug} />
