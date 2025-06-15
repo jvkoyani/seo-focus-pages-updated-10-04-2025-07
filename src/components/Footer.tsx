@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, Clock, ChevronRight, FileText, FileJson } from 'lucide-react';
@@ -20,22 +18,14 @@ const Footer = () => {
                   Sydney NSW 2000, Australia
                 </span>
               </div>
-              <div className="flex items-center">
-                <Phone className="h-5 w-5 mr-3 text-seo-blue" />
-                <a href="tel:1300123456" className="text-gray-300 hover:text-white">
-                  1300 123 456
-                </a>
-              </div>
+              
               <div className="flex items-center">
                 <Mail className="h-5 w-5 mr-3 text-seo-blue" />
                 <a href="mailto:info@example.com" className="text-gray-300 hover:text-white">
                   info@example.com
                 </a>
               </div>
-              <div className="flex items-center">
-                <Clock className="h-5 w-5 mr-3 text-seo-blue" />
-                <span className="text-gray-300">Mon-Fri: 9am-5pm</span>
-              </div>
+              
             </div>
           </div>
 
@@ -80,10 +70,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/sitemap" className="text-gray-300 hover:text-white flex items-center">
-                  <ChevronRight className="h-4 w-4 mr-1" />
-                  <span>Sitemap</span>
-                </Link>
+                
               </li>
             </ul>
           </div>
@@ -189,4 +176,3 @@ const Footer = () => {
     </footer>;
 };
 export default Footer;
-
