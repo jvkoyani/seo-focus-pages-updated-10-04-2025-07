@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, Clock, ChevronRight, FileText, FileJson } from 'lucide-react';
@@ -15,8 +16,8 @@ const Footer = () => {
               <div className="flex items-start">
                 <MapPin className="h-5 w-5 mt-1 mr-3 text-seo-blue" />
                 <span className="text-gray-300">
-                  123 SEO Street, Sydney<br />
-                  NSW 2000, Australia
+                  123 SEO Street,<br />
+                  Sydney NSW 2000, Australia
                 </span>
               </div>
               <div className="flex items-center">
