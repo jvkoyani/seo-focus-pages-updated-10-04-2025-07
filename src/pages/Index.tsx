@@ -62,51 +62,75 @@ const Index = ({ routeKey }: { routeKey?: string }) => {
             </p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <InfoCard
-              title="Data-Driven Approach"
-              description="We use comprehensive analytics and industry data to develop SEO strategies tailored to your specific market and audience."
-              icon={<BarChart />}
-              animation="fade-in-left"
-              delay={100}
-              iconBackground="bg-blue-50"
-              iconColor="text-blue-500"
-              items={[
-                "In-depth keyword research and analysis",
-                "Competition benchmarking and gap analysis",
-                "Regular performance reporting"
-              ]}
-            />
-            
-            <InfoCard
-              title="Holistic SEO Strategy"
-              description="Our comprehensive approach addresses all aspects of SEO to ensure sustainable, long-term results."
-              icon={<TrendingUp />}
-              animation="fade-in"
-              delay={200}
-              iconBackground="bg-green-50"
-              iconColor="text-green-500"
-              items={[
-                "Technical SEO optimization",
-                "Content strategy and creation",
-                "Link building and off-page SEO"
-              ]}
-            />
-            
-            <InfoCard
-              title="Local SEO Expertise"
-              description="We specialize in helping Australian businesses dominate local search results in their target markets."
-              icon={<MapPin />}
-              animation="fade-in-right"
-              delay={300}
-              iconBackground="bg-amber-50"
-              iconColor="text-amber-500"
-              items={[
-                "Google Business Profile optimization",
-                "Local citation building and management",
-                "Targeted local keyword strategies"
-              ]}
-            />
+          <div className="max-w-6xl mx-auto">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                <CarouselItem className="md:basis-1/3">
+                  <div className="p-2">
+                    <InfoCard
+                      title="Data-Driven Approach"
+                      description="We use comprehensive analytics and industry data to develop SEO strategies tailored to your specific market and audience."
+                      icon={<BarChart />}
+                      animation="fade-in-left"
+                      delay={100}
+                      iconBackground="bg-blue-50"
+                      iconColor="text-blue-500"
+                      items={[
+                        "In-depth keyword research and analysis",
+                        "Competition benchmarking and gap analysis",
+                        "Regular performance reporting"
+                      ]}
+                    />
+                  </div>
+                </CarouselItem>
+                
+                <CarouselItem className="md:basis-1/3">
+                  <div className="p-2">
+                    <InfoCard
+                      title="Holistic SEO Strategy"
+                      description="Our comprehensive approach addresses all aspects of SEO to ensure sustainable, long-term results."
+                      icon={<TrendingUp />}
+                      animation="fade-in"
+                      delay={200}
+                      iconBackground="bg-green-50"
+                      iconColor="text-green-500"
+                      items={[
+                        "Technical SEO optimization",
+                        "Content strategy and creation",
+                        "Link building and off-page SEO"
+                      ]}
+                    />
+                  </div>
+                </CarouselItem>
+                
+                <CarouselItem className="md:basis-1/3">
+                  <div className="p-2">
+                    <InfoCard
+                      title="Local SEO Expertise"
+                      description="We specialize in helping Australian businesses dominate local search results in their target markets."
+                      icon={<MapPin />}
+                      animation="fade-in-right"
+                      delay={300}
+                      iconBackground="bg-amber-50"
+                      iconColor="text-amber-500"
+                      items={[
+                        "Google Business Profile optimization",
+                        "Local citation building and management",
+                        "Targeted local keyword strategies"
+                      ]}
+                    />
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
           </div>
         </div>
       </section>
