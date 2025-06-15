@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowRight, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
@@ -17,28 +16,44 @@ const ServiceIndustryLocationPage = ({ routeKey }: { routeKey?: string }) => {
   const params = useParams();
   const slug = Object.values(params)[0];
 
+  console.log('ServiceIndustryLocationPage - Full slug:', slug);
+
   // Early return if slug is missing
   if (!slug) {
+    console.log('ServiceIndustryLocationPage - No slug found');
     return <NotFound />;
   }
 
-  // Use regex to extract slugs. Example: "local-seo-for-healthcare-in-melbourne"
+  // Use regex to extract slugs. Example: "search-engine-optimization-for-healthcare-in-melbourne"
   const match = slug.match(/(.+)-for-(.+)-in-(.+)/);
 
   if (!match) {
-    // This slug format is not for this page.
+    console.log('ServiceIndustryLocationPage - Slug does not match expected pattern:', slug);
     return <NotFound />;
   }
   
   const [, serviceSlug, industrySlug, locationSlug] = match;
+  
+  console.log('ServiceIndustryLocationPage - Extracted slugs:', {
+    serviceSlug,
+    industrySlug,
+    locationSlug
+  });
 
   // Find the matching data
   const service = findServiceBySlug(serviceSlug);
   const industry = findIndustryBySlug(industrySlug);
   const location = findLocationBySlug(locationSlug);
 
+  console.log('ServiceIndustryLocationPage - Found data:', {
+    service: service?.title,
+    industry: industry?.title,
+    location: location?.name
+  });
+
   // If any data is missing, return NotFound
   if (!service || !industry || !location) {
+    console.log('ServiceIndustryLocationPage - Missing data, returning NotFound');
     return <NotFound />;
   }
 
