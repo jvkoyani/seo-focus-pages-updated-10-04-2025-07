@@ -20,21 +20,66 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Schema } from '@/components/Schema';
 
 const Index = ({ routeKey }: { routeKey?: string }) => {
   // Get featured blog posts and case studies
   const featuredBlogs = blogPosts.slice(0, 3);
   const featuredCaseStudies = caseStudies.slice(0, 2);
 
+  // Homepage schema data
+  const homepageSchema = {
+    type: 'service' as const,
+    data: {
+      name: "Professional SEO Services",
+      description: "Expert search engine optimization services to improve your online visibility and drive targeted traffic. Comprehensive SEO solutions for businesses of all sizes.",
+      url: "https://seofocus.com",
+      areaServed: "United States"
+    }
+  };
+
+  // FAQ schema data
+  const faqSchema = {
+    type: 'faq' as const,
+    data: {
+      questions: [
+        {
+          question: "What is SEO and why is it important?",
+          answer: "SEO (Search Engine Optimization) is the practice of optimizing your website to rank higher in search engine results. It's important because it increases your online visibility, drives organic traffic, and helps potential customers find your business."
+        },
+        {
+          question: "How long does it take to see SEO results?",
+          answer: "SEO is a long-term strategy. While some improvements can be seen within 3-6 months, significant results typically take 6-12 months depending on competition, current website status, and the scope of optimization work."
+        },
+        {
+          question: "Do you provide industry-specific SEO services?",
+          answer: "Yes, we specialize in SEO for various industries including healthcare, legal, real estate, e-commerce, restaurants, technology, and professional services. Each industry has unique SEO challenges and opportunities."
+        },
+        {
+          question: "What's included in your SEO services?",
+          answer: "Our comprehensive SEO services include technical audits, keyword research, on-page optimization, content strategy, link building, local SEO, and ongoing monitoring and reporting."
+        },
+        {
+          question: "How do you measure SEO success?",
+          answer: "We track key metrics including organic traffic growth, keyword rankings, conversion rates, and ROI. We provide transparent monthly reports showing progress toward your specific business goals."
+        }
+      ]
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       <SEO 
-        title="Australia's Premier SEO Agency | Proven Results & Growth"
-        description="Leading SEO agency delivering measurable results for Australian businesses. Expert strategies, proven ROI, and dedicated support. Get your free SEO audit today!"
-        keywords="SEO agency Australia, search engine optimization, digital marketing agency, SEO experts, website ranking improvement, organic traffic growth"
-        canonicalUrl="/"
+        title="SEO Focus | Expert Search Engine Optimization Services"
+        description="Professional SEO services to improve your online visibility and drive targeted traffic. Expert search engine optimization for businesses across all industries."
+        keywords="SEO services, search engine optimization, digital marketing, online visibility, organic traffic, keyword ranking, local SEO, technical SEO"
+        canonicalUrl="https://seofocus.com"
         routeKey={routeKey}
+        schemaData={homepageSchema}
       />
+      
+      {/* Add FAQ schema */}
+      <Schema type="faq" data={faqSchema.data} />
       
       <Navbar />
       <Hero />

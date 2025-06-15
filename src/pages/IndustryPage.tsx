@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import IndustrySeoServices from '@/components/IndustrySeoServices';
 import SEO from '@/components/SEO';
+import Schema from '@/components/Schema';
 
 const IndustryPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -59,6 +60,29 @@ const IndustryPage = () => {
   // Extract relevant industry name without "SEO" suffix for meta description
   const industryName = industry.title.replace(' SEO', '');
 
+  // Schema data for the industry page
+  const schemaData = {
+    type: 'service' as const,
+    data: {
+      name: industry.title,
+      description: `Specialized SEO strategies for ${industryName} businesses. Increase your online visibility, attract more customers, and grow your ${industryName.toLowerCase()} business with our tailored SEO services.`,
+      url: `https://seofocus.com/industry/${slug}`,
+      areaServed: "United States"
+    }
+  };
+
+  // Breadcrumb schema data
+  const breadcrumbSchema = {
+    type: 'breadcrumb' as const,
+    data: {
+      items: [
+        { name: 'Home', url: 'https://seofocus.com' },
+        { name: 'Industries', url: 'https://seofocus.com/industries' },
+        { name: industry.title, url: `https://seofocus.com/industry/${slug}` }
+      ]
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
@@ -66,7 +90,11 @@ const IndustryPage = () => {
         description={`Specialized SEO strategies for ${industryName} businesses. Increase your online visibility, attract more customers, and grow your ${industryName.toLowerCase()} business with our tailored SEO services.`}
         keywords={`${industryName} SEO, ${industryName.toLowerCase()} digital marketing, ${industryName.toLowerCase()} search engine optimization, ${industryName.toLowerCase()} online presence, ${industryName.toLowerCase()} website ranking`}
         canonicalUrl={`https://seofocus.com/industry/${slug}`}
+        schemaData={schemaData}
       />
+      
+      {/* Add breadcrumb schema */}
+      <Schema type="breadcrumb" data={breadcrumbSchema.data} />
       
       <Navbar />
       
