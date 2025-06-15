@@ -14,6 +14,13 @@ import BlogPreview from '@/components/BlogPreview';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
 import InfoCard from '@/components/InfoCard';
 import SEO from '@/components/SEO';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Index = ({ routeKey }: { routeKey?: string }) => {
   // Get featured blog posts and case studies
@@ -21,7 +28,7 @@ const Index = ({ routeKey }: { routeKey?: string }) => {
   const featuredCaseStudies = caseStudies.slice(0, 2);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex col">
       <SEO 
         title="Results-Driven SEO Services | Improve Rankings"
         description="Get expert SEO services that deliver measurable results. Increase your search visibility, drive targeted traffic, and grow your business online."
@@ -211,45 +218,58 @@ const Index = ({ routeKey }: { routeKey?: string }) => {
             </p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {locations.map((location, index) => (
-              <AnimatedSection
-                key={location.id}
-                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group"
-                animation="fade-in"
-                delay={index * 100}
-              >
-                <div className="h-48 relative overflow-hidden">
-                  <img 
-                    src={location.image} 
-                    alt={location.name} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 flex items-center">
-                    <MapPin className="text-white h-5 w-5 mr-2" />
-                    <span className="text-white font-medium">{location.name}</span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
-                    SEO in {location.name}
-                  </h3>
-                  <p className="text-seo-gray-dark mb-4">
-                    {location.description.substring(0, 120)}...
-                  </p>
-                  <Link 
-                    to={`/location/${location.slug}`} 
-                    className="inline-flex items-center text-seo-blue font-medium group"
-                  >
-                    <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
-                      Explore {location.name} SEO services
-                    </span>
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </AnimatedSection>
-            ))}
+          <div className="max-w-6xl mx-auto">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {locations.map((location, index) => (
+                  <CarouselItem key={location.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <AnimatedSection
+                      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group h-full"
+                      animation="fade-in"
+                      delay={index * 100}
+                    >
+                      <div className="h-48 relative overflow-hidden">
+                        <img 
+                          src={location.image} 
+                          alt={location.name} 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div className="absolute bottom-4 left-4 flex items-center">
+                          <MapPin className="text-white h-5 w-5 mr-2" />
+                          <span className="text-white font-medium">{location.name}</span>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-display font-bold text-seo-dark mb-3">
+                          SEO in {location.name}
+                        </h3>
+                        <p className="text-seo-gray-dark mb-4">
+                          {location.description.substring(0, 120)}...
+                        </p>
+                        <Link 
+                          to={`/location/${location.slug}`} 
+                          className="inline-flex items-center text-seo-blue font-medium group"
+                        >
+                          <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
+                            Explore {location.name} SEO services
+                          </span>
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </div>
+                    </AnimatedSection>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex -left-12" />
+              <CarouselNext className="hidden md:flex -right-12" />
+            </Carousel>
           </div>
         </div>
       </section>
