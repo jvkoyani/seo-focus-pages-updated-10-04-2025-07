@@ -1,5 +1,6 @@
 
 import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 
 interface SEOProps {
   title: string;
@@ -29,8 +30,14 @@ const SEO: React.FC<SEOProps> = ({
   
   console.log(`SEO Component rendering for: ${title} with routeKey: ${routeKey}`);
   
+  // Force update document title immediately
+  useEffect(() => {
+    document.title = fullTitle;
+    console.log(`Document title updated to: ${fullTitle}`);
+  }, [fullTitle, routeKey]);
+  
   return (
-    <Helmet key={routeKey || title}>
+    <Helmet key={routeKey}>
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
@@ -52,9 +59,6 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="twitter:title" content={fullTitle} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={fullOgImage} />
-      
-      {/* Key property to ensure meta tags are updated correctly when navigating */}
-      <meta name="key" content={routeKey || fullTitle + description} />
     </Helmet>
   );
 };

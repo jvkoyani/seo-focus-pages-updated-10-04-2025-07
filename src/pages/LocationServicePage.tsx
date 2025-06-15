@@ -13,11 +13,15 @@ import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { findServiceBySlug } from '@/lib/servicesData';
 import FAQ from '@/components/FAQ';
 import ServiceTabs from '@/components/ServiceTabs';
+import SEO from '@/components/SEO';
 
-const LocationServicePage = () => {
+const LocationServicePage = ({ routeKey }: { routeKey?: string }) => {
   const { locationSlug, serviceSlug } = useParams<{ locationSlug: string; serviceSlug: string }>();
   const location = useLocation();
   const navigate = useNavigate();
+  
+  // Generate routeKey if not provided
+  const currentRouteKey = routeKey || `${location.pathname}${location.search}`;
   
   const locationData = locationSlug ? findLocationBySlug(locationSlug) : undefined;
   const serviceData = serviceSlug ? findServiceBySlug(serviceSlug) : undefined;
@@ -39,6 +43,10 @@ const LocationServicePage = () => {
     return null; // Will be redirected
   }
   
+  // Meta title and description for this page
+  const pageTitle = `${serviceData.title} in ${locationData.name} | Expert SEO Services`;
+  const pageDescription = `Professional ${serviceData.title.toLowerCase()} services in ${locationData.name}, ${locationData.state}. Improve your local search rankings and attract more qualified leads.`;
+  
   const faqs = [
     {
       question: `How does ${serviceData.title} help businesses in ${locationData.name}?`,
@@ -56,7 +64,13 @@ const LocationServicePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <SEO 
+        title={pageTitle}
+        description={pageDescription}
+        keywords={`${serviceData.title} ${locationData.name}, ${serviceData.title.toLowerCase()} services ${locationData.state}, SEO ${locationData.name}`}
+        canonicalUrl={`/location/${locationData.slug}/${serviceData.slug}`}
+        routeKey={currentRouteKey}
+      />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-seo-blue-light/10 to-white relative overflow-hidden">

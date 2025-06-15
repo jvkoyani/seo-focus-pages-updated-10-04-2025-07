@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ChevronRight, MapPin, ArrowRight } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -13,6 +13,10 @@ import SEO from '@/components/SEO';
 const County = ({ routeKey }: { routeKey?: string }) => {
   const { country, state, county } = useParams<{ country: string; state: string; county: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Generate routeKey if not provided
+  const currentRouteKey = routeKey || `${location.pathname}${location.search}`;
   
   const countryName = country === 'australia' ? 'Australia' : country;
   const stateFormatted = state ? state.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : '';
@@ -52,7 +56,7 @@ const County = ({ routeKey }: { routeKey?: string }) => {
         description={countyDescription}
         keywords={`${countyFormatted} SEO services, local SEO ${stateFormatted}, search optimization ${countyFormatted}, digital marketing ${countyFormatted}`}
         canonicalUrl={`/${country}/${state}/${county}`}
-        routeKey={routeKey}
+        routeKey={currentRouteKey}
       />
       
       <Navbar />
