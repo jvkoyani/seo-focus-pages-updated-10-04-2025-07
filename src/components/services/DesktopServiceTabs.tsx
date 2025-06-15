@@ -1,13 +1,10 @@
 
 import React from 'react';
 import { cn } from "@/lib/utils";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { ServiceTab } from '@/data/seoServicesData';
+import { CheckCircle, ArrowRight } from 'lucide-react';
 
 interface DesktopServiceTabsProps {
   services: ServiceTab[];
@@ -22,66 +19,144 @@ export function DesktopServiceTabs({
   onTabChange,
   contentRefs 
 }: DesktopServiceTabsProps) {
+  
+  // Service images mapping
+  const serviceImages = {
+    "local-seo": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
+    "technical-seo": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
+    "content-marketing": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
+    "link-building": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
+    "ecommerce-seo": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
+    "seo-audits": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png"
+  };
+
+  // Key benefits for each service
+  const serviceBenefits = {
+    "local-seo": [
+      "Improved visibility in local search results",
+      "Higher conversion rates from local searches",
+      "Enhanced Google Business Profile performance"
+    ],
+    "technical-seo": [
+      "Faster website performance and loading speeds",
+      "Improved crawlability and search engine matching",
+      "Better mobile user experience and responsiveness"
+    ],
+    "content-marketing": [
+      "Engaging content that converts visitors to customers",
+      "Thought leadership establishment in your industry",
+      "Long-term organic traffic growth"
+    ],
+    "link-building": [
+      "Increased domain authority and search rankings",
+      "Better search engine trust and credibility",
+      "High-quality referral traffic from relevant sites"
+    ],
+    "ecommerce-seo": [
+      "Higher product visibility in search results",
+      "Increased online sales and revenue",
+      "Improved shopping experience for customers"
+    ],
+    "seo-audits": [
+      "Complete website SEO analysis",
+      "Competitor benchmarking insights",
+      "Actionable recommendations for improvement"
+    ]
+  };
+
+  // What we do for each service
+  const serviceActions = {
+    "local-seo": [
+      "Google Business Profile optimization",
+      "Local citation building and management",
+      "Local keyword research and targeting"
+    ],
+    "technical-seo": [
+      "Comprehensive technical SEO audits",
+      "Site speed optimization and Core Web Vitals",
+      "Mobile-first optimization and responsive design"
+    ],
+    "content-marketing": [
+      "Content strategy development and planning",
+      "High-quality blog and article creation",
+      "SEO-optimized content for target keywords"
+    ],
+    "link-building": [
+      "Strategic link prospecting and outreach",
+      "High-quality guest posting opportunities",
+      "Digital PR and brand mention building"
+    ],
+    "ecommerce-seo": [
+      "Product page optimization and enhancement",
+      "Category page structure and SEO",
+      "E-commerce technical SEO improvements"
+    ],
+    "seo-audits": [
+      "Technical SEO analysis and recommendations",
+      "Content audit and optimization opportunities",
+      "Competitor analysis and benchmarking"
+    ]
+  };
+
   return (
     <div className="hidden md:block">
-      <Tabs 
-        value={activeTab} 
-        onValueChange={onTabChange} 
-        className="w-full"
-      >
-        <div className="grid grid-cols-12 gap-8">
-          <TabsList className="flex flex-col h-auto space-y-2 col-span-4 sticky top-24">
-            {services.map((service) => (
-              <TabsTrigger
-                key={service.id}
-                value={service.id}
-                className={cn(
-                  "flex items-start justify-start p-4 text-left w-full space-x-4 hover:bg-seo-blue/5 data-[state=active]:bg-seo-blue/10",
-                  "border-l-2 border-transparent data-[state=active]:border-seo-blue",
-                  "transition-all duration-200 replacecontent",
-                  "group"
-                )}
-              >
-                <span className="text-sm font-mono text-seo-blue/70 group-hover:text-seo-blue">
-                  {service.number}
-                </span>
-                <span className="font-medium">{service.title}</span>
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          <div className="col-span-8">
-            {services.map((service) => (
-              <TabsContent
-                key={service.id}
-                value={service.id}
-                className={cn(
-                  "mt-0 focus-visible:outline-none focus-visible:ring-0",
-                  "scroll-mt-24 snap-center"
-                )}
-              >
-                <div 
-                  ref={el => contentRefs.current[service.id] = el}
-                  data-tab-id={service.id}
-                  className={cn(
-                    "space-y-6",
-                    "activeservice:opacity-100 opacity-70 transition-opacity duration-300"
-                  )}
-                >
-                  <h3 className="text-2xl font-bold text-seo-dark">
-                    {service.content.heading}
-                  </h3>
-                  {service.content.paragraphs.map((paragraph, index) => (
-                    <p key={index} className="text-seo-gray-dark leading-relaxed">
-                      {paragraph}
-                    </p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        {services.map((service) => (
+          <Card key={service.id} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+            <div className="relative h-48 overflow-hidden">
+              <img 
+                src={serviceImages[service.id as keyof typeof serviceImages]} 
+                alt={service.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute bottom-4 left-4">
+                <h3 className="text-xl font-bold text-white mb-1">
+                  {service.title}
+                </h3>
+              </div>
+            </div>
+            
+            <CardContent className="p-6">
+              <p className="text-seo-gray-dark mb-4 text-sm leading-relaxed">
+                {service.content.paragraphs[0]}
+              </p>
+              
+              <div className="mb-4">
+                <h4 className="font-semibold text-seo-dark mb-3">Key Benefits</h4>
+                <ul className="space-y-2">
+                  {serviceBenefits[service.id as keyof typeof serviceBenefits]?.map((benefit, index) => (
+                    <li key={index} className="flex items-start text-sm">
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="text-seo-gray-dark">{benefit}</span>
+                    </li>
                   ))}
-                </div>
-              </TabsContent>
-            ))}
-          </div>
-        </div>
-      </Tabs>
+                </ul>
+              </div>
+              
+              <div className="mb-6">
+                <h4 className="font-semibold text-seo-dark mb-3">What We Do</h4>
+                <ul className="space-y-2">
+                  {serviceActions[service.id as keyof typeof serviceActions]?.map((action, index) => (
+                    <li key={index} className="flex items-start text-sm">
+                      <CheckCircle className="h-4 w-4 text-seo-blue mr-2 mt-0.5 flex-shrink-0" />
+                      <span className="text-seo-gray-dark">{action}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <Button 
+                className="w-full bg-seo-blue hover:bg-seo-blue-light text-white"
+                onClick={() => window.location.href = `/service/${service.id}`}
+              >
+                Learn More About {service.title}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
