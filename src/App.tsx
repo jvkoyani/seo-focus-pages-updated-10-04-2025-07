@@ -104,9 +104,6 @@ const App = () => {
             {/* Industry pages */}
             <Route path="/industry/:slug" element={<RouteWrapper Component={IndustryPage} />} />
             
-            {/* SEO-friendly URL patterns - MOVED TO TOP for higher priority */}
-            <Route path="/:serviceSlug-for-:industrySlug-in-:locationSlug" element={<RouteWrapper Component={ServiceIndustryLocationPage} />} />
-            
             {/* Location pages - ordered from most specific to least specific */}
             <Route path="/location/:locationSlug/all" element={<RouteWrapper Component={LocationServicesIndustries} />} />
             <Route path="/location/:locationSlug/industries" element={<RouteWrapper Component={LocationIndustries} />} />
@@ -121,16 +118,16 @@ const App = () => {
             <Route path="/service-blog/:slug" element={<RouteWrapper Component={ServiceBlog} />} />
             <Route path="/service-blog/:slug/:locationSlug" element={<RouteWrapper Component={ServiceBlog} />} />
             
+            {/* SEO-friendly URL patterns - HIGHEST PRIORITY for single-segment routes */}
+            <Route path="/:slug" element={<RouteWrapper Component={ServiceIndustryLocationPage} />} />
+            
             {/* Service-location combinations - these should come after more specific routes */}
             <Route path="/:serviceSlug-:locationSlug" element={<RouteWrapper Component={LocationService} />} />
             
             {/* Hierarchy pages - ordered by specificity */}
             <Route path="/:country/:state/:county" element={<RouteWrapper Component={County} />} />
             <Route path="/:country/:state" element={<RouteWrapper Component={State} />} />
-            <Route path="/:country" element={<RouteWrapper Component={Country} />} />
-            
-            {/* Generic catch-all for service-location combinations */}
-            <Route path="/:serviceLocationSlug" element={<RouteWrapper Component={LocationService} />} />
+            <Route path="/australia" element={<RouteWrapper Component={Country} />} />
             
             {/* 404 fallback - must be last */}
             <Route path="*" element={<RouteWrapper Component={NotFound} />} />
