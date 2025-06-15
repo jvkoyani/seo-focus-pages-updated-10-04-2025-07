@@ -252,7 +252,7 @@ const ContextualBlog: React.FC<ContextualBlogProps> = ({
                   </div>
                   
                   <h3 className="text-xl font-bold text-seo-dark mb-3">
-                    <Link to={`/blogs`} className="hover:text-seo-blue transition-colors">
+                    <Link to={`/blog/${post.slug}`} className="hover:text-seo-blue transition-colors">
                       {post.title}
                     </Link>
                   </h3>
@@ -271,7 +271,7 @@ const ContextualBlog: React.FC<ContextualBlogProps> = ({
                   </div>
                   
                   <Link 
-                    to={`/blogs`}
+                    to={`/blog/${post.slug}`}
                     className="mt-auto inline-flex items-center text-seo-blue font-medium group"
                   >
                     <span className="border-b border-seo-blue/30 group-hover:border-seo-blue transition-colors">
