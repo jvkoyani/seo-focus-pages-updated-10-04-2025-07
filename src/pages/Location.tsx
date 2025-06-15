@@ -16,8 +16,8 @@ import LocationBreadcrumbs from '@/components/LocationBreadcrumbs';
 import ServiceBadge from '@/components/ServiceBadge';
 import { ServiceBadgeProps } from '@/components/ServiceBadge';
 import FAQ, { FAQItem } from '@/components/FAQ';
-import ContextualBlog from '@/components/ContextualBlog';
 import ServiceTabs from '@/components/ServiceTabs';
+
 const Location = () => {
   const {
     slug
@@ -144,12 +144,14 @@ const Location = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
-                  Get a Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button size="lg" asChild className="bg-seo-blue hover:bg-seo-blue-light text-white button-hover-effect">
+                  <Link to="/free-consultation">
+                    Get a Free Consultation
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
-                  <Link to={`/location/${locationData.slug}/all`} className="w-full flex items-center justify-center">
+                <Button size="lg" variant="outline" asChild className="border-seo-blue text-seo-blue hover:bg-seo-blue/5">
+                  <Link to={`/location/${locationData.slug}/all`}>
                     View All Services & Industries
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
@@ -189,8 +191,10 @@ const Location = () => {
                       <span>Actionable recommendations</span>
                     </div>
                     <div className="mt-6">
-                      <Button className="w-full bg-seo-blue hover:bg-seo-blue-light">
-                        Request Free Audit
+                      <Button asChild className="w-full bg-seo-blue hover:bg-seo-blue-light">
+                        <Link to="/seo-audit">
+                          Request Free Audit
+                        </Link>
                       </Button>
                     </div>
                   </div>
@@ -324,8 +328,8 @@ const Location = () => {
                       <p className="text-sm text-seo-gray-dark mb-4">
                         Ready to partner with {locationData.name}'s leading SEO agency?
                       </p>
-                      <Button className="w-full bg-gradient-to-r from-seo-blue to-purple-600 hover:from-seo-blue-light hover:to-purple-500 text-white">
-                        <Link to="/free-consultation" className="w-full flex items-center justify-center">
+                      <Button asChild className="w-full bg-gradient-to-r from-seo-blue to-purple-600 hover:from-seo-blue-light hover:to-purple-500 text-white">
+                        <Link to="/free-consultation">
                           Start Your Partnership Today
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
@@ -340,8 +344,6 @@ const Location = () => {
       </section>
       
       <LocationIndustries locationName={locationData.name} locationSlug={locationData.slug} limit={6} showAllLink={true} />
-      
-      <ContextualBlog title={`Latest SEO Insights for ${locationData.name} Businesses`} subtitle={`Expert guides and tips specifically for businesses in ${locationData.name}`} locationSlug={locationData.slug} />
       
       <FAQ title={`Frequently Asked Questions About SEO in ${locationData.name}`} subtitle={`Get answers to common questions about our SEO services for ${locationData.name} businesses`} faqs={locationFAQs} />
       
@@ -489,12 +491,16 @@ const Location = () => {
                   </div>
                   
                   <div className="space-y-4">
-                    <Button className="w-full bg-seo-blue hover:bg-seo-blue-light text-white py-6 text-lg">
-                      Get Your Free SEO Audit
+                    <Button asChild className="w-full bg-seo-blue hover:bg-seo-blue-light text-white py-6 text-lg">
+                      <Link to="/seo-audit">
+                        Get Your Free SEO Audit
+                      </Link>
                     </Button>
-                    <Button variant="outline" className="w-full border-seo-blue text-seo-blue hover:bg-seo-blue/5 py-6 text-lg">
-                      <Phone className="mr-2 h-5 w-5" />
-                      Schedule a Call
+                    <Button asChild variant="outline" className="w-full border-seo-blue text-seo-blue hover:bg-seo-blue/5 py-6 text-lg">
+                      <Link to="/free-consultation">
+                        <Phone className="mr-2 h-5 w-5" />
+                        Schedule a Call
+                      </Link>
                     </Button>
                   </div>
                   
