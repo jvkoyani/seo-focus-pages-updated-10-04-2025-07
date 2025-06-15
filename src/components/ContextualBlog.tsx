@@ -31,151 +31,177 @@ interface ContextualBlogProps {
 }
 
 const ContextualBlog: React.FC<ContextualBlogProps> = ({
-  title = "Latest Insights & Resources",
+  title,
   subtitle,
   serviceSlug,
   industrySlug,
   locationSlug,
-  className,
+  className = "",
   limit = 3
 }) => {
-  // Generate dynamic subtitle based on context
-  const getContextualSubtitle = () => {
+  // Generate contextual blog posts based on the current page context
+  const generateContextualBlogPosts = (): BlogPost[] => {
+    const allBlogPosts: BlogPost[] = [];
+    
+    // Service + Industry + Location specific blog
     if (serviceSlug && industrySlug && locationSlug) {
-      return `Specialized insights for ${serviceSlug.replace(/-/g, ' ')} in the ${industrySlug.replace(/-/g, ' ')} industry in ${locationSlug.replace(/-/g, ' ')}`;
-    } else if (serviceSlug && industrySlug) {
-      return `Focused resources for ${serviceSlug.replace(/-/g, ' ')} in the ${industrySlug.replace(/-/g, ' ')} industry`;
-    } else if (serviceSlug) {
-      return `Expert insights related to ${serviceSlug.replace(/-/g, ' ')}`;
-    } else {
-      return "Stay updated with our latest SEO insights, tips, and strategies";
-    }
-  };
-
-  // This would be connected to your data source in a real implementation
-  const allBlogPosts: BlogPost[] = [
-    {
-      id: "1",
-      title: "10 Essential Local SEO Strategies for Small Businesses",
-      excerpt: "Discover the top strategies to boost your local presence and attract nearby customers.",
-      date: "April 2, 2025",
-      author: "Sarah Johnson",
-      tags: ["Local SEO", "Small Business", "Google Maps"],
-      slug: "local-seo-strategies-small-business",
-      serviceSlug: "local-seo",
-      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-      id: "2",
-      title: "How Healthcare Providers Can Leverage SEO for Patient Acquisition",
-      excerpt: "Learn how medical practices can use SEO to attract new patients and grow their practice.",
-      date: "March 28, 2025",
-      author: "Dr. Michael Chen",
-      tags: ["Healthcare", "Patient Acquisition", "Medical SEO"],
-      slug: "healthcare-seo-patient-acquisition",
-      serviceSlug: "technical-seo",
-      industrySlug: "healthcare",
-      imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-      id: "3",
-      title: "Sydney Restaurants: Standing Out in Local Search Results",
-      excerpt: "Practical SEO tactics for restaurants in Sydney to improve visibility and attract diners.",
-      date: "March 15, 2025",
-      author: "Emma Wilson",
-      tags: ["Restaurant SEO", "Sydney", "Local Search"],
-      slug: "sydney-restaurants-local-search",
-      serviceSlug: "local-seo",
-      industrySlug: "restaurants",
-      locationSlug: "sydney",
-      imageUrl: "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-      id: "4",
-      title: "Technical SEO Audit Checklist for E-commerce Websites",
-      excerpt: "Comprehensive guide to auditing and improving technical SEO for online stores.",
-      date: "March 10, 2025",
-      author: "Alex Rivera",
-      tags: ["Technical SEO", "E-commerce", "Audit"],
-      slug: "technical-seo-audit-ecommerce",
-      serviceSlug: "technical-seo",
-      industrySlug: "ecommerce",
-      imageUrl: "https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-      id: "5",
-      title: "Content Marketing for Law Firms in Melbourne",
-      excerpt: "How Melbourne law firms can use content marketing to attract potential clients.",
-      date: "February 28, 2025",
-      author: "Jessica Taylor",
-      tags: ["Content Marketing", "Law Firms", "Melbourne"],
-      slug: "content-marketing-law-firms-melbourne",
-      serviceSlug: "content-marketing",
-      industrySlug: "legal",
-      locationSlug: "melbourne",
-      imageUrl: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-      id: "6",
-      title: "Voice Search Optimization for Local Businesses",
-      excerpt: "Prepare your business for the growing trend of voice-based searches.",
-      date: "February 20, 2025",
-      author: "Tom Richards",
-      tags: ["Voice Search", "Local SEO", "Future Trends"],
-      slug: "voice-search-local-businesses",
-      serviceSlug: "local-seo",
-      imageUrl: "https://images.unsplash.com/photo-1581538407295-5402592e5521?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-    }
-  ];
-
-  // Filter blog posts based on context
-  const filteredPosts = allBlogPosts.filter(post => {
-    if (serviceSlug && industrySlug && locationSlug) {
-      return post.serviceSlug === serviceSlug && 
-             post.industrySlug === industrySlug && 
-             post.locationSlug === locationSlug;
-    } else if (serviceSlug && industrySlug) {
-      return post.serviceSlug === serviceSlug && 
-             post.industrySlug === industrySlug;
-    } else if (serviceSlug) {
-      return post.serviceSlug === serviceSlug;
-    }
-    return true; // Return all posts if no filters
-  }).slice(0, limit);
-
-  // If no posts match the specific criteria, fall back to less specific criteria
-  const getRelevantPosts = () => {
-    if (filteredPosts.length > 0) {
-      return filteredPosts;
+      const serviceName = serviceSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const industryName = industrySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const locationName = locationSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      
+      allBlogPosts.push({
+        id: `why-seo-focus-${serviceSlug}-${industrySlug}-${locationSlug}`,
+        title: `Why SEO Focus is Best for ${serviceName} for ${industryName} in ${locationName}`,
+        excerpt: `Discover why SEO Focus stands out as the premier choice for ${serviceName.toLowerCase()} services specifically tailored for ${industryName.toLowerCase()} businesses in ${locationName}. Our specialized approach delivers exceptional results.`,
+        date: "June 10, 2025",
+        author: "SEO Focus Team",
+        tags: [serviceName, industryName, locationName, "Why Choose Us"],
+        slug: `why-seo-focus-best-${serviceSlug}-${industrySlug}-${locationSlug}`,
+        serviceSlug,
+        industrySlug,
+        locationSlug,
+        imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      });
     }
     
-    // Try with less specific criteria
+    // Service + Industry specific blog
     if (serviceSlug && industrySlug) {
-      const serviceIndustryPosts = allBlogPosts.filter(
-        post => post.serviceSlug === serviceSlug && post.industrySlug === industrySlug
-      ).slice(0, limit);
-      if (serviceIndustryPosts.length > 0) return serviceIndustryPosts;
+      const serviceName = serviceSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const industryName = industrySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      
+      allBlogPosts.push({
+        id: `why-seo-focus-${serviceSlug}-${industrySlug}`,
+        title: `Why SEO Focus is Best for ${serviceName} in ${industryName}`,
+        excerpt: `Learn why SEO Focus is the top choice for ${serviceName.toLowerCase()} services in the ${industryName.toLowerCase()} industry. Our industry-specific expertise and proven methodologies set us apart.`,
+        date: "June 8, 2025",
+        author: "Industry Specialist Team",
+        tags: [serviceName, industryName, "Industry Expertise"],
+        slug: `why-seo-focus-best-${serviceSlug}-${industrySlug}`,
+        serviceSlug,
+        industrySlug,
+        imageUrl: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      });
     }
     
+    // Service specific blog
     if (serviceSlug) {
-      const servicePosts = allBlogPosts.filter(
-        post => post.serviceSlug === serviceSlug
-      ).slice(0, limit);
-      if (servicePosts.length > 0) return servicePosts;
+      const serviceName = serviceSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      
+      allBlogPosts.push({
+        id: `why-seo-focus-${serviceSlug}`,
+        title: `Why SEO Focus is Best for ${serviceName}`,
+        excerpt: `Discover what makes SEO Focus the leading provider of ${serviceName.toLowerCase()} services. Our innovative approach, expert team, and commitment to results make the difference.`,
+        date: "June 5, 2025",
+        author: "Service Excellence Team",
+        tags: [serviceName, "Service Excellence", "Why Choose Us"],
+        slug: `why-seo-focus-best-${serviceSlug}`,
+        serviceSlug,
+        imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      });
     }
     
-    // Fallback to all posts
+    // Industry specific blog
+    if (industrySlug && !serviceSlug) {
+      const industryName = industrySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      
+      allBlogPosts.push({
+        id: `why-seo-focus-${industrySlug}`,
+        title: `Why SEO Focus is Best for ${industryName}`,
+        excerpt: `Explore why SEO Focus is the preferred SEO partner for ${industryName.toLowerCase()} businesses. Our deep industry knowledge and tailored strategies drive exceptional results.`,
+        date: "June 3, 2025",
+        author: "Industry Expert Team",
+        tags: [industryName, "Industry Focus", "Specialized Solutions"],
+        slug: `why-seo-focus-best-${industrySlug}`,
+        industrySlug,
+        imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      });
+    }
+    
+    // Add some general high-quality blog posts if we need more content
+    const generalPosts: BlogPost[] = [
+      {
+        id: "seo-trends-2025",
+        title: "Top SEO Trends to Watch in 2025",
+        excerpt: "Stay ahead of the curve with the latest SEO trends and algorithm updates that will shape digital marketing in 2025.",
+        date: "May 28, 2025",
+        author: "SEO Research Team",
+        tags: ["SEO Trends", "2025", "Algorithm Updates"],
+        slug: "seo-trends-2025",
+        imageUrl: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      },
+      {
+        id: "local-seo-complete-guide",
+        title: "The Complete Guide to Local SEO Success",
+        excerpt: "Master local SEO with our comprehensive guide covering everything from Google Business Profile optimization to local link building.",
+        date: "May 25, 2025",
+        author: "Local SEO Experts",
+        tags: ["Local SEO", "Google Business Profile", "Local Rankings"],
+        slug: "complete-local-seo-guide",
+        serviceSlug: "local-seo",
+        imageUrl: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      },
+      {
+        id: "technical-seo-audit",
+        title: "How to Conduct a Technical SEO Audit",
+        excerpt: "Learn the essential steps for conducting a comprehensive technical SEO audit to identify and fix issues affecting your website's performance.",
+        date: "May 20, 2025",
+        author: "Technical SEO Team",
+        tags: ["Technical SEO", "SEO Audit", "Website Performance"],
+        slug: "technical-seo-audit-guide",
+        serviceSlug: "technical-seo",
+        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+      }
+    ];
+    
+    allBlogPosts.push(...generalPosts);
+    
     return allBlogPosts.slice(0, limit);
   };
 
-  const relevantPosts = getRelevantPosts();
+  // Generate dynamic title and subtitle
+  const getContextualTitle = () => {
+    if (title) return title;
+    
+    if (serviceSlug && industrySlug && locationSlug) {
+      return "Why Choose SEO Focus";
+    } else if (serviceSlug && industrySlug) {
+      return "Industry-Specific Insights";
+    } else if (serviceSlug) {
+      return "Service Excellence Insights";
+    } else if (industrySlug) {
+      return "Industry-Focused Resources";
+    }
+    return "Latest Insights & Resources";
+  };
+
+  const getContextualSubtitle = () => {
+    if (subtitle) return subtitle;
+    
+    const serviceName = serviceSlug ? serviceSlug.replace(/-/g, ' ') : '';
+    const industryName = industrySlug ? industrySlug.replace(/-/g, ' ') : '';
+    const locationName = locationSlug ? locationSlug.replace(/-/g, ' ') : '';
+    
+    if (serviceSlug && industrySlug && locationSlug) {
+      return `Specialized insights for ${serviceName} in the ${industryName} industry in ${locationName}`;
+    } else if (serviceSlug && industrySlug) {
+      return `Focused resources for ${serviceName} in the ${industryName} industry`;
+    } else if (serviceSlug) {
+      return `Expert insights related to ${serviceName}`;
+    } else if (industrySlug) {
+      return `Specialized resources for the ${industryName} industry`;
+    }
+    return "Stay updated with our latest SEO insights, tips, and strategies";
+  };
+
+  const relevantPosts = generateContextualBlogPosts();
   
   // Don't render if no posts found
   if (relevantPosts.length === 0) {
     return null;
   }
 
-  const dynamicSubtitle = subtitle || getContextualSubtitle();
+  const dynamicTitle = getContextualTitle();
+  const dynamicSubtitle = getContextualSubtitle();
 
   return (
     <section className={`py-16 bg-seo-gray-light ${className}`}>
@@ -188,7 +214,7 @@ const ContextualBlog: React.FC<ContextualBlogProps> = ({
             Knowledge Hub
           </span>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-4">
-            {title}
+            {dynamicTitle}
           </h2>
           <p className="text-lg text-seo-gray-dark">
             {dynamicSubtitle}

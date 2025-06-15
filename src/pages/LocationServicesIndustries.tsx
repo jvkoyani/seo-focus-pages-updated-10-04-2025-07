@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, MapPin, ChevronRight } from 'lucide-react';
@@ -6,14 +5,16 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactForm from '@/components/ContactForm';
+import ContextualBlog from '@/components/ContextualBlog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { findLocationBySlug } from '@/lib/additionalLocationData';
 import { getAllIndustries } from '@/lib/industriesData';
 import { getAllServices } from '@/lib/servicesData';
 import { icons } from 'lucide-react';
+import SEO from '@/components/SEO';
 
-const LocationServicesIndustries = () => {
+const LocationServicesIndustries = ({ routeKey }: { routeKey?: string }) => {
   const { locationSlug } = useParams<{ locationSlug: string }>();
   const navigate = useNavigate();
   
@@ -35,6 +36,10 @@ const LocationServicesIndustries = () => {
     return null; // Will redirect to 404
   }
   
+  // Custom meta for location services & industries
+  const locationTitle = `Complete SEO Solutions in ${locationData.name} | All Services & Industries`;
+  const locationDescription = `Comprehensive SEO services for all industries in ${locationData.name}. From healthcare to retail, we provide specialized digital marketing solutions tailored to your business sector.`;
+  
   // Dynamically get the icon component based on icon name
   const getIconComponent = (iconName: string) => {
     const IconComponent = icons[iconName as keyof typeof icons];
@@ -43,6 +48,14 @@ const LocationServicesIndustries = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title={locationTitle}
+        description={locationDescription}
+        keywords={`${locationData.name} SEO services, all industries ${locationData.name}, complete SEO solutions, business optimization ${locationData.name}`}
+        canonicalUrl={`/location/${locationData.slug}/services-industries`}
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       {/* Hero Section */}
@@ -264,6 +277,13 @@ const LocationServicesIndustries = () => {
           </div>
         </div>
       </section>
+      
+      {/* Contextual Blog Section */}
+      <ContextualBlog
+        locationSlug={locationData.slug}
+        title={`Why Choose SEO Focus in ${locationData.name}`}
+        subtitle={`Discover what makes us the leading SEO agency in ${locationData.name} and how our local expertise drives exceptional results for businesses across all industries.`}
+      />
       
       {/* CTA Section */}
       <section className="py-16 bg-seo-gray-light">

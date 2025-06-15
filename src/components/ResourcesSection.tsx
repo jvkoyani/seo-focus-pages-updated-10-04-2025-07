@@ -139,6 +139,15 @@ const ResourcesSection = ({
             </div>
           </div>
         )}
+        
+        {/* Add contextual blog for additional engagement */}
+        <div className="mt-16">
+          <ContextualBlog 
+            title="Why Choose SEO Focus"
+            subtitle="Discover what makes us the leading choice for SEO services across all industries and locations"
+            limit={3}
+          />
+        </div>
       </div>
     </div>
   );
