@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, LineChart, RefreshCw, BarChart, TrendingUp } from 'lucide-react';
@@ -8,8 +7,38 @@ import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import Hero from '@/components/Hero';
 import SEO from '@/components/SEO';
+import Schema from '@/components/Schema';
 
 const MonitoringOptimization = ({ routeKey }: { routeKey?: string }) => {
+  // FAQ schema data for monitoring and optimization page
+  const faqSchema = {
+    type: 'faq' as const,
+    data: {
+      questions: [
+        {
+          question: "What SEO metrics do you track for performance monitoring?",
+          answer: "We continuously monitor key metrics including keyword rankings, organic traffic, conversion rates, engagement metrics, bounce rate, page load speed, and technical SEO health to measure progress toward your goals."
+        },
+        {
+          question: "How do you analyze SEO performance data?",
+          answer: "We analyze performance data to identify patterns, opportunities, and areas needing improvement, generating actionable insights through advanced analytics tools and custom reporting dashboards."
+        },
+        {
+          question: "What is your iterative optimization approach?",
+          answer: "Based on performance data, we continuously refine and improve your SEO strategy, making data-driven adjustments to maximize results and ROI while adapting to algorithm changes and market shifts."
+        },
+        {
+          question: "How often do you provide SEO performance reports?",
+          answer: "We provide regular, transparent reports on performance, insights, and next steps, typically monthly with real-time dashboard access, ensuring you understand the impact of our work and future opportunities."
+        },
+        {
+          question: "How do you adapt to Google algorithm changes?",
+          answer: "Our monitoring systems track algorithm updates and their impact on your rankings. We quickly analyze changes and implement necessary adjustments to maintain and improve your search visibility."
+        }
+      ]
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
@@ -19,6 +48,9 @@ const MonitoringOptimization = ({ routeKey }: { routeKey?: string }) => {
         canonicalUrl="/methodology/monitoring-optimization"
         routeKey={routeKey}
       />
+      
+      {/* Add FAQ schema */}
+      <Schema type="faq" data={faqSchema.data} />
       
       <Navbar />
       

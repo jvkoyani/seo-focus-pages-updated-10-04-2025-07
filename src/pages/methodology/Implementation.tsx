@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, FileText, Link as LinkIcon, Settings } from 'lucide-react';
@@ -8,8 +7,38 @@ import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import Hero from '@/components/Hero';
 import SEO from '@/components/SEO';
+import Schema from '@/components/Schema';
 
 const Implementation = ({ routeKey }: { routeKey?: string }) => {
+  // FAQ schema data for implementation page
+  const faqSchema = {
+    type: 'faq' as const,
+    data: {
+      questions: [
+        {
+          question: "What technical SEO improvements do you implement?",
+          answer: "We implement site speed optimization, mobile-friendliness enhancements, structured data markup, crawlability improvements, indexability fixes, and other foundational SEO elements to ensure search engines can properly access and understand your website."
+        },
+        {
+          question: "How do you approach content optimization during implementation?",
+          answer: "We create and optimize content to target strategic keywords, fulfill user intent, and establish topical authority. This includes optimizing existing content for better performance and creating new content that aligns with your SEO strategy."
+        },
+        {
+          question: "What does your off-page optimization process include?",
+          answer: "Our off-page optimization focuses on building high-quality backlinks, enhancing online reputation, and improving brand mentions across the web to boost domain authority and search rankings through ethical, white-hat techniques."
+        },
+        {
+          question: "Do you provide local SEO implementation services?",
+          answer: "Yes, for local businesses we optimize Google Business Profiles, build local citations, implement location-specific optimizations, and improve visibility in local search results to help you dominate your local market."
+        },
+        {
+          question: "How long does the implementation phase typically take?",
+          answer: "Implementation timelines vary based on scope and complexity, but most technical implementations are completed within 2-4 weeks, while content and off-page optimization are ongoing processes that build momentum over 3-6 months."
+        }
+      ]
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
@@ -19,6 +48,9 @@ const Implementation = ({ routeKey }: { routeKey?: string }) => {
         canonicalUrl="/methodology/implementation"
         routeKey={routeKey}
       />
+      
+      {/* Add FAQ schema */}
+      <Schema type="faq" data={faqSchema.data} />
       
       <Navbar />
       

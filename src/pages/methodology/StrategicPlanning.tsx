@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, PlaneLanding, Target, Calendar } from 'lucide-react';
@@ -8,8 +7,38 @@ import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import Hero from '@/components/Hero';
 import SEO from '@/components/SEO';
+import Schema from '@/components/Schema';
 
 const StrategicPlanning = ({ routeKey }: { routeKey?: string }) => {
+  // FAQ schema data for strategic planning page
+  const faqSchema = {
+    type: 'faq' as const,
+    data: {
+      questions: [
+        {
+          question: "How do you set SEO goals that align with business objectives?",
+          answer: "We establish clear, measurable objectives aligned with your business goals, whether increasing organic traffic, generating leads, boosting e-commerce sales, or enhancing brand visibility. Each goal includes specific KPIs and timelines."
+        },
+        {
+          question: "What does your SEO strategy development process include?",
+          answer: "We create a comprehensive SEO roadmap covering technical optimizations, content strategy, on-page enhancements, off-page initiatives, and local SEO tactics. Each component is tailored to your specific industry and competitive landscape."
+        },
+        {
+          question: "How detailed is your SEO action planning?",
+          answer: "We develop detailed implementation schedules with prioritized tasks, responsible parties, expected outcomes, and realistic timelines to ensure efficient execution and maximum impact from day one."
+        },
+        {
+          question: "What KPIs do you track for SEO success?",
+          answer: "We establish key performance indicators including organic traffic growth, keyword ranking improvements, conversion rate increases, lead generation, revenue attribution, and ROI metrics with regular tracking and reporting."
+        },
+        {
+          question: "How do you ensure SEO strategy remains adaptable?",
+          answer: "Our strategic planning includes flexibility for algorithm updates, market changes, and evolving business needs. We build in review points and adjustment mechanisms to keep your strategy effective long-term."
+        }
+      ]
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
@@ -19,6 +48,9 @@ const StrategicPlanning = ({ routeKey }: { routeKey?: string }) => {
         canonicalUrl="/methodology/strategic-planning"
         routeKey={routeKey}
       />
+      
+      {/* Add FAQ schema */}
+      <Schema type="faq" data={faqSchema.data} />
       
       <Navbar />
       
