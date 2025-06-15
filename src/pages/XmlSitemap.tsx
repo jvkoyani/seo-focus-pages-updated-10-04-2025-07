@@ -67,7 +67,9 @@ const XmlSitemap = () => {
   </url>`;
       });
 
-      // Create a combined array of all cities
+      // Limit to major cities only (first 20 cities) to prevent excessive URL generation
+      const majorCities = allAustralianCities.slice(0, 20);
+
       const processCity = (city: any) => {
         // Handle both object-based city data and string-based city data
         const cityName = typeof city === 'string' ? city : city.name;
@@ -102,8 +104,9 @@ const XmlSitemap = () => {
     <priority>0.7</priority>
   </url>`;
 
-        // Add industry-location combinations
-        industries.forEach(industry => {
+        // Limit industry-location combinations to top 5 industries only
+        const topIndustries = industries.slice(0, 5);
+        topIndustries.forEach(industry => {
           xml += `
   <url>
     <loc>${baseUrl}/location/${citySlug}/industry/${industry.slug}</loc>
@@ -111,30 +114,11 @@ const XmlSitemap = () => {
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>`;
-          
-          // Add service-industry-location combinations with SEO-friendly URL pattern
-          services.forEach(service => {
-            xml += `
-  <url>
-    <loc>${baseUrl}/${service.slug}-for-${industry.slug}-in-${citySlug}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>`;
-            
-            // Add service-industry-location combinations with path-based URL pattern
-            xml += `
-  <url>
-    <loc>${baseUrl}/service/${service.slug}/industry/${industry.slug}/location/${citySlug}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>`;
-          });
         });
 
-        // Add service-location combinations for all services using the correct URL pattern
-        services.forEach(service => {
+        // Add service-location combinations for top 3 services only
+        const topServices = services.slice(0, 3);
+        topServices.forEach(service => {
           xml += `
   <url>
     <loc>${baseUrl}/location/${citySlug}/${service.slug}</loc>
@@ -154,8 +138,8 @@ const XmlSitemap = () => {
         });
       };
 
-      // Process all cities in the allAustralianCities array
-      allAustralianCities.forEach(city => {
+      // Process major cities only
+      majorCities.forEach(city => {
         processCity(city);
       });
 
@@ -181,7 +165,8 @@ const XmlSitemap = () => {
       const states = [...new Set(allAustralianCities
         .filter(city => typeof city === 'object')
         .map(city => (city as any).state))]
-        .filter(Boolean);
+        .filter(Boolean)
+        .slice(0, 8); // Limit to 8 states
         
       states.forEach(state => {
         if (state && state !== "Various") {
@@ -196,29 +181,39 @@ const XmlSitemap = () => {
         }
       });
 
-      // Add blog posts
-      const { blogPosts } = require('@/lib/data');
-      blogPosts.forEach((post: any) => {
-        xml += `
+      // Add blog posts (limit to avoid excessive URLs)
+      try {
+        const { blogPosts } = require('@/lib/data');
+        const limitedBlogPosts = blogPosts.slice(0, 50); // Limit to 50 blog posts
+        limitedBlogPosts.forEach((post: any) => {
+          xml += `
   <url>
     <loc>${baseUrl}/blog/${post.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
-      });
+        });
+      } catch (error) {
+        console.log('Blog posts not available');
+      }
 
-      // Add case studies
-      const { caseStudies } = require('@/lib/data');
-      caseStudies.forEach((caseStudy: any) => {
-        xml += `
+      // Add case studies (limit to avoid excessive URLs)
+      try {
+        const { caseStudies } = require('@/lib/data');
+        const limitedCaseStudies = caseStudies.slice(0, 20); // Limit to 20 case studies
+        limitedCaseStudies.forEach((caseStudy: any) => {
+          xml += `
   <url>
     <loc>${baseUrl}/case-study/${caseStudy.slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
-      });
+        });
+      } catch (error) {
+        console.log('Case studies not available');
+      }
 
       xml += `
 </urlset>`;
