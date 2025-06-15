@@ -7,10 +7,19 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import Hero from '@/components/Hero';
+import SEO from '@/components/SEO';
 
-const StrategicPlanning = () => {
+const StrategicPlanning = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="SEO Strategic Planning Methodology | Custom Roadmap Development"
+        description="Learn our strategic planning process for SEO success. Goal setting, comprehensive strategy development, action planning, and KPI definition for maximum ROI."
+        keywords="SEO strategic planning, SEO roadmap development, SEO goal setting, SEO strategy methodology, custom SEO planning, SEO action plan"
+        canonicalUrl="/methodology/strategic-planning"
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       <Hero 

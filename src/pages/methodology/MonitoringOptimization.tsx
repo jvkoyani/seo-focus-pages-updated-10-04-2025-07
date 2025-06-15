@@ -7,10 +7,19 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import Hero from '@/components/Hero';
+import SEO from '@/components/SEO';
 
-const MonitoringOptimization = () => {
+const MonitoringOptimization = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="SEO Monitoring & Optimization | Continuous Performance Improvement"
+        description="Our ongoing SEO monitoring and optimization process. Performance tracking, data analysis, iterative improvements, and transparent reporting for sustained growth."
+        keywords="SEO monitoring, SEO optimization, performance tracking, SEO analytics, continuous improvement, SEO reporting, iterative optimization"
+        canonicalUrl="/methodology/monitoring-optimization"
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       <Hero 

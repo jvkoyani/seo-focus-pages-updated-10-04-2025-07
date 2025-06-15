@@ -7,10 +7,19 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import Hero from '@/components/Hero';
+import SEO from '@/components/SEO';
 
-const ResearchAnalysis = () => {
+const ResearchAnalysis = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="SEO Research & Analysis Methodology | Data-Driven Insights"
+        description="Comprehensive SEO research and analysis process. Website audits, competitor analysis, audience research, and keyword strategy for informed decision-making."
+        keywords="SEO research, SEO analysis, website audit, competitor analysis, keyword research, audience research, SEO methodology, data-driven SEO"
+        canonicalUrl="/methodology/research-analysis"
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       <Hero 

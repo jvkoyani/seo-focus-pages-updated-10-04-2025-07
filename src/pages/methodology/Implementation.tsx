@@ -7,10 +7,19 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 import AnimatedSection from '@/components/AnimatedSection';
 import Hero from '@/components/Hero';
+import SEO from '@/components/SEO';
 
-const Implementation = () => {
+const Implementation = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="SEO Implementation Methodology | Expert Technical Execution"
+        description="Discover our proven SEO implementation process. Expert technical SEO, content optimization, link building, and local SEO execution for measurable results."
+        keywords="SEO implementation, technical SEO execution, content optimization process, link building strategy, local SEO implementation, SEO methodology"
+        canonicalUrl="/methodology/implementation"
+        routeKey={routeKey}
+      />
+      
       <Navbar />
       
       <Hero 

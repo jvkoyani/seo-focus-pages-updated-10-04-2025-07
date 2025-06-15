@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -200,9 +199,9 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <SEO 
-        title="SEO Blog | Expert Tips, Strategies & Industry Insights"
-        description="Stay ahead with actionable SEO tips, algorithm updates, and proven strategies from industry experts. Free guides to improve your search rankings today."
-        keywords="SEO blog, SEO tips, search optimization strategies, SEO best practices, digital marketing insights, Google algorithm updates"
+        title="SEO Blog | Expert Tips, Strategies & Industry Insights 2025"
+        description="Stay ahead with actionable SEO tips, algorithm updates, and proven strategies from industry experts. Free guides to improve your search rankings and drive organic traffic."
+        keywords="SEO blog, SEO tips 2025, search optimization strategies, SEO best practices, digital marketing insights, Google algorithm updates, content marketing SEO"
         canonicalUrl="/blogs"
         routeKey={routeKey}
       />
@@ -223,7 +222,7 @@ const Blogs = ({ routeKey }: { routeKey?: string }) => {
               Stay up-to-date with the latest SEO trends, strategies, and best practices to improve your search visibility.
             </p>
             <p className="text-lg text-seo-gray-dark">
-              Browse through {allBlogPosts.length} comprehensive articles covering all aspects of SEO and digital marketing.
+              Browse our comprehensive collection of SEO articles, guides, and industry insights.
             </p>
           </AnimatedSection>
         </div>
