@@ -1,28 +1,21 @@
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Quote } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { testimonials } from '@/lib/data';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface TestimonialsProps {
   location?: string;
 }
 
 const Testimonials = ({ location }: TestimonialsProps) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const handlePrev = () => {
-    setActiveIndex((prevIndex) => 
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
-  };
-
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => 
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
   return (
     <section className="py-24 bg-seo-gray-light relative overflow-hidden">
       <div className="container mx-auto px-4">
@@ -43,87 +36,54 @@ const Testimonials = ({ location }: TestimonialsProps) => {
           </p>
         </AnimatedSection>
 
-        <div className="relative max-w-4xl mx-auto">
-          <AnimatedSection 
-            key={activeIndex}
-            className="bg-white rounded-2xl shadow-lg p-8 md:p-12"
-            animation="fade-in"
+        <div className="max-w-4xl mx-auto">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
           >
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0">
-                <img 
-                  src={testimonials[activeIndex].image} 
-                  alt={testimonials[activeIndex].name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex-1">
-                <Quote className="h-12 w-12 text-seo-blue/20 mb-4" />
-                <p className="text-lg md:text-xl text-seo-dark mb-6 italic">
-                  "{testimonials[activeIndex].quote}"
-                </p>
-                <div>
-                  <h4 className="text-xl font-display font-semibold text-seo-dark">
-                    {testimonials[activeIndex].name}
-                  </h4>
-                  <div className="flex items-center text-seo-gray-medium text-sm">
-                    <span>{testimonials[activeIndex].company}</span>
-                    <span className="mx-2">•</span>
-                    <span>{testimonials[activeIndex].location}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-
-          <div className="flex justify-center mt-8 space-x-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  index === activeIndex ? 'bg-seo-blue' : 'bg-seo-gray-medium/30'
-                }`}
-                onClick={() => setActiveIndex(index)}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          <button 
-            className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-12 w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-seo-dark hover:text-seo-blue transition-colors hidden md:flex"
-            onClick={handlePrev}
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          
-          <button 
-            className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-12 w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-seo-dark hover:text-seo-blue transition-colors hidden md:flex"
-            onClick={handleNext}
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+            <CarouselContent>
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index}>
+                  <AnimatedSection 
+                    className="bg-white rounded-2xl shadow-lg p-8 md:p-12"
+                    animation="fade-in"
+                  >
+                    <div className="flex flex-col md:flex-row gap-8 items-center">
+                      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0">
+                        <img 
+                          src={testimonial.image} 
+                          alt={testimonial.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <Quote className="h-12 w-12 text-seo-blue/20 mb-4" />
+                        <p className="text-lg md:text-xl text-seo-dark mb-6 italic">
+                          "{testimonial.quote}"
+                        </p>
+                        <div>
+                          <h4 className="text-xl font-display font-semibold text-seo-dark">
+                            {testimonial.name}
+                          </h4>
+                          <div className="flex items-center text-seo-gray-medium text-sm">
+                            <span>{testimonial.company}</span>
+                            <span className="mx-2">•</span>
+                            <span>{testimonial.location}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </AnimatedSection>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
         </div>
-      </div>
-
-      {/* Mobile navigation buttons */}
-      <div className="flex justify-center mt-6 space-x-4 md:hidden">
-        <button 
-          className="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-seo-dark hover:text-seo-blue transition-colors"
-          onClick={handlePrev}
-          aria-label="Previous testimonial"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        
-        <button 
-          className="w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-seo-dark hover:text-seo-blue transition-colors"
-          onClick={handleNext}
-          aria-label="Next testimonial"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
       </div>
     </section>
   );
