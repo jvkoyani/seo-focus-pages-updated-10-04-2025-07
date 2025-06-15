@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  ArrowRight, MapPin, TrendingUp, BarChart, 
-  CheckCircle, Award, Users, Target, Star, 
-  Zap, Globe, Compass, Building, ShoppingBag, 
-  Phone, Lightbulb, ChevronRight, Heart
-} from 'lucide-react';
+import { ArrowRight, MapPin, TrendingUp, BarChart, CheckCircle, Award, Users, Target, Star, Zap, Globe, Compass, Building, ShoppingBag, Phone, Lightbulb, ChevronRight, Heart } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -23,107 +18,84 @@ import { ServiceBadgeProps } from '@/components/ServiceBadge';
 import FAQ, { FAQItem } from '@/components/FAQ';
 import ContextualBlog from '@/components/ContextualBlog';
 import ServiceTabs from '@/components/ServiceTabs';
-
 const Location = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const {
+    slug
+  } = useParams<{
+    slug: string;
+  }>();
   const location = useLocation();
   const navigate = useNavigate();
-  
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   }, [location.pathname]);
-  
   const locationData = findLocationBySlug(slug || '');
-  
   const handleLinkClick = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
-  
   useEffect(() => {
     if (!locationData && slug) {
       navigate('/not-found');
     }
   }, [locationData, slug, navigate]);
-
-  const authorityBadges: ServiceBadgeProps[] = [
-    {
-      text: `#1 SEO Agency in ${locationData?.name || ''}`,
-      icon: "award" as const,
-      variant: "primary" as const,
-      size: "lg"
-    },
-    {
-      text: "Results Guaranteed",
-      icon: "shield" as const,
-      variant: "success" as const,
-      size: "lg"
-    },
-    {
-      text: "5-Star Service",
-      icon: "star" as const,
-      variant: "warning" as const,
-      size: "lg"
-    }
-  ];
-
-  const locationFAQs: FAQItem[] = locationData ? [
-    {
-      question: `Why is local SEO important for businesses in ${locationData.name}?`,
-      answer: `Local SEO is crucial for businesses in ${locationData.name} because it helps you connect with nearby customers actively searching for your products or services. With proper local SEO optimization, your business appears in relevant local searches, Google Maps, and local directories, driving foot traffic and increasing conversions from ${locationData.name} residents.`
-    },
-    {
-      question: `How long does it take to see results from SEO in ${locationData.name}?`,
-      answer: `SEO is a long-term investment, but most businesses in ${locationData.name} begin seeing initial improvements within 3-4 months. Significant results typically appear between 6-12 months, depending on your industry competition, website condition, and the specific keywords targeted. Our strategies are tailored to the unique ${locationData.name} market to accelerate results where possible.`
-    },
-    {
-      question: `What makes your ${locationData.name} SEO services different from other agencies?`,
-      answer: `Our ${locationData.name} SEO services stand out because we combine deep local market knowledge with advanced technical expertise. We have established relationships with local business directories, publications, and organizations in ${locationData.name} that help strengthen your local presence. Additionally, we provide transparent reporting and personalized service with a dedicated account manager who understands the ${locationData.name} business landscape.`
-    },
-    {
-      question: `Do you guarantee first-page rankings for ${locationData.name} searches?`,
-      answer: `While we cannot ethically guarantee specific rankings (as Google prohibits such guarantees), we have an exceptional track record of helping ${locationData.name} businesses achieve first-page results. Our comprehensive approach focuses on sustainable strategies that comply with Google's guidelines and adapt to algorithm changes, giving your business the best opportunity to rank well for relevant ${locationData.name} searches long-term.`
-    },
-    {
-      question: `What local SEO strategies do you use for ${locationData.name} businesses?`,
-      answer: `For ${locationData.name} businesses, we implement a comprehensive local SEO strategy that includes Google Business Profile optimization, local citation building across ${locationData.name} directories, location-specific content creation, local link building with ${locationData.name} businesses and organizations, localized keyword research, review management, and mobile optimization. We adapt our approach based on your specific industry and the competitive landscape in ${locationData.name}.`
-    },
-    {
-      question: `How do you measure the success of ${locationData.name} SEO campaigns?`,
-      answer: `We measure success through multiple metrics including local ranking improvements, organic traffic growth from ${locationData.name} visitors, conversion rates, phone calls, direction requests, increases in local reviews, citation improvements, and ultimately, business growth. We provide detailed monthly reports that track these metrics and explain what they mean for your business in clear, jargon-free language.`
-    }
-  ] : [];
-  
+  const authorityBadges: ServiceBadgeProps[] = [{
+    text: `#1 SEO Agency in ${locationData?.name || ''}`,
+    icon: "award" as const,
+    variant: "primary" as const,
+    size: "lg"
+  }, {
+    text: "Results Guaranteed",
+    icon: "shield" as const,
+    variant: "success" as const,
+    size: "lg"
+  }, {
+    text: "5-Star Service",
+    icon: "star" as const,
+    variant: "warning" as const,
+    size: "lg"
+  }];
+  const locationFAQs: FAQItem[] = locationData ? [{
+    question: `Why is local SEO important for businesses in ${locationData.name}?`,
+    answer: `Local SEO is crucial for businesses in ${locationData.name} because it helps you connect with nearby customers actively searching for your products or services. With proper local SEO optimization, your business appears in relevant local searches, Google Maps, and local directories, driving foot traffic and increasing conversions from ${locationData.name} residents.`
+  }, {
+    question: `How long does it take to see results from SEO in ${locationData.name}?`,
+    answer: `SEO is a long-term investment, but most businesses in ${locationData.name} begin seeing initial improvements within 3-4 months. Significant results typically appear between 6-12 months, depending on your industry competition, website condition, and the specific keywords targeted. Our strategies are tailored to the unique ${locationData.name} market to accelerate results where possible.`
+  }, {
+    question: `What makes your ${locationData.name} SEO services different from other agencies?`,
+    answer: `Our ${locationData.name} SEO services stand out because we combine deep local market knowledge with advanced technical expertise. We have established relationships with local business directories, publications, and organizations in ${locationData.name} that help strengthen your local presence. Additionally, we provide transparent reporting and personalized service with a dedicated account manager who understands the ${locationData.name} business landscape.`
+  }, {
+    question: `Do you guarantee first-page rankings for ${locationData.name} searches?`,
+    answer: `While we cannot ethically guarantee specific rankings (as Google prohibits such guarantees), we have an exceptional track record of helping ${locationData.name} businesses achieve first-page results. Our comprehensive approach focuses on sustainable strategies that comply with Google's guidelines and adapt to algorithm changes, giving your business the best opportunity to rank well for relevant ${locationData.name} searches long-term.`
+  }, {
+    question: `What local SEO strategies do you use for ${locationData.name} businesses?`,
+    answer: `For ${locationData.name} businesses, we implement a comprehensive local SEO strategy that includes Google Business Profile optimization, local citation building across ${locationData.name} directories, location-specific content creation, local link building with ${locationData.name} businesses and organizations, localized keyword research, review management, and mobile optimization. We adapt our approach based on your specific industry and the competitive landscape in ${locationData.name}.`
+  }, {
+    question: `How do you measure the success of ${locationData.name} SEO campaigns?`,
+    answer: `We measure success through multiple metrics including local ranking improvements, organic traffic growth from ${locationData.name} visitors, conversion rates, phone calls, direction requests, increases in local reviews, citation improvements, and ultimately, business growth. We provide detailed monthly reports that track these metrics and explain what they mean for your business in clear, jargon-free language.`
+  }] : [];
   if (!locationData) {
-    return (
-      <div className="min-h-screen flex flex-col">
+    return <div className="min-h-screen flex flex-col">
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">Location Not Found</h1>
             <p className="mb-6">Sorry, the location you're looking for doesn't exist.</p>
-            <Link 
-              to="/" 
-              className="inline-flex items-center text-seo-blue font-medium"
-              onClick={handleLinkClick}
-            >
+            <Link to="/" className="inline-flex items-center text-seo-blue font-medium" onClick={handleLinkClick}>
               <span>Return to home</span>
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
         </div>
         <Footer />
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Navbar />
       
       {/* Hero Section */}
@@ -138,11 +110,7 @@ const Location = () => {
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection className="mb-4" animation="fade-in">
             <div className="inline-flex items-center space-x-2">
-              <Link 
-                to="/" 
-                className="text-seo-gray-dark hover:text-seo-blue transition-colors"
-                onClick={handleLinkClick}
-              >
+              <Link to="/" className="text-seo-gray-dark hover:text-seo-blue transition-colors" onClick={handleLinkClick}>
                 Home
               </Link>
               <ChevronRight className="h-4 w-4 text-seo-gray-medium" />
@@ -164,15 +132,7 @@ const Location = () => {
               </div>
               
               <div className="flex flex-wrap gap-2 mb-4">
-                {authorityBadges.map((badge, index) => (
-                  <ServiceBadge
-                    key={index}
-                    text={badge.text}
-                    icon={badge.icon}
-                    variant={badge.variant}
-                    size={badge.size}
-                  />
-                ))}
+                {authorityBadges.map((badge, index) => <ServiceBadge key={index} text={badge.text} icon={badge.icon} variant={badge.variant} size={badge.size} />)}
               </div>
               
               <h1 className="text-4xl md:text-5xl font-display font-bold text-seo-dark mb-6 leading-tight">
@@ -242,23 +202,7 @@ const Location = () => {
       </section>
       
       {/* Services Tabs Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16" animation="fade-in">
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-seo-blue/10 text-seo-blue mb-4">
-              Our Services
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-seo-dark mb-6">
-              Comprehensive SEO Solutions for {locationData.name}
-            </h2>
-            <p className="text-lg text-seo-gray-dark">
-              Explore our range of specialized SEO services designed to help your {locationData.name} business succeed online
-            </p>
-          </AnimatedSection>
-          
-          <ServiceTabs />
-        </div>
-      </section>
+      
       
       <Services location={locationData.name} locationSlug={locationData.slug} />
       
@@ -395,24 +339,11 @@ const Location = () => {
         </div>
       </section>
       
-      <LocationIndustries 
-        locationName={locationData.name}
-        locationSlug={locationData.slug}
-        limit={6}
-        showAllLink={true}
-      />
+      <LocationIndustries locationName={locationData.name} locationSlug={locationData.slug} limit={6} showAllLink={true} />
       
-      <ContextualBlog 
-        title={`Latest SEO Insights for ${locationData.name} Businesses`}
-        subtitle={`Expert guides and tips specifically for businesses in ${locationData.name}`}
-        locationSlug={locationData.slug}
-      />
+      <ContextualBlog title={`Latest SEO Insights for ${locationData.name} Businesses`} subtitle={`Expert guides and tips specifically for businesses in ${locationData.name}`} locationSlug={locationData.slug} />
       
-      <FAQ 
-        title={`Frequently Asked Questions About SEO in ${locationData.name}`}
-        subtitle={`Get answers to common questions about our SEO services for ${locationData.name} businesses`}
-        faqs={locationFAQs}
-      />
+      <FAQ title={`Frequently Asked Questions About SEO in ${locationData.name}`} subtitle={`Get answers to common questions about our SEO services for ${locationData.name} businesses`} faqs={locationFAQs} />
       
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
@@ -425,10 +356,7 @@ const Location = () => {
                 Need a comprehensive view of all our services and industry-specific solutions for {locationData.name}? 
                 Check out our dedicated page.
               </p>
-              <Link 
-                to={`/location/${locationData.slug}/all`}
-                className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-8 rounded-md transition-colors relative overflow-hidden group"
-              >
+              <Link to={`/location/${locationData.slug}/all`} className="inline-flex items-center bg-seo-blue hover:bg-seo-blue-light text-white font-medium py-3 px-8 rounded-md transition-colors relative overflow-hidden group">
                 <span className="relative z-10">View All {locationData.name} Services & Industries</span>
                 <ArrowRight className="ml-2 h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-gradient-to-r from-seo-blue-light to-seo-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -580,15 +508,10 @@ const Location = () => {
         </div>
       </section>
       
-      <ResourcesSection 
-        filterTag={locationData.name} 
-        className="bg-white"
-      />
+      <ResourcesSection filterTag={locationData.name} className="bg-white" />
       
       <ContactForm />
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Location;
