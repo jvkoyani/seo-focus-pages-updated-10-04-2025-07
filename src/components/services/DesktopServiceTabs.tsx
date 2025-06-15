@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,14 +19,14 @@ export function DesktopServiceTabs({
   contentRefs 
 }: DesktopServiceTabsProps) {
   
-  // Service images mapping
+  // Service images mapping with more relevant images
   const serviceImages = {
-    "local-seo": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
-    "technical-seo": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
-    "content-marketing": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
-    "link-building": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
-    "ecommerce-seo": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png",
-    "seo-audits": "/lovable-uploads/6fbc13e2-3a3a-4ccb-91ff-f770bdacdbe3.png"
+    "local-seo": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop",
+    "technical-seo": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop",
+    "content-marketing": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop",
+    "link-building": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=600&fit=crop",
+    "ecommerce-seo": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+    "seo-audits": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
   };
 
   // Key benefits for each service
@@ -109,7 +108,7 @@ export function DesktopServiceTabs({
                 alt={service.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
               <div className="absolute bottom-4 left-4">
                 <h3 className="text-xl font-bold text-white mb-1">
                   {service.title}
