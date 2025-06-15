@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -14,6 +13,13 @@ import BlogPreview from '@/components/BlogPreview';
 import CaseStudyPreview from '@/components/CaseStudyPreview';
 import InfoCard from '@/components/InfoCard';
 import SEO from '@/components/SEO';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Index = ({ routeKey }: { routeKey?: string }) => {
   // Get featured blog posts and case studies
@@ -278,10 +284,26 @@ const Index = ({ routeKey }: { routeKey?: string }) => {
             </p>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {featuredCaseStudies.map((study, index) => (
-              <CaseStudyPreview key={study.id} caseStudy={study} delay={index * 100} />
-            ))}
+          <div className="max-w-5xl mx-auto mb-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {featuredCaseStudies.map((study, index) => (
+                  <CarouselItem key={study.id} className="md:basis-1/2">
+                    <div className="p-2">
+                      <CaseStudyPreview caseStudy={study} delay={index * 100} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
           </div>
           
           <AnimatedSection
