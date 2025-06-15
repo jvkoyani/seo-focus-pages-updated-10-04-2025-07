@@ -20,7 +20,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Schema } from '@/components/Schema';
+import Schema from '@/components/Schema';
 
 const Index = ({ routeKey }: { routeKey?: string }) => {
   // Get featured blog posts and case studies
